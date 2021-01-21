@@ -21,7 +21,7 @@ export const createMessage = (groupId, messageText) =>
     })
 
 export const getMessageGroupDetails = groupContainerId =>
-    getCollection("/groups/")
+    getCollection("/messenger/")
         .doc(groupContainerId)
         .get()
 
@@ -29,8 +29,8 @@ export const getMessageGroupDetails = groupContainerId =>
 const createMessenger = (groupContainerId, viewLengthMinimum) => {
     const result = {}
     result.groupContainerId = groupContainerId
-    result.messageCollectionPath = "/groups/" + groupContainerId + "/messages/"
-    result.groupDocumentPath = "/groups/" + groupContainerId
+    result.messageCollectionPath = "/messenger/" + groupContainerId + "/messages/"
+    result.groupDocumentPath = "/messenger/" + groupContainerId
     result.viewLength = viewLengthMinimum
     return result
 }
