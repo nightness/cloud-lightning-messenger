@@ -1,0 +1,10 @@
+POST https://us-central1-cloud-lightning.cloudfunctions.net/users?key=abc123 HTTP/1.1
+content-type: application/json
+
+{
+    "displayName": "Timmy",
+    "districtId": "1234",
+    "claims": {
+        "dispatcher": true
+    }
+}

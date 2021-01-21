@@ -1,0 +1,123 @@
+import React, { useState, useEffect, useRef } from 'react'
+import { StyleSheet, FlatList, ScrollView, View } from 'react-native'
+import { useCollection, getDocumentsDataWithId, getData } from './Firebase'
+import ActivityIndicator from '../common/ActivityIndicator'
+import DisplayError from '../common/DisplayError'
+import Text from '../common/Text'
+
+// Ref: For loading more, pull small chunks https://youtu.be/WcGd8VkRc48?t=237
+
+const getTime = () => {
+    let tmpDate = new Date(Date.now())
+    return tmpDate.getTime()
+}
+
+const CollectionFlatList = props => {
+    const flatList = useRef()
+    const { messages, onScrollProp = onScroll, onStartReached, autoScrollToEnd, ...restProps } = props
+    const [hitTop, setHitTop] = useState(state => ({}))
+    const [refreshing, setRefreshing] = useState(false)
+
+    const onScroll = (e) => {
+        const { contentOffset, contentSize, layoutMeasurement } = e.nativeEvent
+        const maxY = Math.round(contentSize.height - layoutMeasurement.height)
+        const maxX = Math.round(contentSize.width - layoutMeasurement.width)
+
+        if (contentOffset.y === 0) setHitTop({})
+        if (onScrollProp) onScrollProp(e)
+    }
+    const onContentSizeChange = (e, f) => {
+        if (autoScrollToEnd && !refreshing)
+            flatList.current.scrollToEnd({ animated: false })
+    }
+    const onLayout = ({ nativeEvent }) => {
+        if (autoScrollToEnd && !refreshing)
+            flatList.current.scrollToEnd({ animated: false })
+    }
+    const onRefresh = (e) => {
+        console.log(e)
+    }
+    const loadMoreMessages = () => {
+        console.log("loadMoreMessages() : Start")
+        setRefreshing(true)
+
+        // each new message increases the viewLength by 1
+        messengerDispatch({
+            type: 'incrementViewLength',
+            amount: 25
+        })
+        updateMessages()
+    }
+
+    React.useEffect(() => {
+        console.log('hit top!')
+        if (typeof (onStartReached) === 'function')
+            onStartReached()
+    }, [hitTop])
+
+    return (
+        <View style={styles.view}>
+            <FlatList
+                {...restProps}
+                ref={flatList}
+                removeClippedSubviews={true}
+                contentContainerStyle={styles.flatlist}
+                data={messages}
+                onStartReached={loadMoreMessages}
+                onLayout={onLayout}
+                onContentSizeChange={onContentSizeChange}
+                onScroll={onScroll}
+            />
+        </View>
+    )
+}
+
+export default ({ collectionPath, orderBy, initialNumToRender, ...restProps }) => {
+    const [snapshot, loadingCollection, errorCollection] = useCollection(collectionPath)
+    const [messages, setMessages] = useState([])
+    const [loadingData, setDataLoading] = useState(true)
+    const [errorData, setDataError] = useState(false)
+
+    const fetchData = () => {
+        getData(snapshot, orderBy).then((querySnapshot) => {
+            setMessages(getDocumentsDataWithId(querySnapshot))
+            setDataLoading(false)
+        }).catch((e) => {
+            setDataError(e)
+        })
+    }
+
+    useEffect(() => {
+        if (!loadingCollection && !errorCollection && snapshot)
+            fetchData()
+    }, [snapshot])
+
+    let render = <ActivityIndicator />
+    if (errorCollection || errorData) {
+        let errorCollectionCode = errorCollection ? errorCollection.code : null
+        let errorDataCode = errorData ? errorData.code : null
+        render =
+            <DisplayError
+                permissionDenied={(errorCollectionCode === 'permission-denied' || errorDataCode === 'permission-denied')}
+            />
+    } else if (!loadingCollection && !loadingData) {
+        render =
+            <CollectionFlatList messages={messages} {...restProps} />
+    }
+    return (
+        <>{render}</>
+    )
+
+}
+
+const styles = StyleSheet.create({
+    view: {
+        flex: 1,
+        margin: 0,
+        padding: 5,
+        borderWidth: 2,
+        borderRadius: 5,
+        borderColor: "#48a",
+        width: "100%"
+    }
+})

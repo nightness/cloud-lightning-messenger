@@ -1,0 +1,1 @@
+DELETE https://us-central1-cloud-lightning.cloudfunctions.net/users/2ps87JcL5HwwlMqv5ucX?key=abc123 HTTP/1.1

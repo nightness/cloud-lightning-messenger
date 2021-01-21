@@ -1,0 +1,155 @@
+import * as firebase from 'firebase';
+import 'firebase/firestore';
+import 'firebase/functions';
+import * as FirebaseAuth from 'react-firebase-hooks/auth';
+import * as FirebaseFirestore from 'react-firebase-hooks/firestore';
+import { useReducer } from 'react-native'
+import { firebaseConfig } from '../../private/FirebaseConfig'
+
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig)
+}
+
+export const getFirestore = () => {
+    var firestore = firebase.firestore();
+    if (false && location.hostname === "localhost") {
+        firestore.settings({
+            host: "localhost:8080"
+        })
+    }
+    return firestore;
+}
+
+// getFirestore().enablePersistence()
+//     .then(() => {
+//         console.log('Warning: Firestore Persistence Enabled!!!')
+//     })
+//     .catch((err) => {
+//         // Not supported
+//         if (err.code ==='unimplemented')
+//             console.log('Firestore Persistence Error: unimplemented')
+
+//         // Open in another tab
+//         if (err.code === 'failed-precondition')
+//             console.log('Firestore Persistence Error: failed-precondition')
+//     })
+
+export const getAuth = () => firebase.auth()
+export const getFunctions = () => firebase.functions()
+
+export const GoogleAuthProvider = firebase.auth.GoogleAuthProvider
+
+export const getCurrentTimeStamp = () => firebase.firestore.FieldValue.serverTimestamp()
+export const getCurrentUser = () => getAuth().currentUser
+
+export const useAuthState = () => FirebaseAuth.useAuthState(getAuth())
+export const useAuthRest = () => {
+    // useReducer
+}
+
+export const getCollection = (collectionPath) => getFirestore().collection(collectionPath)
+export const useCollection = (collectionPath, includeMetadataChanges = false) =>
+    FirebaseFirestore.useCollection(
+        getCollection(collectionPath),
+        {
+            snapshotListenOptions: { includeMetadataChanges },
+        }
+    );
+export const useCollectionOnce = (collectionPath, includeMetadataChanges = false) =>
+    FirebaseFirestore.useCollectionOnce(
+        getCollection(collectionPath),
+        {
+            snapshotListenOptions: { includeMetadataChanges },
+        }
+    );
+export const useCollectionData = (collectionPath, includeMetadataChanges = false) =>
+    FirebaseFirestore.useCollectionData(
+        getCollection(collectionPath),
+        {
+            snapshotListenOptions: { includeMetadataChanges },
+        }
+    );
+export const useCollectionDataOnce = (collectionPath, includeMetadataChanges = false) =>
+    FirebaseFirestore.useCollectionDataOnce(
+        getCollection(collectionPath),
+        {
+            snapshotListenOptions: { includeMetadataChanges },
+        }
+    );
+
+export const getDocument = (documentPath) => getFirestore().doc(documentPath)
+export const useDocument = (documentPath, includeMetadataChanges = false) =>
+    FirebaseFirestore.useDocument(
+        getDocument(documentPath),
+        {
+            snapshotListenOptions: { includeMetadataChanges },
+        }
+    );
+export const useDocumentOnce = (documentPath, includeMetadataChanges = false) =>
+    FirebaseFirestore.useDocumentOnce(
+        getDocument(documentPath),
+        {
+            snapshotListenOptions: { includeMetadataChanges },
+        }
+    );
+export const useDocumentData = (documentPath, includeMetadataChanges = false) =>
+    FirebaseFirestore.useDocumentData(
+        getDocument(documentPath),
+        {
+            snapshotListenOptions: { includeMetadataChanges },
+        }
+    );
+
+export const useDocumentDataOnce = (documentPath, includeMetadataChanges = false) =>
+    FirebaseFirestore.useDocumentDataOnce(
+        getDocument(documentPath),
+        {
+            snapshotListenOptions: { includeMetadataChanges },
+        }
+    );
+
+export const getData = (snapshot, orderBy, length, firstItem) => {
+    if (!orderBy)
+        return snapshot.query.get()
+    else if (!length)
+        return snapshot.query.orderBy(orderBy).get()
+    else if (!firstItem)
+        return snapshot.query.orderBy(orderBy).limitToLast(length).get()
+    else
+        return snapshot.query.orderBy(orderBy).limitToLast(length).startAt(firstItem).get()
+}
+
+export const getDocumentsDataWithId = (querySnapshot) => {
+    let docs = [];
+    querySnapshot.docs.forEach((doc) => {
+        const data = doc.data()
+        // Adds the doc's id to it's own data
+        data.id = doc.id;
+        docs.push(data);
+    })
+    return docs;
+}
+
+// Returns a promise
+export const callFunction = (funcName, data) => {
+    return getFunctions().httpsCallable(funcName)(data)
+}
+
+const createFunctions = (communityId, chatRoomId) => {
+    const result = {}
+    result.functions = communityId
+    return result
+}
+
+// export const useFunctions = () => useReducer(reducer, createFunctions)
+
+// function reducer(state, action) {
+//     console.log(state)
+//     switch (action.type) {
+//         case 'invoke':
+//             console.log("invoke action")
+//             return state
+//         default:
+//             return state
+//     }
+// }

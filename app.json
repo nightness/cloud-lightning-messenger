@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Cloud Lightning Messenger",
+    "slug": "cloud-lightning-messenger",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#eeefff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "requireFullScreen": true,
+      "bundleIdentifier": "com.cloud-lightning.messenger",
+      "googleServicesFile": "./private/GoogleService-Info.plist"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#eeeFFF"
+      },
+      "package": "com.cloud_lightning.messenger",
+      "googleServicesFile": "./private/google-services.json"
+    }
+  }
+}

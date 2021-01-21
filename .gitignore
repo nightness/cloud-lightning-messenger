@@ -1,0 +1,20 @@
+node_modules/
+.expo/
+.vscode/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+private/
+functions/
+*.log
+google-services.json
+GoogleService-Info.plist
+
+
+# macOS
+.DS_Store
