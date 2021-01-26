@@ -21,22 +21,15 @@ import { FirebaseFlatList } from './firebase/FirebaseFlatList'
 import Message from './messenger/Message'
 import faker from 'faker'
 
-const Playground = () => {
+// Playground
+const Playground = ({ navigation }) => {
     return (
         <Screen title='Playground' hasLogout={true}>
-            <FirebaseFlatList
-                autoScrollToEnd={true}
-                documentPath='/groups/BF4w762Mt5nxy7MgIIbI'
-                collectionPath='/groups/BF4w762Mt5nxy7MgIIbI/messages'
-                orderBy='postedAt'
-                renderItem={({ item }) => <Message item={item} />}
-                onStartReachedThreshold={0.15}
-            />
+
         </Screen>
     )
 }
 
-// Playground
 const Stack = createStackNavigator()
 export default ({ navigation }) => {
     const theme = ''

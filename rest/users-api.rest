@@ -1,0 +1,50 @@
+###
+### https://us-central1-cloud-lightning.cloudfunctions.net/users
+###
+
+### WATCH ON JWT https://youtu.be/7Q17ubqLfaM?t=210
+### https://youtu.be/mbsmsi7l3r4?t=590
+
+
+### Watch first!
+### https://www.youtube.com/watch?v=mbsmsi7l3r4&t=803s
+
+
+### Add User --- DEEP DIVE HOW FIREBASE HANDLES THESE custom auth tokens
+###              https://youtu.be/WtYzHTXHBp0?t=141
+POST https://us-central1-cloud-lightning.cloudfunctions.net/users HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.NGNjZWMzMWI3NWUzM2I3NzYzYzgwMzUzNmYzZWQyNDhmMzJmMmM2NThjNTI5MmE2ODEwODAyYTBmYjY5Njg4MGY1MGYyOTAzYTM0ZmI2YmIyM2FlZjkzODJkYjM1OTA2ODVjNTg4NmMyNTVhZDcxMTViNWU0MzY2NmVhODRmNmY.qXMT0RhKPjSXHPy7p_j1X9p0KPIhxLuJcOXCiremIMM
+content-type: application/json
+
+{
+    "displayName": "",
+    "districtId": "1234",
+    "claims": {
+        "dispatcher": true
+    }
+}
+
+### Get all users
+GET https://us-central1-cloud-lightning.cloudfunctions.net/users HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.NGNjZWMzMWI3NWUzM2I3NzYzYzgwMzUzNmYzZWQyNDhmMzJmMmM2NThjNTI5MmE2ODEwODAyYTBmYjY5Njg4MGY1MGYyOTAzYTM0ZmI2YmIyM2FlZjkzODJkYjM1OTA2ODVjNTg4NmMyNTVhZDcxMTViNWU0MzY2NmVhODRmNmY.qXMT0RhKPjSXHPy7p_j1X9p0KPIhxLuJcOXCiremIMM
+
+### Get a specific user
+GET https://us-central1-cloud-lightning.cloudfunctions.net/users/igNrFajlbB0XHVEmbzyu HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.NGNjZWMzMWI3NWUzM2I3NzYzYzgwMzUzNmYzZWQyNDhmMzJmMmM2NThjNTI5MmE2ODEwODAyYTBmYjY5Njg4MGY1MGYyOTAzYTM0ZmI2YmIyM2FlZjkzODJkYjM1OTA2ODVjNTg4NmMyNTVhZDcxMTViNWU0MzY2NmVhODRmNmY.qXMT0RhKPjSXHPy7p_j1X9p0KPIhxLuJcOXCiremIMM
+
+### Modify an existing user
+PUT https://us-central1-cloud-lightning.cloudfunctions.net/users/BwAZPRJWpqc2GrMZ9AVD HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.NGNjZWMzMWI3NWUzM2I3NzYzYzgwMzUzNmYzZWQyNDhmMzJmMmM2NThjNTI5MmE2ODEwODAyYTBmYjY5Njg4MGY1MGYyOTAzYTM0ZmI2YmIyM2FlZjkzODJkYjM1OTA2ODVjNTg4NmMyNTVhZDcxMTViNWU0MzY2NmVhODRmNmY.qXMT0RhKPjSXHPy7p_j1X9p0KPIhxLuJcOXCiremIMM
+content-type: application/json
+
+{
+    "districtId": "8888",
+    "claims": {
+        "driver2": true
+    }
+}
+
+### Delete an existing user
+DELETE https://us-central1-cloud-lightning.cloudfunctions.net/users/BwAZPRJWpqc2GrMZ9AVD HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.NGNjZWMzMWI3NWUzM2I3NzYzYzgwMzUzNmYzZWQyNDhmMzJmMmM2NThjNTI5MmE2ODEwODAyYTBmYjY5Njg4MGY1MGYyOTAzYTM0ZmI2YmIyM2FlZjkzODJkYjM1OTA2ODVjNTg4NmMyNTVhZDcxMTViNWU0MzY2NmVhODRmNmY.qXMT0RhKPjSXHPy7p_j1X9p0KPIhxLuJcOXCiremIMM
+

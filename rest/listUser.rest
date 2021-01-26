@@ -1,1 +1,0 @@
-GET https://us-central1-cloud-lightning.cloudfunctions.net/users/qdL6Wxd1OBc7tcOwsyiW?key=abc123 HTTP/1.1

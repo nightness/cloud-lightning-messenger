@@ -1,4 +1,5 @@
-import React, { createContext, useState, useReducer, useContext } from 'react'
+import React, { createContext, useState, useReducer } from 'react'
+import { ActivityIndicator } from 'react-native'
 import { getCollection, callFunction, useAuthState } from '../firebase/Firebase'
 
 export const MessengerContext = createContext()
@@ -7,6 +8,12 @@ export const MessengerContext = createContext()
 export const MessengerProvider = ({ children }) => {
     const [currentUser, loadingUser, errorUser] = useAuthState()
 
+    if (loadingUser)
+        return <ActivityIndicator />
+    else if (errorUser)
+        return <DisplayError
+            permissionDenied={(errorUser === 'permission-denied')}
+        />
     return (
         <MessengerContext.Provider value={{ currentUser, loadingUser, errorUser }}>
             {children}
@@ -14,23 +21,17 @@ export const MessengerProvider = ({ children }) => {
     )
 }
 
-export const createMessage = (groupId, messageText) =>
+export const createMessage = (messageText) =>
     callFunction('addMessage', {
-        group: groupId,
         message: messageText,
     })
 
-export const getMessageGroupDetails = groupContainerId =>
-    getCollection("/messenger/")
-        .doc(groupContainerId)
-        .get()
 
-
-const createMessenger = (groupContainerId, viewLengthMinimum) => {
+const createMessenger = (messengerContainerId, viewLengthMinimum) => {
     const result = {}
-    result.groupContainerId = groupContainerId
-    result.messageCollectionPath = "/messenger/" + groupContainerId + "/messages/"
-    result.groupDocumentPath = "/messenger/" + groupContainerId
+    result.messengerContainerId = messengerContainerId
+    result.messageCollectionPath = "/messenger/" + messengerContainerId + "/messages/"
+    result.messengerDocumentPath = "/messenger/" + messengerContainerId
     result.viewLength = viewLengthMinimum
     return result
 }

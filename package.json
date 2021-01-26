@@ -22,6 +22,7 @@
     "expo-status-bar": "~1.0.2",
     "faker": "^5.1.0",
     "firebase": "7.9.0",
+    "firebase-functions": "^3.13.1",
     "formik": "^2.2.6",
     "google-libphonenumber": "^3.2.15",
     "i18next": "^19.8.3",

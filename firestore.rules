@@ -9,9 +9,24 @@ service cloud.firestore {
     match /groups/{groupId}/messages/{messageId} {
     	allow read: if exists(/databases/$(database)/documents/groups/$(groupId)/members/$(request.auth.uid))
     }
+
+  	// Message Container Rules - The groups document should contain a 'members' array, and a members
+  	// collection containing documents matching member uid's. These need to remain in sync.
+  	match /messenger/{messengerId} {
+			allow read: if (request.auth.uid == messengerId);
+    }
+    match /messenger/{messengerId}/messages/{messageId} {
+			allow read: if (request.auth.uid == messengerId);
+    }    
+
+
     // User Rules
     match /users/{userId} {
       allow read: if request.auth != null
+    }
+    // Auth token
+    match /users/{userId}/auth  {
+      allow read,write: if false
     }
   }
 }

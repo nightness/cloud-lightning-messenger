@@ -1,0 +1,7 @@
+## Get a JWT to authenticate with the 'users' REST API
+POST https://us-central1-cloud-lightning.cloudfunctions.net/auth HTTP/1.1
+content-type: application/json
+
+{
+    "key": "4ccec31b75e33b7763c803536f3ed248f32f2c656ac20d3f90802a0fb696880f50f2903a34fb6bb23aef9382db3590685c5886c255ad7115b5e43666ea84f6f"
+}

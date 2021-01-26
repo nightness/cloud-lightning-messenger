@@ -13,7 +13,7 @@ const Messenger = ({ navigation }) => {
     const sendMessage = () => {
         const text = messageText
         setMessageText('')
-        createMessage(messenger.groupContainerId, text)
+        createMessage(text)
             .then(results => {
                 const data = results.data;
                 if (typeof (data.type) === 'string') {
