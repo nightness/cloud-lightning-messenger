@@ -1,3 +1,4 @@
+import { auth } from 'firebase'
 import React, { createContext, useState, useEffect, useRef } from 'react'
 import { useAuthState, getCurrentUser, getCollection } from '../firebase/Firebase'
 
@@ -64,8 +65,12 @@ export const useProfiler = () => {
     }
 
     useEffect(() => {
-        if (currentUser)
+        if (currentUser) {
             getUserName(currentUser.uid)
+            // Debug [REMOVE]
+            currentUser.getIdToken()
+                .then(token => console.log(token))
+        }
     }, [currentUser]);
 
     return {

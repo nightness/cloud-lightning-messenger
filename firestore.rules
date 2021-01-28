@@ -1,8 +1,7 @@
 rules_version = '2'
 service cloud.firestore {
   match /databases/{database}/documents {
-  	// Group Rules - The groups document should contain a 'members' array, and a members
-  	// collection containing documents matching member uid's. These need to remain in sync.
+  	// Group Rules 
   	match /groups/{groupId} {
 			allow read: if exists(/databases/$(database)/documents/groups/$(groupId)/members/$(request.auth.uid))
     }
@@ -10,15 +9,15 @@ service cloud.firestore {
     	allow read: if exists(/databases/$(database)/documents/groups/$(groupId)/members/$(request.auth.uid))
     }
 
-  	// Message Container Rules - The groups document should contain a 'members' array, and a members
-  	// collection containing documents matching member uid's. These need to remain in sync.
+  	// Message Container Rules 
   	match /messenger/{messengerId} {
+      allow read: if (request.auth.token.dispatcher == true);
 			allow read: if (request.auth.uid == messengerId);
     }
     match /messenger/{messengerId}/messages/{messageId} {
+    	allow read: if (request.auth.token.dispatcher == true);
 			allow read: if (request.auth.uid == messengerId);
     }    
-
 
     // User Rules
     match /users/{userId} {
