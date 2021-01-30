@@ -21,7 +21,7 @@ import {
     FirestoreDocumentView,
     InfiniteScroll,
 } from './common/Components'
-import { getAuth, callFunction, GoogleAuthProvider, useAuthState } from './firebase/Firebase'
+import { getAuth, callFirebaseFunction, GoogleAuthProvider, useAuthState } from './firebase/Firebase'
 import { useStateChanged, useStateDifferences } from './shared/Hooks'
 import { FirebaseFlatList } from './firebase/FirebaseFlatList'
 import Message from './messenger/Message'
@@ -29,7 +29,8 @@ import "./shared/FormValidation"
 
 // Playground
 const Playground = ({ navigation }) => {
-    const [currentUser, loading, error] = useAuthState();
+    const [currentUser] = useAuthState(); /* Loading and error are not needed since this
+                                             was already loaded in the default export */
     const [claimName, setClaimName] = useState('')
     const [userToken, setUserToken] = useState()
 
@@ -45,66 +46,50 @@ const Playground = ({ navigation }) => {
             console.log("Notice: User token loaded.")
     }, [userToken])
 
-
-    const addClaim = async claimName => {
-        callFunction('addClaim', {
+    const addClaim = async () => {
+        callFirebaseFunction('modifyClaim', {
             userId: currentUser.uid,
             authToken: userToken,
-            role: claimName,
+            claim: claimName,
+            value: true,
         }).then(result => console.log(result))
     }
 
-    const removeClaim = async claimName => {
-        callFunction('removeClaim', {
+    const removeClaim = async () => {
+        callFirebaseFunction('modifyClaim', {
             userId: currentUser.uid,
             authToken: userToken,
-            role: claimName,
+            claim: claimName,
         }).then(result => console.log(result))
     }
 
-    if (loading) {
-        return (
-            <Screen title='Playground'>
-                <ActivityIndicator />
-            </Screen>
-        )
-    }
-    else if (error) {
-        return (
-            <Screen title='Playground'>
-                <DisplayError errorMessage={"Firebase Error: " + firebaseError.message} />
-            </Screen>
-        )
-    }
-    else {
-        return (
-            <Screen navigation={navigation} title='Playground' hasLogout={true}>
-                <View>
-                    <TextInput
-                        onChangeText={text => setClaimName(text)}
-                        placeHolder={'claim'}
-                    />
-                    <Button
-                        title='Add Claim'
-                        onPress={() => addClaim(claimName)}
-                    />
-                    <Button
-                        title='Remove Claim'
-                        onPress={() => removeClaim(claimName)}
-                    />
-                    <Button
-                        title='Console Log Claims'
-                        onPress={() => {
-                            currentUser.getIdTokenResult()
-                                .then(idTokenResult => {
-                                    console.log(idTokenResult.claims)
-                                })
-                        }}
-                    />
-                </View>
-            </Screen>
-        )
-    }
+    return (
+        <Screen navigation={navigation} title='Playground' hasLogout={true}>
+            <View>
+                <TextInput
+                    onChangeText={text => setClaimName(text)}
+                    placeHolder={'claim'}
+                />
+                <Button
+                    title='Add Claim'
+                    onPress={addClaim}
+                />
+                <Button
+                    title='Remove Claim'
+                    onPress={removeClaim}
+                />
+                <Button
+                    title='Console Log Claims'
+                    onPress={() => {
+                        currentUser.getIdTokenResult()
+                            .then(idTokenResult => {
+                                console.log(idTokenResult.claims)
+                            })
+                    }}
+                />
+            </View>
+        </Screen>
+    )
 }
 
 const Stack = createStackNavigator()

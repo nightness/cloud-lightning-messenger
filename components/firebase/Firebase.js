@@ -131,7 +131,7 @@ export const getDocumentsDataWithId = (querySnapshot) => {
 }
 
 // Returns a promise
-export const callFunction = (funcName, data) => {
+export const callFirebaseFunction = (funcName, data) => {
     return getFunctions().httpsCallable(funcName)(data)
 }
 

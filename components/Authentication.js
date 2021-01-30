@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { View, Image } from 'react-native'
 import { Container, Text, TextInput, Button, ScrollView, Modal, ActivityIndicator, DisplayError } from './common/Components'
-import { getAuth, callFunction, GoogleAuthProvider } from './firebase/Firebase'
+import { getAuth, callFirebaseFunction, GoogleAuthProvider } from './firebase/Firebase'
 import { Styles, Themes } from './shared/Constants'
 import { GlobalContext } from './shared/GlobalContext'
 

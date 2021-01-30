@@ -1,6 +1,6 @@
 import React, { createContext, useState, useReducer } from 'react'
 import { ActivityIndicator } from 'react-native'
-import { getCollection, callFunction, useAuthState } from '../firebase/Firebase'
+import { getCollection, callFirebaseFunction, useAuthState } from '../firebase/Firebase'
 
 export const MessengerContext = createContext()
 
@@ -22,7 +22,7 @@ export const MessengerProvider = ({ children }) => {
 }
 
 export const createMessage = (messageText) =>
-    callFunction('addMessage', {
+    callFirebaseFunction('addMessage', {
         message: messageText,
     })
 
