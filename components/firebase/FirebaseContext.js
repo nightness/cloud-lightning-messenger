@@ -1,6 +1,6 @@
-import React, { createContext, useState, useReducer, useEffect } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
 import { ActivityIndicator } from 'react-native'
-import { getCollection, callFirebaseFunction, useAuthState } from './Firebase'
+import { useAuthState } from './Firebase'
 
 export const FirebaseContext = createContext()
 
@@ -12,16 +12,17 @@ export const FirebaseProvider = ({ children }) => {
     const [errorClaims, setClaimsError] = useState()
 
     useEffect(() => {
-        currentUser.getIdTokenResult()
-            .then(idTokenResult => {
-                if (idTokenResult.claims !== undefined)
-                    setClaims(idTokenResult.claims)
-                setLoadingClaims(false)
-            })
-            .catch((error) => {
-                setClaimsError(error)
-            });
-    }, [])
+        if (currentUser)
+            currentUser.getIdTokenResult()
+                .then(idTokenResult => {
+                    if (idTokenResult.claims !== undefined)
+                        setClaims(idTokenResult.claims)
+                    setLoadingClaims(false)
+                })
+                .catch((error) => {
+                    setClaimsError(error)
+                });
+    }, [currentUser])
 
     const isLoading = loadingUser || loadingClaims
     const error = errorUser || errorClaims
