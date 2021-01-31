@@ -1,14 +1,56 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useReducer } from 'react'
 import { View } from 'react-native'
 import { Screen, Container, Text, TextInput, Button, ActivityIndicator, DisplayError, FirestoreCollectionView } from '../common/Components'
 import { Styles } from '../shared/Constants'
-import { MessengerProvider, MessengerContext, useMessenger, createMessage } from './MessengerContext'
+import { FirebaseProvider, FirebaseContext, callFirebaseFunction } from '../firebase/FirebaseContext'
 import Message from './Message'
 
+export const createMessage = (messageText) =>
+    callFirebaseFunction('addMessage', {
+        message: messageText,
+    })
+
+
+const createMessenger = (messengerContainerId, viewLengthMinimum) => {
+    const result = {}
+    result.messengerContainerId = messengerContainerId
+    result.messageCollectionPath = "/messenger/" + messengerContainerId + "/messages/"
+    result.messengerDocumentPath = "/messenger/" + messengerContainerId
+    result.viewLength = viewLengthMinimum
+    return result
+}
+
+export const useMessenger = (groupContainerId, viewLengthMinimum) =>
+    useReducer(reducer, createMessenger(groupContainerId, viewLengthMinimum))
+
+function reducer(state, action) {
+    switch (action.type) {
+        case "setView": {
+            const newState = { ...state }
+            newState.viewLength = action.length ? action.length : newState.viewLength
+            newState.viewFirst = action.first ? action.first : newState.viewFirst
+            newState.viewLast = action.last ? action.last : newState.viewLast
+            return newState
+        }
+        case 'incrementViewLength': {
+            const newState = { ...state }
+            newState.viewLength = newState.viewLength + (action.amount ? action.amount : 1)
+            console.log(`incrementViewLength: new length = ${newState.viewLength}`)
+            return newState
+        }
+        default:
+            return state
+    }
+}
+
 const Messenger = ({ navigation }) => {
-    const { currentUser } = useContext(MessengerContext)
+    const { currentUser, claims } = useContext(FirebaseContext)
     const [messageText, setMessageText] = useState('')
     const [messenger, messengerDispatch] = useMessenger(currentUser.uid, 25)
+
+    useEffect(() => {
+        console.log(claims)
+    }, [claims])
 
     const sendMessage = () => {
         const text = messageText
@@ -67,6 +109,6 @@ const Messenger = ({ navigation }) => {
 }
 
 export default ({ navigation }) =>
-    <MessengerProvider>
+    <FirebaseProvider>
         <Messenger navigation={navigation} />
-    </MessengerProvider>
+    </FirebaseProvider>

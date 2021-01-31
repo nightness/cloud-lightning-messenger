@@ -50,6 +50,7 @@ const AppStack = () => {
     const [user, firebaseLoading, firebaseError] = useAuthState()
     const { theme, setTheme } = useContext(GlobalContext)
 
+
     if (firebaseLoading) {
         return (
             <ActivityIndicator />
