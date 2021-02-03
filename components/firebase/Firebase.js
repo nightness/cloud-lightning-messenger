@@ -34,15 +34,16 @@ export const getFirestore = () => {
 //             console.log('Firestore Persistence Error: failed-precondition')
 //     })
 
-export const getAuth = () => firebase.auth()
-export const getFunctions = () => firebase.functions()
+export const firebaseAuth = firebase.auth
+export const firebaseFunctions = firebase.functions
+export const firebaseFirestore = firebase.firestore
 
 export const GoogleAuthProvider = firebase.auth.GoogleAuthProvider
 
 export const getCurrentTimeStamp = () => firebase.firestore.FieldValue.serverTimestamp()
-export const getCurrentUser = () => getAuth().currentUser
+export const getCurrentUser = () => firebaseAuth().currentUser
 
-export const useAuthState = () => FirebaseAuth.useAuthState(getAuth())
+export const useAuthState = () => FirebaseAuth.useAuthState(firebaseAuth())
 export const useAuthRest = () => {
     // useReducer
 }
@@ -119,7 +120,7 @@ export const getData = (snapshot, orderBy, length, firstItem) => {
         return snapshot.query.orderBy(orderBy).limitToLast(length).startAt(firstItem).get()
 }
 
-export const getDocumentsDataWithId = (querySnapshot) => {
+export const getDocumentsDataWithId = querySnapshot => {
     let docs = [];
     querySnapshot.docs.forEach((doc) => {
         const data = doc.data()
@@ -130,9 +131,14 @@ export const getDocumentsDataWithId = (querySnapshot) => {
     return docs;
 }
 
+export const collectionContains = async (collection, docId) => {
+    const firestore = firebaseFirestore()
+    return await firestore.collection(collection).doc("ABC").get()
+}
+
 // Returns a promise
 export const callFirebaseFunction = (funcName, data) => {
-    return getFunctions().httpsCallable(funcName)(data)
+    return firebaseFunctions().httpsCallable(funcName)(data)
 }
 
 const createFunctions = (communityId, chatRoomId) => {

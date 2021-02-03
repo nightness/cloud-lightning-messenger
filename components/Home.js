@@ -5,6 +5,7 @@ import { ProfileContext } from './shared/ProfileContext'
 import { Themes } from './shared/Constants'
 
 export default ({ navigation }) => {
+    const [isLoadingProfile, setIsLoadingProfile] = useState(true)
     const [name, setName] = useState()
     const profileCache = useContext(ProfileContext)
     const { screenOrientation } = useContext(GlobalContext)
@@ -13,15 +14,18 @@ export default ({ navigation }) => {
         console.log(`ScreenOrientation: ${screenOrientation}`)
     }, [screenOrientation]);
 
-    // BUG: And this doesn't fix it, when logging in with a google account, 
-    // Get rid of this profile cache idea!!!
     useEffect(() => {
-        if (profileCache)
-            setName(profileCache.getUserName())
+        if (!profileCache) return
+        profileCache.hasProfile().then(hasProfile => {
+            if (hasProfile) {
+                setIsLoadingProfile(false)
+                setName(profileCache.getUserName())
+            }
+        })
     }, [profileCache])
 
     let children = <ActivityIndicator />
-    if (!profileCache.isFetching) {
+    if (!profileCache.isFetching && !isLoadingProfile) {
         children =
             <Text>Welcome {name}</Text>
     }

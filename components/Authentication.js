@@ -1,13 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { View, Image } from 'react-native'
 import { Container, Text, TextInput, Button, ScrollView, Modal, ActivityIndicator, DisplayError } from './common/Components'
-import { getAuth, GoogleAuthProvider } from './firebase/Firebase'
+import { firebaseAuth, GoogleAuthProvider } from './firebase/Firebase'
 import { Styles, Themes } from './shared/Constants'
 import { GlobalContext } from './shared/GlobalContext'
 
 export const LogoutModal = ({ navigation, shown, dismiss }) => {
     const firebaseLogout = () => {
-        getAuth().signOut().then(() => {
+        firebaseAuth().signOut().then(() => {
             navigation.replace('Authentication')
         }).catch(error => {
 
@@ -52,7 +52,7 @@ export const Authentication = ({ navigation, customToken }) => {
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
     const { theme, setTheme } = useContext(GlobalContext)
-    const auth = getAuth()
+    const auth = firebaseAuth()
 
     useEffect(() => {
         if (customToken) {
