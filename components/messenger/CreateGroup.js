@@ -11,7 +11,7 @@ export default function CreateGroup(props) {
             onBackdropPress={setIsVisible(!isVisible)}
         >
             <Button
-                title='Add Memebers'
+                title='Add Members'
             />
             <Button
                 title='Create Group'

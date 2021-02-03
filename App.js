@@ -11,11 +11,13 @@ import Playground from './components/Playground'
 import Authentication from './components/Authentication'
 import { ActivityIndicator, DisplayError } from './components/common/Components'
 import { useAuthState } from './components/firebase/Firebase'
+import { FirebaseProvider } from './components/firebase/FirebaseContext'
 import { GlobalContext, GlobalProvider } from './components/shared/GlobalContext'
 import { ProfileContext, ProfileProvider } from './components/shared/ProfileContext'
 import { Defaults } from './components/shared/Constants'
 import Home from './components/Home'
 import Messenger from './components/messenger/Messenger'
+import DispatchMessenger from './components/messenger/DispatchMessenger'
 
 const getFonts = () => Fonts.loadAsync({
     'serif-pro-black': require('./assets/fonts/SourceSerifPro/SourceSerifPro-Black.ttf'),
@@ -33,12 +35,14 @@ const DrawerNavigator = () => {
                 <Drawer.Screen
                     name="Home"
                     component={Home}
-                    options={{ title: 'My Home Screen' }}
                 />
                 <Drawer.Screen
                     name="Messenger"
                     component={Messenger}
-                    options={{ title: 'Messenger' }}
+                />
+                <Drawer.Screen
+                    name="Dispatch Messenger"
+                    component={DispatchMessenger}
                 />
             </Drawer.Navigator>
         </ProfileProvider>
@@ -104,8 +108,10 @@ export default function App() {
     else {
         return (
             <GlobalProvider>
-                { (Defaults.playgroundMode ? <Playground /> : <AppStack />)}
-                <ModalPortal />
+                <FirebaseProvider>
+                    {(Defaults.playgroundMode ? <Playground /> : <AppStack />)}
+                    <ModalPortal />
+                </FirebaseProvider>
             </GlobalProvider>
         )
     }

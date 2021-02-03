@@ -21,30 +21,22 @@ import {
     FirestoreDocumentView,
     InfiniteScroll,
 } from './common/Components'
-import { getAuth, callFirebaseFunction, GoogleAuthProvider, useAuthState } from './firebase/Firebase'
-import { useStateChanged, useStateDifferences } from './shared/Hooks'
-import { FirebaseFlatList } from './firebase/FirebaseFlatList'
-import Message from './messenger/Message'
+import { callFirebaseFunction, useAuthState } from './firebase/Firebase'
+import { FirebaseContext } from './firebase/FirebaseContext'
 import "./shared/FormValidation"
+
+
+
+const fetchStuff = async () => true
+const fetchResult = (async () => {
+    try {
+        return await fetchStuff()
+    } catch (error) { }
+})()
 
 // Playground
 const Playground = ({ navigation }) => {
-    const [currentUser] = useAuthState(); /* Loading and error are not needed since this
-                                             was already loaded in the default export */
-    const [claimName, setClaimName] = useState('')
-    const [userToken, setUserToken] = useState()
-
-    useEffect(() => {
-        currentUser.getIdToken(true)
-            .then(token => setUserToken(token))
-            .catch(err => console.error(err))
-
-    }, [])
-
-    useEffect(() => {
-        if (userToken)
-            console.log("Notice: User token loaded.")
-    }, [userToken])
+    const { currentUser, claims } = useContext(FirebaseContext)
 
     const addClaim = async () => {
         callFirebaseFunction('modifyClaim', {
@@ -80,12 +72,7 @@ const Playground = ({ navigation }) => {
                 />
                 <Button
                     title='Console Log Claims'
-                    onPress={() => {
-                        currentUser.getIdTokenResult()
-                            .then(idTokenResult => {
-                                console.log(idTokenResult.claims)
-                            })
-                    }}
+                    onPress={() => console.log(claims)}
                 />
             </View>
         </Screen>
@@ -130,4 +117,3 @@ export default ({ navigation }) => {
         )
     }
 }
-
