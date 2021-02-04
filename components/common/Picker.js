@@ -3,10 +3,6 @@ import { ScrollView, Platform } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Themes, Styles } from '../shared/Constants'
 import { Picker, PickerIOS } from '@react-native-picker/picker'
-//import { Picker } from 'react-native'
-//import DropDownPicker from 'react-native-dropdown-picker'
-//import { SimplePicker } from 'react-native-simple-picker'
-import SimplePicker from 'react-native-smart-picker'
 import ToggleBox from 'react-native-togglebox'
 
 export default ({ style, data = [], selectedValue, ...restProps }) => {
