@@ -72,20 +72,18 @@ export default ({ navigation }) => {
                     renderItem={({ item }) => <Message item={item} />}
                 />
                 <View style={Styles.messenger.viewTextInput}>
-                    <View style={Styles.messenger.commentInput}>
-                        <TextInput
-                            value={messageText}
-                            style={Styles.messenger.textInput}
-                            onChangeText={msg => setMessageText(msg)}
-                            onKeyPress={onMessageKeyPress}
-                        />
-                        <Button
-                            title='Send'
-                            style={Styles.messenger.sendButton}
-                            disabled={messageText.length < 1}
-                            onPress={sendMessage}
-                        />
-                    </View>
+                    <TextInput
+                        value={messageText}
+                        style={Styles.messenger.textInput}
+                        onChangeText={msg => setMessageText(msg)}
+                        onKeyPress={onMessageKeyPress}
+                    />
+                    <Button
+                        title='Send'
+                        style={Styles.messenger.sendButton}
+                        disabled={messageText.length < 1}
+                        onPress={sendMessage}
+                    />
                 </View>
             </Container>
         </Screen>

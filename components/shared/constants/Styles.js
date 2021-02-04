@@ -95,19 +95,23 @@ export const textInput = StyleSheet.create({
 })
 
 export const picker = StyleSheet.create({
-    container: {
+    scrollView: {
 
     },
-    togglebox: {
+    toggleBox: {
         backgroundColor: '#ddd',
         borderColor: 'rgb(178,181,189)',
         borderBottomWidth: 1,
     },
     picker: {
         margin: 5,
-        backgroundColor: '#999',
+        backgroundColor: '#fff',
         paddingHorizontal: 2
     },
+    item: {
+        //backgroundColor: '#fff'
+        //color: '#ddd'
+    }
 })
 
 
@@ -137,10 +141,9 @@ export const messenger = StyleSheet.create({
         borderColor: "#48a",
         width: "100%"
     },
-    commentInput: {
-        flexDirection: 'row',
-    },
     viewTextInput: {
+        flexDirection: 'row',
+        //alignContent: 'stretch',
         width: "100%",
         borderWidth: 2,
         borderRadius: 5,
@@ -150,13 +153,14 @@ export const messenger = StyleSheet.create({
 
     },
     textInput: {
-        width: "100%",
+        flex: 5,
         height: 35,
-        marginHorizontal: 10,
+        marginLeft: 5,
         marginVertical: 5,
     },
     sendButton: {
-        marginHorizontal: 10,
+        flex: 1,
+        marginRight: 5,
         marginVertical: 5,
         height: 35,
     }

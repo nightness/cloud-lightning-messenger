@@ -15,38 +15,35 @@ export default ({ style, data = [], selectedValue, ...restProps }) => {
     //const properTheme = enabled ? Themes.picker[theme] : Themes.pickerDisabled[theme]
     const selectedData = data ? data.find(data => data.value === selectedItem) : undefined
 
+    const PickerCommon = () => <Picker
+        style={[Styles.picker.picker, Themes.picker[theme], style]}
+        {...restProps}
+        selectedValue={selectedItem}
+        onValueChange={setSelectedItem}
+    >
+        {
+            data.map(item =>
+                <Picker.Item
+                    style={Styles.picker.item}
+                    label={item.label}
+                    value={item.value}
+                    key={item.value}
+                />)
+        }
+    </Picker>
+
     if (Platform.OS === 'ios') {
         return (
-            <ScrollView style={Styles.picker.container} bounces={false}>
-                <ToggleBox label={selectedData.label} style={Styles.picker.togglebox}>
-                    <Picker
-                        style={[Styles.picker.picker, Themes.picker[theme], style]}
-                        {...restProps}
-                        selectedValue={selectedItem}
-                        label='Set you favorite country'
-                        onValueChange={setSelectedItem}
-                    >
-                        {
-                            data.map(item => <Picker.Item label={item.label} value={item.value} key={item.value} />)
-                        }
-                    </Picker>
+            <ScrollView style={Styles.picker.scrollView} bounces={false}>
+                <ToggleBox label={selectedData.label} style={Styles.picker.toggleBox}>
+                    <PickerCommon />
                 </ToggleBox>
             </ScrollView>
         )
     }
     return (
         <ScrollView>
-            <Picker
-                style={[Styles.picker.picker, Themes.picker[theme], style]}
-                {...restProps}
-                selectedValue={selectedItem}
-                label='Set you favorite country'
-                onValueChange={setSelectedItem}
-            >
-                {
-                    data.map(item => <Picker.Item label={item.label} value={item.value} key={item.value} />)
-                }
-            </Picker>
+            <PickerCommon />
         </ScrollView>
     )
 }
