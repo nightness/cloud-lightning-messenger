@@ -16,7 +16,6 @@ export default ({ navigation }) => {
     useEffect(() => {
         if (!profileCache) return
         const username = profileCache.getUserName()
-        console.log(username)
         if (username) {
             setName(username)
         }

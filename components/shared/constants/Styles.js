@@ -95,8 +95,17 @@ export const textInput = StyleSheet.create({
 })
 
 export const picker = StyleSheet.create({
+    container: {
+
+    },
+    togglebox: {
+        backgroundColor: '#ddd',
+        borderColor: 'rgb(178,181,189)',
+        borderBottomWidth: 1,
+    },
     picker: {
         margin: 5,
+        backgroundColor: '#999',
         paddingHorizontal: 2
     },
 })

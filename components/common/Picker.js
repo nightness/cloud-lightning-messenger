@@ -13,24 +13,25 @@ export default ({ style, data = [], selectedValue, ...restProps }) => {
     const { theme, setTheme } = useContext(GlobalContext)
     const [selectedItem, setSelectedItem] = useState(selectedValue)
     //const properTheme = enabled ? Themes.picker[theme] : Themes.pickerDisabled[theme]
-
-    console.log(`Selected Item = ${selectedItem}`)
+    const selectedData = data ? data.find(data => data.value === selectedItem) : undefined
 
     if (Platform.OS === 'ios') {
         return (
-            <ToggleBox label='test' value='testing' style={{ Height: 40 }}>
-                <Picker
-                    style={[Styles.picker.picker, Themes.picker[theme], style]}
-                    {...restProps}
-                    selectedValue={selectedItem}
-                    label='Set you favorite country'
-                    onValueChange={setSelectedItem}
-                >
-                    {
-                        data.map(item => <Picker.Item label={item.label} value={item.value} key={item.value} />)
-                    }
-                </Picker>
-            </ToggleBox>
+            <ScrollView style={Styles.picker.container} bounces={false}>
+                <ToggleBox label={selectedData.label} style={Styles.picker.togglebox}>
+                    <Picker
+                        style={[Styles.picker.picker, Themes.picker[theme], style]}
+                        {...restProps}
+                        selectedValue={selectedItem}
+                        label='Set you favorite country'
+                        onValueChange={setSelectedItem}
+                    >
+                        {
+                            data.map(item => <Picker.Item label={item.label} value={item.value} key={item.value} />)
+                        }
+                    </Picker>
+                </ToggleBox>
+            </ScrollView>
         )
     }
     return (

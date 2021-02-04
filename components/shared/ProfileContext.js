@@ -80,7 +80,6 @@ export const useProfiler = () => {
 
     useEffect(() => {
         const username = getUserName()
-        console.log(username)
         if (username) {
             setIsLoadingProfile(false)
         }
