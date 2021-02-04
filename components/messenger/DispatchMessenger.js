@@ -42,11 +42,8 @@ export default ({ navigation }) => {
         sendMessage()
     }
 
-    const options = ['Option1', 'Option2', 'Option3'];
-
-    // Labels is optional
-    const labels = ['Banana', 'Apple', 'Pear'];
-
+    // Get all drivers in a selected zone
+    // Use label for displayName and set value to the user's id (same as message container id)
     const data = [
         { label: 'Austria', value: 'A' },
         { label: 'Czechia', value: 'CZ' },
@@ -59,6 +56,10 @@ export default ({ navigation }) => {
         <Screen navigation={navigation} title={"Dispatch Messenger"} hasBurger={true} hasLogout={true}>
             <Container>
                 <View style={Styles.messenger.viewTextInput}>
+                    <Picker
+                        data={data}
+                        selectedValue={'US'}
+                    />
                     <Picker
                         data={data}
                         selectedValue={'US'}
