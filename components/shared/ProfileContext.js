@@ -6,6 +6,7 @@ export const ProfileContext = createContext()
 
 export const useProfiler = () => {
     const [snapshot, loadingCollection, errorCollection] = useCollection("users")
+    const [isLoadingProfile, setIsLoadingProfile] = useState(true)
     const [cachedUsers, setCachedUsers] = useState({})
     const [currentUser, loading, error] = useAuthState();
     const [isFetching, setIsFetching] = useState(true)
@@ -18,7 +19,8 @@ export const useProfiler = () => {
             const currentUser = getCurrentUser()
             userId = currentUser ? currentUser.uid : null
         }
-        if (!userId) return false;
+        if (!userId) return false
+        if (cachedUsers[userId]) return true
         const docRef = await getCollection("users").doc(userId).get()
         return docRef.exists
     }
@@ -48,7 +50,8 @@ export const useProfiler = () => {
         while (lookupQueueRef.current.length > 0) {
             if (!newCache) {
                 newCache = { ...cachedUsers }
-                setIsFetching(true)
+                if (!forced)
+                    setIsFetching(true)
             }
             fetchUidRef.current = lookupQueueRef.current.shift()
 
@@ -76,26 +79,34 @@ export const useProfiler = () => {
     }
 
     useEffect(() => {
+        const username = getUserName()
+        console.log(username)
+        if (username) {
+            setIsLoadingProfile(false)
+        }
+        else {
+            hasProfile().then(hasProfile => {
+                if (hasProfile) {
+                    setIsLoadingProfile(false)
+                }
+            })
+        }
+    }, [cachedUsers])
+
+    useEffect(() => {
         if (!snapshot) return
+
         snapshot.docChanges().forEach(documentChange => {
-            fetchUser(documentChange.doc.id, true)
+            if (cachedUsers[documentChange.doc.id])
+                fetchUser(documentChange.doc.id, true)
             //console.log(documentChange.doc.id)
         })
     }, [snapshot])
 
-    useEffect(() => {
-        if (currentUser) {
-            getUserName(currentUser.uid)
-            // Debug [REMOVE]
-            currentUser.getIdToken()
-                .then(token => console.log(token))
-        }
-    }, [currentUser]);
-
     return {
         cachedUsers,
         fetchUser,
-        isFetching: isFetching || loading,
+        isFetching: isFetching || loading || isLoadingProfile,
         getUserName,
         hasProfile,
         error

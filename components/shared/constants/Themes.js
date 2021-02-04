@@ -101,6 +101,28 @@ export const buttonDisabled = {
     }
 }
 
+export const picker = {
+    Light: {
+        color: "#222",
+        backgroundColor: '#eee',
+    },
+    Dark: {
+        color: "#eee",
+        backgroundColor: '#222',
+    }
+}
+
+export const pickerDisabled = {
+    Light: {
+        color: "#444",
+        backgroundColor: '#aaa',
+    },
+    Dark: {
+        color: "#999",
+        backgroundColor: '#777',
+    }
+}
+
 export const tabNavigator = {
     Light: {
         activeTintColor: '#246',

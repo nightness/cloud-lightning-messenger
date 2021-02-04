@@ -94,6 +94,14 @@ export const textInput = StyleSheet.create({
     },
 })
 
+export const picker = StyleSheet.create({
+    picker: {
+        margin: 5,
+        paddingHorizontal: 2
+    },
+})
+
+
 export const logoutModal = StyleSheet.create({
     text: {
         fontSize: 16,

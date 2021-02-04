@@ -5,7 +5,6 @@ import { ProfileContext } from './shared/ProfileContext'
 import { Themes } from './shared/Constants'
 
 export default ({ navigation }) => {
-    const [isLoadingProfile, setIsLoadingProfile] = useState(true)
     const [name, setName] = useState()
     const profileCache = useContext(ProfileContext)
     const { screenOrientation } = useContext(GlobalContext)
@@ -16,16 +15,15 @@ export default ({ navigation }) => {
 
     useEffect(() => {
         if (!profileCache) return
-        profileCache.hasProfile().then(hasProfile => {
-            if (hasProfile) {
-                setIsLoadingProfile(false)
-                setName(profileCache.getUserName())
-            }
-        })
+        const username = profileCache.getUserName()
+        console.log(username)
+        if (username) {
+            setName(username)
+        }
     }, [profileCache])
 
     let children = <ActivityIndicator />
-    if (!profileCache.isFetching && !isLoadingProfile) {
+    if (!profileCache.isFetching) {
         children =
             <Text>Welcome {name}</Text>
     }

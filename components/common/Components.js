@@ -13,6 +13,7 @@ import ScrollView from './ScrollView'
 import Modal from './Modal'
 import HelperText from './HelperText'
 import IconButton from './IconButton'
+import Picker from './Picker'
 
 export {
     ActivityIndicator,
@@ -29,5 +30,6 @@ export {
     FormField,
     ScrollView,
     HelperText,
-    IconButton
+    IconButton,
+    Picker
 }
