@@ -157,6 +157,11 @@ export const Authentication = ({ navigation, customToken }) => {
                     onTouchOutside={() => {
                         setPasswordResetModalVisible(false)
                     }}
+                    style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        margin: 0
+                    }}
                 >
                     <TextInput
                         placeholder='E-mail'

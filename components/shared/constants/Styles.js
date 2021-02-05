@@ -8,14 +8,14 @@ export const screen = StyleSheet.create({
 
 export const modal = StyleSheet.create({
     content: {
-
+        width: 350
     }
 })
 
 export const auth = StyleSheet.create({
     logo: {
         flex: 1,
-        height: 120,
+        height: 180,
         width: 180,
         alignSelf: "center",
         margin: 30
