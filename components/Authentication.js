@@ -21,12 +21,12 @@ export const LogoutModal = ({ navigation, shown, dismiss }) => {
         >
             <Text style={Styles.logoutModal.text}>
                 Are you sure you want to logout?
-                    </Text>
+            </Text>
             <View style={Styles.logoutModal.buttonView}>
                 <Button
                     style={Styles.logoutModal.button}
                     title='Yes'
-                    onPress={firebaseLogout}
+                    onPress={() => (dismiss && dismiss()) || firebaseLogout()}
                 />
                 <Button
                     style={Styles.logoutModal.button}
@@ -158,18 +158,17 @@ export const Authentication = ({ navigation, customToken }) => {
                         setPasswordResetModalVisible(false)
                     }}
                 >
-                    <View>
-                        <TextInput
-                            placeholder='E-mail'
-                            onChangeText={(text) => setEmail(text)}
-                            value={email}
-                        />
-                        <Button
-                            disabled={submitted || !isValidEMail}
-                            title='Reset Password'
-                            onPress={sendPasswordReset}
-                        />
-                    </View>
+                    <TextInput
+                        placeholder='E-mail'
+                        onChangeText={(text) => setEmail(text)}
+                        value={email}
+                    />
+                    <Button
+                        disabled={submitted || !isValidEMail}
+                        title='Reset Password'
+                        onPress={sendPasswordReset}
+                        style={{ marginTop: 5 }}
+                    />
                 </Modal>
                 <Container>
                     <ScrollView bounces={false}
@@ -226,6 +225,7 @@ export const Authentication = ({ navigation, customToken }) => {
                                 title='Log in'
                                 disabled={submitted || !isValidEMail}
                                 onPress={onLoginPress}
+                                style={{ marginTop: 5 }}
                             />
                             <View style={Styles.auth.footerView}>
                                 <Text fontSize={16}>Don't have an account?</Text>
