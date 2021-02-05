@@ -7,7 +7,10 @@ export default ({ children, style, navigation, ...restProps }) => {
     const { theme } = useContext(GlobalContext)
 
     return (
-        <KeyboardAwareScrollView style={[Styles.views.scrollView, Themes.screen[theme], style]}>
+        <KeyboardAwareScrollView
+            style={[Styles.views.scrollView, Themes.screen[theme], style]}
+            {...restProps}
+        >
             {children}
         </KeyboardAwareScrollView>
     )

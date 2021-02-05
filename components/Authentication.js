@@ -172,7 +172,7 @@ export const Authentication = ({ navigation, customToken }) => {
                     </View>
                 </Modal>
                 <Container>
-                    <ScrollView
+                    <ScrollView bounces={false}
                         style={{ flex: 1, width: '100%' }}
                         keyboardShouldPersistTaps="always">
 
