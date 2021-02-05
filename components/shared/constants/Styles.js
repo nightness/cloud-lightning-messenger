@@ -16,7 +16,7 @@ export const auth = StyleSheet.create({
     logo: {
         flex: 1,
         height: 120,
-        width: 90,
+        width: 180,
         alignSelf: "center",
         margin: 30
     },
@@ -95,9 +95,6 @@ export const textInput = StyleSheet.create({
 })
 
 export const picker = StyleSheet.create({
-    scrollView: {
-
-    },
     toggleBox: {
         backgroundColor: '#ddd',
         borderColor: 'rgb(178,181,189)',
