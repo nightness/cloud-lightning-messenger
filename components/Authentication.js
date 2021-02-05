@@ -19,22 +19,20 @@ export const LogoutModal = ({ navigation, shown, dismiss }) => {
             visible={shown}
             onTouchOutside={() => dismiss && dismiss()}
         >
-            <View style={{ flex: 1 }}>
-                <Text style={Styles.logoutModal.text}>
-                    Are you sure you want to logout?
+            <Text style={Styles.logoutModal.text}>
+                Are you sure you want to logout?
                     </Text>
-                <View style={Styles.logoutModal.buttonView}>
-                    <Button
-                        style={Styles.logoutModal.button}
-                        title='Yes'
-                        onPress={firebaseLogout}
-                    />
-                    <Button
-                        style={Styles.logoutModal.button}
-                        title='No'
-                        onPress={() => dismiss && dismiss()}
-                    />
-                </View>
+            <View style={Styles.logoutModal.buttonView}>
+                <Button
+                    style={Styles.logoutModal.button}
+                    title='Yes'
+                    onPress={firebaseLogout}
+                />
+                <Button
+                    style={Styles.logoutModal.button}
+                    title='No'
+                    onPress={() => dismiss && dismiss()}
+                />
             </View>
         </Modal>
     )
@@ -100,7 +98,7 @@ export const Authentication = ({ navigation, customToken }) => {
 
     const signInWithGoogle = () => {
         const provider = new GoogleAuthProvider()
-        auth.signInWithPopup(provider)
+        auth.signInWithRedirect(provider)
             .then(() => {
                 navigation.replace("Main")
             })
