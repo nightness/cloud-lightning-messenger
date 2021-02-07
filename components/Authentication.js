@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { View, Image } from 'react-native'
+import { View, Image, Platform } from 'react-native'
 import { Container, Text, TextInput, Button, ScrollView, Modal, ActivityIndicator, DisplayError } from './common/Components'
 import { firebaseAuth, GoogleAuthProvider } from './firebase/Firebase'
 import { Styles, Themes } from './shared/Constants'
@@ -246,13 +246,15 @@ export const Authentication = ({ navigation, customToken }) => {
                                     onPress={onPasswordResetPress}
                                 />
                             </View>
-                            <View style={Styles.auth.footerView}>
-                                <Text fontSize={16}>Google Sign-In?</Text>
-                                <Button
-                                    title='Google Sign-In'
-                                    onPress={signInWithGoogle}
-                                />
-                            </View>
+                            {Platform.OS === 'web' && <>
+                                <View style={Styles.auth.footerView}>
+                                    <Text fontSize={16}>Google Sign-In?</Text>
+                                    <Button
+                                        title='Google Sign-In'
+                                        onPress={signInWithGoogle}
+                                    />
+                                </View>
+                            </>}
                         </>}
                     </ScrollView>
                 </Container>
