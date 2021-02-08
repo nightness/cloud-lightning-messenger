@@ -1,6 +1,6 @@
 import React from 'react'
 import { ActivityIndicator, View } from 'react-native'
-import { Styles } from '../shared/Constants'
+import { Styles } from '../constants/Constants'
 
 export default () => {
     return (

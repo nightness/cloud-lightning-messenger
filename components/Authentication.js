@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { View, Image, Platform } from 'react-native'
 import { Container, Text, TextInput, Button, ScrollView, Modal, ActivityIndicator, DisplayError } from './common/Components'
 import { firebaseAuth, GoogleAuthProvider } from './firebase/Firebase'
-import { Styles, Themes } from './shared/Constants'
+import { Styles, Themes } from './constants/Constants'
 import { GlobalContext } from './shared/GlobalContext'
 
 export const LogoutModal = ({ navigation, shown, dismiss }) => {

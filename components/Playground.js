@@ -8,7 +8,7 @@ import faker from 'faker'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import { Colors } from 'react-native-paper'
-import { Styles, Themes } from './shared/Constants'
+import { Styles, Themes } from './constants/Constants'
 import {
     ActivityIndicator,
     DisplayError,

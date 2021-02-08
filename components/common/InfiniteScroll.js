@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { FlatList, View } from 'react-native'
-import { Styles } from '../shared/Constants'
+import { Styles } from '../constants/Constants'
 
 /*
 React Native Infinite Scroll; by Ben Awad
@@ -62,7 +62,7 @@ export default (props) => {
                 //onRefresh={onRefresh}
                 onLayout={onLayout}
                 onContentSizeChange={onContentSizeChange}
-                onScroll={onScroll}            
+                onScroll={onScroll}
             />
         </View>
     )
