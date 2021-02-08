@@ -4,7 +4,7 @@ import { GlobalContext } from '../shared/GlobalContext'
 import { Header, Icon } from "react-native-elements";
 import { Text, MaterialIcons } from './Components'
 import { LogoutModal } from '../Authentication'
-import { Themes, Styles } from '../constants/Constants'
+import { Themes, Styles } from '../Constants'
 
 export default ({ navigation, title, hasBurger, hasHome, hasBack, hasLogout }) => {
     const { theme, setTheme } = useContext(GlobalContext)

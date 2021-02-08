@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, PureComponent } from 'react'
 import { Screen, Button, Container, Text, ActivityIndicator } from './common/Components'
 import { GlobalContext } from './shared/GlobalContext'
 import { ProfileContext } from './shared/ProfileContext'
-import { Themes } from './constants/Constants'
+import { Themes } from './Constants'
 
 export default ({ navigation }) => {
     const [name, setName] = useState()

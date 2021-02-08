@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useEffect } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
-import { Themes } from '../constants/Constants'
+import { Themes } from '../Constants'
 
 export default ({ children, style, classRef, fontWeight, fontSize, ...restProps }) => {
     const { theme, setTheme } = useContext(GlobalContext)

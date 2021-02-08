@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react'
 import { View, SafeAreaView } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
-import { Themes, Styles } from '../constants/Constants'
+import { Themes, Styles } from '../Constants'
 import { ScrollView } from '../common/Components'
 
 export default ({ children, style, isSafe, isScrollable, autoScrollToEnd }) => {

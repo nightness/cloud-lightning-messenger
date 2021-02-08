@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Button, TouchableOpacity } from 'react-native'
 import { Text } from '../common/Components'
 import { GlobalContext } from '../shared/GlobalContext'
-import { Themes, Styles } from '../constants/Constants'
+import { Themes, Styles } from '../Constants'
 
 export default ({ style, title, disabled, reactNativeButton, ...restProps }) => {
     const { theme, setTheme } = useContext(GlobalContext)

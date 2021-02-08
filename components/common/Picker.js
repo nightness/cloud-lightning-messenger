@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { ScrollView, Platform } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
-import { Themes, Styles } from '../constants/Constants'
+import { Themes, Styles } from '../Constants'
 import { Picker, PickerIOS } from '@react-native-picker/picker'
 import ToggleBox from 'react-native-togglebox'
 

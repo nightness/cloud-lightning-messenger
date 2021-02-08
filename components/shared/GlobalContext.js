@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react'
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useComponentMounted, useComponentUnmounting } from 'react-use-lifecycles'
-import { Defaults } from '../constants/Constants'
+import { Defaults } from '../Constants'
 
 export const GlobalContext = createContext();
 

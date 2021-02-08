@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { View } from 'react-native'
 import { Screen, Container, Text, Picker, TextInput, Button, ActivityIndicator, DisplayError, FirestoreCollectionView } from '../common/Components'
-import { Styles } from '../constants/Constants'
+import { Styles } from '../Constants'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
 import { createMessage, useMessenger } from './MessengerReducer'
