@@ -7,8 +7,6 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import { AppLoading } from 'expo'
 import * as Notifications from 'expo-notifications';
 import * as Fonts from 'expo-font'
-import Playground from './components/Playground'
-import Authentication from './components/Authentication'
 import { ActivityIndicator, DisplayError } from './components/common/Components'
 import { useAuthState } from './components/firebase/Firebase'
 import { FirebaseProvider } from './components/firebase/FirebaseContext'
@@ -18,6 +16,8 @@ import { Defaults } from './components/Constants'
 import Home from './components/Home'
 import Messenger from './components/messenger/Messenger'
 import DispatchMessenger from './components/messenger/DispatchMessenger'
+import Playground from './components/Playground'
+import Authentication from './components/Authentication'
 
 const getFonts = () => Fonts.loadAsync({
     'serif-pro-black': require('./assets/fonts/SourceSerifPro/SourceSerifPro-Black.ttf'),

@@ -1,10 +1,10 @@
 export const screen = {
     Light: {
-        backgroundColor: '#ddd',
+        backgroundColor: '#ccc',
         borderColor: '#333'
     },
     Dark: {
-        backgroundColor: '#246',
+        backgroundColor: '#333',
         borderColor: '#eee'
     }
 }
