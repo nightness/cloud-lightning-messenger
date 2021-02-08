@@ -11,6 +11,7 @@ npm-debug.*
 web-build/
 private/
 functions/
+rest/
 *.log
 google-services.json
 GoogleService-Info.plist
