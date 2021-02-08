@@ -1,42 +1,42 @@
 export const screen = {
     Light: {
-        backgroundColor: '#eee',
-        borderBottomColor: '#333'
+        backgroundColor: '#ddd',
+        borderColor: '#333'
     },
     Dark: {
         backgroundColor: '#246',
-        borderBottomColor: '#eee'
+        borderColor: '#eee'
     }
 }
 
 export const modal = {
     Light: {
-        backgroundColor: '#eee',
-        borderBottomColor: '#333'
+        backgroundColor: '#ddd',
+        borderColor: '#333'
     },
     Dark: {
         backgroundColor: '#246',
-        borderBottomColor: '#eee'
+        borderColor: '#eee'
     }
 }
 
 export const container = {
     Light: {
-        backgroundColor: '#ddd',
+        backgroundColor: '#aaa',
         borderColor: '#212121'
     },
     Dark: {
         backgroundColor: '#212121',
-        borderColor: '#ddd'
+        borderColor: '#aaa'
     }
 }
 
 export const iconColor = {
     Light: {
-        color: "111",
+        color: "#555",
     },
     Dark: {
-        color: "white",
+        color: "red",
     }
 }
 
@@ -70,7 +70,7 @@ export const textInput = {
     }
 }
 
-export const textInputPlaceHolder = {
+export const materialIcons = {
     Light: {
         color: "#212121",
     },

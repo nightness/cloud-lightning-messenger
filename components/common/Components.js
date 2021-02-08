@@ -14,6 +14,7 @@ import Modal from './Modal'
 import HelperText from './HelperText'
 import IconButton from './IconButton'
 import Picker from './Picker'
+import MaterialIcons from './MaterialIcons'
 
 export {
     ActivityIndicator,
@@ -31,5 +32,6 @@ export {
     ScrollView,
     HelperText,
     IconButton,
-    Picker
+    Picker,
+    MaterialIcons
 }

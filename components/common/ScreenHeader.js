@@ -2,8 +2,7 @@ import React, { useState, useContext } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Header, Icon } from "react-native-elements";
-import { Text, Button, Modal } from './Components'
-import { MaterialIcons } from '@expo/vector-icons'
+import { Text, MaterialIcons } from './Components'
 import { LogoutModal } from '../Authentication'
 import { Themes, Styles } from '../shared/Constants'
 
@@ -23,7 +22,6 @@ export default ({ navigation, title, hasBurger, hasHome, hasBack, hasLogout }) =
         }
     }
 
-    const iconColor = Themes.textInputPlaceHolder[theme].color
     const iconSize = 28
 
     return (
@@ -50,29 +48,20 @@ export default ({ navigation, title, hasBurger, hasHome, hasBack, hasLogout }) =
                         {(hasBurger) ?
                             <MaterialIcons
                                 name="menu"
-                                style={Styles.screen.icons}
                                 size={iconSize}
-                                onPress={openMenu}
-                                color={iconColor}
-                                selectable={false} />
+                                onPress={openMenu} />
                             : <></>}
                         {(hasHome) ?
                             <MaterialIcons
                                 name="home"
-                                style={Styles.screen.icons}
                                 size={iconSize}
-                                onPress={() => navigation.popToTop()}
-                                color={iconColor}
-                                selectable={false} />
+                                onPress={() => navigation.popToTop()} />
                             : <></>}
                         {(hasBack) ?
                             <MaterialIcons
                                 name="navigate-before"
-                                style={Styles.screen.icons}
                                 size={iconSize}
-                                onPress={() => navigation.pop()}
-                                color={iconColor}
-                                selectable={false} />
+                                onPress={() => navigation.pop()} />
                             : <></>}
                     </View>
                 }
@@ -82,19 +71,13 @@ export default ({ navigation, title, hasBurger, hasHome, hasBack, hasLogout }) =
                     <View style={{ flexDirection: 'row' }}>
                         <MaterialIcons
                             name="settings-brightness"
-                            style={Styles.screen.icons}
                             size={iconSize}
-                            onPress={toggleDarkMode}
-                            color={iconColor}
-                            selectable={false} />
+                            onPress={toggleDarkMode} />
                         {hasLogout ?
                             <MaterialIcons
                                 name="face"
-                                style={Styles.screen.icons}
                                 size={iconSize}
-                                onPress={() => setShowLogoutModal(true)}
-                                color={iconColor}
-                                selectable={false} />
+                                onPress={() => setShowLogoutModal(true)} />
                             : <></>}
                     </View>
                 }

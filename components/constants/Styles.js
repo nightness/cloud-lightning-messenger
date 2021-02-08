@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 
-export const screen = StyleSheet.create({
+export const materialIcons = StyleSheet.create({
     icons: {
         paddingHorizontal: 3
     },
