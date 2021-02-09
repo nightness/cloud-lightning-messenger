@@ -15,6 +15,7 @@ import HelperText from './HelperText'
 import IconButton from './IconButton'
 import Picker from './Picker'
 import MaterialIcons from './MaterialIcons'
+import View from './View'
 
 export {
     ActivityIndicator,
@@ -33,5 +34,6 @@ export {
     HelperText,
     IconButton,
     Picker,
-    MaterialIcons
+    MaterialIcons,
+    View
 }

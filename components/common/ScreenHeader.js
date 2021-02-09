@@ -36,7 +36,7 @@ export default ({ navigation, title, hasBurger, hasHome, hasBack, hasLogout }) =
                     width: "100%",
                     borderBottomRightRadius: 3,
                     borderBottomLeftRadius: 3,
-                    borderBottomColor: Themes.screen[theme].borderBottomColor // No bottom border
+                    borderBottomColor: Themes.screen[theme].borderBottomColor
                 }}
                 backgroundColor='none'
                 backgroundImageStyle={{}}

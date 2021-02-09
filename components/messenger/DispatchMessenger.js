@@ -1,6 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { View } from 'react-native'
-import { Screen, Container, Text, Picker, TextInput, Button, ActivityIndicator, DisplayError, FirestoreCollectionView } from '../common/Components'
+import {
+    View,
+    Screen,
+    Container,
+    Text,
+    Picker,
+    TextInput,
+    Button,
+    ActivityIndicator,
+    DisplayError,
+    FirestoreCollectionView
+} from '../common/Components'
 import { Styles } from '../Constants'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'

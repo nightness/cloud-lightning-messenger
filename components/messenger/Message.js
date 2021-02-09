@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View } from 'react-native'
-import { Text } from '../common/Components'
+import { Text, View } from '../common/Components'
 
 export default class Message extends PureComponent {
     constructor(props) {

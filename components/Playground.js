@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState, useRef, useMemo } from 'react'
-import { FlatList, View, SafeAreaView } from 'react-native'
+import { FlatList, SafeAreaView } from 'react-native'
+import { View } from './common/Components'
 import { useAsync } from 'react-async-hook'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/native'

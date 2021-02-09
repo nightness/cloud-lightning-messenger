@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Modal, View } from 'react-native'
-import { Text, Button } from '../common/Components'
+import { Modal } from 'react-native'
+import { Text, View, Button } from '../common/Components'
 import { Overlay } from 'react-native-elements'
 
 export default function CreateGroup(props) {

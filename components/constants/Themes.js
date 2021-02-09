@@ -1,11 +1,11 @@
 export const screen = {
     Light: {
         backgroundColor: '#ccc',
-        borderColor: '#333'
+        borderBottomColor: '#333'
     },
     Dark: {
         backgroundColor: '#333',
-        borderColor: '#eee'
+        borderBottomColor: '#eee'
     }
 }
 
@@ -22,12 +22,21 @@ export const modal = {
 
 export const container = {
     Light: {
-        backgroundColor: '#aaa',
-        borderColor: '#212121'
+        backgroundColor: '#ddd',
+        borderColor: 'black'
     },
     Dark: {
         backgroundColor: '#212121',
         borderColor: '#aaa'
+    }
+}
+
+export const view = {
+    Light: {
+
+    },
+    Dark: {
+
     }
 }
 
@@ -103,7 +112,7 @@ export const buttonDisabled = {
 
 export const picker = {
     Light: {
-        color: "#222",
+        color: "#888",
         backgroundColor: '#eee',
     },
     Dark: {

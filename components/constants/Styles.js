@@ -1,5 +1,11 @@
 import { StyleSheet } from 'react-native'
 
+export const view = StyleSheet.create({
+    default: {
+
+    }
+})
+
 export const materialIcons = StyleSheet.create({
     icons: {
         paddingHorizontal: 3
@@ -78,7 +84,6 @@ export const infiniteScroll = StyleSheet.create({
         padding: 5,
         borderWidth: 2,
         borderRadius: 5,
-        borderColor: "#48a",
         width: "100%"
     }
 })
@@ -106,8 +111,7 @@ export const picker = StyleSheet.create({
         paddingHorizontal: 2
     },
     item: {
-        //backgroundColor: '#fff'
-        //color: '#ddd'
+
     }
 })
 
@@ -135,7 +139,6 @@ export const messenger = StyleSheet.create({
         padding: 5,
         borderWidth: 2,
         borderRadius: 5,
-        borderColor: "#48a",
         width: "100%"
     },
     viewTextInput: {
@@ -144,7 +147,6 @@ export const messenger = StyleSheet.create({
         width: "100%",
         borderWidth: 2,
         borderRadius: 5,
-        borderColor: "#48a",
     },
     flatlist: {
 
