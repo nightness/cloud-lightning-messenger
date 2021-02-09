@@ -20,6 +20,15 @@ export const modal = {
     }
 }
 
+export const collectionView = {
+    Light: {
+        borderColor: "black",
+    },
+    Dark: {
+        borderColor: "white",
+    }
+}
+
 export const container = {
     Light: {
         backgroundColor: '#ddd',
@@ -33,10 +42,10 @@ export const container = {
 
 export const view = {
     Light: {
-
+        borderColor: 'black'
     },
     Dark: {
-
+        borderColor: 'white'
     }
 }
 

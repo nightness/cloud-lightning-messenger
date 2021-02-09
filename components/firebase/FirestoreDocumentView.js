@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         flex: 1,
         margin: 5,
         padding: 5,
-        borderWidth: 2,
+        borderWidth: 1,
         borderRadius: 5,
         borderColor: "#48a",
         width: "100%"

@@ -82,7 +82,7 @@ export const infiniteScroll = StyleSheet.create({
         flex: 1,
         margin: 5,
         padding: 5,
-        borderWidth: 2,
+        borderWidth: 1,
         borderRadius: 5,
         width: "100%"
     }
@@ -132,12 +132,26 @@ export const logoutModal = StyleSheet.create({
     }
 })
 
+export const collectionView = StyleSheet.create({
+    view: {
+        flex: 1,
+        margin: 0,
+        padding: 5,
+        borderWidth: 1,
+        borderRadius: 5,
+        width: "100%"
+    },
+    flatlist: {
+
+    }
+})
+
 export const messenger = StyleSheet.create({
     viewChat: {
         flex: 1,
         margin: 5,
         padding: 5,
-        borderWidth: 2,
+        borderWidth: 1,
         borderRadius: 5,
         width: "100%"
     },
@@ -145,7 +159,7 @@ export const messenger = StyleSheet.create({
         flexDirection: 'row',
         //alignContent: 'stretch',
         width: "100%",
-        borderWidth: 2,
+        borderWidth: 1,
         borderRadius: 5,
     },
     flatlist: {

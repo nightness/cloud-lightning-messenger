@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { StyleSheet, FlatList, ScrollView, View } from 'react-native'
 import { useCollection, getDocumentsDataWithId, getData } from './Firebase'
+import { Themes, Styles } from '../Constants'
+import { GlobalContext } from '../shared/GlobalContext'
 import ActivityIndicator from '../common/ActivityIndicator'
 import DisplayError from '../common/DisplayError'
-import Text from '../common/Text'
 
 // Ref: For loading more, pull small chunks https://youtu.be/WcGd8VkRc48?t=237
 
@@ -14,9 +15,10 @@ const getTime = () => {
 
 const CollectionFlatList = props => {
     const flatList = useRef()
-    const { messages, onScrollProp = onScroll, onStartReached, autoScrollToEnd, ...restProps } = props
+    const { style, messages, onScrollProp = onScroll, onStartReached, autoScrollToEnd, ...restProps } = props
     const [hitTop, setHitTop] = useState(state => ({}))
     const [refreshing, setRefreshing] = useState(false)
+    const { theme, setTheme } = useContext(GlobalContext)
 
     const onScroll = (e) => {
         const { contentOffset, contentSize, layoutMeasurement } = e.nativeEvent
@@ -56,12 +58,12 @@ const CollectionFlatList = props => {
     }, [hitTop])
 
     return (
-        <View style={styles.view}>
+        <View style={[Styles.collectionView.view, Themes.collectionView[theme], style]}>
             <FlatList
                 {...restProps}
                 ref={flatList}
                 removeClippedSubviews={true}
-                contentContainerStyle={styles.flatlist}
+                contentContainerStyle={Styles.collectionView.flatlist}
                 data={messages}
                 onStartReached={loadMoreMessages}
                 onLayout={onLayout}
@@ -109,15 +111,3 @@ export default ({ collectionPath, orderBy, initialNumToRender, ...restProps }) =
     )
 
 }
-
-const styles = StyleSheet.create({
-    view: {
-        flex: 1,
-        margin: 0,
-        padding: 5,
-        borderWidth: 2,
-        borderRadius: 5,
-        borderColor: "#48a",
-        width: "100%"
-    }
-})
