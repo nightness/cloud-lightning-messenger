@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { FlatList, View } from 'react-native'
-import { Styles } from '../Constants'
+import { Styles } from '../shared/Constants'
 
 /*
 React Native Infinite Scroll; by Ben Awad

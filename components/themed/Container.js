@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from 'react'
 import { View, SafeAreaView } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
-import { Themes, Styles } from '../Constants'
+import { Themes, Styles } from '../shared/Constants'
 
 export default ({ children, style, isSafe }) => {
     const { theme, setTheme } = useContext(GlobalContext)

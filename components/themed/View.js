@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { View } from 'react-native'
-import { Themes, Styles } from '../Constants'
+import { Themes, Styles } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
 
 export default ({ children, style, ...restProps }) => {

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { View } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
-import { Themes, Styles } from '../Constants'
+import { Themes, Styles } from '../shared/Constants'
 import ScreenHeader from './ScreenHeader'
 
 export default ({ children, style, navigation, ...restProps }) => {

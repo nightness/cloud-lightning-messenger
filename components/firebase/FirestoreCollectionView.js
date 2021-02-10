@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { StyleSheet, FlatList, ScrollView, View } from 'react-native'
 import { useCollection, getDocumentsDataWithId, getData } from './Firebase'
-import { Themes, Styles } from '../Constants'
+import { Themes, Styles } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
 import ActivityIndicator from '../themed/ActivityIndicator'
 import DisplayError from '../themed/DisplayError'

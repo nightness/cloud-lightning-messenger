@@ -7,7 +7,7 @@ import {
     Button,
     FirestoreCollectionView
 } from '../themed/Components'
-import { Styles } from '../Constants'
+import { Styles } from '../shared/Constants'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
 import { createMessage, useMessenger } from './MessengerReducer'

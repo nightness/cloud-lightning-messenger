@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 import { GlobalContext } from '../shared/GlobalContext'
-import { Themes, Styles } from '../Constants'
+import { Themes, Styles } from '../shared/Constants'
 
 export default ({ style, ...restProps }) => {
     const { theme, setTheme } = useContext(GlobalContext)

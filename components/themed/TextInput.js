@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useEffect, Component, PureComponent } from 'react'
 import { TextInput } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
-import { Themes, Styles } from '../Constants'
+import { Themes, Styles } from '../shared/Constants'
 
 export default ({ children, style, classRef, ...restProps }) => {
     const { theme, setTheme } = useContext(GlobalContext)
