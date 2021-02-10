@@ -48,6 +48,21 @@ export const views = StyleSheet.create({
     },
     scrollView: {
         flex: 1,
+    },
+    flexRowJustifyCenter: {
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    flatListView: {
+        flex: 1,
+        margin: 0,
+        padding: 5,
+        borderWidth: 1,
+        borderRadius: 5,
+        width: "100%"
+    },
+    flatlist: {
+
     }
 })
 
@@ -128,20 +143,6 @@ export const logoutModal = StyleSheet.create({
     button: {
         marginTop: 5,
         marginHorizontal: 10
-    }
-})
-
-export const collectionView = StyleSheet.create({
-    view: {
-        flex: 1,
-        margin: 0,
-        padding: 5,
-        borderWidth: 1,
-        borderRadius: 5,
-        width: "100%"
-    },
-    flatlist: {
-
     }
 })
 

@@ -20,7 +20,7 @@ export const modal = {
     }
 }
 
-export const collectionView = {
+export const defaultViews = {
     Light: {
         borderColor: "black",
     },

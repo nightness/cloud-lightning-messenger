@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
-import { StyleSheet, FlatList, ScrollView, View } from 'react-native'
+import { StyleSheet, FlatList, View } from 'react-native'
 import { useCollection, getDocumentsDataWithId, getData } from './Firebase'
 import { Themes, Styles } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
@@ -52,17 +52,16 @@ const CollectionFlatList = props => {
     }
 
     React.useEffect(() => {
-        if (typeof (onStartReached) === 'function')
-            onStartReached()
+        typeof onStartReached === 'function' && onStartReached()
     }, [hitTop])
 
     return (
-        <View style={[Styles.collectionView.view, Themes.collectionView[theme], style]}>
+        <View style={[Styles.views.flatListView, Themes.defaultViews[theme], style]}>
             <FlatList
                 {...restProps}
                 ref={flatList}
                 removeClippedSubviews={true}
-                contentContainerStyle={Styles.collectionView.flatlist}
+                contentContainerStyle={Styles.views.flatlist}
                 data={messages}
                 onStartReached={loadMoreMessages}
                 onLayout={onLayout}
