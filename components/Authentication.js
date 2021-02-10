@@ -53,6 +53,11 @@ export const Authentication = ({ navigation, customToken }) => {
     const auth = firebaseAuth()
 
     useEffect(() => {
+        if (theme === 'Dark')
+            setTheme('Light')
+    })
+
+    useEffect(() => {
         if (customToken) {
             auth
                 .signInWithCustomToken(customToken)

@@ -6,7 +6,7 @@ import { Styles, Themes } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
 
 export default ({ formikProps, fieldName, fieldType, placeHolder, ...restProps }) => {
-    const { theme, setTheme } = useContext(GlobalContext)
+    const { theme } = useContext(GlobalContext)
 
     const onChangeHandler = text => {
         //if (fieldType === 'phone-number')

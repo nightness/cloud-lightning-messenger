@@ -18,7 +18,7 @@ const CollectionFlatList = props => {
     const { style, messages, onScrollProp = onScroll, onStartReached, autoScrollToEnd, ...restProps } = props
     const [hitTop, setHitTop] = useState(state => ({}))
     const [refreshing, setRefreshing] = useState(false)
-    const { theme, setTheme } = useContext(GlobalContext)
+    const { theme } = useContext(GlobalContext)
 
     const onScroll = (e) => {
         const { contentOffset, contentSize, layoutMeasurement } = e.nativeEvent

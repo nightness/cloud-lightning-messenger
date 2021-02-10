@@ -4,7 +4,7 @@ import { GlobalContext } from '../shared/GlobalContext'
 import { Themes } from '../shared/Constants'
 
 export default ({ children, style, fontWeight, fontSize, ...restProps }) => {
-    const { theme, setTheme } = useContext(GlobalContext)
+    const { theme } = useContext(GlobalContext)
 
     // Setup defaults
     if (!fontWeight) { fontWeight = "200" }

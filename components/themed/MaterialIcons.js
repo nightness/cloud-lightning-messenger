@@ -4,7 +4,7 @@ import { GlobalContext } from '../shared/GlobalContext'
 import { Themes, Styles } from '../shared/Constants'
 
 export default ({ style, ...restProps }) => {
-    const { theme, setTheme } = useContext(GlobalContext)
+    const { theme } = useContext(GlobalContext)
     //const properTheme = !disabled ? Themes.button[theme] : Themes.buttonDisabled[theme]
 
     const iconColor = Themes.materialIcons[theme].color

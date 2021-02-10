@@ -4,7 +4,7 @@ import { GlobalContext } from '../shared/GlobalContext'
 import { Themes, Styles } from '../shared/Constants'
 
 export default ({ children, style, isSafe }) => {
-    const { theme, setTheme } = useContext(GlobalContext)
+    const { theme } = useContext(GlobalContext)
 
     if (isSafe)
         return (

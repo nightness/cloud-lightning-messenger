@@ -8,7 +8,7 @@ import { GlobalContext } from '../shared/GlobalContext'
 // Just started
 
 export default ({ navigation, ...restProps }) => {
-    const { theme, setTheme } = useContext(GlobalContext)
+    const { theme } = useContext(GlobalContext)
 
     return (
         <Screen navigation={navigation} title={"Manage Districts"} hasBurger={true} hasLogout={true}>

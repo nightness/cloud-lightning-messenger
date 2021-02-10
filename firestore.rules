@@ -19,11 +19,11 @@ service cloud.firestore {
 			allow read: if (request.auth.uid == messengerId);
     }    
 
-
     // User Rules
     match /users/{userId} {
       allow read: if request.auth != null
     }
+
     // Auth token
     match /users/{userId}/auth  {
       allow read,write: if false

@@ -45,7 +45,7 @@ const DrawerNavigator = () => {
 const Stack = createStackNavigator()
 export default () => {
     const [user, firebaseLoading, firebaseError] = useAuthState()
-    const { theme, setTheme } = useContext(GlobalContext)
+    const { theme } = useContext(GlobalContext)
 
 
     if (firebaseLoading) {

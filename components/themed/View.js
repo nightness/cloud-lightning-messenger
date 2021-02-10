@@ -4,7 +4,7 @@ import { Themes, Styles } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
 
 export default ({ children, style, ...restProps }) => {
-    const { theme, setTheme } = useContext(GlobalContext)
+    const { theme } = useContext(GlobalContext)
 
     return (
         <View style={[Styles.view.default, Themes.view[theme], style]} {...restProps}>

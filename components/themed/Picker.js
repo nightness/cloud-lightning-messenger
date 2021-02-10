@@ -6,7 +6,7 @@ import { Picker, PickerIOS } from '@react-native-picker/picker'
 import ToggleBox from 'react-native-togglebox'
 
 export default ({ style, data = [], selectedValue, onValueChanged, ...restProps }) => {
-    const { theme, setTheme } = useContext(GlobalContext)
+    const { theme } = useContext(GlobalContext)
     const [selectedItem, setSelectedItem] = useState(selectedValue)
     //const properTheme = enabled ? Themes.picker[theme] : Themes.pickerDisabled[theme]
     const selectedData = data ? data.find(data => data.value === selectedItem) : undefined
