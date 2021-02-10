@@ -1,8 +1,7 @@
 import React, { useContext, useState, useRef, useEffect } from 'react'
-import { View } from 'react-native'
+import View from './View'
 import TextInput from './TextInput'
 import HelperText from './HelperText'
-import { Styles, Themes } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
 
 export default ({ formikProps, fieldName, fieldType, placeHolder, ...restProps }) => {
