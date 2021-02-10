@@ -47,7 +47,7 @@ export default ({ navigation }) => {
     }
 
     return (
-        <Screen navigation={navigation} title={"Messenger"} hasBurger={true} hasLogout={true}>
+        <Screen navigation={navigation} title={"Messenger"} hasDrawerNavigation={true} hasLogout={true}>
             <Container>
                 <FirestoreCollectionView
                     contentContainerStyle={Styles.messenger.flatlist}

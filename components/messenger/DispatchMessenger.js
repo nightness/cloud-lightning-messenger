@@ -71,7 +71,7 @@ export default ({ navigation }) => {
     ]
 
     return (
-        <Screen navigation={navigation} title={"Dispatch Messenger"} hasBurger={true} hasLogout={true}>
+        <Screen navigation={navigation} title={"Dispatch Messenger"} hasDrawerNavigation={true} hasLogout={true}>
             <Container>
                 <View style={Styles.messenger.views}>
                     <Picker

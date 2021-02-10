@@ -6,7 +6,7 @@ import { Text, MaterialIcons } from './Components'
 import { LogoutModal } from '../Authentication'
 import { Themes, Styles } from '../shared/Constants'
 
-export default ({ navigation, title, hasBurger, hasHome, hasBack, hasLogout }) => {
+export default ({ navigation, title, hasDrawerNavigation, hasHome, hasBack, hasLogout }) => {
     const { theme, setTheme } = useContext(GlobalContext)
     const [showLogoutModal, setShowLogoutModal] = useState(false)
 
@@ -43,7 +43,7 @@ export default ({ navigation, title, hasBurger, hasHome, hasBack, hasLogout }) =
                 }
                 leftComponent={() =>
                     <View style={{ flexDirection: 'row' }}>
-                        {(hasBurger) ?
+                        {(hasDrawerNavigation) ?
                             <MaterialIcons
                                 name="menu"
                                 size={iconSize}

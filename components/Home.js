@@ -30,7 +30,7 @@ export default ({ navigation }) => {
     return (
         <Screen
             navigation={navigation}
-            hasBurger={true}
+            hasDrawerNavigation={true}
             hasLogout={true}
             title="Home"
         >
