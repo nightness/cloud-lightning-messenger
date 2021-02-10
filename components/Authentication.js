@@ -60,7 +60,7 @@ export const Authentication = ({ navigation, customToken }) => {
                     navigation.replace("Main")
                 })
                 .catch(error => {
-                    alert(error)
+                    alert("Invalid custom token specified")
                     setIsLoading(false)
                 })
         } else {
@@ -266,6 +266,6 @@ export const Authentication = ({ navigation, customToken }) => {
 export default ({ navigation }) =>
     <Authentication
         navigation={navigation}
-    //customToken={'eyJhbGciOiJIUzI1NiJ9.NGNjZWMzMWI3NWUzM2I3NzYzYzgwMzUzNmYzZWQyNDhmMzJmMmM2NTZhYzIwZDNmOTA4MDJhMGZiNjk2ODgwZjUwZjI5MDNhMzRmYjZiYjIzYWVmOTM4MmRiMzU5MDY4NWM1ODg2YzI1NWFkNzExNWI1ZTQzNjY2ZWE4NGY2Zg._hr1hcRt5SqU3_MpDMw-ZQbMn02z3_SzoLqTm7gdJxM'}
+    //  customToken={'abc.123.45657'} {/* This is not a valid custom token */}
     />
 
