@@ -26,8 +26,6 @@ import { callFirebaseFunction, useAuthState } from './firebase/Firebase'
 import { FirebaseContext } from './firebase/FirebaseContext'
 import "./shared/FormValidation"
 
-
-
 const fetchStuff = async () => true
 const fetchResult = (async () => {
     try {

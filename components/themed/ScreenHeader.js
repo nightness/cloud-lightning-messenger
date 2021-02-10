@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, View, useWindowDimensions } from 'react-native'
+import { View, useWindowDimensions } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
-import { Header, Icon } from "react-native-elements";
+import { Header } from "react-native-elements";
 import { Text, MaterialIcons } from './Components'
 import { LogoutModal } from '../Authentication'
 import { Themes, Styles } from '../shared/Constants'
