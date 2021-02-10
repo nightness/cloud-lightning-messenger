@@ -1,4 +1,5 @@
-// Modified version of yup-phone, so it doesn't invalidate empty phone numbers, that's .required()'s job
+// This is a modified (with stripped TS) version of yup-phone, so it doesn't invalidate empty
+// phone numbers, that's .required()'s job. I current have a PR with yup-phone regarding this.
 
 import * as Yup from 'yup';
 import gPhoneNumber from 'google-libphonenumber';
@@ -23,7 +24,7 @@ Yup.addMethod(Yup.string, YUP_PHONE_METHOD, function yupPhone(
             : isValidCountryCode(countryCode)
                 ? `\${path} must be a valid phone number for region ${countryCode}`
                 : '${path} must be a valid phone number.';
-    // @ts-ignore
+
     return this.test(YUP_PHONE_METHOD, errMsg, (value) => {
 
         if (!isValidCountryCode(countryCode)) {
@@ -32,11 +33,11 @@ Yup.addMethod(Yup.string, YUP_PHONE_METHOD, function yupPhone(
             strict = false;
         }
         // This is what .required() is for
-        if (!value || ((typeof(value) === 'string') && value.length === 0)) return true
+        if (!value || ((typeof (value) === 'string') && value.length === 0)) return true
 
         try {
             const phoneNumber = phoneUtil.parseAndKeepRawInput(value, countryCode);
-            
+
             if (phoneNumber && phoneNumber.length > 0 && !phoneUtil.isPossibleNumber(phoneNumber)) {
                 return false;
             }
