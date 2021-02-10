@@ -12,10 +12,7 @@ export default ({ style, data = [], selectedValue, onValueChanged, ...restProps 
     const selectedData = data ? data.find(data => data.value === selectedItem) : undefined
 
     useEffect(() => {
-        onValueChanged && onValueChanged({
-            value: selectedItem,
-            label: selectedData
-        })
+        typeof onValueChanged === 'function' && onValueChanged(selectedData)
     }, [selectedItem])
 
     const PickerCommon = () => <Picker
