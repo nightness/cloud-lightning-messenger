@@ -1,22 +1,19 @@
 import React, { useState } from 'react'
-import { Modal } from 'react-native'
-import { Text, View, Button } from '../common/Components'
-import { Overlay } from 'react-native-elements'
+import { Text, View, Button, Container, Screen } from '../common/Components'
 
-export default props => {
-    const [isVisible, setIsVisible] = useState(false)
+// Not started
+
+export default ({ navigation, ...restProps }) => {
     return (
-        <Overlay
-            visible={isVisible}
-            onBackdropPress={setIsVisible(!isVisible)}
-        >
-            <Button
-                title='Add'
-            />
-            <Button
-                title='Remove'
-                onClick={() => setIsVisible(false)}
-            />
-        </Overlay>
+        <Screen navigation={navigation} title={"Manage Districts"} hasBurger={true} hasLogout={true}>
+            <Container>
+                <Button
+                    title='Add'
+                />
+                <Button
+                    title='Remove'
+                />
+            </Container>
+        </Screen>
     )
 }

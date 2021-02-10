@@ -16,6 +16,7 @@ import { Defaults } from './components/Constants'
 import Home from './components/Home'
 import Messenger from './components/messenger/Messenger'
 import DispatchMessenger from './components/messenger/DispatchMessenger'
+import ManageDistricts from './components/messenger/ManageDistricts'
 import Playground from './components/Playground'
 import Authentication from './components/Authentication'
 
@@ -43,6 +44,10 @@ const DrawerNavigator = () => {
                 <Drawer.Screen
                     name="Dispatch Messenger"
                     component={DispatchMessenger}
+                />
+                <Drawer.Screen
+                    name="Manage Districts"
+                    component={ManageDistricts}
                 />
             </Drawer.Navigator>
         </ProfileProvider>
