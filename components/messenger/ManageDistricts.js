@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Text, View, Button, Container, Screen } from '../common/Components'
 
-// Not started
+// Just started
 
 export default ({ navigation, ...restProps }) => {
     return (
