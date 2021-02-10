@@ -22,13 +22,16 @@ export default ({ style, data = [], selectedValue, onValueChanged, ...restProps 
         onValueChange={setSelectedItem}
     >
         {
-            data.map(item =>
-                <Picker.Item
-                    style={Styles.picker.item}
-                    label={item.label}
-                    value={item.value}
-                    key={item.value}
-                />)
+            data.map(item => {
+                return (
+                    <Picker.Item
+                        style={Styles.picker.item}
+                        label={item.label}
+                        value={item.value}
+                        key={item.value}
+                    />
+                )
+            })
         }
     </Picker>
     if (Platform.OS === 'ios') {
