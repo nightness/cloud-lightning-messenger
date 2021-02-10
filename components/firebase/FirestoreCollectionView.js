@@ -56,7 +56,7 @@ const CollectionFlatList = props => {
     }, [hitTop])
 
     return (
-        <View style={[Styles.views.flatListView, Themes.defaultViews[theme], style]}>
+        <View style={[Styles.views.flatListView, Themes.defaultView[theme], style]}>
             <FlatList
                 {...restProps}
                 ref={flatList}

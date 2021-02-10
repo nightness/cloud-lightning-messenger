@@ -13,13 +13,12 @@ export default ({ navigation, ...restProps }) => {
     return (
         <Screen navigation={navigation} title={"Manage Districts"} hasBurger={true} hasLogout={true}>
             <Container>
-                <View style={[Styles.views.flatListView, Themes.defaultViews[theme]]}>
+                <View style={[Styles.views.flatListView, Themes.defaultView[theme]]}>
                     <FlatList
                         {...restProps}
                         removeClippedSubviews={true}
                         contentContainerStyle={Styles.views.flatlist}
                     // data={messages}
-                    // onStartReached={loadMoreMessages}
                     // onLayout={onLayout}
                     // onContentSizeChange={onContentSizeChange}
                     // onScroll={onScroll}

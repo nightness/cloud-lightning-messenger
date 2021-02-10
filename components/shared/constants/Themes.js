@@ -20,7 +20,7 @@ export const modal = {
     }
 }
 
-export const defaultViews = {
+export const defaultView = {
     Light: {
         borderColor: "black",
     },
