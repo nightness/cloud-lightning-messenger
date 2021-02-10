@@ -9,9 +9,18 @@ import { useCollection } from '../firebase/Firebase'
 export default ({ navigation, ...restProps }) => {
     const { theme } = useContext(GlobalContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('/districts')
+    const [districts, setDistricts] = useState([])
 
     useEffect(() => {
-
+        if (loadingCollection || errorCollection || !snapshot) return
+        var newState = []
+        snapshot.docs.forEach(docRef => {
+            newState.push({
+                label: docRef.id,
+                value: docRef.id
+            })
+        })
+        setDistricts(newState)
     }, [snapshot])
 
     let render = <ActivityIndicator />
@@ -24,7 +33,7 @@ export default ({ navigation, ...restProps }) => {
     } else if (!loadingCollection) {
         render = <>
             <Picker
-                data={dataDistricts}
+                data={districts}
                 //selectedValue={'D2'}
                 onValueChanged={newValue => {
                     console.log(newValue)
