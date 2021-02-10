@@ -4,7 +4,6 @@ import { useAuthState } from './Firebase'
 
 export const FirebaseContext = createContext()
 
-// Provider export
 export const FirebaseProvider = ({ children }) => {
     const [currentUser, loadingUser, errorUser] = useAuthState()
     const [claims, setClaims] = useState({})
