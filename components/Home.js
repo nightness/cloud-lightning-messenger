@@ -30,8 +30,6 @@ export default ({ navigation }) => {
     return (
         <Screen
             navigation={navigation}
-            hasDrawerNavigation={true}
-            hasLogout={true}
             title="Home"
         >
             {children}

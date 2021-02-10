@@ -6,7 +6,7 @@ import { Text, MaterialIcons } from './Components'
 import { LogoutModal } from '../Authentication'
 import { Themes, Styles } from '../shared/Constants'
 
-export default ({ navigation, title, hasDrawerNavigation, hasHome, hasBack, hasLogout }) => {
+export default ({ navigation, title, hasDrawerNavigation = true, hasHome, hasBack, hasLogout = true }) => {
     const { theme, setTheme } = useContext(GlobalContext)
     const [showLogoutModal, setShowLogoutModal] = useState(false)
 

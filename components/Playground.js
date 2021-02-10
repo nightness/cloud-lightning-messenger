@@ -57,7 +57,7 @@ const Playground = ({ navigation }) => {
     }
 
     return (
-        <Screen navigation={navigation} title='Playground' hasLogout={true}>
+        <Screen navigation={navigation} title='Playground'>
             <View>
                 <TextInput
                     onChangeText={text => setClaimName(text)}

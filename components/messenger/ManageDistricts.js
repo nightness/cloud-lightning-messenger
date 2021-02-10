@@ -52,7 +52,7 @@ export default ({ navigation, ...restProps }) => {
     }
 
     return (
-        <Screen navigation={navigation} title={"Manage Districts"} hasDrawerNavigation={true} hasLogout={true}>
+        <Screen navigation={navigation} title={"Manage Districts"}>
             <Container>
                 {render}
             </Container>
