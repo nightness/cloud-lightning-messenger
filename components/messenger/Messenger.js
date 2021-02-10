@@ -3,11 +3,8 @@ import {
     View,
     Screen,
     Container,
-    Text,
     TextInput,
     Button,
-    ActivityIndicator,
-    DisplayError,
     FirestoreCollectionView
 } from '../common/Components'
 import { Styles } from '../Constants'

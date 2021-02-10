@@ -21,7 +21,7 @@ export default ({ navigation }) => {
     const { currentUser, claims } = useContext(FirebaseContext)
     const [messageText, setMessageText] = useState('')
     const [messenger, messengerDispatch] = useMessenger(currentUser.uid, 25)
-    const [selectedValue, setSelectedValue] = useState('usa')
+    const [selectedValue, setSelectedValue] = useState('D5')
 
     useEffect(() => {
         console.log(claims)
@@ -54,12 +54,20 @@ export default ({ navigation }) => {
 
     // Get all drivers in a selected zone
     // Use label for displayName and set value to the user's id (same as message container id)
-    const data = [
-        { label: 'Austria', value: 'A' },
-        { label: 'Czechia', value: 'CZ' },
-        { label: 'Germany', value: 'DE' },
-        { label: 'Poland', value: 'PL' },
-        { label: 'United States', value: 'US' }
+    const dataDistricts = [
+        { label: 'District 1', value: 'D1' },
+        { label: 'District 2', value: 'D2' },
+        { label: 'District 3', value: 'D3' },
+        { label: 'District 4', value: 'D4' },
+        { label: 'District 5', value: 'D5' }
+    ]
+
+    const dataUsers = [
+        { label: 'User 1', value: 'U1' },
+        { label: 'User 2', value: 'U2' },
+        { label: 'User 3', value: 'U3' },
+        { label: 'User 4', value: 'U4' },
+        { label: 'User 5', value: 'U5' }
     ]
 
     return (
@@ -67,12 +75,18 @@ export default ({ navigation }) => {
             <Container>
                 <View style={Styles.messenger.viewTextInput}>
                     <Picker
-                        data={data}
-                        selectedValue={'US'}
+                        data={dataDistricts}
+                        selectedValue={'D2'}
+                        onValueChanged={newValue => {
+                            console.log(newValue)
+                        }}
                     />
                     <Picker
-                        data={data}
-                        selectedValue={'US'}
+                        data={dataUsers}
+                        selectedValue={'U5'}
+                        onValueChanged={newValue => {
+                            console.log(newValue)
+                        }}
                     />
                 </View>
                 <FirestoreCollectionView

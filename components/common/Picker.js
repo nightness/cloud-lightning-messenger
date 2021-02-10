@@ -1,15 +1,22 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { ScrollView, Platform } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Themes, Styles } from '../Constants'
 import { Picker, PickerIOS } from '@react-native-picker/picker'
 import ToggleBox from 'react-native-togglebox'
 
-export default ({ style, data = [], selectedValue, ...restProps }) => {
+export default ({ style, data = [], selectedValue, onValueChanged, ...restProps }) => {
     const { theme, setTheme } = useContext(GlobalContext)
     const [selectedItem, setSelectedItem] = useState(selectedValue)
     //const properTheme = enabled ? Themes.picker[theme] : Themes.pickerDisabled[theme]
     const selectedData = data ? data.find(data => data.value === selectedItem) : undefined
+
+    useEffect(() => {
+        onValueChanged && onValueChanged({
+            value: selectedItem,
+            label: selectedData
+        })
+    }, [selectedItem])
 
     const PickerCommon = () => <Picker
         style={[Styles.picker.picker, Themes.picker[theme], style]}
@@ -27,7 +34,6 @@ export default ({ style, data = [], selectedValue, ...restProps }) => {
                 />)
         }
     </Picker>
-
     if (Platform.OS === 'ios') {
         return (
             <ScrollView bounces={false}>
