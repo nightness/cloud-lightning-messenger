@@ -115,7 +115,6 @@ export const picker = StyleSheet.create({
     }
 })
 
-
 export const logoutModal = StyleSheet.create({
     text: {
         fontSize: 16,
@@ -161,6 +160,8 @@ export const messenger = StyleSheet.create({
         width: "100%",
         borderWidth: 1,
         borderRadius: 5,
+        borderBottomWidth: 0,
+        borderTopWidth: 0,
     },
     flatlist: {
 

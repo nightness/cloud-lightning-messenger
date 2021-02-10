@@ -34,8 +34,6 @@ export default ({ navigation, title, hasBurger, hasHome, hasBack, hasLogout }) =
             <Header
                 containerStyle={{
                     width: "100%",
-                    borderBottomRightRadius: 3,
-                    borderBottomLeftRadius: 3,
                     borderBottomColor: Themes.screen[theme].borderBottomColor
                 }}
                 backgroundColor='none'
