@@ -100,7 +100,7 @@ export const materialIcons = {
 export const button = {
     Light: {
         color: "white",
-        backgroundColor: '#88f',
+        backgroundColor: '#777',
     },
     Dark: {
         color: "#eee",
@@ -111,7 +111,7 @@ export const button = {
 export const buttonDisabled = {
     Light: {
         color: "#aaa",
-        backgroundColor: '#555',
+        backgroundColor: '#444',
     },
     Dark: {
         color: "#999",
