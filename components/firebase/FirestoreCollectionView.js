@@ -52,7 +52,6 @@ const CollectionFlatList = props => {
     }
 
     React.useEffect(() => {
-        console.log('hit top!')
         if (typeof (onStartReached) === 'function')
             onStartReached()
     }, [hitTop])

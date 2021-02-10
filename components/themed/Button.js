@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Button, TouchableOpacity } from 'react-native'
-import { Text } from '../themed/Components'
+import { Text } from './Components'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Themes, Styles } from '../Constants'
 
