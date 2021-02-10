@@ -3,7 +3,7 @@ import { Modal } from 'react-native'
 import { Text, View, Button } from '../common/Components'
 import { Overlay } from 'react-native-elements'
 
-export default function CreateGroup(props) {
+export default props => {
     const [isVisible, setIsVisible] = useState(false)
     return (
         <Overlay
@@ -11,10 +11,10 @@ export default function CreateGroup(props) {
             onBackdropPress={setIsVisible(!isVisible)}
         >
             <Button
-                title='Add Members'
+                title='Add'
             />
             <Button
-                title='Create Group'
+                title='Remove'
                 onClick={() => setIsVisible(false)}
             />
         </Overlay>
