@@ -56,7 +56,7 @@ export default ({ navigation }) => {
                     orderBy='postedAt'
                     renderItem={({ item }) => <Message item={item} />}
                 />
-                <View style={Styles.messenger.viewTextInput}>
+                <View style={Styles.messenger.views}>
                     <TextInput
                         value={messageText}
                         style={Styles.messenger.textInput}

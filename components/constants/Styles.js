@@ -154,7 +154,7 @@ export const messenger = StyleSheet.create({
         borderRadius: 5,
         width: "100%"
     },
-    viewTextInput: {
+    views: {
         flexDirection: 'row',
         //alignContent: 'stretch',
         width: "100%",

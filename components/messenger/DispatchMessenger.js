@@ -73,7 +73,7 @@ export default ({ navigation }) => {
     return (
         <Screen navigation={navigation} title={"Dispatch Messenger"} hasBurger={true} hasLogout={true}>
             <Container>
-                <View style={Styles.messenger.viewTextInput}>
+                <View style={Styles.messenger.views}>
                     <Picker
                         data={dataDistricts}
                         selectedValue={'D2'}
@@ -96,7 +96,7 @@ export default ({ navigation }) => {
                     orderBy='postedAt'
                     renderItem={({ item }) => <Message item={item} />}
                 />
-                <View style={Styles.messenger.viewTextInput}>
+                <View style={Styles.messenger.views}>
                     <TextInput
                         value={messageText}
                         style={Styles.messenger.textInput}
