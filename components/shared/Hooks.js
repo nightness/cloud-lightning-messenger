@@ -12,19 +12,19 @@ export const useValidatedState = (initialValue, isValid, invalidated) => {
     return [value, wrapSetValue]
 }
 
-// Returns a decreaseCount function; and that decrements and returns the new value (doesn't rerender the component)
+// Returns a decreaseCount function; and that decrements and returns the new value (doesn't re-render the component)
 export const useDecrementer = (initialValue) => useMemo(() => {
     let count = initialValue
     return () => --count
 }, []);
 
-// Returns an increaseCount function; and that increments and returns the new value (doesn't rerender the component)
+// Returns an increaseCount function; and that increments and returns the new value (doesn't re-render the component)
 export const useIncrementer = initialValue => useMemo(() => {
     let count = initialValue
     return () => ++count
 }, [])
 
-// Returns [get, set] for a persistent value that's set function doesn't rerender the component
+// Returns [get, set] for a persistent value that's set function doesn't re-render the component
 export const useValue = initialValue => {
     useMemo(() => {
         let currentValue = initialValue

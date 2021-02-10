@@ -95,20 +95,20 @@ export const FirebaseFlatList = ({ documentPath, collectionPath, orderBy, onStar
             fetchData()
     }, [collectionSnapshot])
 
-    let render = <ActivityIndicator />
+    let result = <ActivityIndicator />
     if (errorCollection || errorData) {
         let errorCollectionCode = errorCollection ? errorCollection.code : null
         let errorDataCode = errorData ? errorData.code : null
-        render =
+        result =
             <DisplayError
                 permissionDenied={(errorCollectionCode === 'permission-denied' || errorDataCode === 'permission-denied')}
             />
     } else if (!loadingCollection && !loadingData) {
-        render =
+        result =
             <EnhancedFlatList data={messages} {...restProps} />
     }
     return (
-        <>{render}</>
+        { result }
     )
 
 }
