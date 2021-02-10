@@ -85,28 +85,3 @@ export const useStateDifferences = initialState => {
 
     return [{ state, added, removed }, setState]
 }
-
-// The idea here is that this hook maintains a huge data set, but the
-// stateful value only contains a window of the entire data set along with
-// values to indicate how much data is before and after the windowed state.
-export const useDataView = (initialValue, windowSize) => {
-    const data = useRef(initialValue)
-    const [stateData, setStateData] = useState({
-        windowData,
-        data,
-        preLength,
-        postLength,
-        windowSize,
-    })
-
-    const setWrapper = value => {
-        data.current = value
-        setStateData(value)
-    }
-
-    return {
-        stateData,
-        setWrapper,
-        data
-    }
-}
