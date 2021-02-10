@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState, useRef, useMemo } from 'react'
 import { FlatList, SafeAreaView } from 'react-native'
-import { View } from './common/Components'
+import { View } from './themed/Components'
 import { useAsync } from 'react-async-hook'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/native'
@@ -21,7 +21,7 @@ import {
     TextInput,
     FirestoreDocumentView,
     InfiniteScroll,
-} from './common/Components'
+} from './themed/Components'
 import { callFirebaseFunction, useAuthState } from './firebase/Firebase'
 import { FirebaseContext } from './firebase/FirebaseContext'
 import "./shared/FormValidation"

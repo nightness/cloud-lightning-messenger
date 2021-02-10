@@ -7,7 +7,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import { AppLoading } from 'expo'
 import * as Notifications from 'expo-notifications';
 import * as Fonts from 'expo-font'
-import { ActivityIndicator, DisplayError } from './components/common/Components'
+import { ActivityIndicator, DisplayError } from './components/themed/Components'
 import { useAuthState } from './components/firebase/Firebase'
 import { FirebaseProvider } from './components/firebase/FirebaseContext'
 import { GlobalContext, GlobalProvider } from './components/shared/GlobalContext'

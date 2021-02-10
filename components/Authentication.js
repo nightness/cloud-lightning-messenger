@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Image, Platform } from 'react-native'
-import { Container, Text, TextInput, Button, ScrollView, View, Modal, ActivityIndicator, DisplayError } from './common/Components'
+import { Container, Text, TextInput, Button, ScrollView, View, Modal, ActivityIndicator, DisplayError } from './themed/Components'
 import { firebaseAuth, GoogleAuthProvider } from './firebase/Firebase'
 import { Styles, Themes } from './Constants'
 import { GlobalContext } from './shared/GlobalContext'

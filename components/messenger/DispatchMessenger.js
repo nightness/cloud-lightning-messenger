@@ -10,7 +10,7 @@ import {
     ActivityIndicator,
     DisplayError,
     FirestoreCollectionView
-} from '../common/Components'
+} from '../themed/Components'
 import { Styles } from '../Constants'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'

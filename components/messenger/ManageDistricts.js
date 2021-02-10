@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, View, Button, Container, Screen } from '../common/Components'
+import { Text, View, Button, Container, Screen } from '../themed/Components'
 
 // Just started
 
