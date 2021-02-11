@@ -110,7 +110,7 @@ export default ({ navigation, ...restProps }) => {
                     <Button
                         style={Styles.logoutModal.button}
                         title='Cancel'
-                        onPress={() => setAddDistrictModalVisible(false)}
+                        onPress={() => setAddDistrictModalVisible(false) || setDistrictName('')}
                     />
                 </View>
             </Modal>
