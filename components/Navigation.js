@@ -47,19 +47,12 @@ export default () => {
     const [user, firebaseLoading, firebaseError] = useAuthState()
     const { theme } = useContext(GlobalContext)
 
-
-    if (firebaseLoading) {
-        return (
-            <ActivityIndicator />
-        )
+    var render = <ActivityIndicator />
+    if (firebaseError) {
+        render = <DisplayError errorMessage={"Firebase Error: " + firebaseError.message} />
     }
-    else if (firebaseError) {
-        return (
-            <DisplayError errorMessage={"Firebase Error: " + firebaseError.message} />
-        )
-    }
-    else {
-        return (
+    else if (!firebaseLoading) {
+        render = (
             <NavigationContainer
                 theme={theme === "Dark" ? DarkTheme : DefaultTheme}
             >
@@ -75,5 +68,6 @@ export default () => {
             </NavigationContainer>
         )
     }
+    return render
 }
 
