@@ -11,6 +11,7 @@ export default ({ navigation, ...restProps }) => {
     const [districts, setDistricts] = useState([])
     const [districtName, setDistrictName] = useState('')
     const [addDistrictModalVisible, setAddDistrictModalVisible] = useState(false)
+    const [removeDistrictModalVisible, setRemoveDistrictModalVisible] = useState(false)
     const [selectedDistrict, setSelectedDistrict] = useState()
     const pickerRef = useRef()
 
@@ -43,7 +44,8 @@ export default ({ navigation, ...restProps }) => {
             .collection('/districts')
             .add({
                 name: districtName
-            }).catch(error => {
+            }).then(() => setDistrictName(''))
+            .catch(error => {
                 if (error.code === 'permission-denied')
                     alert('Permission Denied')
             })
@@ -69,6 +71,26 @@ export default ({ navigation, ...restProps }) => {
             />
     } else if (!loadingCollection) {
         render = <>
+            <Modal
+                visible={removeDistrictModalVisible}
+                onTouchOutside={() => setRemoveDistrictModalVisible(false)}
+            >
+                <Text style={Styles.logoutModal.text}>
+                    Are you sure you want to remove the '{selectedDistrict && selectedDistrict.label}' district?
+                </Text>
+                <View style={Styles.logoutModal.buttonView}>
+                    <Button
+                        style={Styles.logoutModal.button}
+                        title='Yes'
+                        onPress={() => setRemoveDistrictModalVisible(false) || removeSelectedDistrict()}
+                    />
+                    <Button
+                        style={Styles.logoutModal.button}
+                        title='No'
+                        onPress={() => setRemoveDistrictModalVisible(false)}
+                    />
+                </View>
+            </Modal>
             <Modal
                 visible={addDistrictModalVisible}
                 onTouchOutside={() => setAddDistrictModalVisible(false)}
@@ -106,7 +128,7 @@ export default ({ navigation, ...restProps }) => {
                 />
                 <Button
                     title='Remove'
-                    onPress={removeSelectedDistrict}
+                    onPress={() => setRemoveDistrictModalVisible(true)}
                 />
             </View>
         </>
