@@ -48,10 +48,9 @@ export default () => {
     const { theme } = useContext(GlobalContext)
 
     var render = <ActivityIndicator />
-    if (firebaseError) {
+    if (firebaseError)
         render = <DisplayError errorMessage={"Firebase Error: " + firebaseError.message} />
-    }
-    else if (!firebaseLoading) {
+    else if (!firebaseLoading)
         render = (
             <NavigationContainer
                 theme={theme === "Dark" ? DarkTheme : DefaultTheme}
@@ -67,7 +66,6 @@ export default () => {
                 </Stack.Navigator>
             </NavigationContainer>
         )
-    }
     return render
 }
 

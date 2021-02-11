@@ -84,9 +84,19 @@ export const textInput = {
     },
     Dark: {
         color: "#eee",
-        backgroundColor: '#246',
+        backgroundColor: '#333',
     }
 }
+
+export const placeHolderText = {
+    Light: {
+        color: "#aaa",
+    },
+    Dark: {
+        color: "#888",
+    }
+}
+
 
 export const materialIcons = {
     Light: {

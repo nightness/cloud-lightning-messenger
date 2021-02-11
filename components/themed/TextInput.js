@@ -17,7 +17,7 @@ export default ({ children, style, classRef, ...restProps }) => {
             {...restProps}
             ref={classRef}
             style={[Styles.textInput.input, Themes.textInput[theme], style]}
-            placeholderTextColor={Themes.materialIcons[theme].color}
+            placeholderTextColor={Themes.placeHolderText[theme].color}
         >
             {children}
         </TextInput>
