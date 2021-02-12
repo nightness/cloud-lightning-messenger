@@ -15,26 +15,27 @@ export default ({ style, classRef, data = [], selectedValue, onValueChanged, ...
         typeof onValueChanged === 'function' && onValueChanged(selectedData)
     }, [selectedItem])
 
-    const PickerCommon = () => <Picker
-        style={[Styles.picker.picker, Themes.picker[theme], style]}
-        {...restProps}
-        ref={classRef}
-        selectedValue={selectedItem}
-        onValueChange={setSelectedItem}
-    >
-        {
-            data.map(item => {
-                return (
-                    <Picker.Item
-                        style={Styles.picker.item}
-                        label={item.label}
-                        value={item.value}
-                        key={item.value}
-                    />
-                )
-            })
-        }
-    </Picker>
+    const PickerCommon = () =>
+        <Picker
+            style={[Styles.picker.picker, Themes.picker[theme], style]}
+            {...restProps}
+            ref={classRef}
+            selectedValue={selectedItem}
+            onValueChange={setSelectedItem}
+        >
+            {
+                data.map(item => {
+                    return (
+                        <Picker.Item
+                            style={Styles.picker.item}
+                            label={item.label}
+                            value={item.value}
+                            key={item.value}
+                        />
+                    )
+                })
+            }
+        </Picker>
     if (Platform.OS === 'ios') {
         return (
             <ScrollView bounces={false}>

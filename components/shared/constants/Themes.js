@@ -97,7 +97,6 @@ export const placeHolderText = {
     }
 }
 
-
 export const materialIcons = {
     Light: {
         color: "#212121",

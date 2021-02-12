@@ -10,7 +10,8 @@ import { ProfileProvider } from './shared/ProfileContext'
 import Home from './Home'
 import Messenger from './messenger/Messenger'
 import DispatchMessenger from './messenger/DispatchMessenger'
-import ManageDistricts from './messenger/ManageDistricts'
+import ManageGroups from './messenger/ManageGroups'
+import ManageUserRoles from './messenger/ManageUserRoles'
 import Authentication from './Authentication'
 
 const Drawer = createDrawerNavigator()
@@ -34,8 +35,12 @@ const DrawerNavigator = () => {
                     component={DispatchMessenger}
                 />
                 <Drawer.Screen
-                    name="Manage Districts"
-                    component={ManageDistricts}
+                    name="Manage User Groups"
+                    component={ManageGroups}
+                />
+                <Drawer.Screen
+                    name="Manage User Roles"
+                    component={ManageUserRoles}
                 />
             </Drawer.Navigator>
         </ProfileProvider>
