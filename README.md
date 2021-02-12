@@ -26,7 +26,7 @@ expo start
 | ------ | ----- | -------------------------------------------------------------------------------------------------- |
 | recent | array | Contains the most recent messages. Objects in the array follow the same structure as in 'history/' |
 
-Single document read pulls all recent messages, individual message documents are only queried when scrolling back in history.
+Single document read pulls all recent messages, individual message documents are only queried when scrolling back in history. (To be implemented, right now everything pulls from /messages/)
 
 ## Fields for /messenger/{messengerId}/messages/{messageId}
 
