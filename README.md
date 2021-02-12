@@ -20,7 +20,7 @@ expo start
 
 # Firestore Database Layout
 
-## Fields for /containers/{containerId}
+## Fields for /messenger/{messengerId}
 
 | Name   | Type  | Description                                                                                        |
 | ------ | ----- | -------------------------------------------------------------------------------------------------- |
@@ -28,7 +28,7 @@ expo start
 
 Single document read pulls all recent messages, individual history documents are only queried when scrolling back in history.
 
-## Fields for /containers/{containerId}/history/{message}
+## Fields for /messenger/{messengerId}/history/{message}
 
 | Name         | Type        | Description                    |
 | ------------ | ----------- | ------------------------------ |
