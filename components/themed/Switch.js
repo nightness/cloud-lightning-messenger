@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Switch } from 'react-native'
 import { Styles, Themes } from '../shared/Constants'
-import { themedSwitch } from '../shared/constants/Themes'
 import { GlobalContext } from '../shared/GlobalContext'
 
 export default ({ children, style, onChange }) => {
