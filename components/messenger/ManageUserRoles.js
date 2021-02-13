@@ -9,10 +9,6 @@ export default ({ navigation, ...restProps }) => {
     const [snapshot, loadingCollection, errorCollection] = useCollection('/users')
     const [users, setUsers] = useState([])
     const pickerRef = useRef()
-    // Modal states
-    const [roleName, setRoleName] = useState('')
-    const [addRoleModalVisible, setAddRoleModalVisible] = useState(false)
-    const [removeRoleModalVisible, setRemoveRoleModalVisible] = useState(false)
     const [selectedUser, setSelectedUser] = useState()
 
 
@@ -40,14 +36,6 @@ export default ({ navigation, ...restProps }) => {
         console.log(selectedUser)
     }, [selectedUser])
 
-    const addRole = () => {
-
-    }
-
-    const removeSelectedRole = () => {
-
-    }
-
     let render = <ActivityIndicator />
     if (errorCollection) {
         let errorCollectionCode = errorCollection ? errorCollection.code : null
@@ -57,49 +45,6 @@ export default ({ navigation, ...restProps }) => {
             />
     } else if (!loadingCollection) {
         render = <>
-            <Modal
-                visible={removeRoleModalVisible}
-                onTouchOutside={() => setRemoveRoleModalVisible(false)}
-            >
-                <Text style={Styles.logoutModal.text}>
-                    Are you sure you want to remove the '{selectedUser && selectedUser.label}' role from this user?
-                </Text>
-                <View style={Styles.logoutModal.buttonView}>
-                    <Button
-                        style={Styles.logoutModal.button}
-                        title='Yes'
-                        onPress={() => setRemoveRoleModalVisible(false) || removeSelectedRole()}
-                    />
-                    <Button
-                        style={Styles.logoutModal.button}
-                        title='No'
-                        onPress={() => setRemoveRoleModalVisible(false)}
-                    />
-                </View>
-            </Modal>
-            <Modal
-                visible={addRoleModalVisible}
-                onTouchOutside={() => setAddRoleModalVisible(false)}
-            >
-                <TextInput
-                    style={Styles.logoutModal.text}
-                    placeholder='Role Name'
-                    onChangeText={text => setRoleName(text)}
-                />
-
-                <View style={Styles.logoutModal.buttonView}>
-                    <Button
-                        style={Styles.logoutModal.button}
-                        title='Add Role'
-                        onPress={() => setAddRoleModalVisible(false) || addRole()}
-                    />
-                    <Button
-                        style={Styles.logoutModal.button}
-                        title='Cancel'
-                        onPress={() => setAddRoleModalVisible(false) || setRoleName('')}
-                    />
-                </View>
-            </Modal>
             <Picker
                 data={users}
                 onValueChanged={newValue => {
