@@ -4,7 +4,7 @@
 
 ```
 npm i -g expo-cli firebase-cli
-expo install
+npm install
 ```
 
 # Startup
