@@ -4,16 +4,14 @@ import { Styles, Themes } from '../shared/Constants'
 import { themedSwitch } from '../shared/constants/Themes'
 import { GlobalContext } from '../shared/GlobalContext'
 
-export default ({ children, style, onSwitchOn, onSwitchOff }) => {
+export default ({ children, style, onChange }) => {
     const [isEnabled, setIsEnabled] = useState(false)
     const { theme } = useContext(GlobalContext)
     const toggleSwitch = () => setIsEnabled(previousState => !previousState)
 
     useEffect(() => {
-        if (isEnabled && typeof onSwitchOn === 'function')
-            onSwitchOn()
-        else if (!isEnabled && typeof onSwitchOff === 'function')
-            onSwitchOff()
+        if (typeof onChange === 'function')
+            onChange(isEnabled)
     }, [isEnabled])
 
     return (

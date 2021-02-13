@@ -109,7 +109,9 @@ export default ({ navigation, ...restProps }) => {
                 classRef={pickerRef}
             />
             <View style={Styles.views.flexRowJustifyCenter}>
-                <Switch />
+                <Switch
+                    onChange={value => console.log(value)}
+                />
             </View>
             <View style={Styles.views.flexRowJustifyCenter}>
                 <Button
