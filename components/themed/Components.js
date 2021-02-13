@@ -16,6 +16,7 @@ import IconButton from './IconButton'
 import Picker from './Picker'
 import MaterialIcons from './MaterialIcons'
 import View from './View'
+import Switch from './Switch'
 
 export {
     ActivityIndicator,
@@ -35,5 +36,6 @@ export {
     IconButton,
     Picker,
     MaterialIcons,
-    View
+    View,
+    Switch
 }

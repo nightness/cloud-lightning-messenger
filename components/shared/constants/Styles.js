@@ -6,6 +6,12 @@ export const view = StyleSheet.create({
     }
 })
 
+export const themedSwitch = StyleSheet.create({
+    default: {
+
+    }
+})
+
 export const materialIcons = StyleSheet.create({
     icons: {
         paddingHorizontal: 3
