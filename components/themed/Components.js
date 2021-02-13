@@ -17,6 +17,7 @@ import Picker from './Picker'
 import MaterialIcons from './MaterialIcons'
 import View from './View'
 import Switch from './Switch'
+import LabeledSwitch from './LabeledSwitch'
 
 export {
     ActivityIndicator,
@@ -37,5 +38,6 @@ export {
     Picker,
     MaterialIcons,
     View,
-    Switch
+    Switch,
+    LabeledSwitch
 }

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
-import { Text, Modal, TextInput, View, Button, Container, Screen, Picker, ActivityIndicator, DisplayError, Switch } from '../themed/Components'
+import { Text, Modal, TextInput, View, Button, Container, Screen, Picker, ActivityIndicator, DisplayError, LabeledSwitch } from '../themed/Components'
 import { Styles, Themes } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
 import { useCollection, getFirestore } from '../firebase/Firebase'
@@ -52,13 +52,10 @@ export default ({ navigation, ...restProps }) => {
                 }}
                 classRef={pickerRef}
             />
-            <View style={Styles.views.flexRowJustifyCenter}>
-                <View style={Styles.views.flexRowJustifyCenter}>
-                    <Text style={{ marginRight: 10 }}>Admin</Text>
-                    <Switch
-                        onChange={value => console.log(value)}
-                    />
-                </View>
+            <View>
+                <LabeledSwitch label='Admin' onChange={value => console.log(value)} />
+                <LabeledSwitch label='Moderator' onChange={value => console.log(value)} />
+                <LabeledSwitch label='Speaker' onChange={value => console.log(value)} />
             </View>
         </>
     }
