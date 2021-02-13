@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
-import { FlatList } from 'react-native'
 import { Text, Modal, TextInput, View, Button, Container, Screen, Picker, ActivityIndicator, DisplayError } from '../themed/Components'
 import { Styles, Themes } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'

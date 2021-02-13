@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
-import { FlatList } from 'react-native'
 import { Text, Modal, TextInput, View, Button, Container, Screen, Picker, ActivityIndicator, DisplayError, Switch } from '../themed/Components'
 import { Styles, Themes } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
@@ -109,20 +108,12 @@ export default ({ navigation, ...restProps }) => {
                 classRef={pickerRef}
             />
             <View style={Styles.views.flexRowJustifyCenter}>
-                <Switch
-                    onChange={value => console.log(value)}
-                />
-            </View>
-            <View style={Styles.views.flexRowJustifyCenter}>
-                <Button
-                    title='Add'
-                    onPress={() => setAddRoleModalVisible(true)}
-                />
-                <Button
-                    title='Remove'
-                    disabled={!selectedUser}
-                    onPress={() => setRemoveRoleModalVisible(true)}
-                />
+                <View style={Styles.views.flexRowJustifyCenter}>
+                    <Text style={{ marginRight: 10 }}>Admin</Text>
+                    <Switch
+                        onChange={value => console.log(value)}
+                    />
+                </View>
             </View>
         </>
     }
