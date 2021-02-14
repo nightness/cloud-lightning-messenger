@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { ActivityIndicator } from 'react-native'
-import { useAuthState } from './Firebase'
+import { useAuthState, callFirebaseFunction } from './Firebase'
 
 export const FirebaseContext = createContext()
 
@@ -9,18 +9,58 @@ export const FirebaseProvider = ({ children }) => {
     const [claims, setClaims] = useState({})
     const [loadingClaims, setLoadingClaims] = useState(true)
     const [errorClaims, setClaimsError] = useState()
+    const [userToken, setUserToken] = useState()
+
+    const updateToken = () => {
+        if (!currentUser) {
+            setUserToken(undefined)
+            return
+        }
+
+        currentUser.getIdToken(true)
+            .then(token => setUserToken(token))
+            .catch()
+
+        currentUser.getIdTokenResult()
+            .then(idTokenResult => {
+                if (idTokenResult.claims !== undefined)
+                    setClaims(idTokenResult.claims)
+                setLoadingClaims(false)
+            })
+            .catch((error) => {
+                setClaimsError(error)
+            })
+    }
 
     useEffect(() => {
-        if (currentUser)
-            currentUser.getIdTokenResult()
-                .then(idTokenResult => {
-                    if (idTokenResult.claims !== undefined)
-                        setClaims(idTokenResult.claims)
-                    setLoadingClaims(false)
-                })
-                .catch((error) => {
-                    setClaimsError(error)
-                });
+        console.log(userToken)
+    }, [userToken])
+
+    const addClaim = async claimName => {
+        callFirebaseFunction('modifyClaim', {
+            userId: currentUser.uid,
+            authToken: userToken,
+            claim: claimName,
+            value: true,
+        }).then(result => {
+            updateToken()
+            console.log(result)
+        })
+    }
+
+    const removeClaim = async claimName => {
+        callFirebaseFunction('modifyClaim', {
+            userId: currentUser.uid,
+            authToken: userToken,
+            claim: claimName,
+        }).then(result => {
+            updateToken()
+            console.log(result)
+        })
+    }
+
+    useEffect(() => {
+        updateToken()
     }, [currentUser])
 
     const isLoading = loadingUser || loadingClaims
@@ -33,7 +73,7 @@ export const FirebaseProvider = ({ children }) => {
             permissionDenied={(errorUser === 'permission-denied')}
         />
     return (
-        <FirebaseContext.Provider value={{ currentUser, claims, isLoading, error }}>
+        <FirebaseContext.Provider value={{ currentUser, claims, isLoading, error, addClaim, removeClaim, userToken }}>
             {children}
         </FirebaseContext.Provider>
     )

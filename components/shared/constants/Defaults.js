@@ -1,2 +1,2 @@
-export const playgroundMode = false
+export const playgroundMode = true
 export const defaultTheme = 'Light'

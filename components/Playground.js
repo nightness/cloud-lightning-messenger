@@ -35,24 +35,8 @@ const fetchResult = (async () => {
 
 // Playground
 const Playground = ({ navigation }) => {
-    const { currentUser, claims } = useContext(FirebaseContext)
-
-    const addClaim = async () => {
-        callFirebaseFunction('modifyClaim', {
-            userId: currentUser.uid,
-            authToken: userToken,
-            claim: claimName,
-            value: true,
-        }).then(result => console.log(result))
-    }
-
-    const removeClaim = async () => {
-        callFirebaseFunction('modifyClaim', {
-            userId: currentUser.uid,
-            authToken: userToken,
-            claim: claimName,
-        }).then(result => console.log(result))
-    }
+    const { claims, addClaim, removeClaim } = useContext(FirebaseContext)
+    const [claimName, setClaimName] = useState()
 
     return (
         <Screen navigation={navigation} title='Playground'>
@@ -63,11 +47,11 @@ const Playground = ({ navigation }) => {
                 />
                 <Button
                     title='Add Claim'
-                    onPress={addClaim}
+                    onPress={() => addClaim(claimName)}
                 />
                 <Button
                     title='Remove Claim'
-                    onPress={removeClaim}
+                    onPress={() => removeClaim(claimName)}
                 />
                 <Button
                     title='Console Log Claims'
