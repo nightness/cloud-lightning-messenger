@@ -30,14 +30,14 @@ expo start
 
 ## Fields for /members/{memberId}/messages/{messageId}
 
-| Name       | Type        | Description                    |
-| ---------- | ----------- | ------------------------------ |
-| authorName | string      | Display name                   |
-| authorId   | string      | member's ID token              |
-| message    | string      | The text of the message        |
-| postedAt   | timestamp   | When the message was posted    |
-| location   | geolocation | Where the message was posted   |
-| isSeen     | boolean     | True if messages has been seen |
+| Name       | Type        | Description                                     |
+| ---------- | ----------- | ----------------------------------------------- |
+| authorName | string      | Display name                                    |
+| authorId   | string      | member's ID token                               |
+| message    | string      | The text of the message                         |
+| postedAt   | timestamp   | When the message was posted                     |
+| location   | geolocation | Where the message was posted                    |
+| isSeen     | boolean     | True if messages has been seen by the recipient |
 
 # Authentication
 

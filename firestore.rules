@@ -12,10 +12,9 @@ service cloud.firestore {
     // Member Rules
     match /members/{memberId} {
       allow read: if request.auth != null
-    }
-    match /members/{memberId}/messages  {
-    	allow read: if (request.auth.token.dispatcher == true)
-			allow read: if (request.auth.uid == messengerId)
+      match /messages/{messageId}  {
+        allow read: if (request.auth.uid == memberId)
+      }
     }
   }
 }
