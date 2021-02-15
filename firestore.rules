@@ -5,7 +5,7 @@ service cloud.firestore {
     function userHasGoogleAccount() {
       return
         request.auth.token.email_verified &&
-        request.auth.token.email.matches('.*@google\.com$')
+        request.auth.token.email.matches('@google.com*')
     }
 
     // For development use
