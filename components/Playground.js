@@ -60,14 +60,14 @@ export const Playground = ({ navigation }) => {
                     title='Add Claim'
                     onPress={async () => {
                         await addClaim(claimName)
-                        await reloadCurrentUser()
+                        await reloadCurrentUser() // Since I'm working with my own claims
                     }}
                 />
                 <Button
                     title='Remove Claim'
                     onPress={async () => {
                         await removeClaim(claimName)
-                        await reloadCurrentUser()
+                        await reloadCurrentUser() // Since I'm working with my own claims
                     }}
                 />
                 <Button
