@@ -1,17 +1,39 @@
 rules_version = '2'
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Global functions
+    function userHasGoogleAccount() {
+      return
+        request.auth.token.email_verified &&
+        request.auth.token.email.matches('.*@google\.com$')
+    }
+
+    // For development use
+    match /{unrestrictedAccessRemoveInProduction=**} {
+      allow read, write: if request.auth.token.allAccess && userHasGoogleAccount()
+    }
+
   	// Group Rules 
   	match /groups/{groupId} {
+      // Group Functions
+      function isGroupMember(uid) {
+        return exists(/databases/$(database)/documents/groups/$(groupId)/members/$(uid))
+      }
+
+      // Group Rules
 			allow read: if request.auth != null
+
+      // Group Messages Rules
       match /messages/{messageId} {
-      	allow read: if exists(/databases/$(database)/documents/groups/$(groupId)/members/$(request.auth.uid))
+      	allow read: if isGroupMember(request.auth.uid)
       }
     }
 
     // Member Rules
     match /members/{memberId} {
       allow read: if request.auth != null
+
+      // Member Personal Messages Rules
       match /messages/{messageId}  {
         allow read: if (request.auth.uid == memberId)
       }
