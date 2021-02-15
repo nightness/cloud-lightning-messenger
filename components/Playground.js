@@ -35,8 +35,19 @@ const fetchResult = (async () => {
 
 // Playground
 export const Playground = ({ navigation }) => {
-    const { claims, addClaim, removeClaim } = useContext(FirebaseContext)
+    const { currentUser, claims, addClaim, removeClaim } = useContext(FirebaseContext)
     const [claimName, setClaimName] = useState()
+
+    useEffect(() => {
+        if (!currentUser) return
+        console.log(currentUser)
+    }, [currentUser])
+
+    const reloadCurrentUser = async () => {
+        console.log('--- reload ---')
+        const result = currentUser.reload()
+        console.log(result)
+    }
 
     return (
         <Screen navigation={navigation} title='Playground'>
@@ -56,6 +67,10 @@ export const Playground = ({ navigation }) => {
                 <Button
                     title='Console Log Claims'
                     onPress={() => console.log(claims)}
+                />
+                <Button
+                    title='Reload Current User'
+                    onPress={reloadCurrentUser}
                 />
             </View>
         </Screen>
