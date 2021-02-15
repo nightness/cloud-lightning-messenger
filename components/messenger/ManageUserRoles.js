@@ -6,7 +6,7 @@ import { useCollection, getFirestore } from '../firebase/Firebase'
 
 export default ({ navigation, ...restProps }) => {
     const { theme } = useContext(GlobalContext)
-    const [snapshot, loadingCollection, errorCollection] = useCollection('/users')
+    const [snapshot, loadingCollection, errorCollection] = useCollection('/members')
     const [users, setUsers] = useState([])
     const pickerRef = useRef()
     const [selectedUser, setSelectedUser] = useState()

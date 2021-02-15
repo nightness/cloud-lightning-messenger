@@ -22,7 +22,7 @@ import {
     FirestoreDocumentView,
     InfiniteScroll,
 } from './themed/Components'
-import { callFirebaseFunction, useAuthState } from './firebase/Firebase'
+import { useAuthState } from './firebase/Firebase'
 import { FirebaseContext } from './firebase/FirebaseContext'
 import "./shared/FormValidation"
 

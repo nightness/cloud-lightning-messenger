@@ -32,10 +32,6 @@ export const FirebaseProvider = ({ children }) => {
             })
     }
 
-    useEffect(() => {
-        console.log(userToken)
-    }, [userToken])
-
     const addClaim = async claimName => {
         callFirebaseFunction('modifyClaim', {
             userId: currentUser.uid,
@@ -59,12 +55,16 @@ export const FirebaseProvider = ({ children }) => {
         })
     }
 
+    const isLoading = loadingUser || loadingClaims
+    const error = errorUser || errorClaims
+
     useEffect(() => {
         updateToken()
     }, [currentUser])
 
-    const isLoading = loadingUser || loadingClaims
-    const error = errorUser || errorClaims
+    useEffect(() => {
+        console.log(userToken)
+    }, [userToken])
 
     if (loadingUser)
         return <ActivityIndicator />

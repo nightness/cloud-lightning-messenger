@@ -9,8 +9,8 @@ export const createMessage = (messageText) =>
 export const useMessenger = (messengerContainerId, viewLengthMinimum) =>
     useReducer(reducer, {
         messengerContainerId,
-        messageCollectionPath: "/messenger/" + messengerContainerId + "/messages/",
-        messengerDocumentPath: "/messenger/" + messengerContainerId,
+        messageCollectionPath: "/members/" + messengerContainerId + "/messages/",
+        messengerDocumentPath: "/members/" + messengerContainerId,
         viewLength: viewLengthMinimum,
     })
 

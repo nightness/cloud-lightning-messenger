@@ -9,24 +9,13 @@ service cloud.firestore {
     	allow read: if exists(/databases/$(database)/documents/groups/$(groupId)/members/$(request.auth.uid))
     }
 
-  	// Message Container Rules 
-  	match /messenger/{messengerId} {
-      allow read: if (request.auth.token.dispatcher == true);
-			allow read: if (request.auth.uid == messengerId);
-    }
-    match /messenger/{messengerId}/messages/{messageId} {
-    	allow read: if (request.auth.token.dispatcher == true);
-			allow read: if (request.auth.uid == messengerId);
-    }    
-
-    // User Rules
-    match /users/{userId} {
+    // Member Rules
+    match /members/{memberId} {
       allow read: if request.auth != null
     }
-
-    // Auth token
-    match /users/{userId}/auth  {
-      allow read,write: if false
+    match /members/{memberId}/messages  {
+    	allow read: if (request.auth.token.dispatcher == true)
+			allow read: if (request.auth.uid == messengerId)
     }
   }
 }
