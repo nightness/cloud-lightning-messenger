@@ -4,9 +4,9 @@ service cloud.firestore {
   	// Group Rules 
   	match /groups/{groupId} {
 			allow read: if exists(/databases/$(database)/documents/groups/$(groupId)/members/$(request.auth.uid))
-    }
-    match /groups/{groupId}/messages/{messageId} {
-    	allow read: if exists(/databases/$(database)/documents/groups/$(groupId)/members/$(request.auth.uid))
+      match /messages/{messageId} {
+      	allow read: if exists(/databases/$(database)/documents/groups/$(groupId)/members/$(request.auth.uid))
+      }
     }
 
     // Member Rules
