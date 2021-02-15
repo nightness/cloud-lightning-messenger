@@ -46,8 +46,6 @@ export const FirebaseProvider = ({ children }) => {
         if (idTokenResult.claims !== undefined)
             setClaims(idTokenResult.claims)
         setLoadingClaims(false)
-
-        return await currentUser.reload()
     }
 
     const isLoading = loadingUser || loadingClaims
