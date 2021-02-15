@@ -8,55 +8,50 @@ export const FirebaseProvider = ({ children }) => {
     const [currentUser, loadingUser, errorUser] = useAuthState()
     const [claims, setClaims] = useState({})
     const [loadingClaims, setLoadingClaims] = useState(true)
-    const [errorClaims, setClaimsError] = useState()
     const [userToken, setUserToken] = useState()
 
-    const updateToken = () => {
+    const addClaim = async claimName => {
+        const result = await callFirebaseFunction('modifyClaim', {
+            userId: currentUser.uid,
+            authToken: userToken,
+            claim: claimName,
+            value: true,
+        })
+        updateToken()
+        console.log(result)
+        return result
+    }
+
+    const removeClaim = async claimName => {
+        const result = await callFirebaseFunction('modifyClaim', {
+            userId: currentUser.uid,
+            authToken: userToken,
+            claim: claimName,
+        })
+        updateToken()
+        console.log(result)
+        return result
+    }
+
+    const updateToken = async () => {
         if (!currentUser) {
             setUserToken(undefined)
             return
         }
 
-        currentUser.getIdToken(true)
-            .then(token => setUserToken(token))
-            .catch()
+        const token = await currentUser.getIdToken(true)
+        setUserToken(token)
 
-        currentUser.getIdTokenResult()
-            .then(idTokenResult => {
-                if (idTokenResult.claims !== undefined)
-                    setClaims(idTokenResult.claims)
-                setLoadingClaims(false)
-            })
-            .catch((error) => {
-                setClaimsError(error)
-            })
-    }
+        const idTokenResult = await currentUser.getIdTokenResult()
+        if (idTokenResult.claims !== undefined)
+            setClaims(idTokenResult.claims)
+        setLoadingClaims(false)
 
-    const addClaim = async claimName => {
-        callFirebaseFunction('modifyClaim', {
-            userId: currentUser.uid,
-            authToken: userToken,
-            claim: claimName,
-            value: true,
-        }).then(result => {
-            updateToken()
-            console.log(result)
-        })
-    }
-
-    const removeClaim = async claimName => {
-        callFirebaseFunction('modifyClaim', {
-            userId: currentUser.uid,
-            authToken: userToken,
-            claim: claimName,
-        }).then(result => {
-            updateToken()
-            console.log(result)
-        })
+        return await currentUser.reload()
     }
 
     const isLoading = loadingUser || loadingClaims
-    const error = errorUser || errorClaims
+    const error = errorUser
 
     useEffect(() => {
         updateToken()

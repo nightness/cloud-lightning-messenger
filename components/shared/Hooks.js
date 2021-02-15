@@ -38,11 +38,12 @@ export const useValue = initialValue => {
 // returns [currentState, previousState, setState]
 export const useStateChanged = initialState => {
     const previousState = useRef()
-    const [state, setState] = useState(initialState)
+    const [state, _setState] = useState(initialState)
 
-    useEffect(() => {
-        previousState.current = state
-    }, [state])
+    const setState = _state => _setState(_previousState => {
+        previousState.current = _previousState
+        return _state
+    })
 
     return [state, previousState.current, setState]
 }

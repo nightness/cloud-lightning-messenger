@@ -34,7 +34,7 @@ const fetchResult = (async () => {
 })()
 
 // Playground
-const Playground = ({ navigation }) => {
+export const Playground = ({ navigation }) => {
     const { claims, addClaim, removeClaim } = useContext(FirebaseContext)
     const [claimName, setClaimName] = useState()
 
