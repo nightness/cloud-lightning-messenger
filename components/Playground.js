@@ -45,7 +45,7 @@ export const Playground = ({ navigation }) => {
 
     const reloadCurrentUser = async () => {
         console.log('--- reload ---')
-        const result = currentUser.reload()
+        const result = await currentUser.reload()
         console.log(result)
     }
 
@@ -58,11 +58,17 @@ export const Playground = ({ navigation }) => {
                 />
                 <Button
                     title='Add Claim'
-                    onPress={() => addClaim(claimName)}
+                    onPress={async () => {
+                        await addClaim(claimName)
+                        await reloadCurrentUser()
+                    }}
                 />
                 <Button
                     title='Remove Claim'
-                    onPress={() => removeClaim(claimName)}
+                    onPress={async () => {
+                        await removeClaim(claimName)
+                        await reloadCurrentUser()
+                    }}
                 />
                 <Button
                     title='Console Log Claims'
