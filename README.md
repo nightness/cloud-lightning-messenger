@@ -20,13 +20,18 @@ expo start
 
 # Firestore Database Layout
 
+## Fields for /profiles/{memberId}
+
+| Name        | Type         | Description                       |
+| ----------- | ------------ | --------------------------------- |
+| displayName | string       | The member's name                 |
+| claims      | map (object) | { "dispatcher": true } (REQUIRED) |
+
 ## Fields for /members/{memberId}
 
-| Name        | Type         | Description                                   |
-| ----------- | ------------ | --------------------------------------------- |
-| displayName | string       | The member's name                             |
-| claims      | map (object) | { "dispatcher": true } (REQUIRED)             |
-| recent      | array        | Contains an array of the most recent messages |
+| Name   | Type  | Description                                   |
+| ------ | ----- | --------------------------------------------- |
+| recent | array | Contains an array of the most recent messages |
 
 ## Fields for /members/{memberId}/messages/{messageId}
 
