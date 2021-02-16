@@ -18,6 +18,7 @@ import MaterialIcons from './MaterialIcons'
 import View from './View'
 import Switch from './Switch'
 import LabeledSwitch from './LabeledSwitch'
+import Image from './Image'
 
 export {
     ActivityIndicator,
@@ -39,5 +40,6 @@ export {
     MaterialIcons,
     View,
     Switch,
-    LabeledSwitch
+    LabeledSwitch,
+    Image
 }

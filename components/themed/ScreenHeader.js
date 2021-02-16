@@ -2,11 +2,11 @@ import React, { useState, useContext } from 'react';
 import { View, useWindowDimensions } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Header } from "react-native-elements";
-import { Text, MaterialIcons } from './Components'
+import { Image, Text, MaterialIcons } from './Components'
 import { LogoutModal } from '../Authentication'
 import { Themes, Styles } from '../shared/Constants'
 
-export default ({ navigation, title, hasDrawerNavigation = true, hasHome, hasBack, hasLogout = true }) => {
+export default ({ navigation, title, photoURL, hasDrawerNavigation = true, hasHome, hasBack, hasLogout = true }) => {
     const { theme, setTheme } = useContext(GlobalContext)
     const [showLogoutModal, setShowLogoutModal] = useState(false)
 
@@ -72,11 +72,20 @@ export default ({ navigation, title, hasDrawerNavigation = true, hasHome, hasBac
                             size={iconSize}
                             onPress={toggleDarkMode} />
                         {hasLogout ?
-                            <MaterialIcons
-                                name="face"
-                                size={iconSize}
-                                onPress={() => setShowLogoutModal(true)} />
-                            : <></>}
+                            (photoURL ?
+                                <Image
+                                    source={{ uri: photoURL }}
+                                    style={{ width: 28, height: 28 }}
+                                    onPress={() => setShowLogoutModal(true)}
+                                /> :
+                                <MaterialIcons
+                                    name="face"
+                                    size={iconSize}
+                                    onPress={() => setShowLogoutModal(true)}
+                                />
+                            )
+                            : <></>
+                        }
                     </View>
                 }
                 rightContainerStyle={{}}
