@@ -5,7 +5,7 @@ import { useAuthState, getCurrentUser, getCollection, useCollection } from '../f
 export const ProfileContext = createContext()
 
 export const useProfiler = () => {
-    const [snapshot, loadingCollection, errorCollection] = useCollection('members')
+    const [snapshot, loadingCollection, errorCollection] = useCollection('profiles')
     const [isLoadingProfile, setIsLoadingProfile] = useState(true)
     const [cachedUsers, setCachedUsers] = useState({})
     const [currentUser, loading, error] = useAuthState();
@@ -21,7 +21,7 @@ export const useProfiler = () => {
         }
         if (!userId) return false
         if (cachedUsers[userId]) return true
-        const docRef = await getCollection('members').doc(userId).get()
+        const docRef = await getCollection('profiles').doc(userId).get()
         return docRef.exists
     }
 
@@ -30,7 +30,7 @@ export const useProfiler = () => {
             const currentUser = getCurrentUser()
             userId = currentUser ? currentUser.uid : null
         }
-        const docRef = await getCollection('members').doc(userId).get()
+        const docRef = await getCollection('profiles').doc(userId).get()
         if (docRef.exists) {
             const docData = docRef.data()
             return docData

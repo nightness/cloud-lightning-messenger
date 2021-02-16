@@ -29,12 +29,17 @@ service cloud.firestore {
       }
     }
 
+    // Profiles Rules
+    match /profiles/{memberId} {
+      allow read: if request.auth != null
+    }
+
     // Member Rules
     match /members/{memberId} {
-      allow read: if request.auth != null
+      allow read: if (request.auth.uid == memberId)
 
-      // Member Personal Messages Rules
-      match /messages/{messageId}  {
+      // And all subdocuments
+      match /{restOfPath=**}  {
         allow read: if (request.auth.uid == memberId)
       }
     }

@@ -22,10 +22,9 @@ expo start
 
 ## Fields for /profiles/{memberId}
 
-| Name        | Type         | Description                       |
-| ----------- | ------------ | --------------------------------- |
-| displayName | string       | The member's name                 |
-| claims      | map (object) | { "dispatcher": true } (REQUIRED) |
+| Name        | Type   | Description       |
+| ----------- | ------ | ----------------- |
+| displayName | string | The member's name |
 
 ## Fields for /members/{memberId}
 
