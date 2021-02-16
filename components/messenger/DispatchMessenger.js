@@ -12,6 +12,7 @@ import {
     FirestoreCollectionView
 } from '../themed/Components'
 import { Styles } from '../shared/Constants'
+import { useCollection } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
 import { createMessage, useMessenger } from './MessengerReducer'
@@ -19,9 +20,25 @@ import Icon from 'react-native-vector-icons/Feather';
 
 export default ({ navigation }) => {
     const { currentUser, claims } = useContext(FirebaseContext)
+    const [snapshot, loadingCollection, errorCollection] = useCollection('/groups')
+    const [groups, setGroups] = useState([])
     const [messageText, setMessageText] = useState('')
     const [messenger, messengerDispatch] = useMessenger(currentUser.uid, 25)
-    const [selectedValue, setSelectedValue] = useState('D5')
+
+    useEffect(() => {
+        if (loadingCollection || errorCollection || !snapshot) return
+        var newState = []
+        snapshot.docs.forEach(docRef => {
+            const push = async docRef => {
+                const name = await docRef.get('name')
+                newState.push({
+                    label: name,
+                    value: docRef.id
+                })
+            }
+            push(docRef).then(() => setGroups(newState))
+        })
+    }, [snapshot])
 
     useEffect(() => {
         console.log(claims)
@@ -52,16 +69,6 @@ export default ({ navigation }) => {
         sendMessage()
     }
 
-    // Get all drivers in a selected zone
-    // Use label for displayName and set value to the user's id (same as message container id)
-    const dataDistricts = [
-        { label: 'District 1', value: 'D1' },
-        { label: 'District 2', value: 'D2' },
-        { label: 'District 3', value: 'D3' },
-        { label: 'District 4', value: 'D4' },
-        { label: 'District 5', value: 'D5' }
-    ]
-
     const dataUsers = [
         { label: 'User 1', value: 'U1' },
         { label: 'User 2', value: 'U2' },
@@ -75,7 +82,7 @@ export default ({ navigation }) => {
             <Container>
                 <View style={Styles.messenger.views}>
                     <Picker
-                        data={dataDistricts}
+                        data={groups}
                         selectedValue={'D2'}
                         onValueChanged={newValue => {
                             console.log(newValue)
