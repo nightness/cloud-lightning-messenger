@@ -37,11 +37,11 @@ service cloud.firestore {
     // Member Rules
     match /members/{memberId} {
       allow read: if (request.auth.uid == memberId)
-
-      // And all subdocuments
-      match /{restOfPath=**}  {
+      
+      // Member Messages
+      match /messages/{messageId} {
         allow read: if (request.auth.uid == memberId)
-      }
-    }
+      }      
+    }    
   }
 }
