@@ -57,25 +57,28 @@ export default () => {
     const [user, firebaseLoading, firebaseError] = useAuthState()
     const { theme } = useContext(GlobalContext)
 
-    var render = <ActivityIndicator />
-    if (firebaseError)
-        render = <DisplayError errorMessage={"Firebase Error: " + firebaseError.message} />
-    else if (!firebaseLoading)
-        render = (
-            <NavigationContainer
-                theme={theme === "Dark" ? DarkTheme : DefaultTheme}
-            >
-                <Stack.Navigator
-                    headerMode="none"
-                    initialRouteName={user ? "Main" : "Authentication"}
-                    navigationOptions={({ navigation }) => ({
-                        headerLeft: null
-                    })}>
-                    <Stack.Screen name="Authentication" component={Authentication} />
-                    <Stack.Screen name="Main" component={DrawerNavigator} />
-                </Stack.Navigator>
-            </NavigationContainer>
+    if (firebaseLoading)
+        return (
+            <ActivityIndicator />
         )
-    return render
+    if (firebaseError)
+        return (
+            <DisplayError errorMessage={"Firebase Error: " + firebaseError.message} />
+        )
+    return (
+        <NavigationContainer
+            theme={theme === "Dark" ? DarkTheme : DefaultTheme}
+        >
+            <Stack.Navigator
+                headerMode="none"
+                initialRouteName={user ? "Main" : "Authentication"}
+                navigationOptions={({ navigation }) => ({
+                    headerLeft: null
+                })}>
+                <Stack.Screen name="Authentication" component={Authentication} />
+                <Stack.Screen name="Main" component={DrawerNavigator} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    )
 }
 
