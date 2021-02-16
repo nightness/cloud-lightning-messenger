@@ -26,7 +26,7 @@ export const LogoutModal = ({ navigation, shown, dismiss }) => {
                 <Button
                     style={Styles.logoutModal.button}
                     title='Yes'
-                    onPress={() => (dismiss && dismiss()) || firebaseLogout()}
+                    onPress={firebaseLogout}
                 />
                 <Button
                     style={Styles.logoutModal.button}
