@@ -1,8 +1,9 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
-import { Text, Modal, TextInput, View, Button, Container, Screen, Picker, ActivityIndicator, DisplayError } from '../themed/Components'
+import { ScrollView, Text, Modal, TextInput, View, Button, Container, Screen, Picker, ActivityIndicator, DisplayError } from '../themed/Components'
 import { Styles, Themes } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
 import { useCollection, getFirestore } from '../firebase/Firebase'
+//import { ScrollView } from 'react-native-gesture-handler'
 
 export default ({ navigation, ...restProps }) => {
     const { theme } = useContext(GlobalContext)
@@ -156,11 +157,12 @@ export default ({ navigation, ...restProps }) => {
             </Modal>
             <Picker
                 data={groups}
-                onValueChanged={newValue => {
-                    setSelectedGroup(newValue)
-                }}
+                onValueChanged={newValue => setSelectedGroup(newValue)}
                 classRef={pickerRef}
             />
+            <ScrollView>
+
+            </ScrollView>
             <View style={Styles.views.flexRowJustifyCenter}>
                 <Button
                     title='Add'
@@ -177,6 +179,15 @@ export default ({ navigation, ...restProps }) => {
                     onPress={() => setRemoveGroupModalVisible(true)}
                 />
             </View>
+            <View style={Styles.views.flexRowJustifyCenter}>
+                <Button
+                    title='Add Member'
+                />
+                <Button
+                    title='Remove Member'
+                />
+            </View>
+
         </>
     }
 

@@ -51,7 +51,7 @@ export default ({ navigation, ...restProps }) => {
                 }}
                 classRef={pickerRef}
             />
-            <View>
+            <View style={{ flex: 5 }}>
                 <LabeledSwitch label='Admin' onChange={value => console.log(value)} />
                 <LabeledSwitch label='Moderator' onChange={value => console.log(value)} />
                 <LabeledSwitch label='Speaker' onChange={value => console.log(value)} />
