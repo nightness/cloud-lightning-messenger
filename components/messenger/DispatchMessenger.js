@@ -16,7 +16,6 @@ import { useCollection } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
 import { createMessage, useMessenger } from './MessengerReducer'
-import Icon from 'react-native-vector-icons/Feather';
 
 export default ({ navigation }) => {
     const { currentUser, claims } = useContext(FirebaseContext)
@@ -83,7 +82,6 @@ export default ({ navigation }) => {
                 <View style={Styles.messenger.views}>
                     <Picker
                         data={groups}
-                        selectedValue={'D2'}
                         onValueChanged={newValue => {
                             console.log(newValue)
                         }}
