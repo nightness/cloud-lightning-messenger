@@ -9,8 +9,7 @@ export default ({ children, style, onChange, classRef, ...restProps }) => {
     const toggleSwitch = () => setIsEnabled(previousState => !previousState)
 
     useEffect(() => {
-        if (typeof onChange === 'function')
-            onChange(isEnabled)
+        (typeof onChange === 'function') && onChange(isEnabled)
     }, [isEnabled])
 
     return (
