@@ -10,6 +10,18 @@ export default ({ navigation, ...restProps }) => {
     const [users, setUsers] = useState([])
     const pickerRef = useRef()
     const [selectedUser, setSelectedUser] = useState()
+    const [isAdmin, setIsAdmin] = useState()
+    const [isManager, setIsManager] = useState()
+    const [isModerator, setIsModerator] = useState()
+
+    const toggleAdmin = () => setIsAdmin(previousState => !previousState)
+    const toggleManager = () => setIsManager(previousState => !previousState)
+    const toggleModerator = () => setIsModerator(previousState => !previousState)
+
+    useEffect(() => {
+        if (isAdmin !== undefined || isManager !== undefined || isModerator !== undefined)
+            console.log(`isAdmin = ${!!isAdmin}, isManager = ${!!isManager}, isModerator = ${!!isModerator}`)
+    }, [isAdmin, isManager, isModerator])
 
     useEffect(() => {
         if (loadingCollection || errorCollection || !snapshot) return
@@ -54,9 +66,9 @@ export default ({ navigation, ...restProps }) => {
                 />
             </View>
             <View style={Styles.views.flexRowJustifyCenter}>
-                <LabeledSwitch style={{ marginRight: 15 }} label='Admin' onChange={value => console.log(value)} />
-                <LabeledSwitch style={{ marginRight: 15 }} label='Moderator' onChange={value => console.log(value)} />
-                <LabeledSwitch label='Speaker' onChange={value => console.log(value)} />
+                <LabeledSwitch style={{ marginRight: 15 }} label='Admin' onChange={toggleAdmin} />
+                <LabeledSwitch style={{ marginRight: 15 }} label='Manager' onChange={toggleManager} />
+                <LabeledSwitch label='Moderator' onChange={toggleModerator} />
             </View>
         </>
     }

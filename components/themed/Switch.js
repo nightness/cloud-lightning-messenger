@@ -5,11 +5,18 @@ import { GlobalContext } from '../shared/GlobalContext'
 
 export default ({ children, style, onChange, classRef, ...restProps }) => {
     const [isEnabled, setIsEnabled] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false)
     const { theme } = useContext(GlobalContext)
     const toggleSwitch = () => setIsEnabled(previousState => !previousState)
 
     useEffect(() => {
-        (typeof onChange === 'function') && onChange(isEnabled)
+        setIsLoaded(true)
+    }, [])
+
+    useEffect(() => {
+        if (isLoaded) {
+            (typeof onChange === 'function') && onChange(isEnabled)
+        }
     }, [isEnabled])
 
     return (
