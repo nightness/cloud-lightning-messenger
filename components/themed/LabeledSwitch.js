@@ -8,9 +8,7 @@ export default ({ label, viewStyle, textStyle, ...restProps }) => {
     return (
         <View style={[Styles.views.flexRowJustifyCenter, viewStyle]}>
             {label && <Text style={[{ marginRight: 10 }, textStyle]}>{label}</Text>}
-            <Switch
-                {...restProps}
-            />
+            <Switch {...restProps} />
         </View>
     )
 }
