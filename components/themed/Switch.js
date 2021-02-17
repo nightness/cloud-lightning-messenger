@@ -3,7 +3,7 @@ import { Switch } from 'react-native'
 import { Styles, Themes } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
 
-export default ({ children, style, onChange }) => {
+export default ({ children, style, onChange, classRef, ...restProps }) => {
     const [isEnabled, setIsEnabled] = useState(false)
     const { theme } = useContext(GlobalContext)
     const toggleSwitch = () => setIsEnabled(previousState => !previousState)
@@ -15,6 +15,8 @@ export default ({ children, style, onChange }) => {
 
     return (
         <Switch style={[Styles.themedSwitch.default, style]}
+            {...restProps}
+            ref={classRef}
             trackColor={{
                 false: Themes.themedSwitch[theme].trackColorOff,
                 true: Themes.themedSwitch[theme].trackColorOn
