@@ -23,6 +23,7 @@ export default ({ navigation, ...restProps }) => {
             console.log(`isAdmin = ${!!isAdmin}, isManager = ${!!isManager}, isModerator = ${!!isModerator}`)
     }, [isAdmin, isManager, isModerator])
 
+    // Update the 'users' state
     useEffect(() => {
         if (loadingCollection || errorCollection || !snapshot) return
         var newState = []

@@ -170,7 +170,7 @@ export const messenger = StyleSheet.create({
         borderBottomWidth: 0,
         borderTopWidth: 0,
     },
-    flatlist: {
+    flatList: {
 
     },
     textInput: {

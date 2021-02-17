@@ -95,7 +95,7 @@ export default ({ navigation }) => {
                     />
                 </View>
                 <FirestoreCollectionView
-                    contentContainerStyle={Styles.messenger.flatlist}
+                    contentContainerStyle={Styles.messenger.flatList}
                     collectionPath={messenger.messageCollectionPath}
                     autoScrollToEnd={true}
                     orderBy='postedAt'
