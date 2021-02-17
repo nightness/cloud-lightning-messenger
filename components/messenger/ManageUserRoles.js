@@ -44,16 +44,18 @@ export default ({ navigation, ...restProps }) => {
             />
     } else if (!loadingCollection) {
         render = <>
-            <Picker
-                data={users}
-                onValueChanged={newValue => {
-                    setSelectedUser(newValue)
-                }}
-                classRef={pickerRef}
-            />
-            <View style={{ flex: 5 }}>
-                <LabeledSwitch label='Admin' onChange={value => console.log(value)} />
-                <LabeledSwitch label='Moderator' onChange={value => console.log(value)} />
+            <View>
+                <Picker
+                    data={users}
+                    onValueChanged={newValue => {
+                        setSelectedUser(newValue)
+                    }}
+                    classRef={pickerRef}
+                />
+            </View>
+            <View style={Styles.views.flexRowJustifyCenter}>
+                <LabeledSwitch style={{ marginRight: 15 }} label='Admin' onChange={value => console.log(value)} />
+                <LabeledSwitch style={{ marginRight: 15 }} label='Moderator' onChange={value => console.log(value)} />
                 <LabeledSwitch label='Speaker' onChange={value => console.log(value)} />
             </View>
         </>
