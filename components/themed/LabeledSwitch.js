@@ -4,11 +4,12 @@ import View from './View'
 import Switch from './Switch'
 import Text from './Text'
 
-export default ({ label, style, textStyle, key, onChange, ...restProps }) => {
+export default ({ label, style, viewStyle, textStyle, key, onChange, ...restProps }) => {
     return (
-        <View style={[Styles.views.flexRowJustifyCenter, style]}>
+        <View style={[Styles.views.flexRowJustifyCenter, viewStyle]}>
             <Text style={[{ marginRight: 10 }, textStyle]}>{label}</Text>
             <Switch
+                style={style}
                 key={key}
                 onChange={onChange}
             />
