@@ -68,7 +68,7 @@ export const useProfiler = () => {
         setIsFetching(false)
     }
 
-    function getUserName(uid) {
+    const getUserName = uid => {
         if (!currentUser) return ''
         if (!uid) uid = currentUser.uid
         if (cachedUsers[uid] && cachedUsers[uid].displayName)
@@ -108,6 +108,7 @@ export const useProfiler = () => {
         isFetching: isFetching || loading || isLoadingProfile,
         getUserName,
         hasProfile,
+        getUserProfile,
         error
     }
 }

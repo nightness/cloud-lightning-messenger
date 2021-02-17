@@ -3,54 +3,22 @@ import { ScrollView, Text, Modal, TextInput, View, Button, Container, Screen, Pi
 import { Styles, Themes } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
 import { useCollection, getFirestore } from '../firebase/Firebase'
+import { ProfileContext } from '../shared/ProfileContext'
 //import { ScrollView } from 'react-native-gesture-handler'
 
 export default ({ navigation, ...restProps }) => {
     const { theme } = useContext(GlobalContext)
+    const profileContext = useContext(ProfileContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('/groups')
     const [groups, setGroups] = useState([])
     const [groupName, setGroupName] = useState('')
+    const [selectedGroup, setSelectedGroup] = useState()
+    const [members, setMembers] = useState([])
+    const [selectedMember, setSelectedMember] = useState()
     const [addGroupModalVisible, setAddGroupModalVisible] = useState(false)
     const [renameGroupModalVisible, setRenameGroupModalVisible] = useState(false)
     const [removeGroupModalVisible, setRemoveGroupModalVisible] = useState(false)
-    const [selectedGroup, setSelectedGroup] = useState()
     const pickerRef = useRef()
-
-    useEffect(() => {
-        if (loadingCollection || errorCollection || !snapshot) return
-        var newState = []
-        snapshot.docs.forEach(docRef => {
-            const push = async docRef => {
-                const name = await docRef.get('name')
-                newState.push({
-                    label: name,
-                    value: docRef.id
-                })
-            }
-            push(docRef).then(() => setGroups(newState))
-        })
-    }, [snapshot])
-
-    useEffect(() => {
-        if (!selectedGroup)
-            setSelectedGroup(groups[0])
-    }, [groups])
-
-    useEffect(() => {
-        console.log(selectedGroup)
-    }, [selectedGroup])
-
-    const addGroup = () => {
-        getFirestore()
-            .collection('/groups')
-            .add({
-                name: groupName
-            }).then(() => setGroupName(''))
-            .catch(error => {
-                if (error.code === 'permission-denied')
-                    alert('Permission Denied')
-            })
-    }
 
     const renameGroup = () => {
         getFirestore()
@@ -73,6 +41,73 @@ export default ({ navigation, ...restProps }) => {
             .collection('/groups')
             .doc(selectedGroup.value)
             .delete()
+            .catch(error => {
+                if (error.code === 'permission-denied')
+                    alert('Permission Denied')
+            })
+    }
+
+    const loadGroupMembers = async () => {
+        const snapshot = await getFirestore()
+            .collection('groups')
+            .doc(selectedGroup.value)
+            .get()
+        const data = snapshot.data()
+        if (!data || !data.members) return
+        let promises = []
+        let members = []
+        data.members.forEach(member => {
+            const add = async uid => {
+                const profile = await profileContext.getUserProfile(member)
+                members.push({
+                    label: profile.displayName,
+                    value: member
+                })
+            }
+            promises.push(add(member))
+        });
+        Promise.all(promises).then(() => {
+            setMembers(members)
+            setSelectedMember(members[0])
+        })
+    }
+
+    useEffect(() => {
+        if (loadingCollection || errorCollection || !snapshot) return
+        var newState = []
+        snapshot.docs.forEach(docRef => {
+            const push = async docRef => {
+                const name = await docRef.get('name')
+                newState.push({
+                    label: name,
+                    value: docRef.id
+                })
+            }
+            push(docRef).then(() => setGroups(newState))
+        })
+    }, [snapshot])
+
+    useEffect(() => {
+        if (!selectedGroup)
+            setSelectedGroup(groups[0])
+    }, [groups])
+
+    useEffect(() => {
+        if (selectedGroup)
+            loadGroupMembers()
+    }, [selectedGroup])
+
+    useEffect(() => {
+        if (selectedMember)
+            console.log(selectedMember)
+    }, [selectedMember])
+
+    const addGroup = () => {
+        getFirestore()
+            .collection('/groups')
+            .add({
+                name: groupName
+            }).then(() => setGroupName(''))
             .catch(error => {
                 if (error.code === 'permission-denied')
                     alert('Permission Denied')
@@ -155,15 +190,17 @@ export default ({ navigation, ...restProps }) => {
                     />
                 </View>
             </Modal>
-            <Picker
-                data={groups}
-                onValueChanged={newValue => setSelectedGroup(newValue)}
-                classRef={pickerRef}
-            />
-            <ScrollView>
-
-            </ScrollView>
-            <View style={Styles.views.flexRowJustifyCenter}>
+            <View>
+                <Picker
+                    data={groups}
+                    onValueChanged={newValue => setSelectedGroup(newValue)}
+                />
+                <Picker
+                    data={members}
+                    onValueChanged={newValue => setSelectedMember(newValue)}
+                />
+            </View>
+            <View style={[Styles.views.flexRowJustifyCenter]}>
                 <Button
                     title='Add'
                     onPress={() => setAddGroupModalVisible(true)}
@@ -185,6 +222,7 @@ export default ({ navigation, ...restProps }) => {
                 />
                 <Button
                     title='Remove Member'
+                    disabled={!selectedMember}
                 />
             </View>
 
