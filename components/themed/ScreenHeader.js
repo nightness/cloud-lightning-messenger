@@ -75,7 +75,7 @@ export default ({ navigation, title, photoURL, hasDrawerNavigation = true, hasHo
                             (photoURL ?
                                 <Image
                                     source={{ uri: photoURL }}
-                                    style={{ width: 28, height: 28 }}
+                                    style={{ width: 28, height: 28, borderRadius: '50%' }}
                                     onPress={() => setShowLogoutModal(true)}
                                 /> :
                                 <MaterialIcons
