@@ -68,8 +68,7 @@ export default ({ navigation, ...restProps }) => {
         });
         Promise.all(promises).then(() => {
             setMembers(members)
-            if (members.length > 0)
-                setSelectedMember(members[0])
+            setSelectedMember((members.length > 0) ? members[0] : undefined)
         })
     }
 
