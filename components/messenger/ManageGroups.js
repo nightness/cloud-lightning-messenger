@@ -53,22 +53,23 @@ export default ({ navigation, ...restProps }) => {
             .doc(selectedGroup.value)
             .get()
         const data = snapshot.data()
-        if (!data || !data.members) return
         let promises = []
         let members = []
-        data.members.forEach(member => {
-            const add = async uid => {
-                const profile = await profileContext.getUserProfile(member)
-                members.push({
-                    label: profile.displayName,
-                    value: member
-                })
-            }
-            promises.push(add(member))
-        });
+        if (data && data.members) {
+            data.members.forEach(member => {
+                const add = async uid => {
+                    const profile = await profileContext.getUserProfile(member)
+                    members.push({
+                        label: profile.displayName,
+                        value: member
+                    })
+                }
+                promises.push(add(member))
+            })
+        }
         Promise.all(promises).then(() => {
             setMembers(members)
-            setSelectedMember((members.length > 0) ? members[0] : undefined)
+            setSelectedMember((members.length > 0) ? members[0] : '')
         })
     }
 
