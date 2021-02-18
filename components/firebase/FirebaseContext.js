@@ -27,7 +27,7 @@ export const FirebaseProvider = ({ children }) => {
             claim: claimName,
             value: true,
         })
-        return result
+        return result.data
     }
 
     // User requires the .admin token to use this function
@@ -37,7 +37,7 @@ export const FirebaseProvider = ({ children }) => {
             authToken: userToken,
             claim: claimName,
         })
-        return result
+        return result.data
     }
 
     const updateUserToken = async uid => {

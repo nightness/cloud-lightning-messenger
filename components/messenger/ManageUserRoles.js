@@ -17,10 +17,10 @@ export default ({ navigation, ...restProps }) => {
     const [isModerator, setIsModerator] = useState()
 
     const setClaim = (uid, claimName, value) => {
-        if (value)
-            addClaim(uid, claimName)
-        else
-            removeClaim(uid, claimName)
+        let promise = value ? addClaim(uid, claimName) : removeClaim(uid, claimName)
+        promise.then(results => {
+            console.log(results)
+        })
     }
     const toggleAdmin = () => setIsAdmin(previousState => setClaim(selectedUser.value, 'admin', !previousState) || !previousState)
     const toggleManager = () => setIsManager(previousState => setClaim(selectedUser.value, 'manager', !previousState) || !previousState)
