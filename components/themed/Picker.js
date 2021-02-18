@@ -13,7 +13,7 @@ export default ({ style, data = [], selectedValue, onValueChanged, ...restProps 
     const selectedData = data ? data.find(data => data.value === selectedItem) : undefined
 
     useEffect(() => {
-        console.log(selectedIndex)
+        //console.log(selectedIndex)
     }, [selectedIndex])
 
     useEffect(() => {

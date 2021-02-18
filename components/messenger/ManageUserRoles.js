@@ -2,24 +2,33 @@ import React, { useState, useContext, useEffect, useRef } from 'react'
 import { Text, Modal, TextInput, View, Button, Container, Screen, Picker, ActivityIndicator, DisplayError, LabeledSwitch } from '../themed/Components'
 import { Styles, Themes } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
+import { FirebaseContext } from '../firebase/FirebaseContext'
 import { useCollection, getFirestore } from '../firebase/Firebase'
 
 export default ({ navigation, ...restProps }) => {
     const { theme } = useContext(GlobalContext)
+    const { currentUser, addClaim, removeClaim, getClaims } = useContext(FirebaseContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('profiles')
     const [users, setUsers] = useState([])
     const [selectedUser, setSelectedUser] = useState()
+    const [selectedUserClaims, setSelectedUserClaims] = useState()
     const [isAdmin, setIsAdmin] = useState()
     const [isManager, setIsManager] = useState()
     const [isModerator, setIsModerator] = useState()
 
-    const toggleAdmin = () => setIsAdmin(previousState => !previousState)
-    const toggleManager = () => setIsManager(previousState => !previousState)
-    const toggleModerator = () => setIsModerator(previousState => !previousState)
+    const setClaim = (uid, claimName, value) => {
+        if (value)
+            addClaim(uid, claimName)
+        else
+            removeClaim(uid, claimName)
+    }
+    const toggleAdmin = () => setIsAdmin(previousState => setClaim('admin', !previousState) || !previousState)
+    const toggleManager = () => setIsManager(previousState => setClaim('manager', !previousState) || !previousState)
+    const toggleModerator = () => setIsModerator(previousState => setClaim('moderator', !previousState) || !previousState)
 
     useEffect(() => {
-        if (isAdmin !== undefined || isManager !== undefined || isModerator !== undefined)
-            console.log(`isAdmin = ${!!isAdmin}, isManager = ${!!isManager}, isModerator = ${!!isModerator}`)
+        if (isAdmin === undefined && isManager === undefined && isModerator === undefined) return
+        console.log(`isAdmin = ${!!isAdmin}, isManager = ${!!isManager}, isModerator = ${!!isModerator}`)
     }, [isAdmin, isManager, isModerator])
 
     // Update the 'users' state
@@ -46,7 +55,22 @@ export default ({ navigation, ...restProps }) => {
     }, [users])
 
     useEffect(() => {
-        console.log(selectedUser)
+        if (!selectedUser) {
+            setSelectedUserClaims({})
+            setIsAdmin(false)
+            setIsManager(false)
+            setIsModerator(false)
+            return
+        }
+        console.log(selectedUser.value)
+        getClaims(selectedUser.value)
+            .then(claims => {
+                setSelectedUserClaims(claims)
+                setIsAdmin(claims && !!claims.admin)
+                setIsManager(claims && !!claims.manager)
+                setIsModerator(claims && !!claims.moderator)
+                console.log(claims)
+            })
     }, [selectedUser])
 
     let render = <ActivityIndicator />
@@ -67,9 +91,9 @@ export default ({ navigation, ...restProps }) => {
                 />
             </View>
             <View style={Styles.views.flexRowJustifyCenter}>
-                <LabeledSwitch style={{ marginRight: 15 }} label='Admin' onChange={toggleAdmin} />
-                <LabeledSwitch style={{ marginRight: 15 }} label='Manager' onChange={toggleManager} />
-                <LabeledSwitch label='Moderator' onChange={toggleModerator} />
+                <LabeledSwitch style={{ marginRight: 15 }} label='Admin' value={!!isAdmin} onChange={toggleAdmin} />
+                <LabeledSwitch style={{ marginRight: 15 }} label='Manager' value={!!isManager} onChange={toggleManager} />
+                <LabeledSwitch label='Moderator' value={!!isModerator} onChange={toggleModerator} />
             </View>
         </>
     }

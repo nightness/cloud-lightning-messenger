@@ -11,31 +11,38 @@ export const FirebaseProvider = ({ children }) => {
     const [userToken, setUserToken] = useState()
 
     // User requires the .admin token to use this function
-    const addClaim = async claimName => {
+    const getClaims = async uid => {
+        const result = await callFirebaseFunction('getClaims', {
+            userId: uid,
+            authToken: userToken,
+        })
+        return result.data.customClaims
+    }
+
+    // User requires the .admin token to use this function
+    const addClaim = async (uid, claimName) => {
         const result = await callFirebaseFunction('modifyClaim', {
-            userId: currentUser.uid,
+            userId: uid,
             authToken: userToken,
             claim: claimName,
             value: true,
         })
-        updateToken()
         console.log(result)
         return result
     }
 
     // User requires the .admin token to use this function
-    const removeClaim = async claimName => {
+    const removeClaim = async (uid, claimName) => {
         const result = await callFirebaseFunction('modifyClaim', {
-            userId: currentUser.uid,
+            userId: uid,
             authToken: userToken,
             claim: claimName,
         })
-        updateToken()
         console.log(result)
         return result
     }
 
-    const updateToken = async () => {
+    const updateUserToken = async uid => {
         if (!currentUser) {
             setUserToken(undefined)
             return
@@ -50,16 +57,12 @@ export const FirebaseProvider = ({ children }) => {
         setLoadingClaims(false)
     }
 
-    const isLoading = loadingUser || loadingClaims
-    const error = errorUser
-
     useEffect(() => {
-        updateToken()
+        updateUserToken()
     }, [currentUser])
 
-    useEffect(() => {
-        console.log(userToken)
-    }, [userToken])
+    const isLoading = loadingUser || loadingClaims
+    const error = errorUser
 
     if (loadingUser)
         return <ActivityIndicator />
@@ -68,7 +71,9 @@ export const FirebaseProvider = ({ children }) => {
             permissionDenied={(errorUser === 'permission-denied')}
         />
     return (
-        <FirebaseContext.Provider value={{ currentUser, claims, isLoading, error, addClaim, removeClaim, userToken }}>
+        <FirebaseContext.Provider value={{
+            currentUser, claims, isLoading, error, addClaim, removeClaim, getClaims, userToken
+        }}>
             {children}
         </FirebaseContext.Provider>
     )
