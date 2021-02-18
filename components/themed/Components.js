@@ -18,6 +18,7 @@ import MaterialIcons from './MaterialIcons'
 import View from './View'
 import Switch from './Switch'
 import LabeledSwitch from './LabeledSwitch'
+import LabeledTextInput from './LabeledTextInput'
 import Image from './Image'
 
 export {
@@ -41,5 +42,6 @@ export {
     View,
     Switch,
     LabeledSwitch,
+    LabeledTextInput,
     Image
 }

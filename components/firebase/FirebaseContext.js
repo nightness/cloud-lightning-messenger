@@ -10,6 +10,7 @@ export const FirebaseProvider = ({ children }) => {
     const [loadingClaims, setLoadingClaims] = useState(true)
     const [userToken, setUserToken] = useState()
 
+    // User requires the .admin token to use this function
     const addClaim = async claimName => {
         const result = await callFirebaseFunction('modifyClaim', {
             userId: currentUser.uid,
@@ -22,6 +23,7 @@ export const FirebaseProvider = ({ children }) => {
         return result
     }
 
+    // User requires the .admin token to use this function
     const removeClaim = async claimName => {
         const result = await callFirebaseFunction('modifyClaim', {
             userId: currentUser.uid,
