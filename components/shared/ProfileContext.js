@@ -30,7 +30,6 @@ export const useProfiler = () => {
             const currentUser = getCurrentUser()
             userId = currentUser ? currentUser.uid : null
         }
-        console.log(userId)
         const docRef = await getCollection('profiles').doc(userId).get()
         if (docRef.exists) {
             const docData = docRef.data()

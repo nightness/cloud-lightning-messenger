@@ -72,7 +72,7 @@ export default ({ navigation, ...restProps }) => {
             }
             data.members.forEach(member => {
                 console.log(member)
-                promises.push(add(member.value))
+                promises.push(add(member))
             })
         }
         Promise.all(promises).then(() => {
@@ -106,21 +106,22 @@ export default ({ navigation, ...restProps }) => {
     }
 
     const removeSelectedMember = () => {
-        const newMembers = [...members]
-        var index = newMembers.indexOf(selectedMember.value);
-        if (index > -1) { newMembers.splice(index, 1) }
+        const newMembers = members.filter(obj => obj.value != selectedMember.value)
         console.log(newMembers)
-        // getFirestore()
-        //     .collection('groups')
-        //     .doc(selectedGroup.value)
-        //     .set({ members: newMembers })
-        //     .then(() => {
-        //         setMembers(newMembers)
-        //     })
-        //     .catch(error => {
-        //         if (error.code === 'permission-denied')
-        //             alert('Permission Denied')
-        //     })
+        getFirestore()
+            .collection('groups')
+            .doc(selectedGroup.value)
+            .set({
+                name: selectedGroup.label,
+                members: newMembers
+            })
+            .then(() => {
+                setMembers(newMembers)
+            })
+            .catch(error => {
+                if (error.code === 'permission-denied')
+                    alert('Permission Denied')
+            })
 
     }
 
