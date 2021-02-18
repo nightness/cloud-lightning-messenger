@@ -11,7 +11,7 @@ export default ({ children, style, navigation, ...restProps }) => {
 
     return (
         <View style={[Styles.views.screen, Themes.screen[theme], style]}>
-            <ScreenHeader navigation={navigation} photoURL={currentUser.photoURL} {...restProps} />
+            <ScreenHeader navigation={navigation} photoURL={currentUser && currentUser.photoURL} {...restProps} />
             {children}
         </View>
     )
