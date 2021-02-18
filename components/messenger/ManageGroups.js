@@ -223,10 +223,10 @@ export default ({ navigation, ...restProps }) => {
                 />
                 <View style={Styles.views.flexRowJustifyCenter}>
                     <Button
-                        title='Add Member'
+                        title='Add'
                     />
                     <Button
-                        title='Remove Member'
+                        title='Remove'
                         disabled={!selectedMember}
                     />
                 </View>
