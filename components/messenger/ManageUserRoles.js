@@ -68,7 +68,6 @@ export default ({ navigation, ...restProps }) => {
                 setIsAdmin(claims && !!claims.admin)
                 setIsManager(claims && !!claims.manager)
                 setIsModerator(claims && !!claims.moderator)
-                console.log(claims)
             })
     }, [selectedUser])
 
