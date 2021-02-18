@@ -5,7 +5,9 @@ import { useAuthState, getCurrentUser, getCollection, useCollection } from '../f
 export const ProfileContext = createContext()
 
 export const useProfiler = () => {
-    const [snapshot, loadingCollection, errorCollection] = useCollection('profiles')
+    const [snapshot, setSnapshot] = useState()
+    const [isLoadingCollection, setIsLoadingCollection] = useState(true)
+    const [collectionError, setCollectionError] = useState()
     const [isLoadingProfile, setIsLoadingProfile] = useState(true)
     const [cachedUsers, setCachedUsers] = useState({})
     const [currentUser, loading, error] = useAuthState();
@@ -59,8 +61,36 @@ export const useProfiler = () => {
                 isFetchingRef.current = true
             }
             console.log(`Starting fetchUser for ${fetchUidRef.current}`)
-            const profile = await getUserProfile(fetchUidRef.current)
-            newCache[fetchUidRef.current] = profile
+            try {
+                const profile = await getUserProfile(fetchUidRef.current)
+                newCache[fetchUidRef.current] = profile
+            } catch (err) {
+                // This can happen because of the security rule that requires a user to have a profile
+                // document with their uid to have access to the database. Since this document is created
+                // by cloud functions, a new user's first sign-in may have these permission-denied exceptions.
+
+                /**
+                    FirebaseError: Missing or insufficient permissions.
+                        at new e (http://localhost:19006/static/js/bundle.js:30324:5382)
+                        at t.ti (http://localhost:19006/static/js/bundle.js:30324:84533)
+                        at t.Di (http://localhost:19006/static/js/bundle.js:30324:93181)
+                        at e.onMessage (http://localhost:19006/static/js/bundle.js:30324:213728)
+                        at http://localhost:19006/static/js/bundle.js:30324:212394
+                        at http://localhost:19006/static/js/bundle.js:30324:213279
+                        at http://localhost:19006/static/js/bundle.js:30324:109564
+                    ProfileContext.js:63 Starting fetchUser for {userId}
+                    ProfileContext.js:128 FirebaseError: Missing or insufficient permissions.
+                        at new e (http://localhost:19006/static/js/bundle.js:30324:5382)
+                        at t.ti (http://localhost:19006/static/js/bundle.js:30324:84533)
+                        at t.Di (http://localhost:19006/static/js/bundle.js:30324:93181)
+                        at e.onMessage (http://localhost:19006/static/js/bundle.js:30324:213728)
+                        at http://localhost:19006/static/js/bundle.js:30324:212394
+                        at http://localhost:19006/static/js/bundle.js:30324:213279
+                        at http://localhost:19006/static/js/bundle.js:30324:109564
+
+                 */
+                console.log(err)
+            }
             isFetchingRef.current = false
         }
         if (newCache)
@@ -78,38 +108,69 @@ export const useProfiler = () => {
         return ''
     }
 
+    const verifyAccess = async () => {
+        var hasAccess = false
+        var retryCount = 0
+        var exception
+        while (!hasAccess && retryCount < 10) {
+            await new Promise(resolve => setTimeout(resolve, 500))
+            try {
+                const profiles = getCollection('profiles')
+                await profiles.get()
+                hasAccess = true
+            } catch (err) {
+                retryCount = retryCount + 1
+                exception = err
+                console.log(err)
+            }
+        }
+        setIsLoadingCollection(false)
+        if (!hasAccess)
+            setCollectionError(exception ? exception : new Error('permission-denied'))
+    }
+    // On component mounted
+    useEffect(() => {
+        //verifyAccess()
+        setIsLoadingCollection(false)
+    }, [])
+
     useEffect(() => {
         const username = getUserName()
         if (username) {
             setIsLoadingProfile(false)
         }
         else {
-            hasProfile().then(hasProfile => {
-                if (hasProfile) {
-                    setIsLoadingProfile(false)
-                }
-            }) // .catch(() => undefined)
+            hasProfile()
+                .then(hasProfile => {
+                    if (hasProfile) {
+                        setIsLoadingProfile(false)
+                    }
+                })
+                .catch(err => console.log(err))
         }
     }, [cachedUsers])
 
     useEffect(() => {
         if (!snapshot) return
 
-        snapshot.docChanges().forEach(documentChange => {
-            if (cachedUsers[documentChange.doc.id])
-                fetchUser(documentChange.doc.id, true)
-            //console.log(documentChange.doc.id)
-        })
+        try {
+            snapshot.docChanges().forEach(documentChange => {
+                if (cachedUsers[documentChange.doc.id])
+                    fetchUser(documentChange.doc.id, true)
+            })
+        } catch (err) {
+            console.log(err)
+        }
     }, [snapshot])
 
     return {
         cachedUsers,
         fetchUser,
-        isFetching: isFetching || loading || isLoadingProfile,
+        isFetching: isFetching || loading || isLoadingProfile || isLoadingCollection,
         getUserName,
         hasProfile,
         getUserProfile,
-        error
+        error: error || collectionError
     }
 }
 

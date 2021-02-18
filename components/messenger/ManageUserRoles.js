@@ -9,8 +9,9 @@ export default ({ navigation, ...restProps }) => {
     const { theme } = useContext(GlobalContext)
     const { currentUser, claims, addClaim, removeClaim, getClaims } = useContext(FirebaseContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('profiles')
-    const [users, setUsers] = useState([])
-    const [selectedUser, setSelectedUser] = useState()
+    const [members, setMembers] = useState([])
+    const [selectedMember, setSelectedMember] = useState()
+    const [loadingClaims, setLoadingClaims] = useState(false)
     const [isAdmin, setIsAdmin] = useState()
     const [isManager, setIsManager] = useState()
     const [isModerator, setIsModerator] = useState()
@@ -22,9 +23,9 @@ export default ({ navigation, ...restProps }) => {
             console.log(results)
         })
     }
-    const toggleAdmin = () => setIsAdmin(previousState => setClaim(selectedUser.value, 'admin', !previousState) || !previousState)
-    const toggleManager = () => setIsManager(previousState => setClaim(selectedUser.value, 'manager', !previousState) || !previousState)
-    const toggleModerator = () => setIsModerator(previousState => setClaim(selectedUser.value, 'moderator', !previousState) || !previousState)
+    const toggleAdmin = () => setIsAdmin(previousState => setClaim(selectedMember.value, 'admin', !previousState) || !previousState)
+    const toggleManager = () => setIsManager(previousState => setClaim(selectedMember.value, 'manager', !previousState) || !previousState)
+    const toggleModerator = () => setIsModerator(previousState => setClaim(selectedMember.value, 'moderator', !previousState) || !previousState)
 
     useEffect(() => {
         setPermissionDenied(!claims.admin)
@@ -43,30 +44,32 @@ export default ({ navigation, ...restProps }) => {
                 })
             }
             push(docRef)
-                .then(() => setUsers(newState))
+                .then(() => setMembers(newState))
             // .catch(() => undefined)
         })
     }, [snapshot])
 
     useEffect(() => {
-        if (!selectedUser)
-            setSelectedUser(users[0])
-    }, [users])
+        if (!selectedMember)
+            setSelectedMember(members[0])
+    }, [members])
 
     useEffect(() => {
-        if (!selectedUser) {
+        if (!selectedMember) {
             setIsAdmin(false)
             setIsManager(false)
             setIsModerator(false)
             return
         }
-        getClaims(selectedUser.value)
+        setLoadingClaims(true)
+        getClaims(selectedMember.value)
             .then(claims => {
                 setIsAdmin(claims && !!claims.admin)
                 setIsManager(claims && !!claims.manager)
                 setIsModerator(claims && !!claims.moderator)
+                setLoadingClaims(false)
             })
-    }, [selectedUser])
+    }, [selectedMember])
 
     let render = <ActivityIndicator />
     if (errorCollection || permissionDenied) {
@@ -79,16 +82,16 @@ export default ({ navigation, ...restProps }) => {
         render = <>
             <View>
                 <Picker
-                    data={users}
+                    data={members}
                     onValueChanged={newValue => {
-                        setSelectedUser(newValue)
+                        setSelectedMember(newValue)
                     }}
                 />
             </View>
             <View style={Styles.views.flexRowJustifyCenter}>
-                <LabeledSwitch style={{ marginRight: 15 }} label='Admin' value={!!isAdmin} onChange={toggleAdmin} />
-                <LabeledSwitch style={{ marginRight: 15 }} label='Manager' value={!!isManager} onChange={toggleManager} />
-                <LabeledSwitch label='Moderator' value={!!isModerator} onChange={toggleModerator} />
+                <LabeledSwitch style={{ marginRight: 15 }} isLoading={loadingClaims} label='Admin' value={!!isAdmin} onChange={toggleAdmin} />
+                <LabeledSwitch style={{ marginRight: 15 }} isLoading={loadingClaims} label='Manager' value={!!isManager} onChange={toggleManager} />
+                <LabeledSwitch isLoading={loadingClaims} label='Moderator' value={!!isModerator} onChange={toggleModerator} />
             </View>
         </>
     }
