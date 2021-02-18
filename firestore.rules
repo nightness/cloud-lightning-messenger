@@ -1,11 +1,16 @@
 rules_version = '2'
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Global functions
+    // Function to check if user has a Google account
     function userHasGoogleAccount() {
-      return
-        request.auth.token.email_verified &&
+      return request.auth.token.email_verified &&
         request.auth.token.email.matches('@google.com*')
+    }
+
+    // Function to check if user is authorized
+    function isAuthorized() {
+      return request.auth.uid != null &&
+        exists(/databases/$(database)/documents/profiles/$(request.auth.uid))
     }
 
     // For development use
@@ -13,7 +18,7 @@ service cloud.firestore {
       allow read, write: if request.auth.token.allAccess && userHasGoogleAccount()
     }
 
-  	// Group Rules 
+  	// Group Match 
   	match /groups/{groupId} {
       // Group Functions
       function isGroupMember(uid) {
@@ -21,7 +26,7 @@ service cloud.firestore {
       }
 
       // Group Rules
-			allow read: if request.auth != null
+			allow read: if isAuthorized()
       allow write: if request.auth.token.admin
 
       // Group Messages Rules
@@ -31,16 +36,16 @@ service cloud.firestore {
       }
     }
 
-    // Profiles Rules
+    // Profiles Match
     match /profiles/{memberId} {
-      allow read: if request.auth != null
+      allow read: if isAuthorized()
     }
 
-    // Member Rules
+    // Member Match
     match /members/{memberId} {
       allow read: if (request.auth.uid == memberId)
       
-      // Member Messages
+      // Member Messages Match
       match /messages/{messageId} {
         allow read: if (request.auth.uid == memberId)
       }      
