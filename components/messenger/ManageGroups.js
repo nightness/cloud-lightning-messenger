@@ -17,6 +17,7 @@ export default ({ navigation, ...restProps }) => {
     const [groupName, setGroupName] = useState('')
     const [selectedGroup, setSelectedGroup] = useState()
     const [members, setMembers] = useState([])
+    const [memberName, setMemberName] = useState('')
     const [selectedMember, setSelectedMember] = useState()
     const [addGroupModalVisible, setAddGroupModalVisible] = useState(false)
     const [renameGroupModalVisible, setRenameGroupModalVisible] = useState(false)
@@ -71,7 +72,6 @@ export default ({ navigation, ...restProps }) => {
                 })
             }
             data.members.forEach(member => {
-                console.log(member)
                 promises.push(add(member))
             })
         }
@@ -94,11 +94,18 @@ export default ({ navigation, ...restProps }) => {
     }
 
     const addMember = () => {
+        const newMembers = [...members, memberName]
+        console.log(newMembers)
         getFirestore()
-            .collection('/groups')
-            .add({
-                name: groupName
-            }).then(() => setGroupName(''))
+            .collection('groups')
+            .doc(selectedGroup.value)
+            .set({
+                name: selectedGroup.label,
+                members: newMembers
+            })
+            .then(() => {
+                setMembers(newMembers)
+            })
             .catch(error => {
                 if (error.code === 'permission-denied')
                     alert('Permission Denied')
@@ -122,7 +129,6 @@ export default ({ navigation, ...restProps }) => {
                 if (error.code === 'permission-denied')
                     alert('Permission Denied')
             })
-
     }
 
     useEffect(() => {
@@ -186,6 +192,29 @@ export default ({ navigation, ...restProps }) => {
                         style={Styles.logoutModal.button}
                         title='No'
                         onPress={() => setRemoveMemberModalVisible(false)}
+                    />
+                </View>
+            </Modal>
+            <Modal
+                visible={addMemberModalVisible}
+                onTouchOutside={() => setAddMemberModalVisible(false)}
+            >
+                <TextInput
+                    style={Styles.logoutModal.text}
+                    placeholder="Member's UID"
+                    onChangeText={text => setMemberName(text)}
+                />
+
+                <View style={Styles.logoutModal.buttonView}>
+                    <Button
+                        style={Styles.logoutModal.button}
+                        title='Add Member'
+                        onPress={() => setAddMemberModalVisible(false) || addMember()}
+                    />
+                    <Button
+                        style={Styles.logoutModal.button}
+                        title='Cancel'
+                        onPress={() => setAddMemberModalVisible(false) || setMemberName('')}
                     />
                 </View>
             </Modal>
@@ -286,6 +315,7 @@ export default ({ navigation, ...restProps }) => {
                 <View style={Styles.views.flexRowJustifyCenter}>
                     <Button
                         title='Add'
+                        onPress={() => setAddMemberModalVisible(true)}
                     />
                     <Button
                         title='Remove'
