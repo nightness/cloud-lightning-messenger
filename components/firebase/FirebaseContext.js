@@ -27,7 +27,6 @@ export const FirebaseProvider = ({ children }) => {
             claim: claimName,
             value: true,
         })
-        console.log(result)
         return result
     }
 
@@ -38,7 +37,6 @@ export const FirebaseProvider = ({ children }) => {
             authToken: userToken,
             claim: claimName,
         })
-        console.log(result)
         return result
     }
 
