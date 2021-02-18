@@ -216,7 +216,7 @@ export default ({ navigation, ...restProps }) => {
                         onPress={() => setRemoveGroupModalVisible(true)}
                     />
                 </View>
-                <Text>Users</Text>
+                <Text>Members</Text>
                 <Picker
                     data={members}
                     onValueChanged={newValue => setSelectedMember(newValue)}
