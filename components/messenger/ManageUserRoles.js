@@ -22,9 +22,9 @@ export default ({ navigation, ...restProps }) => {
         else
             removeClaim(uid, claimName)
     }
-    const toggleAdmin = () => setIsAdmin(previousState => setClaim('admin', !previousState) || !previousState)
-    const toggleManager = () => setIsManager(previousState => setClaim('manager', !previousState) || !previousState)
-    const toggleModerator = () => setIsModerator(previousState => setClaim('moderator', !previousState) || !previousState)
+    const toggleAdmin = () => setIsAdmin(previousState => setClaim(selectedUser.value, 'admin', !previousState) || !previousState)
+    const toggleManager = () => setIsManager(previousState => setClaim(selectedUser.value, 'manager', !previousState) || !previousState)
+    const toggleModerator = () => setIsModerator(previousState => setClaim(selectedUser.value, 'moderator', !previousState) || !previousState)
 
     useEffect(() => {
         if (isAdmin === undefined && isManager === undefined && isModerator === undefined) return
