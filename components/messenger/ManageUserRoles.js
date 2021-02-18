@@ -8,7 +8,6 @@ export default ({ navigation, ...restProps }) => {
     const { theme } = useContext(GlobalContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('profiles')
     const [users, setUsers] = useState([])
-    const pickerRef = useRef()
     const [selectedUser, setSelectedUser] = useState()
     const [isAdmin, setIsAdmin] = useState()
     const [isManager, setIsManager] = useState()
@@ -63,7 +62,6 @@ export default ({ navigation, ...restProps }) => {
                     onValueChanged={newValue => {
                         setSelectedUser(newValue)
                     }}
-                    classRef={pickerRef}
                 />
             </View>
             <View style={Styles.views.flexRowJustifyCenter}>

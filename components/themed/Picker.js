@@ -1,15 +1,20 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import { ScrollView, Platform } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Themes, Styles } from '../shared/Constants'
 import { Picker, PickerIOS } from '@react-native-picker/picker'
 import ToggleBox from 'react-native-togglebox'
 
-export default ({ style, classRef, data = [], selectedValue, onValueChanged, ...restProps }) => {
+export default ({ style, data = [], selectedValue, onValueChanged, ...restProps }) => {
     const { theme } = useContext(GlobalContext)
     const [selectedItem, setSelectedItem] = useState(selectedValue)
+    const [selectedIndex, setSelectedIndex] = useState(0)
     //const properTheme = enabled ? Themes.picker[theme] : Themes.pickerDisabled[theme]
     const selectedData = data ? data.find(data => data.value === selectedItem) : undefined
+
+    useEffect(() => {
+        console.log(selectedIndex)
+    }, [selectedIndex])
 
     useEffect(() => {
         typeof onValueChanged === 'function' && onValueChanged(selectedData)
@@ -19,9 +24,11 @@ export default ({ style, classRef, data = [], selectedValue, onValueChanged, ...
         <Picker
             style={[Styles.picker.picker, Themes.picker[theme], style]}
             {...restProps}
-            ref={classRef}
             selectedValue={selectedItem}
-            onValueChange={setSelectedItem}
+            onValueChange={(item, index) => {
+                setSelectedItem(item)
+                setSelectedIndex(index)
+            }}
         >
             {
                 data.map(item => {

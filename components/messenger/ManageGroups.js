@@ -18,7 +18,6 @@ export default ({ navigation, ...restProps }) => {
     const [addGroupModalVisible, setAddGroupModalVisible] = useState(false)
     const [renameGroupModalVisible, setRenameGroupModalVisible] = useState(false)
     const [removeGroupModalVisible, setRemoveGroupModalVisible] = useState(false)
-    const pickerRef = useRef()
 
     const renameGroup = () => {
         getFirestore()
