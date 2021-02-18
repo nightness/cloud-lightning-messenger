@@ -75,6 +75,7 @@ export default ({ navigation, ...restProps }) => {
 
     useEffect(() => {
         if (loadingCollection || errorCollection || !snapshot) return
+
         var newState = []
         snapshot.docs.forEach(docRef => {
             const push = async docRef => {
@@ -84,7 +85,10 @@ export default ({ navigation, ...restProps }) => {
                     value: docRef.id
                 })
             }
-            push(docRef).then(() => setGroups(newState))
+            push(docRef).then(() => {
+                setGroups(newState)
+                setSelectedGroup(newState[0])
+            })
         })
     }, [snapshot])
 
