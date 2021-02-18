@@ -88,7 +88,7 @@ export const useProfiler = () => {
                 if (hasProfile) {
                     setIsLoadingProfile(false)
                 }
-            })
+            }).catch(() => undefined)
         }
     }, [cachedUsers])
 

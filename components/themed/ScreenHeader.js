@@ -10,10 +10,6 @@ export default ({ navigation, title, photoURL, hasDrawerNavigation = true, hasHo
     const { theme, setTheme } = useContext(GlobalContext)
     const [showLogoutModal, setShowLogoutModal] = useState(false)
 
-    const openMenu = () => {
-        navigation.openDrawer()
-    }
-
     const toggleDarkMode = () => {
         if (theme === "Dark") {
             setTheme("Light")
@@ -47,7 +43,7 @@ export default ({ navigation, title, photoURL, hasDrawerNavigation = true, hasHo
                             <MaterialIcons
                                 name="menu"
                                 size={iconSize}
-                                onPress={openMenu} />
+                                onPress={navigation.openDrawer} />
                             : <></>}
                         {(hasHome) ?
                             <MaterialIcons

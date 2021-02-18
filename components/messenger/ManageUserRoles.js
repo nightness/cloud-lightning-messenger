@@ -34,7 +34,9 @@ export default ({ navigation, ...restProps }) => {
                     value: docRef.id
                 })
             }
-            push(docRef).then(() => setUsers(newState))
+            push(docRef)
+                .then(() => setUsers(newState))
+                .catch(() => undefined)
         })
     }, [snapshot])
 

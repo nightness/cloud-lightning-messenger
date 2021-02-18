@@ -46,7 +46,7 @@ export default ({ style, data = [], selectedValue, onValueChanged, ...restProps 
     if (Platform.OS === 'ios') {
         return (
             <ScrollView bounces={false}>
-                <ToggleBox label={selectedData.label} style={Styles.picker.toggleBox}>
+                <ToggleBox label={selectedData && selectedData.label} style={Styles.picker.toggleBox}>
                     <PickerCommon />
                 </ToggleBox>
             </ScrollView>

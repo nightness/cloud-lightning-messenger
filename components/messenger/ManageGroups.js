@@ -69,7 +69,7 @@ export default ({ navigation, ...restProps }) => {
         Promise.all(promises).then(() => {
             setMembers(members)
             setSelectedMember((members.length > 0) ? members[0] : '')
-        })
+        }).catch(() => undefined)
     }
 
     useEffect(() => {
@@ -87,7 +87,7 @@ export default ({ navigation, ...restProps }) => {
             push(docRef).then(() => {
                 setGroups(newState)
                 setSelectedGroup(newState[0])
-            })
+            }).catch(() => undefined)
         })
     }, [snapshot])
 
