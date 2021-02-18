@@ -3,7 +3,8 @@ service cloud.firestore {
   match /databases/{database}/documents {
     // Function to check if user has a Google account
     function userHasGoogleAccount() {
-      return request.auth.token.email_verified &&
+      return request.auth.uid != null &&
+        request.auth.token.email_verified &&
         request.auth.token.email.matches('@google.com*')
     }
 
@@ -11,6 +12,11 @@ service cloud.firestore {
     function isAuthorized() {
       return request.auth.uid != null &&
         exists(/databases/$(database)/documents/profiles/$(request.auth.uid))
+    }
+
+    // Function to check if user is an admin
+    function isAdmin() {
+      return isAuthorized() && request.auth.token.admin
     }
 
     // For development use
@@ -21,18 +27,17 @@ service cloud.firestore {
   	// Group Match 
   	match /groups/{groupId} {
       // Group Functions
-      function isGroupMember(uid) {
-        return exists(/databases/$(database)/documents/groups/$(groupId)/members/$(uid))
+      function isGroupMember() {
+        return exists(/databases/$(database)/documents/groups/$(groupId)/members/$(request.auth.uid))
       }
 
       // Group Rules
 			allow read: if isAuthorized()
-      allow write: if request.auth.token.admin
+      allow write: if isAdmin()
 
       // Group Messages Rules
       match /messages/{messageId} {
-      	allow read: if isGroupMember(request.auth.uid)
-        allow write: if request.auth.token.admin 
+      	allow read: if isGroupMember()
       }
     }
 
