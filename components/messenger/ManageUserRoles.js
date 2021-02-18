@@ -7,14 +7,14 @@ import { useCollection, getFirestore } from '../firebase/Firebase'
 
 export default ({ navigation, ...restProps }) => {
     const { theme } = useContext(GlobalContext)
-    const { currentUser, addClaim, removeClaim, getClaims } = useContext(FirebaseContext)
+    const { currentUser, claims, addClaim, removeClaim, getClaims } = useContext(FirebaseContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('profiles')
     const [users, setUsers] = useState([])
     const [selectedUser, setSelectedUser] = useState()
-    const [selectedUserClaims, setSelectedUserClaims] = useState()
     const [isAdmin, setIsAdmin] = useState()
     const [isManager, setIsManager] = useState()
     const [isModerator, setIsModerator] = useState()
+    const [permissionDenied, setPermissionDenied] = useState(true)
 
     const setClaim = (uid, claimName, value) => {
         let promise = value ? addClaim(uid, claimName) : removeClaim(uid, claimName)
@@ -27,9 +27,8 @@ export default ({ navigation, ...restProps }) => {
     const toggleModerator = () => setIsModerator(previousState => setClaim(selectedUser.value, 'moderator', !previousState) || !previousState)
 
     useEffect(() => {
-        if (isAdmin === undefined && isManager === undefined && isModerator === undefined) return
-        console.log(`isAdmin = ${!!isAdmin}, isManager = ${!!isManager}, isModerator = ${!!isModerator}`)
-    }, [isAdmin, isManager, isModerator])
+        setPermissionDenied(!claims.admin)
+    }, [])
 
     // Update the 'users' state
     useEffect(() => {
@@ -56,7 +55,6 @@ export default ({ navigation, ...restProps }) => {
 
     useEffect(() => {
         if (!selectedUser) {
-            setSelectedUserClaims({})
             setIsAdmin(false)
             setIsManager(false)
             setIsModerator(false)
@@ -64,7 +62,6 @@ export default ({ navigation, ...restProps }) => {
         }
         getClaims(selectedUser.value)
             .then(claims => {
-                setSelectedUserClaims(claims)
                 setIsAdmin(claims && !!claims.admin)
                 setIsManager(claims && !!claims.manager)
                 setIsModerator(claims && !!claims.moderator)
@@ -72,11 +69,11 @@ export default ({ navigation, ...restProps }) => {
     }, [selectedUser])
 
     let render = <ActivityIndicator />
-    if (errorCollection) {
+    if (errorCollection || permissionDenied) {
         let errorCollectionCode = errorCollection ? errorCollection.code : null
         render =
             <DisplayError
-                permissionDenied={(errorCollectionCode === 'permission-denied')}
+                permissionDenied={(errorCollectionCode === 'permission-denied' || permissionDenied)}
             />
     } else if (!loadingCollection) {
         render = <>
