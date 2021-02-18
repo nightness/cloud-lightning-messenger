@@ -199,37 +199,37 @@ export default ({ navigation, ...restProps }) => {
                     data={groups}
                     onValueChanged={newValue => setSelectedGroup(newValue)}
                 />
+                <View style={[Styles.views.flexRowJustifyCenter]}>
+                    <Button
+                        title='Add'
+                        onPress={() => setAddGroupModalVisible(true)}
+                    />
+                    <Button
+                        title='Rename'
+                        disabled={!selectedGroup}
+                        onPress={() => setGroupName(selectedGroup && selectedGroup.label) || setRenameGroupModalVisible(true)}
+                    />
+                    <Button
+                        title='Remove'
+                        disabled={!selectedGroup}
+                        onPress={() => setRemoveGroupModalVisible(true)}
+                    />
+                </View>
                 <Picker
                     data={members}
                     onValueChanged={newValue => setSelectedMember(newValue)}
                 />
-            </View>
-            <View style={[Styles.views.flexRowJustifyCenter]}>
-                <Button
-                    title='Add'
-                    onPress={() => setAddGroupModalVisible(true)}
-                />
-                <Button
-                    title='Rename'
-                    disabled={!selectedGroup}
-                    onPress={() => setGroupName(selectedGroup && selectedGroup.label) || setRenameGroupModalVisible(true)}
-                />
-                <Button
-                    title='Remove'
-                    disabled={!selectedGroup}
-                    onPress={() => setRemoveGroupModalVisible(true)}
-                />
-            </View>
-            <View style={Styles.views.flexRowJustifyCenter}>
-                <Button
-                    title='Add Member'
-                />
-                <Button
-                    title='Remove Member'
-                    disabled={!selectedMember}
-                />
-            </View>
+                <View style={Styles.views.flexRowJustifyCenter}>
+                    <Button
+                        title='Add Member'
+                    />
+                    <Button
+                        title='Remove Member'
+                        disabled={!selectedMember}
+                    />
+                </View>
 
+            </View>
         </>
     }
 
