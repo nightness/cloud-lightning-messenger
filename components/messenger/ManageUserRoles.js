@@ -36,7 +36,7 @@ export default ({ navigation, ...restProps }) => {
             }
             push(docRef)
                 .then(() => setUsers(newState))
-                .catch(() => undefined)
+            // .catch(() => undefined)
         })
     }, [snapshot])
 

@@ -1,5 +1,8 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
-import { ScrollView, Text, Modal, TextInput, View, Button, Container, Screen, Picker, ActivityIndicator, DisplayError } from '../themed/Components'
+import {
+    ScrollView, Text, Modal, TextInput, View, Button,
+    Container, Screen, Picker, ActivityIndicator, DisplayError
+} from '../themed/Components'
 import { Styles, Themes } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
 import { useCollection, getFirestore } from '../firebase/Firebase'
@@ -18,6 +21,10 @@ export default ({ navigation, ...restProps }) => {
     const [addGroupModalVisible, setAddGroupModalVisible] = useState(false)
     const [renameGroupModalVisible, setRenameGroupModalVisible] = useState(false)
     const [removeGroupModalVisible, setRemoveGroupModalVisible] = useState(false)
+
+    const [addMemberModalVisible, setAddMemberModalVisible] = useState(false)
+    const [removeMemberModalVisible, setRemoveMemberModalVisible] = useState(false)
+
 
     const renameGroup = () => {
         getFirestore()
@@ -47,29 +54,74 @@ export default ({ navigation, ...restProps }) => {
     }
 
     const loadGroupMembers = async () => {
+        if (!selectedGroup || !selectedGroup.value) return
         const snapshot = await getFirestore()
             .collection('groups')
             .doc(selectedGroup.value)
             .get()
         const data = snapshot.data()
         let promises = []
-        let members = []
+        let groupMembers = []
         if (data && data.members) {
+            const add = async uid => {
+                const profile = await profileContext.getUserProfile(uid)
+                groupMembers.push({
+                    label: profile.displayName,
+                    value: uid
+                })
+            }
             data.members.forEach(member => {
-                const add = async uid => {
-                    const profile = await profileContext.getUserProfile(member)
-                    members.push({
-                        label: profile.displayName,
-                        value: member
-                    })
-                }
-                promises.push(add(member))
+                console.log(member)
+                promises.push(add(member.value))
             })
         }
         Promise.all(promises).then(() => {
-            setMembers(members)
-            setSelectedMember((members.length > 0) ? members[0] : '')
-        }).catch(() => undefined)
+            setMembers(groupMembers)
+            setSelectedMember((groupMembers.length > 0) ? groupMembers[0] : '')
+        }) //.catch(() => undefined)
+    }
+
+    const addGroup = () => {
+        getFirestore()
+            .collection('/groups')
+            .add({
+                name: groupName
+            }).then(() => setGroupName(''))
+            .catch(error => {
+                if (error.code === 'permission-denied')
+                    alert('Permission Denied')
+            })
+    }
+
+    const addMember = () => {
+        getFirestore()
+            .collection('/groups')
+            .add({
+                name: groupName
+            }).then(() => setGroupName(''))
+            .catch(error => {
+                if (error.code === 'permission-denied')
+                    alert('Permission Denied')
+            })
+    }
+
+    const removeSelectedMember = () => {
+        const newMembers = [...members]
+        var index = newMembers.indexOf(selectedMember.value);
+        if (index > -1) { newMembers.splice(index, 1) }
+        console.log(newMembers)
+        // getFirestore()
+        //     .collection('groups')
+        //     .doc(selectedGroup.value)
+        //     .set({ members: newMembers })
+        //     .then(() => {
+        //         setMembers(newMembers)
+        //     })
+        //     .catch(error => {
+        //         if (error.code === 'permission-denied')
+        //             alert('Permission Denied')
+        //     })
+
     }
 
     useEffect(() => {
@@ -87,7 +139,7 @@ export default ({ navigation, ...restProps }) => {
             push(docRef).then(() => {
                 setGroups(newState)
                 setSelectedGroup(newState[0])
-            }).catch(() => undefined)
+            }) // .catch(() => undefined)
         })
     }, [snapshot])
 
@@ -106,18 +158,6 @@ export default ({ navigation, ...restProps }) => {
             console.log(selectedMember)
     }, [selectedMember])
 
-    const addGroup = () => {
-        getFirestore()
-            .collection('/groups')
-            .add({
-                name: groupName
-            }).then(() => setGroupName(''))
-            .catch(error => {
-                if (error.code === 'permission-denied')
-                    alert('Permission Denied')
-            })
-    }
-
     let render = <ActivityIndicator />
     if (errorCollection) {
         let errorCollectionCode = errorCollection ? errorCollection.code : null
@@ -127,6 +167,27 @@ export default ({ navigation, ...restProps }) => {
             />
     } else if (!loadingCollection) {
         render = <>
+            <Modal
+                visible={removeMemberModalVisible}
+                onTouchOutside={() => setRemoveGroupModalVisible(false)}
+            >
+                <Text style={Styles.logoutModal.text}>
+                    Are you sure you want to remove the '{selectedMember && selectedMember.label}' from
+                    the '{selectedGroup && selectedGroup.label}' group?
+                </Text>
+                <View style={Styles.logoutModal.buttonView}>
+                    <Button
+                        style={Styles.logoutModal.button}
+                        title='Yes'
+                        onPress={() => setRemoveMemberModalVisible(false) || removeSelectedMember()}
+                    />
+                    <Button
+                        style={Styles.logoutModal.button}
+                        title='No'
+                        onPress={() => setRemoveMemberModalVisible(false)}
+                    />
+                </View>
+            </Modal>
             <Modal
                 visible={removeGroupModalVisible}
                 onTouchOutside={() => setRemoveGroupModalVisible(false)}
@@ -228,6 +289,7 @@ export default ({ navigation, ...restProps }) => {
                     <Button
                         title='Remove'
                         disabled={!selectedMember}
+                        onPress={() => setRemoveMemberModalVisible(true)}
                     />
                 </View>
 

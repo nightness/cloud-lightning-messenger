@@ -25,11 +25,12 @@ export const useProfiler = () => {
         return docRef.exists
     }
 
-    const getUserProfile = async (userId) => {
+    const getUserProfile = async userId => {
         if (!userId) {
             const currentUser = getCurrentUser()
             userId = currentUser ? currentUser.uid : null
         }
+        console.log(userId)
         const docRef = await getCollection('profiles').doc(userId).get()
         if (docRef.exists) {
             const docData = docRef.data()
@@ -88,7 +89,7 @@ export const useProfiler = () => {
                 if (hasProfile) {
                     setIsLoadingProfile(false)
                 }
-            }).catch(() => undefined)
+            }) // .catch(() => undefined)
         }
     }, [cachedUsers])
 
