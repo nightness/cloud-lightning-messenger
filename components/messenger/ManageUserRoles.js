@@ -62,7 +62,6 @@ export default ({ navigation, ...restProps }) => {
             setIsModerator(false)
             return
         }
-        console.log(selectedUser.value)
         getClaims(selectedUser.value)
             .then(claims => {
                 setSelectedUserClaims(claims)
