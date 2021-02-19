@@ -46,7 +46,3 @@ expo start
 # Authentication
 
 In order to have access to the Firestore database, members need to authenticate with Firebase. Instead of having them sign-in manually; there is a REST API to manage member creation. When a member is created with the REST API, it returns a custom authentication token, that is sent to the member so the client can automatically authenticate with Firebase.
-
-If you have the vscode extension 'REST client' you can use the files in the 'rest/' folder to test out that API. (Not in repository)
-
-https://us-central1-cloud-lightning.cloudfunctions.net/members

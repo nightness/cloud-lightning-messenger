@@ -80,15 +80,15 @@ export const themedSwitch = {
     Light: {
         trackColorOn: '#81b0ff',
         trackColorOff: '#767577',
-        thumbColorEnabled: '#f5dd4b',
-        thumbColorDisabled: '#f4f3f4',
+        thumbColorOn: '#ddd',
+        thumbColorOff: '#f4f3f4',
         iosBackgroundColor: '#3e3e3e'
     },
     Dark: {
-        trackColorOn: '#81b0ff',
+        trackColorOn: '#22b0ff',
         trackColorOff: '#767577',
-        thumbColorEnabled: '#f5dd4b',
-        thumbColorDisabled: '#f4f3f4',
+        thumbColorOn: '#fff',
+        thumbColorOff: '#f4f3f4',
         iosBackgroundColor: '#3e3e3e'
     }
 }
