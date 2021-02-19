@@ -4,6 +4,8 @@ import { useAuthState, getCurrentUser, getCollection, useCollection } from '../f
 
 export const ProfileContext = createContext()
 
+const sleep = async delay => await new Promise(r => setTimeout(r, delay));
+
 export const useProfiler = () => {
     const [snapshot, setSnapshot] = useState()
     const [isLoadingCollection, setIsLoadingCollection] = useState(true)
@@ -89,6 +91,7 @@ export const useProfiler = () => {
                         at http://localhost:19006/static/js/bundle.js:30324:109564
 
                  */
+                await sleep(2000)
                 console.log(err)
             }
             isFetchingRef.current = false
@@ -146,7 +149,9 @@ export const useProfiler = () => {
                         setIsLoadingProfile(false)
                     }
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                    console.log(err)
+                })
         }
     }, [cachedUsers])
 

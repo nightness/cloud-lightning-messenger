@@ -15,12 +15,11 @@ export default ({ navigation }) => {
 
     useEffect(() => {
         if (!profileCache) return
-        profileCache
         const username = profileCache.getUserName()
         if (username) {
             setName(username)
         }
-    }, [profileCache])
+    }, [profileCache.cachedUsers])
 
     let children = <ActivityIndicator />
     if (!profileCache.isFetching) {
