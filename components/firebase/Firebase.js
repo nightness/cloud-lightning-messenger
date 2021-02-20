@@ -50,7 +50,7 @@ export const useAuthRest = () => {
 
 export const getCollection = (collectionPath) => getFirestore().collection(collectionPath)
 export const useCollection = (collectionPath, includeMetadataChanges = false) => (!collectionPath ?
-    [undefined, false, new Error('useCollection: collectionPath is null')] :
+    [undefined, false, new Error('useCollection: collectionPath not specified')] :
     FirebaseFirestore.useCollection(
         getCollection(collectionPath),
         {
@@ -60,7 +60,7 @@ export const useCollection = (collectionPath, includeMetadataChanges = false) =>
 )
 
 export const useCollectionOnce = (collectionPath, includeMetadataChanges = false) => (!collectionPath ?
-    [undefined, false, new Error('useCollectionOnce: collectionPath is null')] :
+    [undefined, false, new Error('useCollectionOnce: collectionPath not specified')] :
     FirebaseFirestore.useCollectionOnce(
         getCollection(collectionPath),
         {
@@ -70,7 +70,7 @@ export const useCollectionOnce = (collectionPath, includeMetadataChanges = false
 )
 
 export const useCollectionData = (collectionPath, includeMetadataChanges = false) => (!collectionPath ?
-    [undefined, false, new Error('useCollectionData: collectionPath is null')] :
+    [undefined, false, new Error('useCollectionData: collectionPath not specified')] :
     FirebaseFirestore.useCollectionData(
         getCollection(collectionPath),
         {
@@ -80,7 +80,7 @@ export const useCollectionData = (collectionPath, includeMetadataChanges = false
 )
 
 export const useCollectionDataOnce = (collectionPath, includeMetadataChanges = false) => (!collectionPath ?
-    [undefined, false, new Error('useCollectionDataOnce: collectionPath is null')] :
+    [undefined, false, new Error('useCollectionDataOnce: collectionPath not specified')] :
     FirebaseFirestore.useCollectionDataOnce(
         getCollection(collectionPath),
         {
@@ -91,7 +91,7 @@ export const useCollectionDataOnce = (collectionPath, includeMetadataChanges = f
 
 export const getDocument = (documentPath) => getFirestore().doc(documentPath)
 export const useDocument = (documentPath, includeMetadataChanges = false) => (!documentPath ?
-    [undefined, false, new Error('useDocument: documentPath is null')] :
+    [undefined, false, new Error('useDocument: documentPath was not specified')] :
     FirebaseFirestore.useDocument(
         getDocument(documentPath),
         {
@@ -101,7 +101,7 @@ export const useDocument = (documentPath, includeMetadataChanges = false) => (!d
 )
 
 export const useDocumentOnce = (documentPath, includeMetadataChanges = false) => (!documentPath ?
-    [undefined, false, new Error('useDocumentOnce: documentPath is null')] :
+    [undefined, false, new Error('useDocumentOnce: documentPath was not specified')] :
     FirebaseFirestore.useDocumentOnce(
         getDocument(documentPath),
         {
@@ -111,7 +111,7 @@ export const useDocumentOnce = (documentPath, includeMetadataChanges = false) =>
 )
 
 export const useDocumentData = (documentPath, includeMetadataChanges = false) => (!documentPath ?
-    [undefined, false, new Error('useDocumentData: documentPath is null')] :
+    [undefined, false, new Error('useDocumentData: documentPath was not specified')] :
     FirebaseFirestore.useDocumentData(
         getDocument(documentPath),
         {
@@ -121,7 +121,7 @@ export const useDocumentData = (documentPath, includeMetadataChanges = false) =>
 )
 
 export const useDocumentDataOnce = (documentPath, includeMetadataChanges = false) => (!documentPath ?
-    [undefined, false, new Error('useDocument: documentPath is null')] :
+    [undefined, false, new Error('useDocument: documentPath was not specified')] :
     FirebaseFirestore.useDocumentDataOnce(
         getDocument(documentPath),
         {
