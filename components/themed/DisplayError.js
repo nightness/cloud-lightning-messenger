@@ -13,7 +13,7 @@ export default ({ permissionDenied, error }) => {
             {errorMessageText &&
                 <Text style={Styles.displayError.text}>
                     {errorMessageText}
-                </Text>}
+                </Text>
             }
         </Container>
     )
