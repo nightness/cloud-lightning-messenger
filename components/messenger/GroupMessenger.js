@@ -22,7 +22,7 @@ export default ({ navigation }) => {
     const [snapshot, loadingCollection, errorCollection] = useCollection('/groups')
     const [groups, setGroups] = useState([])
     const [messageText, setMessageText] = useState('')
-    const [messenger, messengerDispatch] = useMessenger(currentUser.uid, 25)
+    const [groupCollectionPath, setGroupCollectionPath] = useState()
 
     useEffect(() => {
         if (loadingCollection || errorCollection || !snapshot) return
@@ -68,16 +68,8 @@ export default ({ navigation }) => {
         sendMessage()
     }
 
-    const dataUsers = [
-        { label: 'User 1', value: 'U1' },
-        { label: 'User 2', value: 'U2' },
-        { label: 'User 3', value: 'U3' },
-        { label: 'User 4', value: 'U4' },
-        { label: 'User 5', value: 'U5' }
-    ]
-
     return (
-        <Screen navigation={navigation} title={"Dispatch Messenger"}>
+        <Screen navigation={navigation} title={"Group Messenger"}>
             <Container>
                 <View style={Styles.messenger.views}>
                     <Picker
@@ -86,17 +78,10 @@ export default ({ navigation }) => {
                             console.log(newValue)
                         }}
                     />
-                    <Picker
-                        data={dataUsers}
-                        selectedValue={'U5'}
-                        onValueChanged={newValue => {
-                            console.log(newValue)
-                        }}
-                    />
                 </View>
                 <FirestoreCollectionView
                     contentContainerStyle={Styles.messenger.flatList}
-                    collectionPath={messenger.messageCollectionPath}
+                    collectionPath={groupCollectionPath}
                     autoScrollToEnd={true}
                     orderBy='postedAt'
                     renderItem={({ item }) => <Message item={item} />}

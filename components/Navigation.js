@@ -9,7 +9,7 @@ import { GlobalContext } from './shared/GlobalContext'
 import { ProfileProvider } from './shared/ProfileContext'
 import Home from './Home'
 import Messenger from './messenger/Messenger'
-import DispatchMessenger from './messenger/DispatchMessenger'
+import GroupMessenger from './messenger/GroupMessenger'
 import ManageGroups from './messenger/ManageGroups'
 import ManageUserRoles from './messenger/ManageUserRoles'
 import Authentication from './Authentication'
@@ -32,8 +32,8 @@ const DrawerNavigator = () => {
                     component={Messenger}
                 />
                 <Drawer.Screen
-                    name="Dispatch Messenger"
-                    component={DispatchMessenger}
+                    name="Group Messenger"
+                    component={GroupMessenger}
                 />
                 <Drawer.Screen
                     name="Manage Groups"

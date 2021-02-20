@@ -96,10 +96,10 @@ export default ({ collectionPath, orderBy, initialNumToRender, ...restProps }) =
     if (errorCollection || errorData) {
         let errorCollectionCode = errorCollection ? errorCollection.code : null
         let errorDataCode = errorData ? errorData.code : null
-        render =
-            <DisplayError
-                permissionDenied={(errorCollectionCode === 'permission-denied' || errorDataCode === 'permission-denied')}
-            />
+        render = <DisplayError
+            permissionDenied={(errorCollectionCode === 'permission-denied' || errorDataCode === 'permission-denied')}
+            errorMessage={errorCollection ? errorCollection.message : undefined}
+        />
     } else if (!loadingCollection && !loadingData) {
         render =
             <CollectionFlatList messages={messages} {...restProps} />
