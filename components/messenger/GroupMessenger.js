@@ -15,7 +15,6 @@ import { Styles } from '../shared/Constants'
 import { useCollection } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
-import { createMessage, useMessenger } from './MessengerReducer'
 
 export default ({ navigation }) => {
     const { currentUser, claims } = useContext(FirebaseContext)
@@ -44,22 +43,22 @@ export default ({ navigation }) => {
     }, [claims])
 
     const sendMessage = () => {
-        const text = messageText
-        setMessageText('')
-        createMessage(text)
-            .then(results => {
-                const data = results.data;
-                if (typeof (data.type) === 'string') {
-                    console.log("Error: " + data.message)
-                    if (data.type === 'silent') return
-                    alert(data.message)
-                } else {
-                    console.log(data)
-                }
-            })
-            .catch(error => {
-                alert('Unhandled exception')
-            })
+        // const text = messageText
+        // setMessageText('')
+        // createMessage(text)
+        //     .then(results => {
+        //         const data = results.data;
+        //         if (typeof (data.type) === 'string') {
+        //             console.log("Error: " + data.message)
+        //             if (data.type === 'silent') return
+        //             alert(data.message)
+        //         } else {
+        //             console.log(data)
+        //         }
+        //     })
+        //     .catch(error => {
+        //         alert('Unhandled exception')
+        //     })
     }
 
     const onMessageKeyPress = ({ key }) => {

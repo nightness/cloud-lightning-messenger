@@ -26,7 +26,7 @@ export default ({ permissionDenied, errorMessage, children }) => {
     else
         return (
             <Container>
-                <Text>An error occured</Text>
+                <Text>An error occurred</Text>
             </Container>
         )
 }
