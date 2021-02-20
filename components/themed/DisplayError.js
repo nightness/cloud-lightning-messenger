@@ -6,7 +6,7 @@ import { Styles } from '../shared/Constants'
 export default ({ permissionDenied, errorMessage, children }) => {
     if (permissionDenied) {
         return (
-            <Container style={Styles.views.flatListView}>
+            <Container style={Styles.views.filletedBorderView}>
                 <Text style={Styles.displayError.text}>
                     Permission Denied
                 </Text>
@@ -14,7 +14,7 @@ export default ({ permissionDenied, errorMessage, children }) => {
         )
     } else if (typeof (errorMessage) === 'string')
         return (
-            <Container style={Styles.views.flatListView}>
+            <Container style={Styles.views.filletedBorderView}>
                 <Text style={Styles.displayError.text}>
                     {errorMessage}
                 </Text>
@@ -22,13 +22,13 @@ export default ({ permissionDenied, errorMessage, children }) => {
         )
     else if (children)
         return (
-            <Container style={Styles.views.flatListView}>
+            <Container style={Styles.views.filletedBorderView}>
                 {children}
             </Container>
         )
     else
         return (
-            <Container style={Styles.views.flatListView}>
+            <Container style={Styles.views.filletedBorderView}>
                 <Text style={Styles.displayError.text}>
                     An unknown error occurred
                 </Text>

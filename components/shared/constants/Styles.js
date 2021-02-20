@@ -67,7 +67,7 @@ export const views = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center'
     },
-    flatListView: {
+    filletedBorderView: {
         flex: 1,
         margin: 0,
         padding: 5,
@@ -75,7 +75,7 @@ export const views = StyleSheet.create({
         borderRadius: 5,
         width: "100%"
     },
-    flatlist: {
+    flatList: {
 
     }
 })

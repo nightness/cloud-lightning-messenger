@@ -56,12 +56,12 @@ const CollectionFlatList = props => {
     }, [hitTop])
 
     return (
-        <View style={[Styles.views.flatListView, Themes.defaultView[theme], style]}>
+        <View style={[Styles.views.filletedBorderView, Themes.defaultView[theme], style]}>
             <FlatList
                 {...restProps}
                 ref={flatList}
                 removeClippedSubviews={true}
-                contentContainerStyle={Styles.views.flatlist}
+                contentContainerStyle={Styles.views.flatList}
                 data={messages}
                 onStartReached={loadMoreMessages}
                 onLayout={onLayout}
