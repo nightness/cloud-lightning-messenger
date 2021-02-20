@@ -13,10 +13,16 @@ export const themedSwitch = StyleSheet.create({
 })
 
 export const displayError = StyleSheet.create({
+    header: {
+        paddingTop: 5,
+        fontSize: 18,
+        fontWeight: '600'
+    },
     text: {
         paddingTop: 5,
         paddingLeft: 10,
-        fontSize: 16
+        fontSize: 14,
+        fontWeight: '600'
     }
 })
 

@@ -3,10 +3,13 @@ import Container from './Container'
 import Text from './Text'
 import { Styles } from '../shared/Constants'
 
-export default ({ permissionDenied, errorMessage = 'An unknown error occurred' }) => {
+export default ({ permissionDenied, error }) => {
+    let errorMessage = error ? error.message : undefined
     let errorMessageText = permissionDenied ? 'Permission Denied' : errorMessage
+    console.error(error)
     return (
         <Container style={Styles.views.filletedBorderView}>
+            <Text style={Styles.displayError.header}>Error Handler</Text>
             <Text style={Styles.displayError.text}>
                 {errorMessageText}
             </Text>
