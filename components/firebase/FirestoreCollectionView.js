@@ -92,7 +92,6 @@ export default ({ collectionPath, orderBy, initialNumToRender, ...restProps }) =
             fetchData()
     }, [snapshot])
 
-    let render = <ActivityIndicator />
     if (errorCollection || errorData) {
         let errorCollectionCode = errorCollection ? errorCollection.code : null
         let errorDataCode = errorData ? errorData.code : null
@@ -102,11 +101,7 @@ export default ({ collectionPath, orderBy, initialNumToRender, ...restProps }) =
             errorMessage={errorCollection ? errorCollection.message : undefined}
         />
     } else if (!loadingCollection && !loadingData) {
-        render =
-            <CollectionFlatList messages={messages} {...restProps} />
+        return <CollectionFlatList messages={messages} {...restProps} />
     }
-    return (
-        <>{render}</>
-    )
-
+    return <ActivityIndicator />
 }
