@@ -10,7 +10,7 @@ export default ({ permissionDenied, error }) => {
     return (
         <Container style={Styles.views.filletedBorderView}>
             <Text style={Styles.displayError.header}>
-                Sorry, an {!errorMessageText ? 'unknown' : ''} error has occurred
+                Sorry, an {!errorMessageText ? 'unknown error' : 'error'} has occurred
             </Text>
             {errorMessageText &&
                 <Text style={Styles.displayError.text}>
