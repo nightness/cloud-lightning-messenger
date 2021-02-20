@@ -49,65 +49,86 @@ export const useAuthRest = () => {
 }
 
 export const getCollection = (collectionPath) => getFirestore().collection(collectionPath)
-export const useCollection = (collectionPath, includeMetadataChanges = false) =>
+export const useCollection = (collectionPath, includeMetadataChanges = false) => (!collectionPath ?
+    [undefined, false, new Error('useCollection: collectionPath is null')] :
     FirebaseFirestore.useCollection(
         getCollection(collectionPath),
         {
             snapshotListenOptions: { includeMetadataChanges },
         }
-    );
-export const useCollectionOnce = (collectionPath, includeMetadataChanges = false) =>
+    )
+)
+
+export const useCollectionOnce = (collectionPath, includeMetadataChanges = false) => (!collectionPath ?
+    [undefined, false, new Error('useCollectionOnce: collectionPath is null')] :
     FirebaseFirestore.useCollectionOnce(
         getCollection(collectionPath),
         {
             snapshotListenOptions: { includeMetadataChanges },
         }
-    );
-export const useCollectionData = (collectionPath, includeMetadataChanges = false) =>
+    )
+)
+
+export const useCollectionData = (collectionPath, includeMetadataChanges = false) => (!collectionPath ?
+    [undefined, false, new Error('useCollectionData: collectionPath is null')] :
     FirebaseFirestore.useCollectionData(
         getCollection(collectionPath),
         {
             snapshotListenOptions: { includeMetadataChanges },
         }
-    );
-export const useCollectionDataOnce = (collectionPath, includeMetadataChanges = false) =>
+    )
+)
+
+export const useCollectionDataOnce = (collectionPath, includeMetadataChanges = false) => (!collectionPath ?
+    [undefined, false, new Error('useCollectionDataOnce: collectionPath is null')] :
     FirebaseFirestore.useCollectionDataOnce(
         getCollection(collectionPath),
         {
             snapshotListenOptions: { includeMetadataChanges },
         }
-    );
+    )
+)
 
 export const getDocument = (documentPath) => getFirestore().doc(documentPath)
-export const useDocument = (documentPath, includeMetadataChanges = false) =>
+export const useDocument = (documentPath, includeMetadataChanges = false) => (!documentPath ?
+    [undefined, false, new Error('useDocument: documentPath is null')] :
     FirebaseFirestore.useDocument(
         getDocument(documentPath),
         {
             snapshotListenOptions: { includeMetadataChanges },
         }
-    );
-export const useDocumentOnce = (documentPath, includeMetadataChanges = false) =>
+    )
+)
+
+export const useDocumentOnce = (documentPath, includeMetadataChanges = false) => (!documentPath ?
+    [undefined, false, new Error('useDocumentOnce: documentPath is null')] :
     FirebaseFirestore.useDocumentOnce(
         getDocument(documentPath),
         {
             snapshotListenOptions: { includeMetadataChanges },
         }
-    );
-export const useDocumentData = (documentPath, includeMetadataChanges = false) =>
+    )
+)
+
+export const useDocumentData = (documentPath, includeMetadataChanges = false) => (!documentPath ?
+    [undefined, false, new Error('useDocumentData: documentPath is null')] :
     FirebaseFirestore.useDocumentData(
         getDocument(documentPath),
         {
             snapshotListenOptions: { includeMetadataChanges },
         }
-    );
+    )
+)
 
-export const useDocumentDataOnce = (documentPath, includeMetadataChanges = false) =>
+export const useDocumentDataOnce = (documentPath, includeMetadataChanges = false) => (!documentPath ?
+    [undefined, false, new Error('useDocument: documentPath is null')] :
     FirebaseFirestore.useDocumentDataOnce(
         getDocument(documentPath),
         {
             snapshotListenOptions: { includeMetadataChanges },
         }
-    );
+    )
+)
 
 export const getData = (snapshot, orderBy, length, firstItem) => {
     if (!orderBy)
