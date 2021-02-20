@@ -9,7 +9,7 @@ export default ({ permissionDenied, error }) => {
     console.error(error)
     return (
         <Container style={Styles.views.filletedBorderView}>
-            <Text style={Styles.displayError.header}>Error Handler</Text>
+            <Text style={Styles.displayError.header}>Sorry, an error has occurred</Text>
             <Text style={Styles.displayError.text}>
                 {errorMessageText}
             </Text>
