@@ -1,32 +1,37 @@
 import React from 'react'
 import Container from './Container'
 import Text from './Text'
+import { Styles } from '../shared/Constants'
 
 export default ({ permissionDenied, errorMessage, children }) => {
     if (permissionDenied) {
         return (
-            <Container>
-                <Text>Permission Denied</Text>
+            <Container style={Styles.views.flatListView}>
+                <Text style={Styles.displayError.text}>
+                    Permission Denied
+                </Text>
             </Container>
         )
     } else if (typeof (errorMessage) === 'string')
         return (
-            <Container>
-                <Text>
+            <Container style={Styles.views.flatListView}>
+                <Text style={Styles.displayError.text}>
                     {errorMessage}
                 </Text>
             </Container>
         )
     else if (children)
         return (
-            <Container>
+            <Container style={Styles.views.flatListView}>
                 {children}
             </Container>
         )
     else
         return (
-            <Container>
-                <Text>An unknown error occurred</Text>
+            <Container style={Styles.views.flatListView}>
+                <Text style={Styles.displayError.text}>
+                    An unknown error occurred
+                </Text>
             </Container>
         )
 }

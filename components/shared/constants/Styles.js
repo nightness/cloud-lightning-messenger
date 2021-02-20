@@ -12,6 +12,14 @@ export const themedSwitch = StyleSheet.create({
     }
 })
 
+export const displayError = StyleSheet.create({
+    text: {
+        paddingTop: 5,
+        paddingLeft: 10,
+        fontSize: 16
+    }
+})
+
 export const materialIcons = StyleSheet.create({
     icons: {
         paddingHorizontal: 3
