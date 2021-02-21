@@ -49,11 +49,13 @@ service cloud.firestore {
 
     // Member Match
     match /members/{memberId} {
-      allow read: if (request.auth.uid == memberId)
+      allow write: if (request.auth.uid == memberId)
+      allow read: if isAuthorized()
       
       // Member Messages Match
       match /messages/{messageId} {
-        allow read: if (request.auth.uid == memberId)
+        allow write: if (request.auth.uid == memberId)
+        allow read: if isAuthorized()
       }      
     }    
   }

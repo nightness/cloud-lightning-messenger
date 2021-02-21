@@ -26,13 +26,37 @@ expo start
 | ----------- | ------ | ----------------- |
 | displayName | string | The member's name |
 
+#
+
+## Fields for /groups/{groupId}
+
+| Name    | Type   | Description                                         |
+| ------- | ------ | --------------------------------------------------- |
+| name    | string | Name for the group (optional)                       |
+| members | array  | Contains an array memberId's                        |
+| recent  | array  | Contains an array of the most recent group messages |
+
+#
+
+## Fields for /groups/{groupId}/messages/{messageId}
+
+| Name       | Type        | Description                  |
+| ---------- | ----------- | ---------------------------- |
+| authorName | string      | Display name                 |
+| authorId   | string      | member's ID token            |
+| message    | string      | The text of the message      |
+| postedAt   | timestamp   | When the message was posted  |
+| location   | geolocation | Where the message was posted |
+
+#
+
 ## Fields for /members/{memberId}
 
-| Name   | Type  | Description                                   |
-| ------ | ----- | --------------------------------------------- |
-| recent | array | Contains an array of the most recent messages |
+| Name   | Type  | Description                                        |
+| ------ | ----- | -------------------------------------------------- |
+| recent | array | Contains an array of the most recent wall messages |
 
-## Fields for /members/{memberId}/messages/{messageId}
+## Fields for /members/{memberId}/messages/{messageId} (a user's wall messages)
 
 | Name       | Type        | Description                                     |
 | ---------- | ----------- | ----------------------------------------------- |

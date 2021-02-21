@@ -3,41 +3,62 @@ import {
     View,
     Screen,
     Container,
+    Text,
+    Picker,
     TextInput,
     Button,
+    ActivityIndicator,
+    DisplayError,
     FirestoreCollectionView
 } from '../themed/Components'
 import { Styles } from '../shared/Constants'
+import { useCollection } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
-import { createMessage, useMessenger } from './MessengerReducer'
 
 export default ({ navigation }) => {
     const { currentUser, claims } = useContext(FirebaseContext)
+    const [snapshot, loadingCollection, errorCollection] = useCollection('/profiles')
+    const [members, setMembers] = useState([])
     const [messageText, setMessageText] = useState('')
-    const [messenger, messengerDispatch] = useMessenger(currentUser.uid, 25)
+    const [groupCollectionPath, setGroupCollectionPath] = useState()
+
+    useEffect(() => {
+        if (loadingCollection || errorCollection || !snapshot) return
+        var newState = []
+        snapshot.docs.forEach(docRef => {
+            const push = async docRef => {
+                const name = await docRef.get('displayName')
+                newState.push({
+                    label: name,
+                    value: docRef.id
+                })
+            }
+            push(docRef).then(() => setMembers(newState))
+        })
+    }, [snapshot])
 
     useEffect(() => {
         console.log(claims)
     }, [claims])
 
     const sendMessage = () => {
-        const text = messageText
-        setMessageText('')
-        createMessage(text)
-            .then(results => {
-                const data = results.data;
-                if (typeof (data.type) === 'string') {
-                    console.log("Error: " + data.message)
-                    if (data.type === 'silent') return
-                    alert(data.message)
-                } else {
-                    console.log(data)
-                }
-            })
-            .catch(error => {
-                alert('Unhandled exception')
-            })
+        // const text = messageText
+        // setMessageText('')
+        // createMessage(text)
+        //     .then(results => {
+        //         const data = results.data;
+        //         if (typeof (data.type) === 'string') {
+        //             console.log("Error: " + data.message)
+        //             if (data.type === 'silent') return
+        //             alert(data.message)
+        //         } else {
+        //             console.log(data)
+        //         }
+        //     })
+        //     .catch(error => {
+        //         alert('Unhandled exception')
+        //     })
     }
 
     const onMessageKeyPress = ({ key }) => {
@@ -49,9 +70,17 @@ export default ({ navigation }) => {
     return (
         <Screen navigation={navigation} title={"Messenger"}>
             <Container>
+                <View style={Styles.messenger.views}>
+                    <Picker
+                        data={members}
+                        onValueChanged={newValue => {
+                            console.log(newValue)
+                        }}
+                    />
+                </View>
                 <FirestoreCollectionView
-                    contentContainerStyle={Styles.messenger.flatlist}
-                    collectionPath={messenger.messageCollectionPath}
+                    contentContainerStyle={Styles.messenger.flatList}
+                    collectionPath={groupCollectionPath}
                     autoScrollToEnd={true}
                     orderBy='postedAt'
                     renderItem={({ item }) => <Message item={item} />}

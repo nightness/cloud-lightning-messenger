@@ -12,6 +12,7 @@ import Messenger from './messenger/Messenger'
 import GroupMessenger from './messenger/GroupMessenger'
 import ManageGroups from './messenger/ManageGroups'
 import ManageUserRoles from './messenger/ManageUserRoles'
+import MemberWall from './messenger/MemberWall'
 import Authentication from './Authentication'
 import { Playground } from './Playground'
 
@@ -26,6 +27,10 @@ const DrawerNavigator = () => {
                 <Drawer.Screen
                     name="Home"
                     component={Home}
+                />
+                <Drawer.Screen
+                    name="Wall"
+                    component={MemberWall}
                 />
                 <Drawer.Screen
                     name="Messenger"
