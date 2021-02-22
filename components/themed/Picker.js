@@ -28,7 +28,6 @@ export default ({ style, data = [], selectedIndex = 0, onValueChanged, ...restPr
                 setSelectedValue(value)
                 setSelectedItem(data?.[index])
             }}
-            ref={pickerRef}
         >
             {
                 data.map(item => {
