@@ -6,7 +6,6 @@ import { Picker, PickerIOS } from '@react-native-picker/picker'
 import ToggleBox from 'react-native-togglebox'
 
 export default ({ style, data = [], selectedIndex = 0, onValueChanged, ...restProps }) => {
-    const pickerRef = useRef()
     const { theme } = useContext(GlobalContext)
     const [selectValue, setSelectedValue] = useState()
     const [selectedItem, setSelectedItem] = useState(data?.[selectedIndex])
@@ -17,13 +16,6 @@ export default ({ style, data = [], selectedIndex = 0, onValueChanged, ...restPr
     }, [data])
 
     useEffect(() => {
-        console.log(pickerRef.current) // .current added at work, start here
-    }, [pickerRef])
-
-    useEffect(() => {
-        console.log('*** Selected Item Changed ***')
-        //console.log(selectedItem)
-        //console.log(data[0])
         typeof onValueChanged === 'function' && onValueChanged(selectedItem)
     }, [selectedItem])
 
