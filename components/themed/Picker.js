@@ -42,10 +42,14 @@ export default ({ style, data = [], selectedIndex = 0, onValueChanged, ...restPr
                 })
             }
         </Picker>
+
     if (Platform.OS === 'ios') {
         return (
             <ScrollView bounces={false}>
-                <ToggleBox label={(selectedItem && selectedItem.label) ? selectedItem.label : ''} style={Styles.picker.toggleBox}>
+                <ToggleBox label={
+                    (selectedItem && selectedItem.label) ? selectedItem.label :
+                        selectedItem ? selectedItem : ''
+                } style={Styles.picker.toggleBox}>
                     <PickerCommon />
                 </ToggleBox>
             </ScrollView>

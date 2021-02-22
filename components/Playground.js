@@ -42,10 +42,15 @@ export const Playground = ({ navigation }) => {
 
     useEffect(() => {
         setTimeout(() => {
+            // setData([
+            //     'First',
+            //     'Second',
+            //     'Third'
+            // ]) // iOS isn't liking this, web is fine
             setData([
-                'First',
-                'Second',
-                'Third'
+                { label: 'First', value: 1 },
+                { label: 'Second', value: 2 },
+                { label: 'Third', value: 3 }
             ])
         }, 1000);
     }, [])
