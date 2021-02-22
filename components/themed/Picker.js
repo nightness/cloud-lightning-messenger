@@ -5,30 +5,38 @@ import { Themes, Styles } from '../shared/Constants'
 import { Picker, PickerIOS } from '@react-native-picker/picker'
 import ToggleBox from 'react-native-togglebox'
 
-export default ({ style, data = [], selectedValue, onValueChanged, ...restProps }) => {
+export default ({ style, data = [], selectedIndex = 0, onValueChanged, ...restProps }) => {
+    const pickerRef = useRef()
     const { theme } = useContext(GlobalContext)
-    const [selectedItem, setSelectedItem] = useState(selectedValue)
-    const [selectedIndex, setSelectedIndex] = useState(0)
+    const [selectValue, setSelectedValue] = useState()
+    const [selectedItem, setSelectedItem] = useState(data?.[selectedIndex])
     //const properTheme = enabled ? Themes.picker[theme] : Themes.pickerDisabled[theme]
-    const selectedData = data ? data.find(data => data.value === selectedItem) : undefined
 
     useEffect(() => {
-        //console.log(selectedIndex)
-    }, [selectedIndex])
+        typeof onValueChanged === 'function' && onValueChanged(data?.[selectedIndex])
+    }, [data])
 
     useEffect(() => {
-        typeof onValueChanged === 'function' && onValueChanged(selectedData)
+        console.log(pickerRef.current) // .current added at work, start here
+    }, [pickerRef])
+
+    useEffect(() => {
+        console.log('*** Selected Item Changed ***')
+        //console.log(selectedItem)
+        //console.log(data[0])
+        typeof onValueChanged === 'function' && onValueChanged(selectedItem)
     }, [selectedItem])
 
     const PickerCommon = () =>
         <Picker
             style={[Styles.picker.picker, Themes.picker[theme], style]}
             {...restProps}
-            selectedValue={selectedItem}
-            onValueChange={(item, index) => {
-                setSelectedItem(item)
-                setSelectedIndex(index)
+            selectedValue={selectValue}
+            onValueChange={(value, index) => {
+                setSelectedValue(value)
+                setSelectedItem(data?.[index])
             }}
+            ref={pickerRef}
         >
             {
                 data.map(item => {
@@ -46,7 +54,7 @@ export default ({ style, data = [], selectedValue, onValueChanged, ...restProps 
     if (Platform.OS === 'ios') {
         return (
             <ScrollView bounces={false}>
-                <ToggleBox label={selectedData && selectedData.label} style={Styles.picker.toggleBox}>
+                <ToggleBox label={selectedItem && selectedItem.label} style={Styles.picker.toggleBox}>
                     <PickerCommon />
                 </ToggleBox>
             </ScrollView>

@@ -19,6 +19,7 @@ import {
     Text,
     TextInput,
     View,
+    Picker,
     FirestoreDocumentView,
     InfiniteScroll,
 } from './themed/Components'
@@ -37,16 +38,33 @@ const fetchResult = (async () => {
 export const Playground = ({ navigation }) => {
     const { currentUser, claims, addClaim, removeClaim } = useContext(FirebaseContext)
     const [claimName, setClaimName] = useState()
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        setTimeout(() => {
+            setData([
+                { label: 'First', value: 1 },
+                { label: 'Second', value: 2 },
+                { label: 'Third', value: 3 }
+            ])
+        }, 1000);
+    }, [])
 
     useEffect(() => {
         if (!currentUser) return
-        console.log(currentUser)
+        //console.log(currentUser)
     }, [currentUser])
 
 
     return (
         <Screen navigation={navigation} title='Playground'>
             <View>
+                <Picker
+                    data={data}
+                    onValueChanged={value => {
+                        console.log(value)
+                    }}
+                />
                 <TextInput
                     onChangeText={text => setClaimName(text)}
                     placeHolder={'claim'}
