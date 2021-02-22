@@ -8,7 +8,7 @@ import ToggleBox from 'react-native-togglebox'
 export default ({ style, data = [], selectedIndex = 0, onValueChanged, ...restProps }) => {
     const { theme } = useContext(GlobalContext)
     const [selectValue, setSelectedValue] = useState()
-    const [selectedItem, setSelectedItem] = useState(data?.[selectedIndex])
+    const [selectedItem, setSelectedItem] = useState()
     //const properTheme = enabled ? Themes.picker[theme] : Themes.pickerDisabled[theme]
 
     useEffect(() => {
