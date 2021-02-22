@@ -34,9 +34,9 @@ export default ({ style, data = [], selectedIndex = 0, onValueChanged, ...restPr
                     return (
                         <Picker.Item
                             style={Styles.picker.item}
-                            label={item.label}
-                            value={item.value}
-                            key={item.value}
+                            label={item?.label || item}
+                            value={item?.value}
+                            key={item?.value || item}
                         />
                     )
                 })

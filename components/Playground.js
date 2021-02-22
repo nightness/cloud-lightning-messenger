@@ -43,9 +43,9 @@ export const Playground = ({ navigation }) => {
     useEffect(() => {
         setTimeout(() => {
             setData([
-                { label: 'First', value: 1 },
-                { label: 'Second', value: 2 },
-                { label: 'Third', value: 3 }
+                'First',
+                'Second',
+                'Third'
             ])
         }, 1000);
     }, [])
