@@ -4,7 +4,7 @@ import 'firebase/functions';
 import * as FirebaseAuth from 'react-firebase-hooks/auth';
 import * as FirebaseFirestore from 'react-firebase-hooks/firestore';
 import { useReducer } from 'react-native'
-import { firebaseConfig } from '../../private/FirebaseConfig'
+import { firebaseConfig } from '../../FirebaseConfig'
 
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig)
@@ -20,19 +20,19 @@ export const getFirestore = () => {
     return firestore;
 }
 
-// getFirestore().enablePersistence()
-//     .then(() => {
-//         console.log('Warning: Firestore Persistence Enabled!!!')
-//     })
-//     .catch((err) => {
-//         // Not supported
-//         if (err.code ==='unimplemented')
-//             console.log('Firestore Persistence Error: unimplemented')
+getFirestore().enablePersistence()
+    .then(() => {
+        console.log('Warning: Firestore Persistence Enabled!!!')
+    })
+    .catch((err) => {
+        // Not supported
+        if (err.code === 'unimplemented')
+            console.log('Firestore Persistence Error: unimplemented')
 
-//         // Open in another tab
-//         if (err.code === 'failed-precondition')
-//             console.log('Firestore Persistence Error: failed-precondition')
-//     })
+        // Open in another tab
+        if (err.code === 'failed-precondition')
+            console.log('Firestore Persistence Error: failed-precondition')
+    })
 
 export const firebaseAuth = firebase.auth
 export const firebaseFunctions = firebase.functions

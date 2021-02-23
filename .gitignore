@@ -8,7 +8,7 @@ npm-debug.*
 *.key
 *.mobileprovision
 *.orig.*
-web-build/
+#web-build/
 private/
 functions/
 rest/
