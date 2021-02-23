@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { ScrollView, Platform } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Themes, Styles } from '../shared/Constants'
