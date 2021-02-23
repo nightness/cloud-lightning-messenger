@@ -43,23 +43,24 @@ export default ({ style, data = [], selectedIndex = 0, onValueChanged, ...restPr
             }
         </Picker>
 
-    if (Platform.OS === 'ios') {
-        return (
-            <ScrollView bounces={false}>
-                <ToggleBox label={
-                    (selectedItem && selectedItem.label) ? selectedItem.label :
-                        selectedItem ? selectedItem : ''
-                } style={Styles.picker.toggleBox}>
-                    <PickerCommon />
-                </ToggleBox>
-            </ScrollView>
-        )
-    }
     return (
         <ScrollView bounces={false}>
-            <PickerCommon />
+            {(Platform.OS === 'ios') &&
+                <ToggleBox
+                    label={
+                        (selectedItem && selectedItem.label) ? selectedItem.label :
+                            selectedItem ? selectedItem : ''
+                    }
+                    style={Styles.picker.toggleBox}>
+                    <PickerCommon />
+                </ToggleBox>
+            }
+            {(Platform.OS !== 'ios') &&
+                <PickerCommon />
+            }
         </ScrollView>
     )
 }
+
 
 
