@@ -25,5 +25,13 @@
     "ui": {
       "enabled": true
     }
+  },
+  "hosting": {
+    "public": "web-build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
   }
 }

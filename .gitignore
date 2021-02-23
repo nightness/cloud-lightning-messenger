@@ -1,5 +1,6 @@
 node_modules/
 .expo/
+.firebase/
 .vscode/
 npm-debug.*
 *.jks
