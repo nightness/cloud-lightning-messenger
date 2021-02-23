@@ -29,7 +29,7 @@ service cloud.firestore {
   	match /groups/{groupId} {
       // Group Functions
       function isGroupMember() {
-        return request.auth.uid in get(/databases/$(database)/documents/groups/{groupId}/).data.members
+        return request.auth.uid in get(/databases/$(database)/documents/groups/{groupId}).data.members
       }
 
       // Group Rules
