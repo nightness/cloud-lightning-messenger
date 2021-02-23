@@ -66,7 +66,3 @@ expo start
 | postedAt   | timestamp   | When the message was posted                     |
 | location   | geolocation | Where the message was posted                    |
 | isSeen     | boolean     | True if messages has been seen by the recipient |
-
-# Authentication for 3rd Parties
-
-In order to have access to the Firestore database, members need to authenticate with Firebase. Instead of having them sign-in manually; there is a REST API to manage member creation. When a member is created with the REST API, it returns a custom authentication token, that is sent to the member so the client can automatically authenticate with Firebase.
