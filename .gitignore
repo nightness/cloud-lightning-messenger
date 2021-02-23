@@ -1,7 +1,11 @@
 node_modules/
 .expo/
-.firebase/
+.firebase
 .vscode/
+web-build/
+private/
+functions/
+rest/
 npm-debug.*
 *.jks
 *.p8
@@ -10,10 +14,6 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 # Files for https://cloud-lightning.web.app/
-web-build/
-private/
-functions/
-rest/
 *.log
 google-services.json
 GoogleService-Info.plist
