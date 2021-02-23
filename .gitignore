@@ -9,6 +9,7 @@ npm-debug.*
 *.key
 *.mobileprovision
 *.orig.*
+# Files for https://cloud-lightning.web.app/
 web-build/
 private/
 functions/
