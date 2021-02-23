@@ -30,7 +30,7 @@ export default ({ navigation }) => {
             const push = async docRef => {
                 const name = await docRef.get('displayName')
                 newState.push({
-                    label: name || '{unknown}',
+                    label: name || `{${docRef.id}}`,
                     value: docRef.id
                 })
             }
