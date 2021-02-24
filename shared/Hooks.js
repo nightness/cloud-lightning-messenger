@@ -1,10 +1,5 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 
-export const newState = (oldState, modifyFunction) => {
-    const newState = typeof ('array') ? [...oldState] : typeof ('object') ? { ...oldObject } : null
-    return modifyFunction(newState)
-}
-
 export const useValidatedState = (initialValue, isValid, invalidated) => {
     const [value, setValue] = useState(isValid(initialValue) ? initialValue : undefined)
     const wrapSetValue = value => isValid(value) ? setValue(value) : invalidated()
