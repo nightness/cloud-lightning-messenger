@@ -1,13 +1,11 @@
-import React, { useState, useContext, useEffect, useRef } from 'react'
-import { Text, Modal, TextInput, View, Button, Container, Screen, Picker, ActivityIndicator, DisplayError, LabeledSwitch } from '../themed/Components'
-import { Styles, Themes } from '../shared/Constants'
-import { GlobalContext } from '../shared/GlobalContext'
+import React, { useState, useContext, useEffect } from 'react'
+import { View, Container, Screen, Picker, ActivityIndicator, DisplayError, LabeledSwitch } from '../themed/Components'
+import { Styles } from '../shared/Constants'
 import { FirebaseContext } from '../firebase/FirebaseContext'
-import { useCollection, getFirestore } from '../firebase/Firebase'
+import { useCollection } from '../firebase/Firebase'
 
 export default ({ navigation, ...restProps }) => {
-    const { theme } = useContext(GlobalContext)
-    const { currentUser, claims, addClaim, removeClaim, getClaims } = useContext(FirebaseContext)
+    const { claims, addClaim, removeClaim, getClaims } = useContext(FirebaseContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('profiles')
     const [members, setMembers] = useState([])
     const [selectedMember, setSelectedMember] = useState()
