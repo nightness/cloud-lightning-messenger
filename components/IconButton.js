@@ -4,6 +4,5 @@ import { IconButton } from 'react-native-paper'
 export default (props) => (
     <IconButton
         {...props}
-        onPress={() => console.log('Pressed')}
     />
 )

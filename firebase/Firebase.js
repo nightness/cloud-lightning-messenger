@@ -22,16 +22,16 @@ export const getFirestore = () => {
 
 getFirestore().enablePersistence()
     .then(() => {
-        console.log('Warning: Firestore Persistence Enabled!!!')
+        console.warn('Firestore Persistence Enabled!!!')
     })
     .catch((err) => {
         // Not supported
         if (err.code === 'unimplemented')
-            console.log('Firestore Persistence Error: unimplemented')
+            console.error('Firestore Persistence: unimplemented')
 
         // Open in another tab
         if (err.code === 'failed-precondition')
-            console.log('Firestore Persistence Error: failed-precondition')
+            console.error('Firestore Persistence: failed-precondition')
     })
 
 export const firebaseAuth = firebase.auth

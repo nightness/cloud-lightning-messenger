@@ -1,7 +1,6 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 
 export const newState = (oldState, modifyFunction) => {
-    console.log(oldState)
     const newState = typeof ('array') ? [...oldState] : typeof ('object') ? { ...oldObject } : null
     return modifyFunction(newState)
 }
