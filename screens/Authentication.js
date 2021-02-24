@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { Image, Platform } from 'react-native'
 import { Container, Text, TextInput, Button, ScrollView, View, Modal, ActivityIndicator, DisplayError } from '../components/Components'
 import { firebaseAuth, GoogleAuthProvider, callFirebaseFunction } from '../firebase/Firebase'
+import { FirebaseContext } from '../firebase/FirebaseContext'
 import { Styles, Themes } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
 
@@ -39,6 +40,7 @@ export const LogoutModal = ({ navigation, shown, dismiss }) => {
 }
 
 export const Authentication = ({ navigation, customToken }) => {
+    const { setDisplayName: firestoreSetDisplayName } = useContext(FirebaseContext)
     const [displayName, setDisplayName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -62,12 +64,7 @@ export const Authentication = ({ navigation, customToken }) => {
 
     const onRegistrationSetDisplayName = async () => {
         setIsLoading(true)
-        const authToken = await auth.currentUser.getIdToken()
-        auth.currentUser.updateProfile({ displayName })
-        await callFirebaseFunction('setDisplayName', {
-            displayName,
-            authToken
-        })
+        await firestoreSetDisplayName(displayName)
         navigation.replace("Main")
     }
 

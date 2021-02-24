@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { ActivityIndicator } from 'react-native'
-import { useAuthState, callFirebaseFunction } from './Firebase'
+import { useAuthState, callFirebaseFunction, getAuth } from './Firebase'
 
 export const FirebaseContext = createContext()
 
@@ -8,13 +8,13 @@ export const FirebaseProvider = ({ children }) => {
     const [currentUser, loadingUser, errorUser] = useAuthState()
     const [claims, setClaims] = useState({})
     const [loadingClaims, setLoadingClaims] = useState(true)
-    const [userToken, setUserToken] = useState()
+    const [authToken, setAuthToken] = useState()
 
     // User requires the .admin token to use this function
     const getClaims = async uid => {
         const result = await callFirebaseFunction('getClaims', {
             userId: uid,
-            authToken: userToken,
+            authToken: authToken,
         })
         return result.data.customClaims
     }
@@ -23,7 +23,7 @@ export const FirebaseProvider = ({ children }) => {
     const addClaim = async (uid, claimName) => {
         const result = await callFirebaseFunction('modifyClaim', {
             userId: uid,
-            authToken: userToken,
+            authToken: authToken,
             claim: claimName,
             value: true,
         })
@@ -34,7 +34,7 @@ export const FirebaseProvider = ({ children }) => {
     const removeClaim = async (uid, claimName) => {
         const result = await callFirebaseFunction('modifyClaim', {
             userId: uid,
-            authToken: userToken,
+            authToken: authToken,
             claim: claimName,
         })
         return result.data
@@ -42,17 +42,27 @@ export const FirebaseProvider = ({ children }) => {
 
     const updateUserToken = async uid => {
         if (!currentUser) {
-            setUserToken(undefined)
+            setAuthToken(undefined)
             return
         }
 
         const token = await currentUser.getIdToken(true)
-        setUserToken(token)
+        setAuthToken(token)
 
         const idTokenResult = await currentUser.getIdTokenResult()
         if (idTokenResult.claims !== undefined)
             setClaims(idTokenResult.claims)
         setLoadingClaims(false)
+    }
+
+    const setDisplayName = async displayName => {
+        const auth = getAuth()
+        const authToken = await auth.currentUser.getIdToken()
+        auth.currentUser.updateProfile({ displayName })
+        return await callFirebaseFunction('setDisplayName', {
+            displayName,
+            authToken
+        })
     }
 
     useEffect(() => {
@@ -70,7 +80,7 @@ export const FirebaseProvider = ({ children }) => {
         />
     return (
         <FirebaseContext.Provider value={{
-            currentUser, claims, isLoading, error, addClaim, removeClaim, getClaims, userToken
+            currentUser, claims, isLoading, error, addClaim, removeClaim, getClaims, setDisplayName, authToken
         }}>
             {children}
         </FirebaseContext.Provider>

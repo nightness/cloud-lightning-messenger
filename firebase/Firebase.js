@@ -10,6 +10,12 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig)
 }
 
+export const getAuth = () => {
+    var auth = firebase.auth()
+
+    return auth
+}
+
 export const getFirestore = () => {
     var firestore = firebase.firestore();
     if (false && location.hostname === "localhost") {
