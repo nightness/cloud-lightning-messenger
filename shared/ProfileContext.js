@@ -92,7 +92,7 @@ export const useProfiler = () => {
 
                  */
                 await sleep(2000)
-                console.log(err)
+                console.error(err)
             }
             isFetchingRef.current = false
         }
@@ -124,7 +124,7 @@ export const useProfiler = () => {
             } catch (err) {
                 retryCount = retryCount + 1
                 exception = err
-                console.log(err)
+                console.error(err)
             }
         }
         setIsLoadingCollection(false)
@@ -150,7 +150,7 @@ export const useProfiler = () => {
                     }
                 })
                 .catch(err => {
-                    console.log(err)
+                    console.error(err)
                 })
         }
     }, [cachedUsers])
@@ -164,7 +164,7 @@ export const useProfiler = () => {
                     fetchUser(documentChange.doc.id, true)
             })
         } catch (err) {
-            console.log(err)
+            console.error(err)
         }
     }, [snapshot])
 
