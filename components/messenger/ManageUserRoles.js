@@ -73,10 +73,9 @@ export default ({ navigation, ...restProps }) => {
 
     let render = <ActivityIndicator />
     if (errorCollection || permissionDenied) {
-        let errorCollectionCode = errorCollection ? errorCollection.code : null
         render =
             <DisplayError
-                permissionDenied={(errorCollectionCode === 'permission-denied' || permissionDenied)}
+                permissionDenied={(errorCollection?.code === 'permission-denied' || permissionDenied)}
             />
     } else if (!loadingCollection) {
         render = <>

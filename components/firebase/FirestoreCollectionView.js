@@ -93,10 +93,8 @@ export default ({ collectionPath, orderBy, initialNumToRender, ...restProps }) =
     }, [snapshot])
 
     if (errorCollection || errorData) {
-        let errorCollectionCode = errorCollection ? errorCollection.code : null
-        let errorDataCode = errorData ? errorData.code : null
         return <DisplayError
-            permissionDenied={(errorCollectionCode === 'permission-denied' || errorDataCode === 'permission-denied')}
+            permissionDenied={(errorCollection?.code === 'permission-denied' || errorData?.code === 'permission-denied')}
             error={errorCollection || errorData}
         />
     } else if (!loadingCollection && !loadingData) {
