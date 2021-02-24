@@ -3,8 +3,8 @@ import { StyleSheet, FlatList, View } from 'react-native'
 import { useCollection, getDocumentsDataWithId, getData } from './Firebase'
 import { Themes, Styles } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
-import ActivityIndicator from '../themed/ActivityIndicator'
-import DisplayError from '../themed/DisplayError'
+import ActivityIndicator from '../components/ActivityIndicator'
+import DisplayError from '../components/DisplayError'
 
 // Ref: For loading more, pull small chunks https://youtu.be/WcGd8VkRc48?t=237
 

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { View, Container, Screen, Picker, ActivityIndicator, DisplayError, LabeledSwitch } from '../themed/Components'
+import { View, Container, Screen, Picker, ActivityIndicator, DisplayError, LabeledSwitch } from '../components/Components'
 import { Styles } from '../shared/Constants'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import { useCollection } from '../firebase/Firebase'

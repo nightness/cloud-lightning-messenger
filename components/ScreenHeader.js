@@ -3,7 +3,7 @@ import { View, useWindowDimensions } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Header } from "react-native-elements";
 import { Image, Text, MaterialIcons } from './Components'
-import { LogoutModal } from '../Authentication'
+import { LogoutModal } from '../screens/Authentication'
 import { Themes, Styles } from '../shared/Constants'
 
 export default ({ navigation, title, photoURL, hasDrawerNavigation = true, hasHome, hasBack, hasLogout = true }) => {

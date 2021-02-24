@@ -8,7 +8,6 @@ import faker from 'faker'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import { Colors } from 'react-native-paper'
-import { Styles, Themes } from './shared/Constants'
 import {
     ActivityIndicator,
     DisplayError,
@@ -22,10 +21,10 @@ import {
     Picker,
     FirestoreDocumentView,
     InfiniteScroll,
-} from './themed/Components'
-import { useAuthState } from './firebase/Firebase'
-import { FirebaseContext } from './firebase/FirebaseContext'
-import "./shared/FormValidation"
+} from '../components/Components'
+import { useAuthState } from '../firebase/Firebase'
+import { FirebaseContext } from '../firebase/FirebaseContext'
+import "../shared/FormValidation"
 
 const fetchStuff = async () => true
 const fetchResult = (async () => {

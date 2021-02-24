@@ -5,8 +5,8 @@ import { FlatList } from 'react-native'
 import { useCollection, useDocument, getDocumentsDataWithId, getData } from './Firebase'
 
 // Remove for NPM package
-import ActivityIndicator from '../themed/ActivityIndicator'
-import DisplayError from '../themed/DisplayError'
+import ActivityIndicator from '../components/ActivityIndicator'
+import DisplayError from '../components/DisplayError'
 
 export const EnhancedFlatList = ({ onStartReached, onStartReachedThreshold, autoScrollToEnd, refreshing, ...restProps }) => {
     const flatList = useRef()

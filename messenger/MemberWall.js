@@ -6,7 +6,7 @@ import {
     TextInput,
     Button,
     FirestoreCollectionView
-} from '../themed/Components'
+} from '../components/Components'
 import { Styles } from '../shared/Constants'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'

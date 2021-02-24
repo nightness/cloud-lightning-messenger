@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { StyleSheet, FlatList, VirtualizedList, ScrollView, View, AppLoading } from 'react-native'
 import { useDocumentData } from './Firebase'
-import ActivityIndicator from '../themed/ActivityIndicator'
-import DisplayError from '../themed/DisplayError'
-import Text from '../themed/Text'
+import ActivityIndicator from '../components/ActivityIndicator'
+import DisplayError from '../components/DisplayError'
+import Text from '../components/Text'
 
 const DocumentFlatList = props => {
     const flatList = useRef()

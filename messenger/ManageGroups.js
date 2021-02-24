@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from 'react'
 import {
     ScrollView, Text, Modal, TextInput, View, Button,
     Container, Screen, Picker, ActivityIndicator, DisplayError
-} from '../themed/Components'
+} from '../components/Components'
 import { Styles, Themes } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
 import { useCollection, getFirestore } from '../firebase/Firebase'
