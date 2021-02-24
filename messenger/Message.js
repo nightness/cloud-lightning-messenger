@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Text, View } from '../themed/Components'
+import { Text, View } from '../components/Components'
 
 export default class Message extends PureComponent {
     constructor(props) {

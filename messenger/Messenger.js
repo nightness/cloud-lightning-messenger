@@ -10,7 +10,7 @@ import {
     ActivityIndicator,
     DisplayError,
     FirestoreCollectionView
-} from '../themed/Components'
+} from '../components/Components'
 import { Styles } from '../shared/Constants'
 import { useCollection } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
@@ -18,8 +18,8 @@ import Message from './Message'
 
 export default ({ navigation }) => {
     const { currentUser, claims } = useContext(FirebaseContext)
-    const [snapshot, loadingCollection, errorCollection] = useCollection('/groups')
-    const [groups, setGroups] = useState([])
+    const [snapshot, loadingCollection, errorCollection] = useCollection('/profiles')
+    const [members, setMembers] = useState([])
     const [messageText, setMessageText] = useState('')
     const [groupCollectionPath, setGroupCollectionPath] = useState()
 
@@ -28,13 +28,15 @@ export default ({ navigation }) => {
         var newState = []
         snapshot.docs.forEach(docRef => {
             const push = async docRef => {
-                const name = await docRef.get('name')
+                const name = await docRef.get('displayName')
                 newState.push({
-                    label: name,
+                    label: name || `{${docRef.id}}`,
                     value: docRef.id
                 })
             }
-            push(docRef).then(() => setGroups(newState))
+            push(docRef)
+                .then(() => setMembers(newState))
+                .catch(err => console.error(err))
         })
     }, [snapshot])
 
@@ -68,11 +70,11 @@ export default ({ navigation }) => {
     }
 
     return (
-        <Screen navigation={navigation} title={"Group Messenger"}>
+        <Screen navigation={navigation} title={"Messenger"}>
             <Container>
                 <View style={Styles.messenger.views}>
                     <Picker
-                        data={groups}
+                        data={members}
                         onValueChanged={newValue => {
                             console.log(newValue)
                         }}

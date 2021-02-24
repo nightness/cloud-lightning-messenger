@@ -10,7 +10,7 @@ import {
     ActivityIndicator,
     DisplayError,
     FirestoreCollectionView
-} from '../themed/Components'
+} from '../components/Components'
 import { Styles } from '../shared/Constants'
 import { useCollection } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
@@ -18,8 +18,8 @@ import Message from './Message'
 
 export default ({ navigation }) => {
     const { currentUser, claims } = useContext(FirebaseContext)
-    const [snapshot, loadingCollection, errorCollection] = useCollection('/profiles')
-    const [members, setMembers] = useState([])
+    const [snapshot, loadingCollection, errorCollection] = useCollection('/groups')
+    const [groups, setGroups] = useState([])
     const [messageText, setMessageText] = useState('')
     const [groupCollectionPath, setGroupCollectionPath] = useState()
 
@@ -28,13 +28,13 @@ export default ({ navigation }) => {
         var newState = []
         snapshot.docs.forEach(docRef => {
             const push = async docRef => {
-                const name = await docRef.get('displayName')
+                const name = await docRef.get('name')
                 newState.push({
                     label: name,
                     value: docRef.id
                 })
             }
-            push(docRef).then(() => setMembers(newState))
+            push(docRef).then(() => setGroups(newState))
         })
     }, [snapshot])
 
@@ -68,11 +68,11 @@ export default ({ navigation }) => {
     }
 
     return (
-        <Screen navigation={navigation} title={"Messenger"}>
+        <Screen navigation={navigation} title={"Group Messenger"}>
             <Container>
                 <View style={Styles.messenger.views}>
                     <Picker
-                        data={members}
+                        data={groups}
                         onValueChanged={newValue => {
                             console.log(newValue)
                         }}

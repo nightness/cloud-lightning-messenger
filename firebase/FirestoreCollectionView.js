@@ -3,8 +3,8 @@ import { StyleSheet, FlatList, View } from 'react-native'
 import { useCollection, getDocumentsDataWithId, getData } from './Firebase'
 import { Themes, Styles } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
-import ActivityIndicator from '../themed/ActivityIndicator'
-import DisplayError from '../themed/DisplayError'
+import ActivityIndicator from '../components/ActivityIndicator'
+import DisplayError from '../components/DisplayError'
 
 // Ref: For loading more, pull small chunks https://youtu.be/WcGd8VkRc48?t=237
 
@@ -15,18 +15,18 @@ const getTime = () => {
 
 const CollectionFlatList = props => {
     const flatList = useRef()
-    const { style, messages, onScrollProp = onScroll, onStartReached, autoScrollToEnd, ...restProps } = props
+    const { style, messages, onScroll, onStartReached, autoScrollToEnd, ...restProps } = props
     const [hitTop, setHitTop] = useState(state => ({}))
     const [refreshing, setRefreshing] = useState(false)
     const { theme } = useContext(GlobalContext)
 
-    const onScroll = (e) => {
+    const onFlatListScroll = (e) => {
         const { contentOffset, contentSize, layoutMeasurement } = e.nativeEvent
         const maxY = Math.round(contentSize.height - layoutMeasurement.height)
         const maxX = Math.round(contentSize.width - layoutMeasurement.width)
 
         if (contentOffset.y === 0) setHitTop({})
-        if (onScrollProp) onScrollProp(e)
+        typeof onScroll === 'function' && onScroll(e)
     }
     const onContentSizeChange = (e, f) => {
         if (autoScrollToEnd && !refreshing)
@@ -66,7 +66,7 @@ const CollectionFlatList = props => {
                 onStartReached={loadMoreMessages}
                 onLayout={onLayout}
                 onContentSizeChange={onContentSizeChange}
-                onScroll={onScroll}
+                onScroll={onFlatListScroll}
             />
         </View>
     )
@@ -93,10 +93,8 @@ export default ({ collectionPath, orderBy, initialNumToRender, ...restProps }) =
     }, [snapshot])
 
     if (errorCollection || errorData) {
-        let errorCollectionCode = errorCollection ? errorCollection.code : null
-        let errorDataCode = errorData ? errorData.code : null
         return <DisplayError
-            permissionDenied={(errorCollectionCode === 'permission-denied' || errorDataCode === 'permission-denied')}
+            permissionDenied={(errorCollection?.code === 'permission-denied' || errorData?.code === 'permission-denied')}
             error={errorCollection || errorData}
         />
     } else if (!loadingCollection && !loadingData) {

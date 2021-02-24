@@ -4,7 +4,7 @@ import 'firebase/functions';
 import * as FirebaseAuth from 'react-firebase-hooks/auth';
 import * as FirebaseFirestore from 'react-firebase-hooks/firestore';
 import { useReducer } from 'react-native'
-import { firebaseConfig } from '../../FirebaseConfig'
+import { firebaseConfig } from '../private/FirebaseConfig'
 
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig)

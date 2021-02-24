@@ -5,8 +5,8 @@ import { FlatList } from 'react-native'
 import { useCollection, useDocument, getDocumentsDataWithId, getData } from './Firebase'
 
 // Remove for NPM package
-import ActivityIndicator from '../themed/ActivityIndicator'
-import DisplayError from '../themed/DisplayError'
+import ActivityIndicator from '../components/ActivityIndicator'
+import DisplayError from '../components/DisplayError'
 
 export const EnhancedFlatList = ({ onStartReached, onStartReachedThreshold, autoScrollToEnd, refreshing, ...restProps }) => {
     const flatList = useRef()
@@ -97,11 +97,9 @@ export const FirebaseFlatList = ({ documentPath, collectionPath, orderBy, onStar
 
     let result = <ActivityIndicator />
     if (errorCollection || errorData) {
-        let errorCollectionCode = errorCollection ? errorCollection.code : null
-        let errorDataCode = errorData ? errorData.code : null
         result =
             <DisplayError
-                permissionDenied={(errorCollectionCode === 'permission-denied' || errorDataCode === 'permission-denied')}
+                permissionDenied={(errorCollection?.code === 'permission-denied' || errorData?.code === 'permission-denied')}
             />
     } else if (!loadingCollection && !loadingData) {
         result =

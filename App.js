@@ -3,11 +3,11 @@ import React, { useState } from 'react'
 import { ModalPortal } from 'react-native-modals'
 import { AppLoading } from 'expo'
 import * as Fonts from 'expo-font'
-import { FirebaseProvider } from './components/firebase/FirebaseContext'
-import { GlobalProvider } from './components/shared/GlobalContext'
-import { Defaults } from './components/shared/Constants'
-import Playground from './components/Playground'
-import AppNavigator from './components/Navigation'
+import { FirebaseProvider } from './firebase/FirebaseContext'
+import { GlobalProvider } from './shared/GlobalContext'
+import { Defaults } from './shared/Constants'
+import Playground from './screens/Playground'
+import AppNavigator from './screens/Navigation'
 
 const getFonts = () => Fonts.loadAsync({
     'serif-pro-black': require('./assets/fonts/SourceSerifPro/SourceSerifPro-Black.ttf'),

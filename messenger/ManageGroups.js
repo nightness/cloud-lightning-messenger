@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from 'react'
 import {
     ScrollView, Text, Modal, TextInput, View, Button,
     Container, Screen, Picker, ActivityIndicator, DisplayError
-} from '../themed/Components'
+} from '../components/Components'
 import { Styles, Themes } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
 import { useCollection, getFirestore } from '../firebase/Firebase'
@@ -67,7 +67,7 @@ export default ({ navigation, ...restProps }) => {
             const add = async uid => {
                 const profile = await profileContext.getUserProfile(uid)
                 groupMembers.push({
-                    label: profile.displayName,
+                    label: profile.displayName || `{${uid}}`,
                     value: uid
                 })
             }
@@ -167,10 +167,9 @@ export default ({ navigation, ...restProps }) => {
 
     let render = <ActivityIndicator />
     if (errorCollection) {
-        let errorCollectionCode = errorCollection ? errorCollection.code : null
         render =
             <DisplayError
-                permissionDenied={(errorCollectionCode === 'permission-denied')}
+                permissionDenied={(errorCollection?.code === 'permission-denied')}
             />
     } else if (!loadingCollection) {
         render = <>
