@@ -15,7 +15,7 @@ export default ({ navigation, ...restProps }) => {
     const [isAdmin, setIsAdmin] = useState()
     const [isManager, setIsManager] = useState()
     const [isModerator, setIsModerator] = useState()
-    const [permissionDenied, setPermissionDenied] = useState(true)
+    const [permissionDenied, setPermissionDenied] = useState(!claims.admin)
 
     const setClaim = (uid, claimName, value) => {
         let promise = value ? addClaim(uid, claimName) : removeClaim(uid, claimName)
@@ -26,10 +26,6 @@ export default ({ navigation, ...restProps }) => {
     const toggleAdmin = () => setIsAdmin(previousState => setClaim(selectedMember.value, 'admin', !previousState) || !previousState)
     const toggleManager = () => setIsManager(previousState => setClaim(selectedMember.value, 'manager', !previousState) || !previousState)
     const toggleModerator = () => setIsModerator(previousState => setClaim(selectedMember.value, 'moderator', !previousState) || !previousState)
-
-    useEffect(() => {
-        setPermissionDenied(!claims.admin)
-    }, [])
 
     // Update the 'users' state
     useEffect(() => {
@@ -72,7 +68,7 @@ export default ({ navigation, ...restProps }) => {
     }, [selectedMember])
 
     let render = <ActivityIndicator />
-    if (errorCollection || (permissionDenied && !loadingCollection)) {
+    if (errorCollection || permissionDenied) {
         render = <DisplayError
             permissionDenied={(errorCollection?.code === 'permission-denied' || permissionDenied)}
         />
