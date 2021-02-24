@@ -95,7 +95,6 @@ export default ({ navigation, ...restProps }) => {
 
     const addMember = () => {
         const newMembers = [...members, memberName]
-        console.log(newMembers)
         getFirestore()
             .collection('groups')
             .doc(selectedGroup.value)
@@ -114,7 +113,6 @@ export default ({ navigation, ...restProps }) => {
 
     const removeSelectedMember = () => {
         const newMembers = members.filter(obj => obj.value != selectedMember.value)
-        console.log(newMembers)
         getFirestore()
             .collection('groups')
             .doc(selectedGroup.value)

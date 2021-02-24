@@ -42,7 +42,7 @@ export default (props) => {
             flatList.scrollToEnd({ animated: false })
     }
     const onRefresh = (e) => {
-        console.log(e)
+        //console.log(e)
     }
 
     useEffect(() => {

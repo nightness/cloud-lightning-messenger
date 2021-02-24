@@ -25,13 +25,10 @@ export const EnhancedFlatList = ({ onStartReached, onStartReachedThreshold, auto
         }
     }) => {
         const scrollHeight = contentHeight - height
-        //const scaledThreshold = Math.round(scrollHeight - scrollHeight * onStartReachedThreshold)
         const scaledThreshold = Math.round(scrollHeight * onStartReachedThreshold)
         scrollOffset.current = y
-        //console.log(`contentOffset: ${y}, size: ${scrollHeight} threshold: ${scaledThreshold}`)
         if (y < scaledThreshold && !atTop.current) {
             atTop.current = true
-            //console.log(`call onStartReached`)
             if (typeof onStartReached === 'function')
                 onStartReached(y)
         } else if (y - scaledThreshold > 0) {
@@ -52,12 +49,12 @@ export const EnhancedFlatList = ({ onStartReached, onStartReachedThreshold, auto
     }
 
     const onContentSizeChange = newHeight => {
-        console.log(flatList.current)
+        //console.log(flatList.current)
         scrollToEnd()
     }
 
     const onLayout = ({ nativeEvent }) => {
-        console.log(nativeEvent.layout)
+        //console.log(nativeEvent.layout)
         flatListHeight.current = nativeEvent.layout.height
         scrollToEnd()
     }

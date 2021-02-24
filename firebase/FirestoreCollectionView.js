@@ -37,7 +37,7 @@ const CollectionFlatList = props => {
             flatList.current.scrollToEnd({ animated: false })
     }
     const onRefresh = (e) => {
-        console.log(e)
+        //console.log(e)
     }
     const loadMoreMessages = () => {
         console.log("loadMoreMessages() : Start")
