@@ -67,7 +67,7 @@ export default ({ navigation, ...restProps }) => {
             const add = async uid => {
                 const profile = await profileContext.getUserProfile(uid)
                 groupMembers.push({
-                    label: profile.displayName,
+                    label: profile.displayName || `{${uid}}`,
                     value: uid
                 })
             }

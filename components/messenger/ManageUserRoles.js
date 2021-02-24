@@ -39,13 +39,13 @@ export default ({ navigation, ...restProps }) => {
             const push = async docRef => {
                 const name = await docRef.get('displayName')
                 newState.push({
-                    label: name,
+                    label: name || `{${docRef.id}}`,
                     value: docRef.id
                 })
             }
             push(docRef)
                 .then(() => setMembers(newState))
-            // .catch(() => undefined)
+                .catch(err => console.error(err))
         })
     }, [snapshot])
 
