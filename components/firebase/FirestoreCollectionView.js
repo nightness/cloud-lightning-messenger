@@ -15,18 +15,18 @@ const getTime = () => {
 
 const CollectionFlatList = props => {
     const flatList = useRef()
-    const { style, messages, onScrollProp = onScroll, onStartReached, autoScrollToEnd, ...restProps } = props
+    const { style, messages, onScroll, onStartReached, autoScrollToEnd, ...restProps } = props
     const [hitTop, setHitTop] = useState(state => ({}))
     const [refreshing, setRefreshing] = useState(false)
     const { theme } = useContext(GlobalContext)
 
-    const onScroll = (e) => {
+    const onFlatListScroll = (e) => {
         const { contentOffset, contentSize, layoutMeasurement } = e.nativeEvent
         const maxY = Math.round(contentSize.height - layoutMeasurement.height)
         const maxX = Math.round(contentSize.width - layoutMeasurement.width)
 
         if (contentOffset.y === 0) setHitTop({})
-        if (onScrollProp) onScrollProp(e)
+        typeof onScroll === 'function' && onScroll(e)
     }
     const onContentSizeChange = (e, f) => {
         if (autoScrollToEnd && !refreshing)
@@ -66,7 +66,7 @@ const CollectionFlatList = props => {
                 onStartReached={loadMoreMessages}
                 onLayout={onLayout}
                 onContentSizeChange={onContentSizeChange}
-                onScroll={onScroll}
+                onScroll={onFlatListScroll}
             />
         </View>
     )
