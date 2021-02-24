@@ -34,7 +34,9 @@ export const materialIcons = StyleSheet.create({
 
 export const modal = StyleSheet.create({
     content: {
-        width: 350
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 0
     }
 })
 

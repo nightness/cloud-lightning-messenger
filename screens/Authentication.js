@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Image, Platform } from 'react-native'
 import { Container, Text, TextInput, Button, ScrollView, View, Modal, ActivityIndicator, DisplayError } from '../components/Components'
-import { firebaseAuth, GoogleAuthProvider } from '../firebase/Firebase'
+import { firebaseAuth, GoogleAuthProvider, callFirebaseFunction } from '../firebase/Firebase'
 import { Styles, Themes } from '../shared/Constants'
 import { GlobalContext } from '../shared/GlobalContext'
 
@@ -39,7 +39,7 @@ export const LogoutModal = ({ navigation, shown, dismiss }) => {
 }
 
 export const Authentication = ({ navigation, customToken }) => {
-    const [fullName, setFullName] = useState('')
+    const [displayName, setDisplayName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -52,27 +52,6 @@ export const Authentication = ({ navigation, customToken }) => {
     const { theme, setTheme } = useContext(GlobalContext)
     const auth = firebaseAuth()
 
-    useEffect(() => {
-        if (theme === 'Dark')
-            setTheme('Light')
-    })
-
-    useEffect(() => {
-        if (customToken) {
-            auth
-                .signInWithCustomToken(customToken)
-                .then(() => {
-                    navigation.replace("Main")
-                })
-                .catch(error => {
-                    alert("Invalid custom token specified")
-                    setIsLoading(false)
-                })
-        } else {
-            setIsLoading(false)
-        }
-    }, [])
-
     const onSignUpPress = () => {
         setIsRegistering(true)
     }
@@ -81,15 +60,24 @@ export const Authentication = ({ navigation, customToken }) => {
         setIsRegistering(false)
     }
 
+    const onRegistrationSetDisplayName = async () => {
+        setIsLoading(true)
+        const authToken = await auth.currentUser.getIdToken()
+        auth.currentUser.updateProfile({ displayName })
+        await callFirebaseFunction('setDisplayName', {
+            displayName,
+            authToken
+        })
+        navigation.replace("Main")
+    }
+
     const onRegisterPress = () => {
         if (password !== confirmPassword) {
             alert("Passwords don't match.")
         } else {
             auth
                 .createUserWithEmailAndPassword(email, password)
-                .then(() => {
-                    navigation.replace("Main")
-                })
+                .then(onRegistrationSetDisplayName)
                 .catch((error) => {
                     alert(error)
                 })
@@ -125,7 +113,6 @@ export const Authentication = ({ navigation, customToken }) => {
 
     const sendPasswordReset = () => {
         if (isValidEMail) {
-            console.log(`Send Password reset to: ${email}`)
             setSubmitted(true)
             auth
                 .sendPasswordResetEmail(email)
@@ -145,9 +132,32 @@ export const Authentication = ({ navigation, customToken }) => {
     }
 
     useEffect(() => {
+        if (theme === 'Dark')
+            setTheme('Light')
+    })
+
+    useEffect(() => {
+        if (customToken) {
+            auth
+                .signInWithCustomToken(customToken)
+                .then(() => {
+                    navigation.replace("Main")
+                })
+                .catch(error => {
+                    alert("Invalid custom token specified")
+                    setIsLoading(false)
+                })
+        } else {
+            setIsLoading(false)
+        }
+    }, [])
+
+    // BUG: wont validate site names with a hyphen
+    useEffect(() => {
         const emailRegEx = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/
         setIsValidEMail(email.match(emailRegEx))
     }, [email])
+
 
     if (isLoading) {
         return <ActivityIndicator />
@@ -161,11 +171,6 @@ export const Authentication = ({ navigation, customToken }) => {
                     visible={passwordResetModalVisible}
                     onTouchOutside={() => {
                         setPasswordResetModalVisible(false)
-                    }}
-                    style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        margin: 0
                     }}
                 >
                     <TextInput
@@ -192,8 +197,8 @@ export const Authentication = ({ navigation, customToken }) => {
                         {isRegistering &&
                             <TextInput
                                 placeholder='Full Name'
-                                onChangeText={(text) => setFullName(text)}
-                                value={fullName}
+                                onChangeText={(text) => setDisplayName(text)}
+                                value={displayName}
                             />
                         }
                         <TextInput
