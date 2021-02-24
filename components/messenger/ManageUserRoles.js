@@ -77,9 +77,7 @@ export default ({ navigation, ...restProps }) => {
             <View>
                 <Picker
                     data={members}
-                    onValueChanged={newValue => {
-                        setSelectedMember(newValue)
-                    }}
+                    onValueChanged={newValue => setSelectedMember(newValue)}
                 />
             </View>
             <View style={Styles.views.flexRowJustifyCenter}>
