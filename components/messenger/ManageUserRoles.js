@@ -60,9 +60,9 @@ export default ({ navigation, ...restProps }) => {
         setLoadingClaims(true)
         getClaims(selectedMember.value)
             .then(claims => {
-                setIsAdmin(claims && !!claims.admin)
-                setIsManager(claims && !!claims.manager)
-                setIsModerator(claims && !!claims.moderator)
+                setIsAdmin(claims?.admin)
+                setIsManager(claims?.manager)
+                setIsModerator(claims?.moderator)
                 setLoadingClaims(false)
             })
     }, [selectedMember])
