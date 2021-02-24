@@ -54,7 +54,7 @@ service cloud.firestore {
       
       // Member Messages Match
       match /messages/{messageId} {
-        allow write: if userHasGoogleAccount() && (request.auth.uid == memberId)
+        allow write: if isAuthorized() && (request.auth.uid == memberId)
         allow read: if isAuthorized()
       }      
     }    
