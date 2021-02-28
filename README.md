@@ -48,6 +48,7 @@ expo start
 | ---------- | ----------- | ---------------------------- |
 | senderName | string      | Display name                 |
 | senderId   | string      | member's ID token            |
+| senderPhotoUrl   | string      | member's Photo URL            |
 | message    | string      | The text of the message      |
 | postedAt   | timestamp   | When the message was posted  |
 | location   | geolocation | Where the message was posted |
@@ -68,6 +69,7 @@ All messages to a member is managed by this collection. If senderId == memberId 
 | ---------- | ----------- | ----------------------------------------------- |
 | senderName | string      | Display name                                    |
 | senderId   | string      | member's ID token                               |
+| senderPhotoUrl   | string      | member's Photo URL            |
 | message    | string      | The text of the message                         |
 | postedAt   | timestamp   | When the message was posted                     |
 | location   | geolocation | Where the message was posted                    |
