@@ -46,8 +46,8 @@ expo start
 
 | Name       | Type        | Description                  |
 | ---------- | ----------- | ---------------------------- |
-| authorName | string      | Display name                 |
-| authorId   | string      | member's ID token            |
+| senderName | string      | Display name                 |
+| senderId   | string      | member's ID token            |
 | message    | string      | The text of the message      |
 | postedAt   | timestamp   | When the message was posted  |
 | location   | geolocation | Where the message was posted |
@@ -66,7 +66,7 @@ All messages to a member is managed by this collection. If senderId == memberId 
 
 | Name       | Type        | Description                                     |
 | ---------- | ----------- | ----------------------------------------------- |
-| authorName | string      | Display name                                    |
+| senderName | string      | Display name                                    |
 | senderId   | string      | member's ID token                               |
 | message    | string      | The text of the message                         |
 | postedAt   | timestamp   | When the message was posted                     |
