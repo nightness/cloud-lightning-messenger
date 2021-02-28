@@ -60,7 +60,7 @@ expo start
 | ------ | ----- | -------------------------------------------------- |
 | recent | array | Contains an array of the most recent wall messages |
 
-## Fields for /members/{memberId}/messages/{messageId} (a user's wall messages)
+## Fields for /members/{memberId}/messages/{messageId}
 
 | Name       | Type        | Description                                     |
 | ---------- | ----------- | ----------------------------------------------- |
