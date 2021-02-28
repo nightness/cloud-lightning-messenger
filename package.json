@@ -5,7 +5,11 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "jest --watchAll"
+  },
+  "jest": {
+    "preset": "jest-expo"
   },
   "dependencies": {
     "@expo/websql": "^1.0.1",
@@ -23,7 +27,6 @@
     "expo-status-bar": "~1.0.2",
     "faker": "^5.1.0",
     "firebase": "7.9.0",
-    "firebase-functions": "^3.13.1",
     "formik": "^2.2.6",
     "google-libphonenumber": "^3.2.15",
     "i18next": "^19.8.3",
@@ -54,12 +57,15 @@
     "react-navigation-stack": "^2.10.0",
     "react-use-lifecycles": "^1.1.0",
     "recyclerlistview": "^3.0.0",
-    "yup": "^0.32.8",
-    "yup-phone": "^1.2.19"
+    "yup": "^0.32.8"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
-    "jest": "^26.6.3"
+    "@types/faker": "^5.1.7",
+    "@types/react": "~16.9.35",
+    "@types/react-native": "~0.63.2",
+    "@types/react-native-modals": "^0.19.0",
+    "typescript": "~4.0.0"
   },
   "private": true
 }
