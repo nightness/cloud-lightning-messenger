@@ -62,7 +62,7 @@ expo start
 
 ## Fields for /members/{memberId}/messages/{messageId}
 
-All messages for a particular member are managed by this collection. If authorId == memberId it's a wall post, otherwise it's a message from the authorId.
+All messages to a member is managed by this collection. If authorId == memberId it's a wall post, otherwise it's a message from the authorId.
 
 | Name       | Type        | Description                                     |
 | ---------- | ----------- | ----------------------------------------------- |
