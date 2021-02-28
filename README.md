@@ -55,12 +55,6 @@ expo start
 
 #
 
-## Fields for /members/{memberId}
-
-| Name   | Type  | Description                                        |
-| ------ | ----- | -------------------------------------------------- |
-| recent | array | Contains an array of the most recent wall messages |
-
 ## Fields for /members/{memberId}/messages/{messageId}
 
 All messages to a member is managed by this collection. If senderId == memberId it's a wall post, otherwise it's a message from the senderId.
