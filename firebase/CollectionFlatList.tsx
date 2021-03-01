@@ -9,7 +9,6 @@ import {
 import { Styles } from '../shared/Styles'
 import { Themes } from '../shared/Themes'
 import { GlobalContext } from '../shared/GlobalContext'
-import Message from '../messenger/Message'
 
 interface CollectionFlatListProps<T> {
     style?: any

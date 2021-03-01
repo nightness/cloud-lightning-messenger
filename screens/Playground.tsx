@@ -1,65 +1,38 @@
-import React, { useEffect, useContext, useState, useRef, useMemo } from 'react'
-import { FlatList, SafeAreaView } from 'react-native'
-import { useAsync } from 'react-async-hook'
+import React, { useEffect, useContext, useState } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import {
     NavigationContainer,
     DarkTheme,
     DefaultTheme,
-    NavigationState,
-    Router,
     DefaultRouterOptions,
 } from '@react-navigation/native'
 import Authentication from './Authentication'
-import faker from 'faker'
-import { Formik } from 'formik'
-import * as yup from 'yup'
-import { Colors } from 'react-native-paper'
 import {
     ActivityIndicator,
     DisplayError,
     Screen,
-    Container,
-    FormField,
     Button,
-    Text,
     TextInput,
     View,
     Picker,
-    FirestoreDocumentView,
 } from '../components/Components'
 import { useAuthState } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import '../shared/FormValidation'
 
-const fetchStuff = async () => true
-const fetchResult = (async () => {
-    try {
-        return await fetchStuff()
-    } catch (error) {}
-})()
-
-const getTime = () => {
-    let tmpDate = new Date(Date.now())
-    return tmpDate.getTime()
-}
-
 interface Props {
     navigation: DefaultRouterOptions // ?
 }
+
 // Playground
 export const Playground = ({ navigation }: Props) => {
     const { currentUser, claims, addClaim, removeClaim } = useContext(FirebaseContext)
     const [claimName, setClaimName] = useState()
     const [data, setData] = useState([])
 
+    /*
     useEffect(() => {
         setTimeout(() => {
-            // setData([
-            //     'First',
-            //     'Second',
-            //     'Third'
-            // ]) // iOS isn't liking this, web is fine
             setData([
                 { label: 'First', value: 1 },
                 { label: 'Second', value: 2 },
@@ -110,6 +83,8 @@ export const Playground = ({ navigation }: Props) => {
             </View>
         </Screen>
     )
+    */
+    return <></>
 }
 
 const Stack = createStackNavigator()
