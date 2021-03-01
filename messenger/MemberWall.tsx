@@ -21,7 +21,7 @@ interface Props {
 export default ({ navigation }: Props) => {
     const { currentUser, claims } = useContext(FirebaseContext)
     const [messageText, setMessageText] = useState('')
-    const [messenger, messengerDispatch] = useMessenger(currentUser?.uid, 25)
+    const [messenger, messengerDispatch] = useMessenger(currentUser?.uid || '', 25)
 
     useEffect(() => {
         console.log(claims)

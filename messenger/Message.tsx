@@ -14,7 +14,7 @@ interface Props {
     item: MessageProps
 }
 
-export default class Message extends PureComponent {
+export default class Message extends PureComponent<Props> {
     private item: MessageProps
     private date: string
     private time: string
