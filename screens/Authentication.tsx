@@ -20,35 +20,6 @@ import { FirebaseContext } from '../firebase/FirebaseContext'
 import { Styles } from '../shared/Styles'
 import { GlobalContext } from '../shared/GlobalContext'
 
-export const LogoutModal = ({ navigation, shown, dismiss }) => {
-    const firebaseLogout = () => {
-        firebaseAuth()
-            .signOut()
-            .then(() => {
-                navigation.replace('Authentication')
-            })
-            .catch((error) => {})
-    }
-
-    return (
-        <Modal visible={shown} onTouchOutside={() => dismiss && dismiss()}>
-            <Text style={Styles.logoutModal.text}>Are you sure you want to logout?</Text>
-            <View style={Styles.logoutModal.buttonView}>
-                <Button
-                    style={Styles.logoutModal.button}
-                    title="Yes"
-                    onPress={firebaseLogout}
-                />
-                <Button
-                    style={Styles.logoutModal.button}
-                    title="No"
-                    onPress={() => dismiss && dismiss()}
-                />
-            </View>
-        </Modal>
-    )
-}
-
 export const Authentication = ({ navigation, customToken }) => {
     const { setDisplayName: firestoreSetDisplayName } = useContext(FirebaseContext)
     const [displayName, setDisplayName] = useState('')

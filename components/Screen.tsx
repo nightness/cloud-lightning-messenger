@@ -8,7 +8,7 @@ import ScreenHeader from './ScreenHeader'
 
 interface Props {
     children: JSX.Element
-    style: object
+    style?: object
     navigation?: any
     title: string
 }

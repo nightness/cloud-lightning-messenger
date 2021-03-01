@@ -13,8 +13,8 @@ export type ThemeStyles = {
     iosBackgroundColor?: string
     thumbColorOn?: string
     thumbColorOff?: string
-    trackColorOn?: string
-    trackColorOff?: string
+    trackColorOn: string
+    trackColorOff: string
 }
 
 export interface ThemeType {

@@ -5,10 +5,12 @@ import * as FirebaseAuth from 'react-firebase-hooks/auth'
 import * as FirebaseFirestore from 'react-firebase-hooks/firestore'
 import { firebaseConfig } from '../private/FirebaseConfig'
 import * as Defaults from '../shared/Defaults'
+
 export type AuthError = firebase.auth.Error
 export type DocumentData = firebase.firestore.DocumentData
-export type DocumentSnapshot = firebase.firestore.DocumentSnapshot<DocumentData>
-export type QuerySnapshot = firebase.firestore.QuerySnapshot<DocumentData>
+export type DocumentSnapshot<T> = firebase.firestore.DocumentSnapshot<T>
+export type Timestamp = firebase.firestore.Timestamp
+export type QuerySnapshot<T> = firebase.firestore.QuerySnapshot<T>
 
 export const getFirestore = () => {
     var firestore = firebase.firestore()
@@ -122,23 +124,24 @@ export const useDocumentDataOnce = (
         : FirebaseFirestore.useDocumentDataOnce(getDocument(documentPath))
 
 export const getData = (
-    snapshot: QuerySnapshot,
-    orderBy: string,
-    length: number,
-    firstItem: any
+    querySnapshot: QuerySnapshot<DocumentData>,
+    orderBy?: string,
+    length?: number,
+    firstItem?: any
 ) => {
-    if (!orderBy) return snapshot.query.get()
-    else if (!length) return snapshot.query.orderBy(orderBy).get()
-    else if (!firstItem) return snapshot.query.orderBy(orderBy).limitToLast(length).get()
+    if (!orderBy) return querySnapshot.query.get()
+    else if (!length) return querySnapshot.query.orderBy(orderBy).get()
+    else if (!firstItem)
+        return querySnapshot.query.orderBy(orderBy).limitToLast(length).get()
     else
-        return snapshot.query
+        return querySnapshot.query
             .orderBy(orderBy)
             .limitToLast(length)
             .startAt(firstItem)
             .get()
 }
 
-export const getDocumentsDataWithId = (querySnapshot: QuerySnapshot) => {
+export const getDocumentsDataWithId = (querySnapshot: QuerySnapshot<DocumentData>) => {
     let docs: DocumentData[] = []
     querySnapshot.docs.forEach((doc) => {
         const data = doc.data()

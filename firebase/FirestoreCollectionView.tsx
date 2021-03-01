@@ -1,25 +1,44 @@
 import React, { useState, useEffect } from 'react'
-import { useCollection, getDocumentsDataWithId, getData } from './Firebase'
+import {
+    useCollection,
+    getDocumentsDataWithId,
+    getData,
+    DocumentData,
+    QuerySnapshot,
+} from './Firebase'
 import ActivityIndicator from '../components/ActivityIndicator'
 import DisplayError from '../components/DisplayError'
 import CollectionFlatList from './CollectionFlatList'
+import { ListRenderItem } from 'react-native'
+import { FirebaseError } from 'firebase'
 
-interface Props {
+interface Props<T> {
     collectionPath: string
-    orderBy: string
-    initialNumToRender: number
+    renderItem: ListRenderItem<T>
+    orderBy?: string
+    initialNumToRender?: number
+    autoScrollToEnd?: boolean
 }
 
-export default ({ collectionPath, orderBy, initialNumToRender, ...restProps }: Props) => {
+export default ({
+    collectionPath,
+    renderItem,
+    orderBy,
+    initialNumToRender,
+    autoScrollToEnd,
+    ...restProps
+}: Props<any>) => {
     const [snapshot, loadingCollection, errorCollection] = useCollection(collectionPath)
     const [messages, setMessages] = useState([])
     const [loadingData, setDataLoading] = useState(true)
     const [errorData, setDataError] = useState(false)
 
     const fetchData = () => {
-        getData(snapshot, orderBy)
-            .then((querySnapshot) => {
-                setMessages(getDocumentsDataWithId(querySnapshot))
+        const querySnapshot = snapshot as QuerySnapshot<DocumentData>
+        getData(querySnapshot, orderBy)
+            .then((documentRef) => {
+                // @ts-ignore
+                setMessages(getDocumentsDataWithId(documentRef))
                 setDataLoading(false)
             })
             .catch((e) => {
@@ -35,14 +54,20 @@ export default ({ collectionPath, orderBy, initialNumToRender, ...restProps }: P
         return (
             <DisplayError
                 permissionDenied={
-                    errorCollection?.code === 'permission-denied' ||
-                    errorData?.code === 'permission-denied'
+                    (errorCollection as FirebaseError)?.code === 'permission-denied'
                 }
                 error={errorCollection || errorData}
             />
         )
     } else if (!loadingCollection && !loadingData) {
-        return <CollectionFlatList messages={messages} {...restProps} />
+        return (
+            <CollectionFlatList
+                renderItem={renderItem}
+                messages={messages}
+                autoScrollToEnd={autoScrollToEnd}
+                {...restProps}
+            />
+        )
     }
     return <ActivityIndicator />
 }

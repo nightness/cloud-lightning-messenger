@@ -6,10 +6,10 @@ import { Styles } from '../shared/Styles'
 import { Themes } from '../shared/Themes'
 
 interface Props {
-    style: any
+    style?: any
     title: string
-    disabled: boolean
-    reactNativeButton: any
+    disabled?: boolean
+    reactNativeButton?: any
     onPress: () => any
 }
 

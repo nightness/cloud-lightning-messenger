@@ -3,11 +3,12 @@ import { View, useWindowDimensions } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Header } from 'react-native-elements'
 import { Image, Text, MaterialIcons } from './Components'
-import { LogoutModal } from '../screens/Authentication'
+import { LogoutModal } from '../screens/modals/LogoutModal'
 import { Themes, Theme } from '../shared/Themes'
+import { StackNavigationProp } from '@react-navigation/stack'
 
 interface Props {
-    navigation: any
+    navigation: StackNavigationProp<any>
     title: string
     photoURL?: string | null
     hasDrawerNavigation?: boolean
@@ -30,10 +31,10 @@ export default ({
 
     const toggleDarkMode = () => {
         if (!setTheme) return
-        if (theme === Theme.Light) {
-            setTheme(Theme.Dark)
+        if (theme === 'Light') {
+            setTheme('Dark')
         } else {
-            setTheme(Theme.Light)
+            setTheme('Light')
         }
     }
 

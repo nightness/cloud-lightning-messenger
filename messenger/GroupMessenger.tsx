@@ -11,23 +11,31 @@ import {
     FirestoreCollectionView,
 } from '../components/Components'
 import { Styles } from '../shared/Styles'
-import { useCollection } from '../firebase/Firebase'
+import { DocumentData, QuerySnapshot, useCollection } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
+import { StackNavigationProp } from '@react-navigation/stack'
+import firebase from 'firebase'
+import { NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native'
 
-export default ({ navigation }) => {
+interface Props {
+    navigation: StackNavigationProp<any>
+}
+
+export default ({ navigation }: Props) => {
     const { currentUser, claims } = useContext(FirebaseContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('/groups')
-    const [groups, setGroups] = useState([])
+    const [groups, setGroups] = useState<PickerItem[]>([])
     const [messageText, setMessageText] = useState('')
-    const [groupCollectionPath, setGroupCollectionPath] = useState()
+    const [groupCollectionPath, setGroupCollectionPath] = useState<string>('')
 
     useEffect(() => {
         if (loadingCollection || errorCollection || !snapshot) return
         var newState: PickerItem[] = []
+        const querySnapshot = snapshot as QuerySnapshot<DocumentData>
         // @ts-ignore
-        snapshot.docs.forEach((docRef) => {
-            const push = async (docRef) => {
+        querySnapshot.docs.forEach((docRef) => {
+            const push = async (docRef: DocumentData) => {
                 const name = await docRef.get('name')
                 newState.push({
                     label: name,
@@ -61,8 +69,8 @@ export default ({ navigation }) => {
         //     })
     }
 
-    const onMessageKeyPress = ({ key }) => {
-        if (key != 'Enter') return
+    const onMessageKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
+        if (e.nativeEvent.key != 'Enter') return
         // Adds a new message to the chatroom
         sendMessage()
     }
@@ -79,7 +87,6 @@ export default ({ navigation }) => {
                     />
                 </View>
                 <FirestoreCollectionView
-                    contentContainerStyle={Styles.messenger.flatList}
                     collectionPath={groupCollectionPath}
                     autoScrollToEnd={true}
                     orderBy="postedAt"

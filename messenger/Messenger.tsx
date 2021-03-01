@@ -7,24 +7,32 @@ import {
     TextInput,
     Button,
     FirestoreCollectionView,
+    PickerItem,
 } from '../components/Components'
 import { Styles } from '../shared/Styles'
-import { useCollection } from '../firebase/Firebase'
+import { DocumentData, QuerySnapshot, useCollection } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
+import { NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native'
+import { StackNavigationProp } from '@react-navigation/stack'
 
-export default ({ navigation }) => {
+interface Props {
+    navigation: StackNavigationProp<any>
+}
+
+export default ({ navigation }: Props) => {
     const { currentUser, claims } = useContext(FirebaseContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('/profiles')
-    const [members, setMembers] = useState([])
-    const [messageText, setMessageText] = useState('')
-    const [groupCollectionPath, setGroupCollectionPath] = useState()
+    const [members, setMembers] = useState<PickerItem[]>([])
+    const [messageText, setMessageText] = useState<string>('')
+    const [groupCollectionPath, setGroupCollectionPath] = useState<string>('')
 
     useEffect(() => {
         if (loadingCollection || errorCollection || !snapshot) return
-        var newState = []
-        snapshot.docs.forEach((docRef) => {
-            const push = async (docRef) => {
+        var newState: PickerItem[] = []
+        const querySnapshot = snapshot as QuerySnapshot<DocumentData>
+        querySnapshot.docs.forEach((docRef) => {
+            const push = async (docRef: DocumentData) => {
                 const name = await docRef.get('displayName')
                 newState.push({
                     label: name || `{${docRef.id}}`,
@@ -60,8 +68,8 @@ export default ({ navigation }) => {
         //     })
     }
 
-    const onMessageKeyPress = ({ key }) => {
-        if (key != 'Enter') return
+    const onMessageKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
+        if (e.nativeEvent.key != 'Enter') return
         // Adds a new message to the chatroom
         sendMessage()
     }
@@ -78,7 +86,6 @@ export default ({ navigation }) => {
                     />
                 </View>
                 <FirestoreCollectionView
-                    contentContainerStyle={Styles.messenger.flatList}
                     collectionPath={groupCollectionPath}
                     autoScrollToEnd={true}
                     orderBy="postedAt"
@@ -88,7 +95,7 @@ export default ({ navigation }) => {
                     <TextInput
                         value={messageText}
                         style={Styles.messenger.textInput}
-                        onChangeText={(msg) => setMessageText(msg)}
+                        onChangeText={(msg: string) => setMessageText(msg)}
                         onKeyPress={onMessageKeyPress}
                     />
                     <Button

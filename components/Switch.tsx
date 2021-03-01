@@ -24,7 +24,7 @@ export default ({ style, value, onChange, classRef, ...restProps }: Props) => {
 
     return (
         <Switch
-            style={[Styles.themedSwitch.default, style]}
+            style={[style]}
             {...restProps}
             ref={classRef}
             trackColor={trackColor}
