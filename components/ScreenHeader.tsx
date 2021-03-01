@@ -51,6 +51,7 @@ export default ({
                 <MaterialIcons
                     name="menu"
                     size={iconSize}
+                    // @ts-ignore
                     onPress={navigation.openDrawer}
                 />
             ) : (

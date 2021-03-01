@@ -1,3 +1,4 @@
+/*
 import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { StyleSheet, FlatList, VirtualizedList, ScrollView, View, AppLoading } from 'react-native'
 import { useDocumentData } from './Firebase'
@@ -99,3 +100,5 @@ const styles = StyleSheet.create({
         width: "100%"
     }
 })
+
+*/

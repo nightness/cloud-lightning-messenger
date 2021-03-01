@@ -13,7 +13,7 @@ export default ({ children, style, ...restProps }: ViewProps) => {
     const { theme } = useContext(GlobalContext)
 
     return (
-        <View style={[Styles.view.default, Themes.view[theme], style]} {...restProps}>
+        <View style={[Themes.view[theme], style]} {...restProps}>
             {children}
         </View>
     )

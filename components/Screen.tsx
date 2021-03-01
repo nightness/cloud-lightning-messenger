@@ -19,7 +19,7 @@ export default ({ children, style, navigation, title, ...restProps }: Props) => 
     const themeName = theme.toString()
 
     return (
-        <View style={[Styles.views.screen, Themes.screen[themeName], style]}>
+        <View style={[Styles.views.screen, Themes.screen[theme], style]}>
             <ScreenHeader
                 navigation={navigation}
                 title={title}
