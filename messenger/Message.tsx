@@ -11,34 +11,34 @@ interface MessageProps {
 }
 
 interface Props {
-    message: MessageProps
+    item: MessageProps
 }
 
 export default class Message extends PureComponent {
-    private message: MessageProps
+    private item: MessageProps
     private date: string
     private time: string
 
     constructor(props: Props) {
         super(props)
-        this.message = props.message
-        this.date = (this.message.postedAt
-            ? this.message.postedAt.toDate()
+        this.item = props.item
+        this.date = (this.item.postedAt
+            ? this.item.postedAt.toDate()
             : new Date()
         ).toLocaleDateString()
-        this.time = (this.message.postedAt
-            ? this.message.postedAt.toDate()
+        this.time = (this.item.postedAt
+            ? this.item.postedAt.toDate()
             : new Date()
         ).toLocaleTimeString()
     }
     render() {
         return (
-            <View key={this.message.id} style={{ paddingVertical: 5 }}>
+            <View key={this.item.id} style={{ paddingVertical: 5 }}>
                 <Text fontSize={12} fontWeight="100">
-                    {`${this.message.authorName} [ ${this.date} @ ${this.time} ] `}
+                    {`${this.item.authorName} [ ${this.date} @ ${this.time} ] `}
                 </Text>
                 <Text fontSize={14} fontWeight="400">
-                    {this.message.message}
+                    {this.item.message}
                 </Text>
             </View>
         )

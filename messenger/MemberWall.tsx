@@ -11,11 +11,17 @@ import { Styles } from '../shared/Styles'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
 import { createMessage, useMessenger } from './MessengerReducer'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native'
 
-export default ({ navigation }) => {
+interface Props {
+    navigation: StackNavigationProp<any>
+}
+
+export default ({ navigation }: Props) => {
     const { currentUser, claims } = useContext(FirebaseContext)
     const [messageText, setMessageText] = useState('')
-    const [messenger, messengerDispatch] = useMessenger(currentUser.uid, 25)
+    const [messenger, messengerDispatch] = useMessenger(currentUser?.uid, 25)
 
     useEffect(() => {
         console.log(claims)
@@ -40,8 +46,8 @@ export default ({ navigation }) => {
             })
     }
 
-    const onMessageKeyPress = ({ key }) => {
-        if (key != 'Enter') return
+    const onMessageKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
+        if (e.nativeEvent.key != 'Enter') return
         // Adds a new message to the chatroom
         sendMessage()
     }
@@ -50,7 +56,6 @@ export default ({ navigation }) => {
         <Screen navigation={navigation} title={'Wall'}>
             <Container>
                 <FirestoreCollectionView
-                    contentContainerStyle={Styles.messenger.flatList}
                     collectionPath={messenger.messageCollectionPath}
                     autoScrollToEnd={true}
                     orderBy="postedAt"
