@@ -19,9 +19,10 @@ import {
 import { useAuthState } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import '../shared/FormValidation'
+import { Theme } from '../shared/Themes'
 
 interface Props {
-    navigation: DefaultRouterOptions // ?
+    navigation: DefaultRouterOptions
 }
 
 // Playground
@@ -85,38 +86,4 @@ export const Playground = ({ navigation }: Props) => {
     )
     */
     return <></>
-}
-
-const Stack = createStackNavigator()
-export default ({ navigation }) => {
-    const theme = ''
-    const [currentUser, loading, error] = useAuthState()
-
-    if (loading) {
-        return (
-            <Screen title="Playground">
-                <ActivityIndicator />
-            </Screen>
-        )
-    } else if (error) {
-        return (
-            <Screen title="Playground">
-                <DisplayError error={error} />
-            </Screen>
-        )
-    } else {
-        return (
-            <NavigationContainer
-                theme={theme === Theme[Theme.Dark] ? DarkTheme : DefaultTheme}
-            >
-                <Stack.Navigator
-                    initialRouteName={currentUser ? 'Main' : 'Authentication'}
-                    headerMode="none"
-                >
-                    <Stack.Screen name="Authentication" component={Authentication} />
-                    <Stack.Screen name="Main" component={Playground} />
-                </Stack.Navigator>
-            </NavigationContainer>
-        )
-    }
 }

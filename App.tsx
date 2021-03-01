@@ -1,13 +1,11 @@
 import 'react-native-gesture-handler'
 import React, { useState } from 'react'
 // @ts-ignore
-import { ModalPortal } from 'react-native-modals' // ./node_modules/@types/react-native-modals
+import { ModalPortal } from 'react-native-modals'
 import { AppLoading } from 'expo'
 import * as Fonts from 'expo-font'
 import { FirebaseProvider } from './firebase/FirebaseContext'
 import { GlobalProvider } from './shared/GlobalContext'
-import * as Defaults from './shared/Defaults'
-import Playground from './screens/Playground'
 import AppNavigator from './navigation/AppNavigator'
 
 const getFonts = () =>
@@ -25,7 +23,7 @@ export default function App() {
         return (
             <GlobalProvider>
                 <FirebaseProvider>
-                    {Defaults.playgroundMode ? <Playground /> : <AppNavigator />}
+                    <AppNavigator />
                     <ModalPortal />
                 </FirebaseProvider>
             </GlobalProvider>

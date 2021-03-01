@@ -21,7 +21,7 @@ export const FirebaseContext = createContext<ContextType>({
 })
 
 interface Props {
-    children: JSX.Element
+    children: JSX.Element | JSX.Element[]
 }
 
 export const FirebaseProvider = ({ children }: Props) => {
