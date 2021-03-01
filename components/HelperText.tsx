@@ -5,12 +5,13 @@ import { Themes } from '../shared/Themes'
 
 interface Props {
     children: JSX.Element
+    type: 'error' | 'info'
     style?: any
     fontWeight?: string
     fontSize?: number
 }
 
-export default ({ children, style, fontWeight, fontSize, ...restProps }: Props) => {
+export default ({ children, style, fontWeight, fontSize, type, ...restProps }: Props) => {
     const { theme } = useContext(GlobalContext)
 
     // Setup defaults
@@ -24,6 +25,7 @@ export default ({ children, style, fontWeight, fontSize, ...restProps }: Props) 
     return (
         <HelperText
             {...restProps}
+            type={type}
             style={[
                 Themes.helperText[theme],
                 style,

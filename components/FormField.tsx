@@ -21,7 +21,7 @@ export default ({
 }: Props) => {
     const { theme } = useContext(GlobalContext)
 
-    const onChangeHandler = (text) => {
+    const onChangeHandler = (text: string) => {
         //if (fieldType === 'phone-number')
         //    formatPhoneNumber(text)
     }
@@ -33,13 +33,13 @@ export default ({
                     if (fieldType) onChangeHandler(text)
                     formikProps.handleChange(fieldName)(text)
                 }}
-                placeholder={placeHolder}
+                //placeholder={placeHolder}
                 value={formikProps.values[fieldName]}
                 onBlur={formikProps.handleBlur(fieldName)}
-                keyboardAppearance={Theme[theme].toLowerCase()}
+                keyboardAppearance={theme}
                 {...restProps}
             />
-            <HelperText fontSize={10}>
+            <HelperText fontSize={10} type="error">
                 {formikProps.touched[fieldName] && formikProps.errors[fieldName]}
             </HelperText>
         </View>
