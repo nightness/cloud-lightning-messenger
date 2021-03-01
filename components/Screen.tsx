@@ -16,7 +16,6 @@ interface Props {
 export default ({ children, style, navigation, title, ...restProps }: Props) => {
     const { theme } = useContext(GlobalContext)
     const { currentUser } = useContext(FirebaseContext)
-    const themeName = theme.toString()
 
     return (
         <View style={[Styles.views.screen, Themes.screen[theme], style]}>
