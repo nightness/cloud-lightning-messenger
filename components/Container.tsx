@@ -5,7 +5,7 @@ import { Styles } from '../shared/Styles'
 import { Theme, Themes } from '../shared/Themes'
 
 interface Props {
-    children: JSX.Element[]
+    children: JSX.Element | JSX.Element[]
     style?: any
     isSafe?: boolean
 }

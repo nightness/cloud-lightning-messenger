@@ -15,7 +15,9 @@ interface Props {
     style?: StyleProp<any>
     classRef?: any
     value?: string
+    placeholder?: string
     keyboardAppearance?: Theme
+    defaultValue?: string
     onChangeText?: (text: string) => void
     onKeyPress?: (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => void
     onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void
@@ -27,6 +29,8 @@ export default ({
     classRef,
     value,
     keyboardAppearance,
+    placeholder,
+    defaultValue,
     onChangeText,
     onKeyPress,
     onBlur,
@@ -44,9 +48,11 @@ export default ({
             underlineColorAndroid="transparent"
             {...restProps}
             keyboardAppearance={appearance}
+            placeholder={placeholder}
             onChangeText={onChangeText}
             onKeyPress={onKeyPress}
             onBlur={onBlur}
+            defaultValue={defaultValue}
             value={value}
             ref={classRef}
             style={[Styles.textInput.input, Themes.textInput[theme], style]}

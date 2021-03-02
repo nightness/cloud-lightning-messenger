@@ -18,6 +18,7 @@ import { GlobalContext } from '../shared/GlobalContext'
 import { useCollection, getFirestore } from '../firebase/Firebase'
 import { ProfileContext } from '../shared/ProfileContext'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { GroupDocument } from '../firebase/DataTypes'
 //import { ScrollView } from 'react-native-gesture-handler'
 
 interface Props {
@@ -31,15 +32,20 @@ export default ({ navigation, ...restProps }: Props) => {
     const [groups, setGroups] = useState([])
     const [groupName, setGroupName] = useState('')
     const [selectedGroup, setSelectedGroup] = useState<PickerItem>()
-    const [members, setMembers] = useState([])
-    const [memberName, setMemberName] = useState('')
+    const [members, setMembers] = useState<PickerItem[]>([])
+    const [memberName, setMemberName] = useState<string>('')
     const [selectedMember, setSelectedMember] = useState<PickerItem>()
     const [addGroupModalVisible, setAddGroupModalVisible] = useState(false)
     const [renameGroupModalVisible, setRenameGroupModalVisible] = useState(false)
     const [removeGroupModalVisible, setRemoveGroupModalVisible] = useState(false)
-
     const [addMemberModalVisible, setAddMemberModalVisible] = useState(false)
     const [removeMemberModalVisible, setRemoveMemberModalVisible] = useState(false)
+
+    const getMembers = () => {
+        let memberList: string[] = []
+        members.forEach((member) => memberList.push(member.value))
+        return memberList
+    }
 
     const renameGroup = () => {
         if (!selectedGroup) return
@@ -75,14 +81,14 @@ export default ({ navigation, ...restProps }: Props) => {
             .collection('groups')
             .doc(selectedGroup.value)
             .get()
-        const data = snapshot.data()
+        const data: GroupDocument | undefined = snapshot.data()
         let promises: Promise<any>[] = []
         let groupMembers: PickerItem[] = []
         if (data && data.members) {
             const add = async (uid: string) => {
                 const profile = await profileContext.getUserProfile(uid)
                 groupMembers.push({
-                    label: profile.displayName || `{${uid}}`,
+                    label: profile?.displayName || `{${uid}}`,
                     value: uid,
                 })
             }
@@ -92,7 +98,7 @@ export default ({ navigation, ...restProps }: Props) => {
         }
         Promise.all(promises).then(() => {
             setMembers(groupMembers)
-            setSelectedMember(groupMembers.length > 0 ? groupMembers[0] : '')
+            setSelectedMember(groupMembers.length > 0 ? groupMembers[0] : undefined)
         }) //.catch(() => undefined)
     }
 
@@ -109,7 +115,10 @@ export default ({ navigation, ...restProps }: Props) => {
     }
 
     const addMember = () => {
-        const newMembers = [...members, memberName]
+        if (!selectedGroup) return
+        const existingMembers = getMembers()
+        const newMembers = [...existingMembers, memberName]
+        const newMembersState = [...members, memberName]
         getFirestore()
             .collection('groups')
             .doc(selectedGroup.value)
@@ -118,7 +127,7 @@ export default ({ navigation, ...restProps }: Props) => {
                 members: newMembers,
             })
             .then(() => {
-                setMembers(newMembers)
+                setMembers(newMembersState)
             })
             .catch((error) => {
                 if (error.code === 'permission-denied') alert('Permission Denied')
@@ -188,18 +197,16 @@ export default ({ navigation, ...restProps }: Props) => {
                     onTouchOutside={() => setRemoveGroupModalVisible(false)}
                 >
                     <Text style={Styles.logoutModal.text}>
-                        {`Are you sure you want to remove the '
-                        ${{selectedMember?.label}}' from the '
-                        ${{selectedGroup && selectedGroup.label}}' group?`}
+                        {`Are you sure you want to remove the '${selectedMember?.label}' from the '${selectedGroup?.label}' group?`}
                     </Text>
                     <View style={Styles.logoutModal.buttonView}>
                         <Button
                             style={Styles.logoutModal.button}
                             title="Yes"
-                            onPress={() =>
-                                setRemoveMemberModalVisible(false) ||
+                            onPress={() => {
+                                setRemoveMemberModalVisible(false)
                                 removeSelectedMember()
-                            }
+                            }}
                         />
                         <Button
                             style={Styles.logoutModal.button}
@@ -222,14 +229,18 @@ export default ({ navigation, ...restProps }: Props) => {
                         <Button
                             style={Styles.logoutModal.button}
                             title="Add Member"
-                            onPress={() => setAddMemberModalVisible(false) || addMember()}
+                            onPress={() => {
+                                setAddMemberModalVisible(false)
+                                addMember()
+                            }}
                         />
                         <Button
                             style={Styles.logoutModal.button}
                             title="Cancel"
-                            onPress={() =>
-                                setAddMemberModalVisible(false) || setMemberName('')
-                            }
+                            onPress={() => {
+                                setAddMemberModalVisible(false)
+                                setMemberName('')
+                            }}
                         />
                     </View>
                 </Modal>
@@ -238,16 +249,16 @@ export default ({ navigation, ...restProps }: Props) => {
                     onTouchOutside={() => setRemoveGroupModalVisible(false)}
                 >
                     <Text style={Styles.logoutModal.text}>
-                        Are you sure you want to remove the '
-                        {selectedGroup && selectedGroup.label}' group?
+                        {`Are you sure you want to remove the '${selectedGroup?.label}' group?`}
                     </Text>
                     <View style={Styles.logoutModal.buttonView}>
                         <Button
                             style={Styles.logoutModal.button}
                             title="Yes"
-                            onPress={() =>
-                                setRemoveGroupModalVisible(false) || removeSelectedGroup()
-                            }
+                            onPress={() => {
+                                setRemoveGroupModalVisible(false)
+                                removeSelectedGroup()
+                            }}
                         />
                         <Button
                             style={Styles.logoutModal.button}
@@ -270,14 +281,18 @@ export default ({ navigation, ...restProps }: Props) => {
                         <Button
                             style={Styles.logoutModal.button}
                             title="Add Group"
-                            onPress={() => setAddGroupModalVisible(false) || addGroup()}
+                            onPress={() => {
+                                setAddGroupModalVisible(false)
+                                addGroup()
+                            }}
                         />
                         <Button
                             style={Styles.logoutModal.button}
                             title="Cancel"
-                            onPress={() =>
-                                setAddGroupModalVisible(false) || setGroupName('')
-                            }
+                            onPress={() => {
+                                setAddGroupModalVisible(false)
+                                setGroupName('')
+                            }}
                         />
                     </View>
                 </Modal>
@@ -296,16 +311,18 @@ export default ({ navigation, ...restProps }: Props) => {
                         <Button
                             style={Styles.logoutModal.button}
                             title="Rename Group"
-                            onPress={() =>
-                                setRenameGroupModalVisible(false) || renameGroup()
-                            }
+                            onPress={() => {
+                                setRenameGroupModalVisible(false)
+                                renameGroup()
+                            }}
                         />
                         <Button
                             style={Styles.logoutModal.button}
                             title="Cancel"
-                            onPress={() =>
-                                setRenameGroupModalVisible(false) || setGroupName('')
-                            }
+                            onPress={() => {
+                                setRenameGroupModalVisible(false)
+                                setGroupName('')
+                            }}
                         />
                     </View>
                 </Modal>
@@ -323,10 +340,11 @@ export default ({ navigation, ...restProps }: Props) => {
                         <Button
                             title="Rename"
                             disabled={!selectedGroup}
-                            onPress={() =>
-                                setGroupName(selectedGroup && selectedGroup.label) ||
+                            onPress={() => {
+                                if (!selectedGroup) return
+                                setGroupName(selectedGroup.label)
                                 setRenameGroupModalVisible(true)
-                            }
+                            }}
                         />
                         <Button
                             title="Remove"

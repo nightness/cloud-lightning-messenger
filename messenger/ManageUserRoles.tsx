@@ -7,45 +7,55 @@ import {
     ActivityIndicator,
     DisplayError,
     LabeledSwitch,
+    PickerItem,
 } from '../components/Components'
 import { Styles } from '../shared/Styles'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import { useCollection } from '../firebase/Firebase'
+import { StackNavigationProp } from '@react-navigation/stack'
 
-export default ({ navigation, ...restProps }) => {
+interface Props {
+    navigation: StackNavigationProp<any>
+}
+
+export default ({ navigation, ...restProps }: Props) => {
     const { claims, addClaim, removeClaim, getClaims } = useContext(FirebaseContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('profiles')
     const [members, setMembers] = useState([])
-    const [selectedMember, setSelectedMember] = useState()
+    const [selectedMember, setSelectedMember] = useState<PickerItem>()
     const [loadingClaims, setLoadingClaims] = useState(false)
-    const [isAdmin, setIsAdmin] = useState()
-    const [isManager, setIsManager] = useState()
-    const [isModerator, setIsModerator] = useState()
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [isManager, setIsManager] = useState(false)
+    const [isModerator, setIsModerator] = useState(false)
     const [permissionDenied, setPermissionDenied] = useState(!claims.admin)
 
-    const setClaim = (uid, claimName, value) => {
+    const setClaim = (uid: string, claimName: string, value: boolean) => {
         let promise = value ? addClaim(uid, claimName) : removeClaim(uid, claimName)
         promise.then((results) => {
             console.log(results)
         })
     }
-    const toggleAdmin = () =>
-        setIsAdmin(
-            (previousState) =>
-                setClaim(selectedMember.value, 'admin', !previousState) || !previousState
-        )
-    const toggleManager = () =>
-        setIsManager(
-            (previousState) =>
-                setClaim(selectedMember.value, 'manager', !previousState) ||
-                !previousState
-        )
-    const toggleModerator = () =>
-        setIsModerator(
-            (previousState) =>
-                setClaim(selectedMember.value, 'moderator', !previousState) ||
-                !previousState
-        )
+    const toggleAdmin = () => {
+        if (!selectedMember) return
+        setIsAdmin((previousState) => {
+            setClaim(selectedMember.value, 'admin', !previousState)
+            return !previousState
+        })
+    }
+    const toggleManager = () => {
+        if (!selectedMember) return
+        setIsManager((previousState) => {
+            setClaim(selectedMember.value, 'manager', !previousState)
+            return !previousState
+        })
+    }
+    const toggleModerator = () => {
+        if (!selectedMember) return
+        setIsModerator((previousState) => {
+            setClaim(selectedMember.value, 'moderator', !previousState)
+            return !previousState
+        })
+    }
 
     // Update the 'users' state
     useEffect(() => {

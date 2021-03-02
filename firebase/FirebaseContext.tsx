@@ -1,23 +1,31 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { ActivityIndicator, DisplayError } from '../components/Components'
+import { UserClaims } from './DataTypes'
 import { useAuthState, callFirebaseFunction, getAuth } from './Firebase'
 
 type ContextType = {
     currentUser?: firebase.User
-    claims?: object
+    claims: UserClaims
     isLoading: boolean
     error?: any
-    addClaim?: (uid: string, claimName: string) => Promise<any>
-    removeClaim?: (uid: string, claimName: string) => Promise<any>
-    getClaims?: (uid: string) => Promise<any>
-    setDisplayName?: (
-        displayName: string
-    ) => Promise<firebase.functions.HttpsCallableResult | undefined>
     authToken?: string
+    addClaim: (uid: string, claimName: string) => Promise<any>
+    removeClaim: (uid: string, claimName: string) => Promise<any>
+    getClaims: (uid: string) => Promise<any>
+    setDisplayName: (displayName: string) => Promise<any>
 }
 
 export const FirebaseContext = createContext<ContextType>({
+    claims: {
+        admin: false,
+        manager: false,
+        moderator: false,
+    },
     isLoading: true,
+    addClaim: (uid: string, claimName: string) => new Promise(() => undefined),
+    removeClaim: (uid: string, claimName: string) => new Promise(() => undefined),
+    getClaims: (uid: string) => new Promise(() => undefined),
+    setDisplayName: (displayName: string) => new Promise(() => undefined),
 })
 
 interface Props {
@@ -26,7 +34,11 @@ interface Props {
 
 export const FirebaseProvider = ({ children }: Props) => {
     const [currentUser, loadingUser, errorUser] = useAuthState()
-    const [claims, setClaims] = useState({})
+    const [claims, setClaims] = useState<UserClaims>({
+        admin: false,
+        manager: false,
+        moderator: false,
+    })
     const [loadingClaims, setLoadingClaims] = useState(true)
     const [authToken, setAuthToken] = useState()
 
@@ -36,7 +48,7 @@ export const FirebaseProvider = ({ children }: Props) => {
             userId: uid,
             authToken: authToken,
         })
-        return result.data.customClaims
+        return result.data.customClaims as UserClaims
     }
 
     // User requires the .admin token to use this function
@@ -70,7 +82,8 @@ export const FirebaseProvider = ({ children }: Props) => {
         setAuthToken(token)
 
         const idTokenResult = await currentUser.getIdTokenResult()
-        if (idTokenResult.claims !== undefined) setClaims(idTokenResult.claims)
+        if (idTokenResult.claims !== undefined)
+            setClaims(idTokenResult.claims as UserClaims)
         setLoadingClaims(false)
     }
 

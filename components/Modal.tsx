@@ -9,13 +9,20 @@ interface Props {
     children: JSX.Element[]
     style?: StyleProp<ViewStyle>
     visible: boolean
+    onTouchOutside?: () => void
 }
 
-export default ({ children, style, visible = false, ...restProps }: Props) => {
+export default ({
+    children,
+    style,
+    onTouchOutside,
+    visible = false,
+    ...restProps
+}: Props) => {
     const { theme } = useContext(GlobalContext)
 
     return (
-        <Modal visible={visible} {...restProps}>
+        <Modal visible={visible} onTouchOutside={onTouchOutside} {...restProps}>
             <ModalContent style={[Styles.modal.content, Themes.modal[theme], style]}>
                 {children}
             </ModalContent>

@@ -1,12 +1,6 @@
-import { auth } from 'firebase'
 import React, { createContext, useState, useEffect, useRef } from 'react'
-import {
-    useAuthState,
-    getCurrentUser,
-    getCollection,
-    useCollection,
-    DocumentData,
-} from '../firebase/Firebase'
+import { useAuthState, getCollection, DocumentData } from '../firebase/Firebase'
+import { UserProfile } from '../firebase/DataTypes'
 
 interface ContextType {
     cachedUsers: { [index: string]: UserProfile }
@@ -28,10 +22,6 @@ export const ProfileContext = createContext<ContextType>({
 })
 
 const sleep = async (delay: number) => await new Promise((r) => setTimeout(r, delay))
-
-export interface UserProfile {
-    displayName?: string
-}
 
 export const useProfiler = () => {
     const [isLoadingCollection, setIsLoadingCollection] = useState(true)
