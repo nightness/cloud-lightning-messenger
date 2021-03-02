@@ -26,11 +26,21 @@ interface Props {
     navigation: DefaultRouterOptions
 }
 
+type Testing = {
+    testing: Boolean | Object
+}
+
+let a: Testing = {
+    testing: true,
+}
+
 // Playground
 export const Playground = ({ navigation }: Props) => {
     const { currentUser, claims, addClaim, removeClaim } = useContext(FirebaseContext)
     const [claimName, setClaimName] = useState()
     const [data, setData] = useState([])
+
+    console.log(a.testing instanceof Object)
 
     /*
     useEffect(() => {

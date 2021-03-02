@@ -15,7 +15,12 @@ import {
 } from '../components/Components'
 import { Styles } from '../shared/Styles'
 import { GlobalContext } from '../shared/GlobalContext'
-import { useCollection, getFirestore } from '../firebase/Firebase'
+import {
+    useCollection,
+    getFirestore,
+    DocumentData,
+    QuerySnapshot,
+} from '../firebase/Firebase'
 import { ProfileContext } from '../shared/ProfileContext'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { GroupDocument } from '../firebase/DataTypes'
@@ -119,6 +124,7 @@ export default ({ navigation, ...restProps }: Props) => {
         const existingMembers = getMembers()
         const newMembers = [...existingMembers, memberName]
         const newMembersState = [...members, memberName]
+        /*
         getFirestore()
             .collection('groups')
             .doc(selectedGroup.value)
@@ -132,9 +138,11 @@ export default ({ navigation, ...restProps }: Props) => {
             .catch((error) => {
                 if (error.code === 'permission-denied') alert('Permission Denied')
             })
+        */
     }
 
     const removeSelectedMember = () => {
+        /*
         const newMembers = members.filter((obj) => obj.value != selectedMember.value)
         getFirestore()
             .collection('groups')
@@ -149,11 +157,11 @@ export default ({ navigation, ...restProps }: Props) => {
             .catch((error) => {
                 if (error.code === 'permission-denied') alert('Permission Denied')
             })
+        */
     }
 
     useEffect(() => {
-        if (loadingCollection || errorCollection || snapshot || !snapshot.docs) return
-
+        if (loadingCollection || errorCollection || !snapshot) return
         var newState = []
         snapshot.docs.forEach((docRef) => {
             const push = async (docRef) => {
