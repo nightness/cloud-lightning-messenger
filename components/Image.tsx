@@ -4,11 +4,13 @@ import {
     Image,
     GestureResponderEvent,
     ImageSourcePropType,
+    StyleProp,
+    ImageStyle,
 } from 'react-native'
 
 interface Props {
     disabled?: boolean
-    style?: any
+    style?: StyleProp<ImageStyle>
     source: ImageSourcePropType
     onPress?: (event: GestureResponderEvent) => void
 }

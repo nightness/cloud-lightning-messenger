@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
-import { Button, TouchableOpacity } from 'react-native'
+import { Button, StyleProp, TouchableOpacity, ViewStyle } from 'react-native'
 import { Text } from './Components'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Styles } from '../shared/Styles'
 import { Themes } from '../shared/Themes'
 
 interface Props {
-    style?: any
+    style?: StyleProp<ViewStyle>
     title: string
     disabled?: boolean
     reactNativeButton?: any

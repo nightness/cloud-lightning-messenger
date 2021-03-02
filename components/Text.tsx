@@ -1,11 +1,11 @@
 import React, { useContext, useRef, useEffect } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, StyleProp, TextStyle } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Themes } from '../shared/Themes'
 
 interface Props {
     children: JSX.Element[] | string
-    style?: any
+    style?: StyleProp<TextStyle> | object
     classRef?: any
     fontWeight?: string
     fontSize?: number

@@ -23,7 +23,7 @@ export default () => {
                 <Drawer.Screen name="Messenger" component={Messenger} />
                 <Drawer.Screen name="Group Messenger" component={GroupMessenger} />
                 {/* <Drawer.Screen name="Manage Groups" component={ManageGroups} />
-        <Drawer.Screen name="Manage User Roles" component={ManageUserRoles} /> */}
+                <Drawer.Screen name="Manage User Roles" component={ManageUserRoles} /> */}
                 <Drawer.Screen name="Playground" component={Playground} />
             </Drawer.Navigator>
         </ProfileProvider>

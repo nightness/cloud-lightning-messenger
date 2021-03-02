@@ -11,7 +11,7 @@ import {
 } from '../components/Components'
 import { Styles } from '../shared/Styles'
 import { FirebaseContext } from '../firebase/FirebaseContext'
-import { useCollection } from '../firebase/Firebase'
+import { DocumentData, QuerySnapshot, useCollection } from '../firebase/Firebase'
 import { StackNavigationProp } from '@react-navigation/stack'
 
 interface Props {
@@ -21,7 +21,7 @@ interface Props {
 export default ({ navigation, ...restProps }: Props) => {
     const { claims, addClaim, removeClaim, getClaims } = useContext(FirebaseContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('profiles')
-    const [members, setMembers] = useState([])
+    const [members, setMembers] = useState<PickerItem[]>([])
     const [selectedMember, setSelectedMember] = useState<PickerItem>()
     const [loadingClaims, setLoadingClaims] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
@@ -60,9 +60,10 @@ export default ({ navigation, ...restProps }: Props) => {
     // Update the 'users' state
     useEffect(() => {
         if (loadingCollection || errorCollection || !snapshot) return
-        var newState = []
-        snapshot.docs.forEach((docRef) => {
-            const push = async (docRef) => {
+        const typedSnapshot = snapshot as QuerySnapshot<DocumentData>
+        var newState: PickerItem[] = []
+        typedSnapshot.docs.forEach((docRef) => {
+            const push = async (docRef: DocumentData) => {
                 const name = await docRef.get('displayName')
                 newState.push({
                     label: name || `{${docRef.id}}`,
@@ -100,7 +101,8 @@ export default ({ navigation, ...restProps }: Props) => {
         render = (
             <DisplayError
                 permissionDenied={
-                    errorCollection?.code === 'permission-denied' || permissionDenied
+                    (errorCollection as Error)?.message === 'permission-denied' ||
+                    permissionDenied
                 }
             />
         )

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { ScrollView, Platform } from 'react-native'
+import { ScrollView, Platform, StyleProp, TextStyle } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Styles } from '../shared/Styles'
 import { Theme, Themes } from '../shared/Themes'
@@ -13,7 +13,7 @@ export interface PickerItem {
 }
 
 interface Props {
-    style?: any
+    style?: StyleProp<TextStyle>
     data?: PickerItem[]
     selectedIndex?: number
     onValueChanged?: (item?: PickerItem) => void

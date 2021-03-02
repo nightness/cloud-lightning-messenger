@@ -5,13 +5,15 @@ import {
     NativeScrollEvent,
     NativeSyntheticEvent,
     ListRenderItem,
+    StyleProp,
+    ViewStyle,
 } from 'react-native'
 import { Styles } from '../shared/Styles'
 import { Themes } from '../shared/Themes'
 import { GlobalContext } from '../shared/GlobalContext'
 
 interface CollectionFlatListProps<T> {
-    style?: any
+    style?: StyleProp<ViewStyle>
     messages: T[]
     renderItem: ListRenderItem<T>
     onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void

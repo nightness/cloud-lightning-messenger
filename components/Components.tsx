@@ -6,7 +6,7 @@ import Screen from './Screen'
 import ActivityIndicator from './ActivityIndicator'
 import DisplayError from './DisplayError'
 import FirestoreCollectionView from '../firebase/FirestoreCollectionView'
-import FirestoreDocumentView from '../firebase/FirestoreDocumentView'
+//import FirestoreDocumentView from '../firebase/FirestoreDocumentView'
 import FormField from './FormField'
 import ScrollView from './ScrollView'
 import Modal from './Modal'
@@ -26,7 +26,7 @@ export {
     Container,
     DisplayError,
     FirestoreCollectionView,
-    FirestoreDocumentView,
+    //FirestoreDocumentView,
     Modal,
     Screen,
     Text,

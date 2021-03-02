@@ -11,6 +11,7 @@ import {
     ActivityIndicator,
     DisplayError,
     Screen,
+    Text,
     Button,
     TextInput,
     View,
@@ -85,5 +86,9 @@ export const Playground = ({ navigation }: Props) => {
         </Screen>
     )
     */
-    return <></>
+    return (
+        <Screen navigation={navigation} title="Playground">
+            <Text>Hello</Text>
+        </Screen>
+    )
 }

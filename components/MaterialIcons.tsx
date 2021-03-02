@@ -3,10 +3,10 @@ import { MaterialIcons } from '@expo/vector-icons'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Styles } from '../shared/Styles'
 import { Themes } from '../shared/Themes'
-import { GestureResponderEvent } from 'react-native'
+import { GestureResponderEvent, StyleProp, TextStyle } from 'react-native'
 
 interface Props {
-    style?: any
+    style?: StyleProp<TextStyle>
     name: string
     size?: number
     onPress?: (event: GestureResponderEvent) => void

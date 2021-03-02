@@ -1,4 +1,5 @@
 import React, { useContext, useRef, useEffect } from 'react'
+import { StyleProp, TextStyle } from 'react-native'
 import { HelperText } from 'react-native-paper'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Themes } from '../shared/Themes'
@@ -6,7 +7,7 @@ import { Themes } from '../shared/Themes'
 interface Props {
     children: JSX.Element
     type: 'error' | 'info'
-    style?: any
+    style?: StyleProp<TextStyle> | object
     fontWeight?: string
     fontSize?: number
 }

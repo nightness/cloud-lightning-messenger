@@ -183,10 +183,12 @@ export default ({ navigation, ...restProps }: Props) => {
     }, [selectedMember])
 
     let render = <ActivityIndicator />
-    if (errorCollection) {
+    if (errorCollection instanceof Boolean) {
+        render = <DisplayError />
+    } else if (errorCollection instanceof Error) {
         render = (
             <DisplayError
-                permissionDenied={errorCollection?.code === 'permission-denied'}
+                permissionDenied={errorCollection.message === 'permission-denied'}
             />
         )
     } else if (!loadingCollection) {

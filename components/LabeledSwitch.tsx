@@ -3,16 +3,27 @@ import { Styles } from '../shared/Styles'
 import View from './View'
 import Switch from './Switch'
 import Text from './Text'
-import { ActivityIndicator } from 'react-native'
+import { ActivityIndicator, StyleProp, TextStyle, ViewStyle } from 'react-native'
 
 interface Props {
     label: string
-    viewStyle: any
-    textStyle: any
+    style?: StyleProp<ViewStyle>
+    loadingIndicatorStyle?: StyleProp<ViewStyle>
+    viewStyle?: StyleProp<ViewStyle>
+    textStyle?: StyleProp<TextStyle>
+    value: boolean
     isLoading: boolean
 }
 
-export default ({ label, viewStyle, textStyle, isLoading, ...restProps }: Props) => {
+export default ({
+    label,
+    style,
+    viewStyle,
+    textStyle,
+    loadingIndicatorStyle,
+    isLoading,
+    ...restProps
+}: Props) => {
     return (
         <View style={[Styles.views.flexRowJustifyCenter, viewStyle]}>
             {label ? (
@@ -20,7 +31,11 @@ export default ({ label, viewStyle, textStyle, isLoading, ...restProps }: Props)
             ) : (
                 <></>
             )}
-            {isLoading ? <ActivityIndicator {...restProps} /> : <Switch {...restProps} />}
+            {isLoading ? (
+                <ActivityIndicator style={loadingIndicatorStyle} {...restProps} />
+            ) : (
+                <Switch style={style} {...restProps} />
+            )}
         </View>
     )
 }
