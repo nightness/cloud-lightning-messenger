@@ -10,7 +10,7 @@ import {
 
 interface Props {
     disabled?: boolean
-    style?: StyleProp<ImageStyle>
+    style?: StyleProp<ImageStyle> | object
     source: ImageSourcePropType
     onPress?: (event: GestureResponderEvent) => void
 }

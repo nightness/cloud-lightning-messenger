@@ -22,9 +22,9 @@ export default ({
     title,
     photoURL,
     hasDrawerNavigation = true,
-    hasHome = true,
+    hasHome = false,
     hasBack = false,
-    hasLogout = true,
+    hasLogout = false,
 }: Props) => {
     const { theme, setTheme } = useContext(GlobalContext)
     const [showLogoutModal, setShowLogoutModal] = useState(false)
