@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { View, useWindowDimensions } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Header } from 'react-native-elements'
@@ -6,6 +6,7 @@ import { Image, Text, MaterialIcons } from './Components'
 import { LogoutModal } from '../screens/modals/LogoutModal'
 import { Themes, Theme } from '../shared/Themes'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { useAuthState } from '../firebase/Firebase'
 
 interface Props {
     navigation: StackNavigationProp<any>
@@ -14,7 +15,6 @@ interface Props {
     hasDrawerNavigation?: boolean
     hasHome?: boolean
     hasBack?: boolean
-    hasLogout?: boolean
 }
 
 export default ({
@@ -24,10 +24,15 @@ export default ({
     hasDrawerNavigation = true,
     hasHome = false,
     hasBack = false,
-    hasLogout = false,
 }: Props) => {
+    const [currentUser, loadingUser, errorUser] = useAuthState()
     const { theme, setTheme } = useContext(GlobalContext)
     const [showLogoutModal, setShowLogoutModal] = useState(false)
+    const [showLogout, setShowLogout] = useState(currentUser ? true : false)
+
+    useEffect(() => {
+        setShowLogout(currentUser ? true : false)
+    }, [currentUser])
 
     const toggleDarkMode = () => {
         if (!setTheme) return
@@ -85,7 +90,7 @@ export default ({
                 size={iconSize}
                 onPress={toggleDarkMode}
             />
-            {hasLogout ? (
+            {showLogout ? (
                 photoURL ? (
                     <Image
                         source={{ uri: photoURL }}
