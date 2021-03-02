@@ -62,9 +62,11 @@ export const useAuthRest = () => {
 export const getCollection = (collectionPath: string) =>
     getFirestore().collection(collectionPath)
 export const useCollection = (collectionPath: string, includeMetadataChanges = false) =>
-    FirebaseFirestore.useCollection(getCollection(collectionPath), {
-        snapshotListenOptions: { includeMetadataChanges },
-    })
+    !collectionPath
+        ? [undefined, false, new Error('useCollection: collectionPath not specified')]
+        : FirebaseFirestore.useCollection(getCollection(collectionPath), {
+              snapshotListenOptions: { includeMetadataChanges },
+          })
 
 export const useCollectionOnce = (
     collectionPath: string,

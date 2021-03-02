@@ -163,6 +163,7 @@ export default ({ navigation, ...restProps }: Props) => {
     useEffect(() => {
         if (loadingCollection || errorCollection || !snapshot) return
         var newState: PickerItem[] = []
+        // @ts-ignore
         snapshot.docs.forEach((docRef) => {
             const push = async (docRef: DocumentData) => {
                 const name = await docRef.get('name')
