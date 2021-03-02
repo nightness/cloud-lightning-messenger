@@ -5,31 +5,43 @@ import {
     getCurrentUser,
     getCollection,
     useCollection,
+    DocumentData,
 } from '../firebase/Firebase'
 
-type ContextType = {
-    cachedUsers?: object
-    fetchUser?: (userId: string) => string
+interface ContextType {
+    cachedUsers: { [index: string]: UserProfile }
     isFetching?: boolean
-    getUserName?: (userId: string) => string
-    hasProfile?: (userId: string) => Promise<boolean>
-    getUserProfile?: (userId: string) => string
+    getUserName: (userId: string) => string
+    fetchUser: (userId: string) => Promise<void>
+    hasProfile: (userId: string) => Promise<boolean>
+    getUserProfile: (userId: string) => Promise<DocumentData | undefined>
     error?: any | null | undefined
 }
 
-export const ProfileContext = createContext<ContextType>({})
+export const ProfileContext = createContext<ContextType>({
+    cachedUsers: {},
+    getUserName: (userId: string) => '',
+    fetchUser: (userId: string) => new Promise<void>(() => undefined),
+    hasProfile: (userId: string) => new Promise<boolean>(() => false),
+    getUserProfile: (userId: string) =>
+        new Promise<DocumentData | undefined>(() => undefined),
+})
 
 const sleep = async (delay: number) => await new Promise((r) => setTimeout(r, delay))
+
+export interface UserProfile {
+    displayName?: string
+}
 
 export const useProfiler = () => {
     const [isLoadingCollection, setIsLoadingCollection] = useState(true)
     const [collectionError, setCollectionError] = useState()
     const [isLoadingProfile, setIsLoadingProfile] = useState(true)
-    const [cachedUsers, setCachedUsers] = useState({})
+    const [cachedUsers, setCachedUsers] = useState<{ [index: string]: UserProfile }>({})
     const [currentUser, loading, error] = useAuthState()
     const [isFetching, setIsFetching] = useState(true)
     const isFetchingRef = useRef(false)
-    const fetchUidRef = useRef<string>('')
+    const fetchUidRef = useRef<string | undefined>()
     const lookupQueueRef = useRef<Array<string>>(new Array<string>())
 
     const hasProfile = async (userId: string) => {
@@ -44,7 +56,7 @@ export const useProfiler = () => {
             const docData = docRef.data()
             return docData
         }
-        return {}
+        return
     }
 
     const fetchUser = async (userId: string, forced = false) => {
@@ -65,25 +77,27 @@ export const useProfiler = () => {
             }
             fetchUidRef.current = lookupQueueRef.current.shift()
 
-            if (!isFetchingRef.current) {
-                isFetchingRef.current = true
-            }
-            console.log(`Starting fetchUser for ${fetchUidRef.current}`)
-            try {
-                const profile = await getUserProfile(fetchUidRef.current)
-                newCache[fetchUidRef.current] = profile
-            } catch (err) {
-                // This can happen because of the security rule that requires a user to have a profile
-                // document with their uid to have access to the database. Since this document is created
-                // by cloud functions, a new user's first sign-in may have these permission-denied exceptions.
+            if (fetchUidRef.current) {
+                if (!isFetchingRef.current) {
+                    isFetchingRef.current = true
+                }
+                console.log(`Starting fetchUser for ${fetchUidRef.current}`)
+                try {
+                    const profile = await getUserProfile(fetchUidRef.current)
+                    if (profile) newCache[fetchUidRef.current] = profile
+                } catch (err) {
+                    // This can happen because of the security rule that requires a user to have a profile
+                    // document with their uid to have access to the database. Since this document is created
+                    // by cloud functions, a new user's first sign-in may have these permission-denied exceptions.
 
-                /** FirebaseError: Missing or insufficient permissions. */
+                    /** FirebaseError: Missing or insufficient permissions. */
 
-                // Refactoring should actually prevent this error now
-                await sleep(2000)
-                console.error(err)
+                    // Refactoring should actually prevent this error now
+                    await sleep(2000)
+                    console.error(err)
+                }
+                isFetchingRef.current = false
             }
-            isFetchingRef.current = false
         }
         if (newCache) setCachedUsers(newCache)
         setIsFetching(false)
@@ -93,7 +107,7 @@ export const useProfiler = () => {
         if (!currentUser) return ''
         if (!uid) uid = currentUser.uid
         if (cachedUsers[uid] && cachedUsers[uid].displayName)
-            return cachedUsers[uid].displayName
+            return cachedUsers[uid].displayName || ''
         else if (!cachedUsers[uid]) fetchUser(uid)
         return ''
     }
@@ -125,19 +139,21 @@ export const useProfiler = () => {
     }, [])
 
     useEffect(() => {
-        const username = getUserName(currentUser?.uid)
-        if (username) {
-            setIsLoadingProfile(false)
-        } else {
-            hasProfile(currentUser?.uid)
-                .then((hasProfile) => {
-                    if (hasProfile) {
-                        setIsLoadingProfile(false)
-                    }
-                })
-                .catch((err) => {
-                    console.error(err)
-                })
+        if (currentUser) {
+            const username = getUserName(currentUser.uid)
+            if (username) {
+                setIsLoadingProfile(false)
+            } else {
+                hasProfile(currentUser.uid)
+                    .then((hasProfile) => {
+                        if (hasProfile) {
+                            setIsLoadingProfile(false)
+                        }
+                    })
+                    .catch((err) => {
+                        console.error(err)
+                    })
+            }
         }
     }, [cachedUsers])
 
@@ -152,8 +168,12 @@ export const useProfiler = () => {
     }
 }
 
+interface ProfileProviderProps {
+    children: JSX.Element | JSX.Element[]
+}
+
 // Profile Provider
-export const ProfileProvider = ({ children }) => {
+export const ProfileProvider = ({ children }: ProfileProviderProps) => {
     const profiler = useProfiler()
     return <ProfileContext.Provider value={profiler}>{children}</ProfileContext.Provider>
 }

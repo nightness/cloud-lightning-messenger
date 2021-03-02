@@ -3,7 +3,6 @@ import {
     View,
     Screen,
     Container,
-    Text,
     Picker,
     PickerItem,
     TextInput,
@@ -15,7 +14,6 @@ import { DocumentData, QuerySnapshot, useCollection } from '../firebase/Firebase
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
 import { StackNavigationProp } from '@react-navigation/stack'
-import firebase from 'firebase'
 import { NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native'
 
 interface Props {

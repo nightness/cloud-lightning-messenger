@@ -17,10 +17,11 @@ import { Styles } from '../shared/Styles'
 import { GlobalContext } from '../shared/GlobalContext'
 import { useCollection, getFirestore } from '../firebase/Firebase'
 import { ProfileContext } from '../shared/ProfileContext'
+import { StackNavigationProp } from '@react-navigation/stack'
 //import { ScrollView } from 'react-native-gesture-handler'
 
 interface Props {
-    navigation: object
+    navigation: StackNavigationProp<any>
 }
 
 export default ({ navigation, ...restProps }: Props) => {

@@ -14,7 +14,7 @@ export const useMessenger = (messengerContainerId: string, viewLengthMinimum: nu
         viewLength: viewLengthMinimum,
     })
 
-function reducer(state, action) {
+function reducer(state: any, action: any) {
     switch (action.type) {
         case 'setView': {
             const newState = { ...state }
