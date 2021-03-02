@@ -152,7 +152,7 @@ export default ({ navigation, ...restProps }: Props) => {
     }
 
     useEffect(() => {
-        if (loadingCollection || errorCollection || !snapshot) return
+        if (loadingCollection || errorCollection || snapshot || !snapshot.docs) return
 
         var newState = []
         snapshot.docs.forEach((docRef) => {
