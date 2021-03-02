@@ -11,6 +11,7 @@ export type DocumentData = firebase.firestore.DocumentData
 export type DocumentSnapshot<T> = firebase.firestore.DocumentSnapshot<T>
 export type Timestamp = firebase.firestore.Timestamp
 export type QuerySnapshot<T> = firebase.firestore.QuerySnapshot<T>
+export type QueryDocumentSnapshot<T> = firebase.firestore.QueryDocumentSnapshot<T>
 
 export const getFirestore = () => {
     var firestore = firebase.firestore()
@@ -61,11 +62,9 @@ export const useAuthRest = () => {
 export const getCollection = (collectionPath: string) =>
     getFirestore().collection(collectionPath)
 export const useCollection = (collectionPath: string, includeMetadataChanges = false) =>
-    !collectionPath
-        ? [undefined, false, new Error('useCollection: collectionPath not specified')]
-        : FirebaseFirestore.useCollection(getCollection(collectionPath), {
-              snapshotListenOptions: { includeMetadataChanges },
-          })
+    FirebaseFirestore.useCollection(getCollection(collectionPath), {
+        snapshotListenOptions: { includeMetadataChanges },
+    })
 
 export const useCollectionOnce = (
     collectionPath: string,

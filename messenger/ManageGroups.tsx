@@ -34,7 +34,7 @@ export default ({ navigation, ...restProps }: Props) => {
     const { theme } = useContext(GlobalContext)
     const profileContext = useContext(ProfileContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('/groups')
-    const [groups, setGroups] = useState([])
+    const [groups, setGroups] = useState<PickerItem[]>()
     const [groupName, setGroupName] = useState('')
     const [selectedGroup, setSelectedGroup] = useState<PickerItem>()
     const [members, setMembers] = useState<PickerItem[]>([])
@@ -162,9 +162,9 @@ export default ({ navigation, ...restProps }: Props) => {
 
     useEffect(() => {
         if (loadingCollection || errorCollection || !snapshot) return
-        var newState = []
+        var newState: PickerItem[] = []
         snapshot.docs.forEach((docRef) => {
-            const push = async (docRef) => {
+            const push = async (docRef: DocumentData) => {
                 const name = await docRef.get('name')
                 newState.push({
                     label: name,
@@ -179,7 +179,7 @@ export default ({ navigation, ...restProps }: Props) => {
     }, [snapshot])
 
     useEffect(() => {
-        if (!selectedGroup) setSelectedGroup(groups[0])
+        if (!selectedGroup && groups) setSelectedGroup(groups[0])
     }, [groups])
 
     useEffect(() => {
