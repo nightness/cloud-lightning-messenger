@@ -8,11 +8,13 @@ import {
 } from './Firebase'
 import ActivityIndicator from '../components/ActivityIndicator'
 import DisplayError from '../components/DisplayError'
-import CollectionFlatList from './CollectionFlatList'
-import { ListRenderItem } from 'react-native'
+import { ListRenderItem, StyleProp, ViewStyle } from 'react-native'
 import { FirebaseError } from 'firebase'
+import Message from '../messenger/Message'
+import FlatList from '../components/FlatList'
 
 interface Props<T> {
+    style?: StyleProp<ViewStyle> | object
     collectionPath: string
     renderItem: ListRenderItem<T>
     orderBy?: string
@@ -21,13 +23,14 @@ interface Props<T> {
 }
 
 export default ({
+    style,
     collectionPath,
     renderItem,
     orderBy,
     initialNumToRender,
     autoScrollToEnd,
     ...restProps
-}: Props<any>) => {
+}: Props<Message>) => {
     const [snapshot, loadingCollection, errorCollection] = useCollection(collectionPath)
     const [messages, setMessages] = useState([])
     const [loadingData, setDataLoading] = useState(true)
@@ -46,6 +49,11 @@ export default ({
             })
     }
 
+    const loadMoreMessages = () => {
+        console.log('loadMoreMessages() : Start')
+        //setRefreshing(true)
+    }
+
     useEffect(() => {
         if (!loadingCollection && !errorCollection && snapshot) fetchData()
     }, [snapshot])
@@ -61,9 +69,11 @@ export default ({
         )
     } else if (!loadingCollection && !loadingData) {
         return (
-            <CollectionFlatList
+            <FlatList
                 renderItem={renderItem}
-                messages={messages}
+                style={style}
+                data={messages}
+                onStartReached={loadMoreMessages}
                 autoScrollToEnd={autoScrollToEnd}
                 {...restProps}
             />

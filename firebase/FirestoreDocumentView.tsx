@@ -1,104 +1,57 @@
-/*
-import React, { useState, useEffect, useMemo, useRef } from 'react'
-import { StyleSheet, FlatList, VirtualizedList, ScrollView, View, AppLoading } from 'react-native'
+import React from 'react'
 import { useDocumentData } from './Firebase'
 import ActivityIndicator from '../components/ActivityIndicator'
 import DisplayError from '../components/DisplayError'
-import Text from '../components/Text'
+import { ListRenderItem, StyleProp, ViewStyle } from 'react-native'
+import FlatList from '../components/FlatList'
+import Message from '../messenger/Message'
+import { FirebaseError } from 'firebase'
 
-const DocumentFlatList = props => {
-    const flatList = useRef()
-    const { data, onScrollProp = onScroll, onStartReached, autoScrollToEnd, ...restProps } = props;
-    const [yScroll, setYScroll] = useState(-1)
+interface Props<T> {
+    style: StyleProp<ViewStyle> | object
+    documentPath: string
+    renderItem: ListRenderItem<T>
+    orderBy?: string
+    initialNumToRender?: number
+    autoScrollToEnd?: boolean
+}
 
-    const onScroll = (e) => {
-        const { contentOffset, contentSize, layoutMeasurement } = e.nativeEvent
-        const maxY = Math.round(contentSize.height - layoutMeasurement.height)
-        const maxX = Math.round(contentSize.width - layoutMeasurement.width)
-
-        setYScroll(contentOffset.y)
-        if (onScrollProp) onScrollProp(e)
-    }
-    const onContentSizeChange = (e, f) => {
-        if (autoScrollToEnd && !refreshing)
-            flatList.current.scrollToEnd({ animated: false })
-    }
-    const onLayout = ({ nativeEvent }) => {
-        const { layout, target } = nativeEvent
-        if (autoScrollToEnd && !refreshing)
-            flatList.current.scrollToEnd({ animated: false })
-    }
-    const onRefresh = (e) => {
-        //console.log(e)
-    }
+export default ({
+    style,
+    documentPath,
+    renderItem,
+    orderBy,
+    initialNumToRender,
+    autoScrollToEnd,
+    ...restProps
+}: Props<Message>) => {
+    const [document, loadingDocument, errorDocument] = useDocumentData(documentPath)
 
     const loadMoreMessages = () => {
-        console.log("loadMoreMessages() : Start")
-        setRefreshing(true)
-
-        // each new message increases the viewLength by 1
-        messengerDispatch({
-            type: 'incrementViewLength',
-            amount: 25
-        })
-        updateMessages()
+        console.log('loadMoreMessages() : Start')
+        //setRefreshing(true)
     }
 
-    React.useEffect(() => {
-        if (yScroll === 0 && onStartReached) {
-            onStartReached()
-        }
-    }, [yScroll])
+    if (loadingDocument) return <ActivityIndicator />
 
-    return (
-        <View style={styles.view}>
-            <FlatList
-                {...restProps}
-                ref={flatList}
-                data={data}
-                onStartReached={loadMoreMessages}
-                onLayout={onLayout}
-                onContentSizeChange={onContentSizeChange}
-                onScroll={onScroll}
-                onRefresh={onRefresh}
-                refreshing={refreshing}
-                removeClippedSubviews={true}
-                contentContainerStyle={styles.flatlist}
-            />
-        </View>
-    )
-}
-
-export default ({ documentPath, orderBy, initialNumToRender, ...restProps }) => {
-    const [data, loadingData, errorData] = useDocumentData(documentPath)
-
-    let render = <ActivityIndicator />
-    if (errorData) {
-        let errorDataCode = errorData ? errorData.code : null
-        render =
+    if (errorDocument) {
+        return (
             <DisplayError
-                permissionDenied={(errorDataCode === 'permission-denied')}
+                permissionDenied={
+                    (errorDocument as FirebaseError)?.code === 'permission-denied'
+                }
+                error={errorDocument}
             />
-    } else if (!loadingData) {
-        render =
-            <DocumentFlatList data={data.recentMessages} {...restProps} />
+        )
     }
+
     return (
-        <>{render}</>
+        <FlatList
+            renderItem={renderItem}
+            //@ts-ignore
+            data={document.recentMessages}
+            onStartReached={loadMoreMessages}
+            {...restProps}
+        />
     )
-
 }
-
-const styles = StyleSheet.create({
-    view: {
-        flex: 1,
-        margin: 5,
-        padding: 5,
-        borderWidth: 1,
-        borderRadius: 5,
-        borderColor: "#48a",
-        width: "100%"
-    }
-})
-
-*/

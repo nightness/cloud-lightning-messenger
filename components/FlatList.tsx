@@ -7,14 +7,16 @@ import {
     ListRenderItem,
     StyleProp,
     ViewStyle,
+    LayoutChangeEvent,
 } from 'react-native'
 import { Styles } from '../shared/Styles'
 import { Themes } from '../shared/Themes'
 import { GlobalContext } from '../shared/GlobalContext'
+import Message from '../messenger/Message'
 
-interface CollectionFlatListProps<T> {
-    style?: StyleProp<ViewStyle>
-    messages: T[]
+interface FlatListProps<T> {
+    style?: StyleProp<ViewStyle> | object
+    data: T[]
     renderItem: ListRenderItem<T>
     onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
     onStartReached?: () => void
@@ -23,13 +25,13 @@ interface CollectionFlatListProps<T> {
 
 export default ({
     style,
-    messages,
+    data,
     renderItem,
     onScroll,
     onStartReached,
     autoScrollToEnd,
     ...restProps
-}: CollectionFlatListProps<any>) => {
+}: FlatListProps<Message>) => {
     const flatList = useRef<any>()
     const [refreshing, setRefreshing] = useState(false)
     const { theme } = useContext(GlobalContext)
@@ -46,16 +48,12 @@ export default ({
         if (autoScrollToEnd && !refreshing)
             flatList.current?.scrollToEnd({ animated: false })
     }
-    const onLayout = () => {
+    const onLayout = (nativeEvent: LayoutChangeEvent) => {
         if (autoScrollToEnd && !refreshing)
             flatList.current?.scrollToEnd({ animated: false })
     }
-    const onRefresh = (e: any) => {
+    const onRefresh = () => {
         //console.log(e)
-    }
-    const loadMoreMessages = () => {
-        console.log('loadMoreMessages() : Start')
-        //setRefreshing(true)
     }
 
     return (
@@ -64,10 +62,12 @@ export default ({
                 {...restProps}
                 ref={flatList}
                 renderItem={renderItem}
+                refreshing={refreshing}
                 removeClippedSubviews={true}
-                data={messages}
+                data={data}
                 onLayout={onLayout}
                 onContentSizeChange={onContentSizeChange}
+                onRefresh={onRefresh}
                 onScroll={onFlatListScroll}
             />
         </View>

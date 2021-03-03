@@ -89,6 +89,7 @@ export default ({ navigation }: Props) => {
                     collectionPath={groupCollectionPath}
                     autoScrollToEnd={true}
                     orderBy="postedAt"
+                    // @ts-ignore
                     renderItem={({ item }) => <Message item={item} />}
                 />
                 <View style={Styles.messenger.views}>
