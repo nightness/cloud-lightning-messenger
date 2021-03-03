@@ -23,6 +23,7 @@ export default ({
     textStyle,
     loadingIndicatorStyle,
     isLoading,
+    value,
     onChange,
     ...restProps
 }: Props) => {
@@ -36,7 +37,7 @@ export default ({
             {isLoading ? (
                 <ActivityIndicator style={loadingIndicatorStyle} {...restProps} />
             ) : (
-                <Switch style={style} {...restProps} />
+                <Switch value={value} style={style} {...restProps} />
             )}
         </View>
     )

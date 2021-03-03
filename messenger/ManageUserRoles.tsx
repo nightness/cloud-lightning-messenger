@@ -31,9 +31,11 @@ export default ({ navigation, ...restProps }: Props) => {
 
     const setClaim = (uid: string, claimName: string, value: boolean) => {
         let promise = value ? addClaim(uid, claimName) : removeClaim(uid, claimName)
-        promise.then((results) => {
-            console.log(results)
-        })
+        promise
+            .then((results) => {
+                console.log(results)
+            })
+            .catch((error) => console.log(error))
     }
     const toggleAdmin = () => {
         if (!selectedMember) return
