@@ -13,6 +13,7 @@ interface Props {
     textStyle?: StyleProp<TextStyle>
     value: boolean
     isLoading: boolean
+    onChange: () => void
 }
 
 export default ({
@@ -22,6 +23,7 @@ export default ({
     textStyle,
     loadingIndicatorStyle,
     isLoading,
+    onChange,
     ...restProps
 }: Props) => {
     return (

@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { View, useWindowDimensions } from 'react-native'
+import { View } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Header } from 'react-native-elements'
 import { Image, Text, MaterialIcons } from './Components'
 import { LogoutModal } from '../screens/modals/LogoutModal'
-import { Themes, Theme } from '../shared/Themes'
+import { Themes } from '../shared/Themes'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useAuthState } from '../firebase/Firebase'
 
