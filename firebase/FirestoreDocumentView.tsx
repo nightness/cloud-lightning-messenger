@@ -4,8 +4,8 @@ import ActivityIndicator from '../components/ActivityIndicator'
 import DisplayError from '../components/DisplayError'
 import { ListRenderItem, StyleProp, ViewStyle } from 'react-native'
 import FlatList from '../components/FlatList'
-import Message from '../messenger/Message'
 import { FirebaseError } from 'firebase'
+import Message from '../messenger/Message'
 
 interface Props<T> {
     style: StyleProp<ViewStyle> | object
@@ -16,7 +16,7 @@ interface Props<T> {
     autoScrollToEnd?: boolean
 }
 
-export default ({
+export default function _<T>({
     style,
     documentPath,
     renderItem,
@@ -24,11 +24,11 @@ export default ({
     initialNumToRender,
     autoScrollToEnd,
     ...restProps
-}: Props<Message>) => {
+}: Props<T>) {
     const [document, loadingDocument, errorDocument] = useDocumentData(documentPath)
 
-    const loadMoreMessages = () => {
-        console.log('loadMoreMessages() : Start')
+    const loadMore = () => {
+        console.log('loadMore() : Start')
         //setRefreshing(true)
     }
 
@@ -46,11 +46,11 @@ export default ({
     }
 
     return (
-        <FlatList
+        <FlatList<T>
             renderItem={renderItem}
             //@ts-ignore
             data={document.recentMessages}
-            onStartReached={loadMoreMessages}
+            onStartReached={loadMore}
             {...restProps}
         />
     )

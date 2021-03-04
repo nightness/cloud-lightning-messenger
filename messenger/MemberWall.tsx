@@ -55,7 +55,7 @@ export default ({ navigation }: Props) => {
     return (
         <Screen navigation={navigation} title={'Wall'}>
             <Container>
-                <FirestoreCollectionView
+                <FirestoreCollectionView<Message>
                     collectionPath={messenger.messageCollectionPath}
                     autoScrollToEnd={true}
                     orderBy="postedAt"

@@ -85,7 +85,7 @@ export default ({ navigation }: Props) => {
                         }}
                     />
                 </View>
-                <FirestoreCollectionView
+                <FirestoreCollectionView<Message>
                     collectionPath={groupCollectionPath}
                     autoScrollToEnd={true}
                     orderBy="postedAt"

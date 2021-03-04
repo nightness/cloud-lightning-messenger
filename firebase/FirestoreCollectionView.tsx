@@ -22,7 +22,7 @@ interface Props<T> {
     autoScrollToEnd?: boolean
 }
 
-export default ({
+export default function _<T>({
     style,
     collectionPath,
     renderItem,
@@ -30,7 +30,7 @@ export default ({
     initialNumToRender,
     autoScrollToEnd,
     ...restProps
-}: Props<Message>) => {
+}: Props<T>) {
     const [snapshot, loadingCollection, errorCollection] = useCollection(collectionPath)
     const [messages, setMessages] = useState([])
     const [loadingData, setDataLoading] = useState(true)
@@ -69,7 +69,7 @@ export default ({
         )
     } else if (!loadingCollection && !loadingData) {
         return (
-            <FlatList
+            <FlatList<T>
                 renderItem={renderItem}
                 style={style}
                 data={messages}
