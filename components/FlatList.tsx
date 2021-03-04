@@ -1,6 +1,6 @@
-import React, { useState, useRef, useContext, RefObject } from 'react'
+import React, { useState, useRef, useContext, RefObject, PureComponent } from 'react'
 import {
-    FlatList,
+    FlatList as NativeFlatList,
     View,
     NativeScrollEvent,
     NativeSyntheticEvent,
@@ -10,11 +10,10 @@ import {
     LayoutChangeEvent,
 } from 'react-native'
 import { Styles } from '../shared/Styles'
-import { Themes } from '../shared/Themes'
+import { Theme, Themes } from '../shared/Themes'
 import { GlobalContext } from '../shared/GlobalContext'
-import Message from '../messenger/Message'
 
-interface FlatListProps<T> {
+interface Props<T> {
     style?: StyleProp<ViewStyle> | object
     data: T[]
     renderItem: ListRenderItem<T>
@@ -23,53 +22,121 @@ interface FlatListProps<T> {
     autoScrollToEnd?: boolean
 }
 
-export default ({
-    style,
-    data,
-    renderItem,
-    onScroll,
-    onStartReached,
-    autoScrollToEnd,
-    ...restProps
-}: FlatListProps<Message>) => {
-    const flatList = useRef<any>()
-    const [refreshing, setRefreshing] = useState(false)
-    const { theme } = useContext(GlobalContext)
+interface State<T> {
+    refreshing: boolean
+}
 
-    const onFlatListScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+class FlatList<T> extends PureComponent<Props<T>, State<T>> {
+    static contextType = GlobalContext
+
+    public flatList: React.RefObject<NativeFlatList<T>>
+
+    constructor(props: Props<T>) {
+        super(props)
+        this.state = {
+            refreshing: false,
+        }
+        this.flatList = React.createRef<NativeFlatList<T>>()
+    }
+
+    onFlatListScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
         const { contentOffset, contentSize, layoutMeasurement } = e.nativeEvent
         const maxY = Math.round(contentSize.height - layoutMeasurement.height)
         const maxX = Math.round(contentSize.width - layoutMeasurement.width)
 
-        if (contentOffset.y === 0 && onStartReached) onStartReached()
-        typeof onScroll === 'function' && onScroll(e)
+        if (contentOffset.y === 0 && typeof this.props.onStartReached === 'function')
+            this.props.onStartReached()
+        typeof this.props.onScroll === 'function' && this.props.onScroll(e)
     }
-    const onContentSizeChange = (w: number, h: number) => {
-        if (autoScrollToEnd && !refreshing)
-            flatList.current?.scrollToEnd({ animated: false })
+
+    onContentSizeChange = (w: number, h: number) => {
+        if (this.props.autoScrollToEnd && !this.state.refreshing)
+            this.flatList.current?.scrollToEnd({ animated: false })
     }
-    const onLayout = (nativeEvent: LayoutChangeEvent) => {
-        if (autoScrollToEnd && !refreshing)
-            flatList.current?.scrollToEnd({ animated: false })
+
+    onLayout = (nativeEvent: LayoutChangeEvent) => {
+        if (this.props.autoScrollToEnd && !this.state.refreshing)
+            this.flatList?.current?.scrollToEnd({ animated: false })
     }
-    const onRefresh = () => {
+
+    onRefresh = () => {
         //console.log(e)
     }
 
-    return (
-        <View style={[Styles.views.filletedBorderView, Themes.defaultView[theme], style]}>
-            <FlatList
-                {...restProps}
-                ref={flatList}
-                renderItem={renderItem}
-                refreshing={refreshing}
-                removeClippedSubviews={true}
-                data={data}
-                onLayout={onLayout}
-                onContentSizeChange={onContentSizeChange}
-                onRefresh={onRefresh}
-                onScroll={onFlatListScroll}
-            />
-        </View>
-    )
+    render() {
+        return (
+            <View
+                style={[
+                    Styles.views.filletedBorderView,
+                    Themes.defaultView[this.context.theme as Theme],
+                    this.props.style,
+                ]}
+            >
+                <NativeFlatList
+                    ref={this.flatList}
+                    renderItem={this.props.renderItem}
+                    refreshing={this.state.refreshing}
+                    removeClippedSubviews={true}
+                    data={this.props.data}
+                    onLayout={this.onLayout}
+                    onContentSizeChange={this.onContentSizeChange}
+                    onRefresh={this.onRefresh}
+                    onScroll={this.onFlatListScroll}
+                />
+            </View>
+        )
+    }
 }
+
+export default FlatList
+
+// export default ({
+//     style,
+//     data,
+//     renderItem,
+//     onScroll,
+//     onStartReached,
+//     autoScrollToEnd,
+//     ...restProps
+// }: FlatListProps<Message>) => {
+//     const flatList = useRef<any>()
+//     const [refreshing, setRefreshing] = useState(false)
+//     const { theme } = useContext(GlobalContext)
+
+//     const onFlatListScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+//         const { contentOffset, contentSize, layoutMeasurement } = e.nativeEvent
+//         const maxY = Math.round(contentSize.height - layoutMeasurement.height)
+//         const maxX = Math.round(contentSize.width - layoutMeasurement.width)
+
+//         if (contentOffset.y === 0 && onStartReached) onStartReached()
+//         typeof onScroll === 'function' && onScroll(e)
+//     }
+//     const onContentSizeChange = (w: number, h: number) => {
+//         if (autoScrollToEnd && !refreshing)
+//             flatList.current?.scrollToEnd({ animated: false })
+//     }
+//     const onLayout = (nativeEvent: LayoutChangeEvent) => {
+//         if (autoScrollToEnd && !refreshing)
+//             flatList.current?.scrollToEnd({ animated: false })
+//     }
+//     const onRefresh = () => {
+//         //console.log(e)
+//     }
+
+//     return (
+//         <View style={[Styles.views.filletedBorderView, Themes.defaultView[theme], style]}>
+//             <FlatList
+//                 {...restProps}
+//                 ref={flatList}
+//                 renderItem={renderItem}
+//                 refreshing={refreshing}
+//                 removeClippedSubviews={true}
+//                 data={data}
+//                 onLayout={onLayout}
+//                 onContentSizeChange={onContentSizeChange}
+//                 onRefresh={onRefresh}
+//                 onScroll={onFlatListScroll}
+//             />
+//         </View>
+//     )
+// }
