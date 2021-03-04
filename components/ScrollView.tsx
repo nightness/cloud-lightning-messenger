@@ -8,14 +8,19 @@ import { StyleProp, ViewStyle } from 'react-native'
 interface Props {
     children: JSX.Element[]
     style?: StyleProp<ViewStyle>
+    bounces?: boolean
+    keyboardShouldPersistTaps?: boolean | "always" | "never" | "handled"
+
 }
 
-export default ({ children, style, ...restProps }: Props) => {
+export default ({ children, style, bounces, keyboardShouldPersistTaps, ...restProps }: Props) => {
     const { theme } = useContext(GlobalContext)
 
     return (
         <KeyboardAwareScrollView
             style={[Styles.views.scrollView, Themes.screen[theme], style]}
+            bounces={bounces}
+            keyboardShouldPersistTaps={keyboardShouldPersistTaps}
             {...restProps}
         >
             {children}

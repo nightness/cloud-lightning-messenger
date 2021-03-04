@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { Image, Platform } from 'react-native'
+import { Image, NativeSyntheticEvent, Platform, TextInputKeyPressEventData } from 'react-native'
 import {
     Container,
     Text,
@@ -19,8 +19,14 @@ import {
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import { Styles } from '../shared/Styles'
 import { GlobalContext } from '../shared/GlobalContext'
+import { StackNavigationProp } from '@react-navigation/stack'
 
-export const Authentication = ({ navigation, customToken }) => {
+interface AuthenticationProps {
+    navigation: StackNavigationProp<any>
+    customToken?: string
+}
+
+export const Authentication = ({ navigation, customToken }: AuthenticationProps) => {
     const { setDisplayName: firestoreSetDisplayName } = useContext(FirebaseContext)
     const [displayName, setDisplayName] = useState('')
     const [email, setEmail] = useState('')
@@ -63,8 +69,8 @@ export const Authentication = ({ navigation, customToken }) => {
         }
     }
 
-    const onPasswordKeyPress = ({ key }) => {
-        if (key != 'Enter') return
+    const onPasswordKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
+        if (e.nativeEvent.key != 'Enter') return
         onLoginPress()
     }
 
@@ -109,7 +115,7 @@ export const Authentication = ({ navigation, customToken }) => {
     }
 
     useEffect(() => {
-        if (theme === 'Dark') setTheme('Light')
+        if (theme === 'Dark' && setTheme) setTheme('Light')
     })
 
     useEffect(() => {
@@ -168,34 +174,34 @@ export const Authentication = ({ navigation, customToken }) => {
                             style={Styles.auth.logo}
                             source={require('../assets/icon.png')}
                         />
-                        {isRegistering && (
+                        {isRegistering ? (
                             <TextInput
                                 placeholder="Full Name"
                                 onChangeText={(text) => setDisplayName(text)}
                                 value={displayName}
                             />
-                        )}
+                        ) : <></>}
                         <TextInput
                             placeholder="E-mail"
                             onChangeText={(text) => setEmail(text)}
                             value={email}
                         />
                         <TextInput
-                            secureTextEntry
+                            secureTextEntry={true}
                             placeholder="Password"
                             onChangeText={(text) => setPassword(text)}
                             onKeyPress={onPasswordKeyPress}
                             value={password}
                         />
-                        {isRegistering && (
+                        {isRegistering ? (
                             <TextInput
-                                secureTextEntry
+                                secureTextEntry={true}
                                 placeholder="Confirm Password"
                                 onChangeText={(text) => setConfirmPassword(text)}
                                 value={confirmPassword}
                             />
-                        )}
-                        {isRegistering && (
+                        ) : <></>}
+                        {isRegistering ? (
                             <>
                                 <Button
                                     title="Create Account"
@@ -207,8 +213,8 @@ export const Authentication = ({ navigation, customToken }) => {
                                     <Button title="Log in" onPress={onGotoLoginPress} />
                                 </View>
                             </>
-                        )}
-                        {!isRegistering && (
+                        ) : <></>}
+                        {!isRegistering ? (
                             <>
                                 <Button
                                     title="Log in"
@@ -241,7 +247,7 @@ export const Authentication = ({ navigation, customToken }) => {
                                     </>
                                 )}
                             </>
-                        )}
+                        ) : <></>}
                     </ScrollView>
                 </Container>
             </>
@@ -249,9 +255,13 @@ export const Authentication = ({ navigation, customToken }) => {
     }
 }
 
-export default ({ navigation }) => (
+interface Props {
+    navigation: StackNavigationProp<any>
+}
+
+export default ({ navigation }: Props) => (
     <Authentication
         navigation={navigation}
-        //  customToken={'abc.123.45657'} {/* This is not a valid custom token */}
+    //  customToken={'abc.123.45657'} {/* This is not a valid custom token */}
     />
 )

@@ -11,6 +11,7 @@ import { Styles } from '../shared/Styles'
 import { Theme, Themes } from '../shared/Themes'
 
 interface Props {
+    secureTextEntry?: boolean
     autoCompleteType?: "off" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "email" | "name" | "password" | "postal-code" | "street-address" | "tel" | "username"
     autoCapitalize?: "none" | "sentences" | "words" | "characters"
     autoCorrect?: boolean
@@ -29,6 +30,7 @@ interface Props {
 }
 
 export default ({
+    secureTextEntry = false,
     autoCompleteType = 'off',
     autoCapitalize = 'none',
     autoCorrect = false,
@@ -110,6 +112,7 @@ export default ({
     return (
         // Anything before restProps are defaults, can be overwritten by restProps
         <TextInput
+            secureTextEntry={secureTextEntry}
             autoCompleteType={autoCompleteType}
             autoCapitalize={autoCapitalize}
             autoCorrect={autoCorrect}
