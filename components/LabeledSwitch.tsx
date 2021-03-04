@@ -9,7 +9,6 @@ interface Props {
     label: string
     style?: StyleProp<ViewStyle>
     loadingIndicatorStyle?: StyleProp<ViewStyle>
-    viewStyle?: StyleProp<ViewStyle>
     textStyle?: StyleProp<TextStyle>
     value: boolean
     isLoading: boolean
@@ -19,7 +18,6 @@ interface Props {
 export default ({
     label,
     style,
-    viewStyle,
     textStyle,
     loadingIndicatorStyle,
     isLoading,
@@ -28,7 +26,7 @@ export default ({
     ...restProps
 }: Props) => {
     return (
-        <View style={[Styles.views.flexRowJustifyCenter, viewStyle]}>
+        <View style={[Styles.views.flexRowJustifyCenter, style]}>
             {label ? (
                 <Text style={[{ marginRight: 10 }, textStyle]}>{label}</Text>
             ) : (
@@ -37,7 +35,7 @@ export default ({
             {isLoading ? (
                 <ActivityIndicator style={loadingIndicatorStyle} {...restProps} />
             ) : (
-                <Switch value={value} style={style} {...restProps} />
+                <Switch value={value} {...restProps} />
             )}
         </View>
     )
