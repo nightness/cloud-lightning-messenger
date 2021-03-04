@@ -52,7 +52,7 @@ class FlatList<T> extends PureComponent<Props<T>, State<T>> {
             this.flatList.current?.scrollToEnd({ animated: false })
     }
 
-    private onLayout = (nativeEvent: LayoutChangeEvent) => {
+    private onLayout = (layout: LayoutChangeEvent) => {
         if (this.props.autoScrollToEnd && !this.state.refreshing)
             this.flatList?.current?.scrollToEnd({ animated: false })
     }
