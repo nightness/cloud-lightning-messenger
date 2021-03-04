@@ -94,10 +94,8 @@ export default ({
             return
         }
         const text = history[historyIndex]
-        console.log(text)
         setValue(text)
         onChangeText && onChangeText(text)
-
     }, [historyIndex])
 
     return (
