@@ -28,7 +28,7 @@ export default ({
     children,
     style,
     classRef,
-    keyboardAppearance,    
+    keyboardAppearance,
     saveHistory,
     placeholder,
     value,
@@ -55,12 +55,13 @@ export default ({
     }
 
     const onEnterPressed = () => {
+        setHistoryIndex(-1)
         setHistory([_value, ...history])
         onSubmit && onSubmit(_value)
         setValue('')
     }
 
-    const _onKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {        
+    const _onKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
         if (saveHistory) {
             if (e.nativeEvent.key === 'ArrowUp')
                 onArrowUp()
@@ -68,7 +69,7 @@ export default ({
                 onArrowDown()
         }
         if (e.nativeEvent.key === 'Enter')
-            onEnterPressed()        
+            onEnterPressed()
         // Call parent handler
         onKeyPress && onKeyPress(e)
     }
@@ -78,17 +79,18 @@ export default ({
         // Call parent handler
         onChangeText && onChangeText(text)
     }
-    
+
     useEffect(() => {
-        // If parent is clearing the value, it of been submitted by a button
+        // If parent is clearing the value, it must of been submitted by a button
         if (value === '' && _value !== value) {
-            console.log(`parent submit`)
-        }        
+            setHistoryIndex(-1)
+            setHistory([_value, ...history])
+        }
         if (typeof value === 'string' && _value !== value)
             setValue(value)
     }, [value])
 
-    useEffect(() => {                
+    useEffect(() => {
         if (historyIndex < 0) {
             setValue('')
             return
