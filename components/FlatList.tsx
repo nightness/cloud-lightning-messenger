@@ -40,9 +40,7 @@ class FlatList<T> extends PureComponent<Props<T>, State<T>> {
     }
 
     private onFlatListScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-        const { contentOffset, contentSize, layoutMeasurement } = e.nativeEvent
-        const maxY = Math.round(contentSize.height - layoutMeasurement.height)
-        const maxX = Math.round(contentSize.width - layoutMeasurement.width)
+        const { contentOffset } = e.nativeEvent
 
         if (contentOffset.y === 0 && this.props.onStartReached)
             this.props.onStartReached()
