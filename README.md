@@ -7,7 +7,7 @@ https://cloud-lightning.web.app/
 # Setup
 
 ```
-npm i -g expo-cli firebase-cli
+npm i -g expo-cli firebase-tools
 npm install
 ```
 
