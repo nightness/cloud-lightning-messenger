@@ -119,14 +119,14 @@ export default ({ navigation, ...restProps }: Props) => {
                 </View>
                 <View style={Styles.views.flexRowJustifyCenter}>
                     <LabeledSwitch
-                        viewStyle={{ marginRight: 15 }}
+                        style={{ marginRight: 15 }}
                         isLoading={loadingClaims}
                         label="Admin"
                         value={!!isAdmin}
                         onChange={toggleAdmin}
                     />
                     <LabeledSwitch
-                        viewStyle={{ marginRight: 15 }}
+                        style={{ marginRight: 15 }}
                         isLoading={loadingClaims}
                         label="Manager"
                         value={!!isManager}
