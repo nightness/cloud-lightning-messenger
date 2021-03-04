@@ -49,10 +49,6 @@ export default ({ navigation }: Props) => {
             })
     }
 
-    const onSubmit = (text: string) => {
-        sendMessage()
-    }
-
     return (
         <Screen navigation={navigation} title={'Wall'}>
             <Container>
@@ -70,7 +66,7 @@ export default ({ navigation }: Props) => {
                         saveHistory={true}
                         style={Styles.messenger.textInput}
                         onChangeText={(msg) => setMessageText(msg)}
-                        onSubmit={onSubmit}
+                        onSubmit={sendMessage}
                         underlineColorAndroid="transparent"
                     />
                     <Button
