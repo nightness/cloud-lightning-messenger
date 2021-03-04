@@ -39,7 +39,7 @@ class FlatList<T> extends PureComponent<Props<T>, State<T>> {
         this.flatList = React.createRef<NativeFlatList<T>>()
     }
 
-    onFlatListScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    private onFlatListScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
         const { contentOffset, contentSize, layoutMeasurement } = e.nativeEvent
         const maxY = Math.round(contentSize.height - layoutMeasurement.height)
         const maxX = Math.round(contentSize.width - layoutMeasurement.width)
@@ -49,17 +49,17 @@ class FlatList<T> extends PureComponent<Props<T>, State<T>> {
         typeof this.props.onScroll === 'function' && this.props.onScroll(e)
     }
 
-    onContentSizeChange = (w: number, h: number) => {
+    private onContentSizeChange = (w: number, h: number) => {
         if (this.props.autoScrollToEnd && !this.state.refreshing)
             this.flatList.current?.scrollToEnd({ animated: false })
     }
 
-    onLayout = (nativeEvent: LayoutChangeEvent) => {
+    private onLayout = (nativeEvent: LayoutChangeEvent) => {
         if (this.props.autoScrollToEnd && !this.state.refreshing)
             this.flatList?.current?.scrollToEnd({ animated: false })
     }
 
-    onRefresh = () => {
+    private onRefresh = () => {
         //console.log(e)
     }
 
