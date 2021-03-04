@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import {
     View,
     Screen,
@@ -7,6 +7,7 @@ import {
     Button,
     FirestoreCollectionView,
 } from '../components/Components'
+import { TextInput as NativeTextInput } from 'react-native'
 import { Styles } from '../shared/Styles'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
@@ -22,10 +23,15 @@ export default ({ navigation }: Props) => {
     const { currentUser, claims } = useContext(FirebaseContext)
     const [messageText, setMessageText] = useState('')
     const [messenger, messengerDispatch] = useMessenger(currentUser?.uid || '', 25)
+    const textInput = useRef<NativeTextInput>()
 
     useEffect(() => {
         console.log(claims)
     }, [claims])
+
+    useEffect(() => {
+        textInput.current?.focus()
+    }, [textInput])
 
     const sendMessage = () => {
         const text = messageText
@@ -40,6 +46,7 @@ export default ({ navigation }: Props) => {
                 } else {
                     console.log(data)
                 }
+                textInput.current?.focus()
             })
             .catch((error) => {
                 alert('Unhandled exception')
@@ -64,6 +71,7 @@ export default ({ navigation }: Props) => {
                 />
                 <View style={Styles.messenger.views}>
                     <TextInput
+                        classRef={textInput}
                         value={messageText}
                         style={Styles.messenger.textInput}
                         onChangeText={(msg) => setMessageText(msg)}
