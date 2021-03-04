@@ -31,7 +31,6 @@ export default ({ navigation }: Props) => {
 
     const sendMessage = () => {
         const text = messageText
-        console.log(`sendMessage ${text}`)
         setMessageText('')
         createMessage(text)
             .then((results) => {
@@ -51,7 +50,6 @@ export default ({ navigation }: Props) => {
     }
 
     const onSubmit = (text: string) => {
-        console.log(`onSubmit: ${text}`)
         sendMessage()
     }
 
