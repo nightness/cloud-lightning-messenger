@@ -20,14 +20,10 @@ interface Props {
 }
 
 export default ({ navigation }: Props) => {
-    const { currentUser, claims } = useContext(FirebaseContext)
+    const { currentUser } = useContext(FirebaseContext)
     const [messageText, setMessageText] = useState('')
     const [messenger, messengerDispatch] = useMessenger(currentUser?.uid || '', 25)
     const textInput = useRef<NativeTextInput>()
-
-    useEffect(() => {
-        console.log(claims)
-    }, [claims])
 
     useEffect(() => {
         textInput.current?.focus()
