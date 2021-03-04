@@ -54,7 +54,7 @@ class FlatList<T> extends PureComponent<Props<T>, State<T>> {
 
     private onLayout = (layout: LayoutChangeEvent) => {
         if (this.props.autoScrollToEnd && !this.state.refreshing)
-            this.flatList?.current?.scrollToEnd({ animated: false })
+            this.flatList.current?.scrollToEnd({ animated: false })
     }
 
     private onRefresh = () => {
