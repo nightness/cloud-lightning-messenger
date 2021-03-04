@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { StyleProp, Switch, ViewStyle } from 'react-native'
+import { ColorValue, StyleProp, Switch, ViewStyle } from 'react-native'
 import { Styles } from '../shared/Styles'
 import { Themes } from '../shared/Themes'
 import { GlobalContext } from '../shared/GlobalContext'
@@ -15,8 +15,8 @@ export default ({ style, value, onChange, classRef, ...restProps }: Props) => {
     const { theme } = useContext(GlobalContext)
 
     const trackColor = {
-        false: Themes.themedSwitch[theme].trackColorOff,
-        true: Themes.themedSwitch[theme].trackColorOn,
+        false: Themes.themedSwitch[theme].trackColorOff as ColorValue,
+        true: Themes.themedSwitch[theme].trackColorOn as ColorValue,
     }
     const thumbColor = value
         ? Themes.themedSwitch[theme].thumbColorOn
