@@ -37,7 +37,7 @@ export default ({ navigation }: Props) => {
             .then((results) => {
                 const data = results.data
                 if (typeof data.type === 'string') {
-                    console.log('Error: ' + data.message)
+                    console.error(data.message)
                     if (data.type === 'silent') return
                     alert(data.message)
                 } else {
