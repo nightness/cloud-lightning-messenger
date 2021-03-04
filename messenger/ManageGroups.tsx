@@ -314,7 +314,7 @@ export default ({ navigation, ...restProps }: Props) => {
                     <TextInput
                         style={Styles.logoutModal.text}
                         placeholder="Group Name"
-                        defaultValue={selectedGroup && selectedGroup.label}
+                        value={selectedGroup && selectedGroup.label}
                         onChangeText={(text) => setGroupName(text)}
                     />
 

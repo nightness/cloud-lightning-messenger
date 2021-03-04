@@ -31,6 +31,7 @@ export default ({ navigation }: Props) => {
 
     const sendMessage = () => {
         const text = messageText
+        console.log(`sendMessage ${text}`)
         setMessageText('')
         createMessage(text)
             .then((results) => {
@@ -49,9 +50,8 @@ export default ({ navigation }: Props) => {
             })
     }
 
-    const onMessageKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
-        if (e.nativeEvent.key != 'Enter') return
-        // Adds a new message to the chatroom
+    const onSubmit = (text: string) => {
+        console.log(`onSubmit: ${text}`)
         sendMessage()
     }
 
@@ -69,9 +69,10 @@ export default ({ navigation }: Props) => {
                     <TextInput
                         classRef={textInput}
                         value={messageText}
+                        saveHistory={true}
                         style={Styles.messenger.textInput}
                         onChangeText={(msg) => setMessageText(msg)}
-                        onKeyPress={onMessageKeyPress}
+                        onSubmit={onSubmit}
                     />
                     <Button
                         title="Send"
