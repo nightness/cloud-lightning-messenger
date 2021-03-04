@@ -44,9 +44,9 @@ class FlatList<T> extends PureComponent<Props<T>, State<T>> {
         const maxY = Math.round(contentSize.height - layoutMeasurement.height)
         const maxX = Math.round(contentSize.width - layoutMeasurement.width)
 
-        if (contentOffset.y === 0 && typeof this.props.onStartReached === 'function')
+        if (contentOffset.y === 0 && this.props.onStartReached)
             this.props.onStartReached()
-        typeof this.props.onScroll === 'function' && this.props.onScroll(e)
+        if (this.props.onScroll) this.props.onScroll(e)
     }
 
     private onContentSizeChange = (w: number, h: number) => {
