@@ -5,7 +5,6 @@ import DisplayError from '../components/DisplayError'
 import { ListRenderItem, StyleProp, ViewStyle } from 'react-native'
 import FlatList from '../components/FlatList'
 import { FirebaseError } from 'firebase'
-import Message from '../messenger/Message'
 
 interface Props<T> {
     style: StyleProp<ViewStyle> | object

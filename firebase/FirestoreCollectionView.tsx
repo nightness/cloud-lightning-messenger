@@ -10,7 +10,6 @@ import ActivityIndicator from '../components/ActivityIndicator'
 import DisplayError from '../components/DisplayError'
 import { ListRenderItem, StyleProp, ViewStyle } from 'react-native'
 import { FirebaseError } from 'firebase'
-import Message from '../messenger/Message'
 import FlatList from '../components/FlatList'
 
 interface Props<T> {
