@@ -73,6 +73,7 @@ export default ({ navigation }: Props) => {
                         style={Styles.messenger.textInput}
                         onChangeText={(msg) => setMessageText(msg)}
                         onSubmit={onSubmit}
+                        underlineColorAndroid="transparent"
                     />
                     <Button
                         title="Send"

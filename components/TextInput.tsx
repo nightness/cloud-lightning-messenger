@@ -11,6 +11,10 @@ import { Styles } from '../shared/Styles'
 import { Theme, Themes } from '../shared/Themes'
 
 interface Props {
+    autoCompleteType?: "off" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "email" | "name" | "password" | "postal-code" | "street-address" | "tel" | "username"
+    autoCapitalize?: "none" | "sentences" | "words" | "characters"
+    autoCorrect?: boolean
+    underlineColorAndroid?: string
     children?: JSX.Element[]
     style?: StyleProp<any>
     classRef?: any
@@ -25,6 +29,10 @@ interface Props {
 }
 
 export default ({
+    autoCompleteType = 'off',
+    autoCapitalize = 'none',
+    autoCorrect = false,
+    underlineColorAndroid = 'transparent',
     children,
     style,
     classRef,
@@ -35,8 +43,7 @@ export default ({
     onSubmit,
     onChangeText,
     onKeyPress,
-    onBlur,
-    ...restProps
+    onBlur
 }: Props) => {
     const { theme } = useContext(GlobalContext)
     const [history, setHistory] = useState<Array<string>>([])
@@ -103,11 +110,10 @@ export default ({
     return (
         // Anything before restProps are defaults, can be overwritten by restProps
         <TextInput
-            autoCompleteType={'off'}
-            autoCapitalize="none"
-            autoCorrect={false}
-            underlineColorAndroid="transparent"
-            {...restProps}
+            autoCompleteType={autoCompleteType}
+            autoCapitalize={autoCapitalize}
+            autoCorrect={autoCorrect}
+            underlineColorAndroid={underlineColorAndroid}
             keyboardAppearance={appearance}
             placeholder={placeholder}
             onChangeText={_onChangeText}
