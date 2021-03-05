@@ -255,30 +255,32 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                                     onPress={formikProps.handleSubmit}
                                                 />
                                             </View>
-                                            <View style={Styles.auth.footerView}>
-                                                <Text fontSize={16}>Don't have an account?</Text>
-                                                <Button title="Sign up" onPress={onSignUpPress} />
-                                            </View>
-                                            <View style={Styles.auth.footerView}>
-                                                <Text fontSize={16}>
-                                                    Did you forget your password?
+                                            <View style={Styles.views.flexRowJustifyCenter}>
+                                                <View style={Styles.auth.footerView}>
+                                                    <Text fontSize={16}>Don't have an account?</Text>
+                                                    <Button title="Sign up" onPress={onSignUpPress} />
+                                                </View>
+                                                <View style={Styles.auth.footerView}>
+                                                    <Text fontSize={16}>
+                                                        Did you forget your password?
                                                 </Text>
-                                                <Button
-                                                    title="Password Reset"
-                                                    onPress={() => setMode('password-reset')}
-                                                />
+                                                    <Button
+                                                        title="Password Reset"
+                                                        onPress={() => setMode('password-reset')}
+                                                    />
+                                                </View>
+                                                {Platform.OS === 'web' ? (
+                                                    <>
+                                                        <View style={Styles.auth.footerView}>
+                                                            <Text fontSize={16}>Google Sign-In?</Text>
+                                                            <Button
+                                                                title="Google Sign-In"
+                                                                onPress={signInWithGoogle}
+                                                            />
+                                                        </View>
+                                                    </>
+                                                ) : <></>}
                                             </View>
-                                            {Platform.OS === 'web' ? (
-                                                <>
-                                                    <View style={Styles.auth.footerView}>
-                                                        <Text fontSize={16}>Google Sign-In?</Text>
-                                                        <Button
-                                                            title="Google Sign-In"
-                                                            onPress={signInWithGoogle}
-                                                        />
-                                                    </View>
-                                                </>
-                                            ) : <></>}
                                         </>
                                     ) : <></>}
                                 </>

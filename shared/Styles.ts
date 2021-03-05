@@ -63,6 +63,7 @@ export class Styles {
         flexRowJustifyCenter: {
             flexDirection: 'row',
             justifyContent: 'center',
+            flexWrap: 'wrap',
         },
         filletedBorderView: {
             flex: 1,
