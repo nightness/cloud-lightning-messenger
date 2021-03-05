@@ -133,9 +133,9 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         }
     }, [])
 
-    // BUG: wont validate site names with a hyphen
     useEffect(() => {
-        const emailRegEx = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/
+        const emailRegEx = /^[a-zA-Z0-9\.\-]+@(?:[a-zA-Z0-9\-]+\.)+[A-Za-z]+$/
+        // @ts-ignore
         setIsValidEMail(email.match(emailRegEx))
     }, [email])
 
