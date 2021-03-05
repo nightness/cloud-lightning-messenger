@@ -268,7 +268,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                                     onPress={() => setMode('password-reset')}
                                                 />
                                             </View>
-                                            {Platform.OS === 'web' && (
+                                            {Platform.OS === 'web' ? (
                                                 <>
                                                     <View style={Styles.auth.footerView}>
                                                         <Text fontSize={16}>Google Sign-In?</Text>
@@ -278,7 +278,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                                         />
                                                     </View>
                                                 </>
-                                            )}
+                                            ) : <></>}
                                         </>
                                     ) : <></>}
                                 </>
