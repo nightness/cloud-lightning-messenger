@@ -1,62 +1,69 @@
 rules_version = '2'
 service cloud.firestore {
-  match /databases/{database}/documents {
-    // Function to check if user is authorized
-    function isAuthorized() {
-      return request.auth.uid != null &&
-        exists(/databases/$(database)/documents/profiles/$(request.auth.uid))
-    }
+  	match /databases/{database}/documents {
+    	// Function to check if user is authorized
+    	function isAuthorized() {
+      		return request.auth.uid != null &&
+        		exists(/databases/$(database)/documents/profiles/$(request.auth.uid))
+    	}
 
-    // Function to check if user has a Google account
-    function userHasGoogleAccount() {
-      return isAuthorized() &&
-        request.auth.token.email_verified &&
-        request.auth.token.email.matches('@google.com*')
-    }
+    	function isEmailVerified() {
+      		return request.auth.token.email_verified
+    	}
 
-    // Function to check if user is an admin
-    function isAdmin() {
-      return isAuthorized() &&
-        request.auth.token.admin
-    }
+		function emailMatches(regex) {
+			return request.auth.token.email.matches(regex)
+		}
 
-    // For development use
-    match /{unrestrictedAccessRemoveInProduction=**} {
-      allow read, write: if userHasGoogleAccount() && request.auth.token.allAccess
-    }
+    	// Function to check if user has a Google account
+    	function userHasGoogleAccount() {
+      		return isAuthorized() &&
+        		isEmailVerified() &&
+        		emailMatches('@google.com*')
+    	}
 
-  	// Group Match 
-  	match /groups/{groupId} {
-      // Group Functions
-      function isGroupMember() {
-        return request.auth.uid in get(/databases/$(database)/documents/groups/{groupId}).data.members
-      }
+    	// Function to check if user is an admin
+    	function isAdmin() {
+      		return isAuthorized() && isEmailVerified() && request.auth.token.admin
+    	}
 
-      // Group Rules
+    	// For development use
+    	match /{unrestrictedAccessRemoveInProduction=**} {
+      		allow read, write: if userHasGoogleAccount() && request.auth.token.allAccess
+    	}
+
+  		// Group Match 
+  		match /groups/{groupId} {
+      		// Group Functions
+      		function isGroupMember() {
+        		return request.auth.uid in get(/databases/$(database)/documents/groups/{groupId}).data.members
+      		}
+
+		    // Group Rules
 			allow read: if isAuthorized()
-      allow write: if isAdmin()
+      		allow write: if isAdmin()
 
-      // Group Messages Rules
-      match /messages/{messageId} {
-      	allow read: if isGroupMember()
-      }
-    }
+      		// Group Messages Rules
+      		match /messages/{messageId} {
+      			allow read: if isGroupMember()
+      		}
+    	}
 
-    // Profiles Match
-    match /profiles/{memberId} {
-      allow read: if isAuthorized()
-    }
+    	// Profiles Match
+    	match /profiles/{memberId} {
+      		allow read: if isAuthorized()
+    	}
 
-    // Member Match
-    match /members/{memberId} {
-      allow write: if (request.auth.uid == memberId)
-      allow read: if isAuthorized()
+    	// Member Match
+    	match /members/{memberId} {
+      		allow write: if (request.auth.uid == memberId)
+      		allow read: if isAuthorized()
       
-      // Member Messages Match
-      match /messages/{messageId} {
-        allow write: if isAuthorized() && (request.auth.uid == memberId)
-        allow read: if isAuthorized()
-      }      
-    }    
-  }
+			// Member Messages Match
+      		match /messages/{messageId} {
+        		allow write: if isAuthorized() && (request.auth.uid == memberId)
+        		allow read: if isAuthorized()
+      		}      
+    	}    
+  	}
 }

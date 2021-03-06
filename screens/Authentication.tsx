@@ -113,7 +113,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
     }
 
     const onRegisterPress = (values: AuthenticationFields) => {
-        const onRegistrationSetDisplayName = async () => {
+        const setDisplayName = async () => {
             await firestoreSetDisplayName(values.displayName)
             navigation.replace('Main')
         }
@@ -121,7 +121,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         auth.createUserWithEmailAndPassword(values.eMail, values.password)
             .then(() => {
                 setIsLoading(true)
-                onRegistrationSetDisplayName()
+                setDisplayName()
             })
             .catch((error) => {
                 alert(error)
