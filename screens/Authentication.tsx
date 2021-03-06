@@ -104,13 +104,11 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
 
     const onSignUpPress = (formikProps: FormikProps<any>) => {
         setMode('register')
-        //formikProps.resetForm()
         softReset(formikProps)
     }
 
     const onGotoLoginPress = (formikProps: FormikProps<any>) => {
         setMode('login')
-        //formikProps.resetForm()
         softReset(formikProps)
     }
 
