@@ -10,13 +10,14 @@ import {
     Modal,
     ActivityIndicator,
     DisplayError,
+    FormField,
 } from '../components/Components'
 import {
     firebaseAuth,
     GoogleAuthProvider,
     callFirebaseFunction,
 } from '../firebase/Firebase'
-import { Formik } from 'formik'
+import { Formik, FormikProps } from 'formik'
 import * as Yup from 'yup'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import { Styles } from '../shared/Styles'
@@ -35,8 +36,24 @@ interface AuthenticationFields {
     confirmPassword: string
 }
 
+function equalTo(ref: any, msg: any) {
+    return Yup.mixed().test({
+        name: 'equalTo',
+        exclusive: false,
+        message: msg || '${path} must be the same as ${reference}',
+        params: {
+            reference: ref.path,
+        },
+        test: function (value: any) {
+            return value === this.resolve(ref);
+        },
+    });
+}
+// @ts-ignore
+Yup.addMethod(Yup.string, 'equalTo', equalTo);
+
 const PasswordResetScheme = Yup.object({
-    eMail: Yup.string().required().email(),
+    eMail: Yup.string().required().email()
 })
 
 const LoginScheme = Yup.object({
@@ -47,45 +64,70 @@ const LoginScheme = Yup.object({
 const RegistrationScheme = Yup.object({
     displayName: Yup.string().required().min(3),
     eMail: Yup.string().required().email(),
-    password: Yup.string().required().min(6),
-    confirmPassword: Yup.string().required().min(6)
+    password: Yup.string().required().min(8),
+    confirmPassword: Yup.string()
+        // @ts-ignore
+        .equalTo(Yup.ref('password'), 'Both passwords must match')
+        .required('Please retype your password')
 })
 
 export const Authentication = ({ navigation, customToken }: AuthenticationProps) => {
     const { setDisplayName: firestoreSetDisplayName } = useContext(FirebaseContext)
     const [mode, setMode] = useState<'login' | 'register' | 'password-reset'>('login')
+    const [scheme, setScheme] = useState<object>()
     const [submitted, setSubmitted] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
     const { theme, setTheme } = useContext(GlobalContext)
     const auth = firebaseAuth()
 
-    const onSignUpPress = () => {
-        setMode('register')
+    const softReset = (formikProps: FormikProps<any>) => {
+        formikProps.setValues({
+            displayName: '',
+            eMail: formikProps.values.eMail,
+            password: '',
+            confirmPassword: ''
+        })
+        formikProps.setTouched({
+            displayName: false,
+            eMail: false,
+            password: false,
+            confirmPassword: false
+        })
+        formikProps.setErrors({
+            displayName: undefined,
+            eMail: undefined,
+            password: undefined,
+            confirmPassword: undefined
+        })
     }
 
-    const onGotoLoginPress = () => {
+    const onSignUpPress = (formikProps: FormikProps<any>) => {
+        setMode('register')
+        //formikProps.resetForm()
+        softReset(formikProps)
+    }
+
+    const onGotoLoginPress = (formikProps: FormikProps<any>) => {
         setMode('login')
+        //formikProps.resetForm()
+        softReset(formikProps)
     }
 
     const onRegisterPress = (values: AuthenticationFields) => {
-        if (values.password !== values.confirmPassword) {
-            alert("Passwords don't match.")
-        } else {
-            const onRegistrationSetDisplayName = async () => {
-                await firestoreSetDisplayName(values.displayName)
-                navigation.replace('Main')
-            }
-
-            auth.createUserWithEmailAndPassword(values.eMail, values.password)
-                .then(() => {
-                    setIsLoading(true)
-                    onRegistrationSetDisplayName()
-                })
-                .catch((error) => {
-                    alert(error)
-                })
+        const onRegistrationSetDisplayName = async () => {
+            await firestoreSetDisplayName(values.displayName)
+            navigation.replace('Main')
         }
+
+        auth.createUserWithEmailAndPassword(values.eMail, values.password)
+            .then(() => {
+                setIsLoading(true)
+                onRegistrationSetDisplayName()
+            })
+            .catch((error) => {
+                alert(error)
+            })
     }
 
     const onPasswordKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
@@ -145,6 +187,20 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         }
     }, [])
 
+    useEffect(() => {
+        switch (mode) {
+            case 'login':
+                setScheme(LoginScheme)
+                break
+            case 'register':
+                setScheme(RegistrationScheme)
+                break
+            case 'password-reset':
+                setScheme(PasswordResetScheme)
+        }
+
+    }, [mode])
+
     if (isLoading) {
         return <ActivityIndicator />
     } else if (error) {
@@ -169,6 +225,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                 password: '',
                                 confirmPassword: ''
                             }}
+                            validationSchema={scheme}
                             onSubmit={(values) => {
                                 switch (mode) {
                                     case 'login':
@@ -179,51 +236,49 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                         break;
                                     case 'password-reset':
                                         sendPasswordReset(values)
-                                        break;
                                 }
                             }}
                         >
                             {(formikProps) => (
                                 <>
                                     {mode === 'register' ? (
-                                        <TextInput
+                                        <FormField
+                                            formikProps={formikProps}
+                                            fieldName='displayName'
                                             placeholder="Full Name"
-                                            onChangeText={formikProps.handleChange('displayName')}
-                                            value={formikProps.values.displayName}
                                         />
                                     ) : <></>}
-                                    <TextInput
+                                    <FormField
+                                        formikProps={formikProps}
+                                        fieldName='eMail'
                                         placeholder="E-mail"
-                                        onChangeText={formikProps.handleChange('eMail')}
-                                        value={formikProps.values.eMail}
                                     />
                                     {mode !== 'password-reset' ?
-                                        < TextInput
+                                        <FormField
+                                            formikProps={formikProps}
                                             secureTextEntry={true}
-                                            placeholder="Password"
-                                            onChangeText={formikProps.handleChange('password')}
-                                            value={formikProps.values.password}
+                                            placeholder='Password'
+                                            fieldName='password'
                                         //onKeyPress={onPasswordKeyPress}
                                         /> : <></>}
-                                    {mode === 'register' ? (
-                                        <TextInput
-                                            secureTextEntry={true}
-                                            placeholder="Confirm Password"
-                                            onChangeText={formikProps.handleChange('confirmPassword')}
-                                            value={formikProps.values.confirmPassword}
-                                        />
-                                    ) : <></>}
+
                                     {mode === 'register' ? (
                                         <>
+                                            <FormField
+                                                formikProps={formikProps}
+                                                secureTextEntry={true}
+                                                placeholder="Confirm Password"
+                                                fieldName='confirmPassword'
+
+                                            />
                                             <Button
                                                 title="Create Account"
                                                 disabled={submitted}
-                                                //onPress={onRegisterPress}
                                                 onPress={formikProps.handleSubmit}
                                             />
                                             <View style={Styles.auth.footerView}>
                                                 <Text fontSize={16}>Already got an account?</Text>
-                                                <Button title="Log in" onPress={onGotoLoginPress} />
+                                                <Button title="Log in" onPress={() => onGotoLoginPress(formikProps)} />
                                             </View>
                                         </>
                                     ) : <></>}
@@ -239,7 +294,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                                 <Button
                                                     disabled={submitted}
                                                     title="Cancel"
-                                                    onPress={() => setMode('login')}
+                                                    onPress={() => onGotoLoginPress(formikProps)}
                                                     style={{ marginTop: 5 }}
                                                 />
                                             </View>
@@ -255,10 +310,10 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                                     onPress={formikProps.handleSubmit}
                                                 />
                                             </View>
-                                            <View style={Styles.views.flexRowJustifyCenter}>
+                                            <View>
                                                 <View style={Styles.auth.footerView}>
                                                     <Text fontSize={16}>Don't have an account?</Text>
-                                                    <Button title="Sign up" onPress={onSignUpPress} />
+                                                    <Button title="Sign up" onPress={() => onSignUpPress(formikProps)} />
                                                 </View>
                                                 <View style={Styles.auth.footerView}>
                                                     <Text fontSize={16}>

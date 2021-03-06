@@ -8,15 +8,17 @@ import { Theme } from '../shared/Themes'
 interface Props {
     formikProps: any
     fieldName: string
-    fieldType: any
-    placeHolder: string
+    //fieldType: any
+    placeholder?: string
+    secureTextEntry?: boolean
 }
 
 export default ({
     formikProps,
     fieldName,
-    fieldType,
-    placeHolder,
+    //fieldType,
+    placeholder,
+    secureTextEntry = false,
     ...restProps
 }: Props) => {
     const { theme } = useContext(GlobalContext)
@@ -30,10 +32,11 @@ export default ({
         <View>
             <TextInput
                 onChangeText={(text) => {
-                    if (fieldType) onChangeHandler(text)
+                    //if (fieldType) onChangeHandler(text)
                     formikProps.handleChange(fieldName)(text)
                 }}
-                //placeholder={placeHolder}
+                secureTextEntry={secureTextEntry}
+                placeholder={placeholder}
                 value={formikProps.values[fieldName]}
                 onBlur={formikProps.handleBlur(fieldName)}
                 keyboardAppearance={theme}
