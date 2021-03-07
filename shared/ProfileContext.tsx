@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, useRef } from 'react'
 import { useAuthState, getCollection, DocumentData } from '../firebase/Firebase'
 import { UserProfile } from '../firebase/DataTypes'
 
-interface ContextType {
+export interface ProfileContextType {
     cachedUsers: { [index: string]: UserProfile }
     isFetching?: boolean
     getUserName: (userId: string) => string
@@ -12,7 +12,7 @@ interface ContextType {
     error?: any | null | undefined
 }
 
-export const ProfileContext = createContext<ContextType>({
+export const ProfileContext = createContext<ProfileContextType>({
     cachedUsers: {},
     getUserName: (userId: string) => '',
     fetchUser: (userId: string) => new Promise<void>(() => undefined),

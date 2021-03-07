@@ -1,9 +1,11 @@
 import React, { useReducer } from 'react'
 import { callFirebaseFunction } from '../firebase/Firebase'
 
-export const createMessage = (messageText: string) =>
+export const createMessage = (collectionPath: string, documentId: string, message: string) =>
     callFirebaseFunction('addMessage', {
-        message: messageText,
+        collectionPath,
+        documentId,
+        message,
     })
 
 export const useMessenger = (messengerContainerId: string, viewLengthMinimum: number) =>

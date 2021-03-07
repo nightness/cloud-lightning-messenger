@@ -30,9 +30,10 @@ export default ({ navigation }: Props) => {
     }, [textInput])
 
     const sendMessage = () => {
+        if (!currentUser) return
         const text = messageText
         setMessageText('')
-        createMessage(text)
+        createMessage('/members', currentUser.uid, text)
             .then((results) => {
                 const data = results.data
                 if (typeof data.type === 'string') {
@@ -50,7 +51,7 @@ export default ({ navigation }: Props) => {
     }
 
     return (
-        <Screen navigation={navigation} title={'Wall'}>
+        <Screen navigation={navigation} title={'My Wall'}>
             <Container>
                 <FirestoreCollectionView<Message>
                     collectionPath={messenger.messageCollectionPath}

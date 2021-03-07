@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler'
 import React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { ProfileProvider } from '../shared/ProfileContext'
+import { ProfileContext, ProfileContextType, ProfileProvider } from '../shared/ProfileContext'
 import Home from '../screens/Home'
 import Messenger from '../messenger/Messenger'
 import GroupMessenger from '../messenger/GroupMessenger'
@@ -19,12 +19,15 @@ export default () => {
             //drawerContent={props => <DrawerContent {...props} />}
             >
                 <Drawer.Screen name="Home" component={Home} />
-                <Drawer.Screen name="Wall" component={MemberWall} />
-                <Drawer.Screen name="Messenger" component={Messenger} />
-                <Drawer.Screen name="Group Messenger" component={GroupMessenger} />
+                <Drawer.Screen name="My Wall" component={MemberWall} />
+                <Drawer.Screen name="Member Walls" component={Messenger} />
+                <Drawer.Screen name="Group Chat" component={GroupMessenger} />
+
+
+                {/* Hide if not admin!
                 <Drawer.Screen name="Manage Groups" component={ManageGroups} />
                 <Drawer.Screen name="Manage User Roles" component={ManageUserRoles} />
-                <Drawer.Screen name="Playground" component={Playground} />
+                <Drawer.Screen name="Playground" component={Playground} /> */}
             </Drawer.Navigator>
         </ProfileProvider>
     )

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import {
     View,
     Screen,
@@ -13,8 +13,13 @@ import { Styles } from '../shared/Styles'
 import { DocumentData, QuerySnapshot, useCollection } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
-import { NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native'
+import {
+    NativeSyntheticEvent,
+    TextInputKeyPressEventData,
+    TextInput as NativeTextInput
+} from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { createMessage } from './MessengerReducer'
 
 interface Props {
     navigation: StackNavigationProp<any>
@@ -24,8 +29,14 @@ export default ({ navigation }: Props) => {
     const { currentUser, claims } = useContext(FirebaseContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('/profiles')
     const [members, setMembers] = useState<PickerItem[]>([])
+    const [selectedMember, setSelectedMember] = useState<PickerItem>()
     const [messageText, setMessageText] = useState<string>('')
-    const [groupCollectionPath, setGroupCollectionPath] = useState<string>('')
+    const [messageCollectionPath, setMessageCollectionPath] = useState<string>('/public')
+    const textInput = useRef<NativeTextInput>()
+
+    useEffect(() => {
+        textInput.current?.focus()
+    }, [textInput])
 
     useEffect(() => {
         if (loadingCollection || errorCollection || !snapshot) return
@@ -46,26 +57,34 @@ export default ({ navigation }: Props) => {
     }, [snapshot])
 
     useEffect(() => {
+        if (selectedMember && selectedMember.value)
+            setMessageCollectionPath(`/members/${selectedMember.value}/messages/`)
+        console.log(selectedMember)
+    }, [selectedMember])
+
+    useEffect(() => {
         console.log(claims)
     }, [claims])
 
     const sendMessage = () => {
-        // const text = messageText
-        // setMessageText('')
-        // createMessage(text)
-        //     .then(results => {
-        //         const data = results.data;
-        //         if (typeof (data.type) === 'string') {
-        //             console.log("Error: " + data.message)
-        //             if (data.type === 'silent') return
-        //             alert(data.message)
-        //         } else {
-        //             console.log(data)
-        //         }
-        //     })
-        //     .catch(error => {
-        //         alert('Unhandled exception')
-        //     })
+        if (!selectedMember) return
+        const text = messageText
+        setMessageText('')
+        createMessage('/members', selectedMember.value, text)
+            .then((results) => {
+                const data = results.data
+                if (typeof data.type === 'string') {
+                    console.error(data.message)
+                    if (data.type === 'silent') return
+                    alert(data.message)
+                } else {
+                    console.log(data)
+                }
+                textInput.current?.focus()
+            })
+            .catch((error) => {
+                alert('Unhandled exception')
+            })
     }
 
     const onMessageKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
@@ -75,18 +94,16 @@ export default ({ navigation }: Props) => {
     }
 
     return (
-        <Screen navigation={navigation} title={'Messenger'}>
+        <Screen navigation={navigation} title={'Member Walls'}>
             <Container>
                 <View style={Styles.messenger.views}>
                     <Picker
                         data={members}
-                        onValueChanged={(newValue) => {
-                            console.log(newValue)
-                        }}
+                        onValueChanged={setSelectedMember}
                     />
                 </View>
                 <FirestoreCollectionView<Message>
-                    collectionPath={groupCollectionPath}
+                    collectionPath={messageCollectionPath}
                     autoScrollToEnd={true}
                     orderBy="postedAt"
                     // @ts-ignore
@@ -98,6 +115,7 @@ export default ({ navigation }: Props) => {
                         style={Styles.messenger.textInput}
                         onChangeText={(msg: string) => setMessageText(msg)}
                         onKeyPress={onMessageKeyPress}
+                        classRef={textInput}
                     />
                     <Button
                         title="Send"

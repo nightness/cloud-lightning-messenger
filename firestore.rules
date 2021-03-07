@@ -32,11 +32,21 @@ service cloud.firestore {
       		allow read, write: if userHasGoogleAccount() && request.auth.token.allAccess
     	}
 
+		// General Documents
+    	match /public/{publicDoc=**} {
+      		allow read: if isAuthorized()
+    	}
+
   		// Group Match 
   		match /groups/{groupId} {
       		// Group Functions
       		function isGroupMember() {
         		return request.auth.uid in get(/databases/$(database)/documents/groups/{groupId}).data.members
+      		}
+
+      		// Group Messages Rules
+      		match /messages/loading {
+      			allow read: if isAuthorized()
       		}
 
 		    // Group Rules
@@ -45,7 +55,7 @@ service cloud.firestore {
 
       		// Group Messages Rules
       		match /messages/{messageId} {
-      			allow read: if isGroupMember()
+      			allow read: if isGroupMember() || isAuthorized()
       		}
     	}
 

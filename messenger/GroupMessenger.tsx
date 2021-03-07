@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import {
     View,
     Screen,
@@ -14,7 +14,12 @@ import { DocumentData, QuerySnapshot, useCollection } from '../firebase/Firebase
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native'
+import {
+    NativeSyntheticEvent,
+    TextInputKeyPressEventData,
+    TextInput as NativeTextInput
+} from 'react-native'
+import { createMessage } from './MessengerReducer'
 
 interface Props {
     navigation: StackNavigationProp<any>
@@ -24,8 +29,15 @@ export default ({ navigation }: Props) => {
     const { currentUser, claims } = useContext(FirebaseContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('/groups')
     const [groups, setGroups] = useState<PickerItem[]>([])
+    const [selectedGroup, setSelectedGroup] = useState<PickerItem>()
     const [messageText, setMessageText] = useState('')
-    const [groupCollectionPath, setGroupCollectionPath] = useState<string>('')
+    const [groupCollectionPath, setGroupCollectionPath] = useState<string>('/public')
+    const textInput = useRef<NativeTextInput>()
+
+    useEffect(() => {
+        textInput.current?.focus()
+    }, [textInput])
+
 
     useEffect(() => {
         if (loadingCollection || errorCollection || !snapshot) return
@@ -48,23 +60,31 @@ export default ({ navigation }: Props) => {
         console.log(claims)
     }, [claims])
 
+    useEffect(() => {
+        if (selectedGroup && selectedGroup.value)
+            setGroupCollectionPath(`/groups/${selectedGroup.value}/messages/`)
+        console.log(selectedGroup)
+    }, [selectedGroup])
+
     const sendMessage = () => {
-        // const text = messageText
-        // setMessageText('')
-        // createMessage(text)
-        //     .then(results => {
-        //         const data = results.data;
-        //         if (typeof (data.type) === 'string') {
-        //             console.log("Error: " + data.message)
-        //             if (data.type === 'silent') return
-        //             alert(data.message)
-        //         } else {
-        //             console.log(data)
-        //         }
-        //     })
-        //     .catch(error => {
-        //         alert('Unhandled exception')
-        //     })
+        if (!selectedGroup) return
+        const text = messageText
+        setMessageText('')
+        createMessage('/groups', selectedGroup.value, text)
+            .then((results) => {
+                const data = results.data
+                if (typeof data.type === 'string') {
+                    console.error(data.message)
+                    if (data.type === 'silent') return
+                    alert(data.message)
+                } else {
+                    console.log(data)
+                }
+                textInput.current?.focus()
+            })
+            .catch((error) => {
+                alert('Unhandled exception')
+            })
     }
 
     const onMessageKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
@@ -79,9 +99,7 @@ export default ({ navigation }: Props) => {
                 <View style={Styles.messenger.views}>
                     <Picker
                         data={groups}
-                        onValueChanged={(newValue) => {
-                            console.log(newValue)
-                        }}
+                        onValueChanged={setSelectedGroup}
                     />
                 </View>
                 <FirestoreCollectionView<Message>
@@ -97,6 +115,7 @@ export default ({ navigation }: Props) => {
                         style={Styles.messenger.textInput}
                         onChangeText={(msg) => setMessageText(msg)}
                         onKeyPress={onMessageKeyPress}
+                        classRef={textInput}
                     />
                     <Button
                         title="Send"
