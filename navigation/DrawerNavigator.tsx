@@ -3,11 +3,12 @@ import React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { ProfileContext, ProfileContextType, ProfileProvider } from '../shared/ProfileContext'
 import Home from '../screens/Home'
-import Messenger from '../messenger/Messenger'
+import PrivateMessenger from '../messenger/PrivateMessenger'
+import WallMessenger from '../messenger/WallMessenger'
 import GroupMessenger from '../messenger/GroupMessenger'
 import ManageGroups from '../messenger/ManageGroups'
 import ManageUserRoles from '../messenger/ManageUserRoles'
-import MemberWall from '../messenger/MemberWall'
+import MyWall from '../messenger/MyWall'
 import { Playground } from '../screens/Playground'
 
 const Drawer = createDrawerNavigator()
@@ -19,8 +20,9 @@ export default () => {
             //drawerContent={props => <DrawerContent {...props} />}
             >
                 <Drawer.Screen name="Home" component={Home} />
-                <Drawer.Screen name="My Wall" component={MemberWall} />
-                <Drawer.Screen name="Member Walls" component={Messenger} />
+                <Drawer.Screen name="Messages" component={PrivateMessenger} />
+                <Drawer.Screen name="My Wall" component={MyWall} />
+                <Drawer.Screen name="Member Walls" component={WallMessenger} />
                 <Drawer.Screen name="Group Chat" component={GroupMessenger} />
 
 

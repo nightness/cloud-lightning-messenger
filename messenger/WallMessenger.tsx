@@ -10,7 +10,7 @@ import {
     PickerItem,
 } from '../components/Components'
 import { Styles } from '../shared/Styles'
-import { DocumentData, QuerySnapshot, useCollection } from '../firebase/Firebase'
+import { DocumentData, QuerySnapshot, useCollection, createMessage } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
 import {
@@ -19,7 +19,6 @@ import {
     TextInput as NativeTextInput
 } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { createMessage } from './MessengerReducer'
 
 interface Props {
     navigation: StackNavigationProp<any>
@@ -58,7 +57,7 @@ export default ({ navigation }: Props) => {
 
     useEffect(() => {
         if (selectedMember && selectedMember.value)
-            setMessageCollectionPath(`/members/${selectedMember.value}/messages/`)
+            setMessageCollectionPath(`/walls/${selectedMember.value}/messages/`)
         console.log(selectedMember)
     }, [selectedMember])
 
@@ -70,7 +69,7 @@ export default ({ navigation }: Props) => {
         if (!selectedMember) return
         const text = messageText
         setMessageText('')
-        createMessage('/members', selectedMember.value, text)
+        createMessage('/walls', selectedMember.value, text)
             .then((results) => {
                 const data = results.data
                 if (typeof data.type === 'string') {
@@ -83,7 +82,7 @@ export default ({ navigation }: Props) => {
                 textInput.current?.focus()
             })
             .catch((error) => {
-                alert('Unhandled exception')
+                console.error(error)
             })
     }
 
@@ -106,6 +105,7 @@ export default ({ navigation }: Props) => {
                     collectionPath={messageCollectionPath}
                     autoScrollToEnd={true}
                     orderBy="postedAt"
+                    limitLength={25}
                     // @ts-ignore
                     renderItem={({ item }) => <Message item={item} />}
                 />

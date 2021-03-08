@@ -51,7 +51,6 @@ service cloud.firestore {
 
 		    // Group Rules
 			allow read: if isAuthorized()
-      		allow write: if isAdmin()
 
       		// Group Messages Rules
       		match /messages/{messageId} {
@@ -71,9 +70,31 @@ service cloud.firestore {
       
 			// Member Messages Match
       		match /messages/{messageId} {
-        		allow write: if isAuthorized() && (request.auth.uid == memberId)
+        		allow write: if isAuthorized() && (request.resource.data.authorUID == request.auth.uid) && (request.resource.data.authorUID == resource.data.authorUID)
+        		allow read: if isAuthorized() && ((request.auth.uid == memberId) || (resource.data.authorUID == request.auth.uid))
+      		}      
+    	}
+
+		// Messages Match
+    	match /messages/{memberId} {			
+			allow read, write: if isAuthorized() && (request.auth.uid == memberId)
+      
+    		match /{document=**} {
+      			allow read, write: if isAuthorized() && ((request.auth.uid == memberId) || (request.resource.data.authorUID == request.auth.uid))
+    		}	  			
+    	}    
+
+		// Walls Match
+    	match /walls/{memberId} {
+      		allow write: if isAuthorized() && (request.auth.uid == memberId)
+      		allow read: if isAuthorized()
+      
+			// Wall Messages Match
+      		match /messages/{messageId} {
+        		allow create: if isAuthorized()
+				allow update: if (request.resource.data.authorUID == resource.data.authorUID)
         		allow read: if isAuthorized()
       		}      
-    	}    
+    	}  
   	}
 }

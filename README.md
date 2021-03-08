@@ -55,9 +55,7 @@ expo start
 
 #
 
-## Fields for /members/{memberId}/messages/{messageId}
-
-All messages to a member is managed by this collection. If senderId == memberId it's a wall post, otherwise it's a message from the senderId.
+## Fields for /messages/{ownerMemberId}/{sendingMemberId}/{messageId}
 
 | Name           | Type        | Description                                     |
 | -------------- | ----------- | ----------------------------------------------- |

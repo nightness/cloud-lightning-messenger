@@ -4,21 +4,21 @@ import {
     Screen,
     Container,
     Picker,
-    PickerItem,
     TextInput,
     Button,
     FirestoreCollectionView,
+    PickerItem,
 } from '../components/Components'
 import { Styles } from '../shared/Styles'
 import { DocumentData, QuerySnapshot, useCollection, createMessage } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
-import { StackNavigationProp } from '@react-navigation/stack'
 import {
     NativeSyntheticEvent,
     TextInputKeyPressEventData,
     TextInput as NativeTextInput
 } from 'react-native'
+import { StackNavigationProp } from '@react-navigation/stack'
 
 interface Props {
     navigation: StackNavigationProp<any>
@@ -26,64 +26,64 @@ interface Props {
 
 export default ({ navigation }: Props) => {
     const { currentUser, claims } = useContext(FirebaseContext)
-    const [snapshot, loadingCollection, errorCollection] = useCollection('/groups')
-    const [groups, setGroups] = useState<PickerItem[]>([])
-    const [selectedGroup, setSelectedGroup] = useState<PickerItem>()
-    const [messageText, setMessageText] = useState('')
-    const [groupCollectionPath, setGroupCollectionPath] = useState<string>('/public')
+    const [snapshot, loadingCollection, errorCollection] = useCollection('/profiles')
+    const [members, setMembers] = useState<PickerItem[]>([])
+    const [selectedMember, setSelectedMember] = useState<PickerItem>()
+    const [messageText, setMessageText] = useState<string>('')
+    const [messageCollectionPath, setMessageCollectionPath] = useState<string>('/public')
     const textInput = useRef<NativeTextInput>()
 
     useEffect(() => {
         textInput.current?.focus()
     }, [textInput])
 
-
     useEffect(() => {
         if (loadingCollection || errorCollection || !snapshot) return
         var newState: PickerItem[] = []
         const querySnapshot = snapshot as QuerySnapshot<DocumentData>
-        // @ts-ignore
         querySnapshot.docs.forEach((docRef) => {
             const push = async (docRef: DocumentData) => {
-                const name = await docRef.get('name')
+                const name = await docRef.get('displayName')
                 newState.push({
-                    label: name,
+                    label: name || `{${docRef.id}}`,
                     value: docRef.id,
                 })
             }
-            push(docRef).then(() => setGroups(newState))
+            push(docRef)
+                .then(() => setMembers(newState))
+                .catch((err) => console.error(err))
         })
     }, [snapshot])
+
+    useEffect(() => {
+        if (currentUser && selectedMember && selectedMember.value)
+            setMessageCollectionPath(`/messages/${currentUser.uid}/${selectedMember.value}/`)
+        console.log(selectedMember)
+    }, [selectedMember])
 
     useEffect(() => {
         console.log(claims)
     }, [claims])
 
-    useEffect(() => {
-        if (selectedGroup && selectedGroup.value)
-            setGroupCollectionPath(`/groups/${selectedGroup.value}/messages/`)
-        console.log(selectedGroup)
-    }, [selectedGroup])
-
     const sendMessage = () => {
-        if (!selectedGroup) return
-        const text = messageText
-        setMessageText('')
-        createMessage('/groups', selectedGroup.value, text)
-            .then((results) => {
-                const data = results.data
-                if (typeof data.type === 'string') {
-                    console.error(data.message)
-                    if (data.type === 'silent') return
-                    alert(data.message)
-                } else {
-                    console.log(data)
-                }
-                textInput.current?.focus()
-            })
-            .catch((error) => {
-                alert('Unhandled exception')
-            })
+        if (!selectedMember) return
+        // const text = messageText
+        // setMessageText('')
+        // createMessage('/members', selectedMember.value, text)
+        //     .then((results) => {
+        //         const data = results.data
+        //         if (typeof data.type === 'string') {
+        //             console.error(data.message)
+        //             if (data.type === 'silent') return
+        //             alert(data.message)
+        //         } else {
+        //             console.log(data)
+        //         }
+        //         textInput.current?.focus()
+        //     })
+        //     .catch((error) => {
+        //         console.error(error)
+        //     })
     }
 
     const onMessageKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
@@ -93,16 +93,16 @@ export default ({ navigation }: Props) => {
     }
 
     return (
-        <Screen navigation={navigation} title={'Group Messenger'}>
+        <Screen navigation={navigation} title={'Private Messages'}>
             <Container>
                 <View style={Styles.messenger.views}>
                     <Picker
-                        data={groups}
-                        onValueChanged={setSelectedGroup}
+                        data={members}
+                        onValueChanged={setSelectedMember}
                     />
                 </View>
                 <FirestoreCollectionView<Message>
-                    collectionPath={groupCollectionPath}
+                    collectionPath={messageCollectionPath}
                     autoScrollToEnd={true}
                     orderBy="postedAt"
                     limitLength={25}
@@ -113,7 +113,7 @@ export default ({ navigation }: Props) => {
                     <TextInput
                         value={messageText}
                         style={Styles.messenger.textInput}
-                        onChangeText={(msg) => setMessageText(msg)}
+                        onChangeText={(msg: string) => setMessageText(msg)}
                         onKeyPress={onMessageKeyPress}
                         classRef={textInput}
                     />

@@ -12,7 +12,7 @@ type ContextType = {
     addClaim: (uid: string, claimName: string) => Promise<any>
     removeClaim: (uid: string, claimName: string) => Promise<any>
     getClaims: (uid: string) => Promise<any>
-    setDisplayName: (displayName: string) => Promise<any>
+    setProfileAttribute: (displayName: string) => Promise<any>
 }
 
 export const FirebaseContext = createContext<ContextType>({
@@ -25,7 +25,7 @@ export const FirebaseContext = createContext<ContextType>({
     addClaim: (uid: string, claimName: string) => new Promise(() => undefined),
     removeClaim: (uid: string, claimName: string) => new Promise(() => undefined),
     getClaims: (uid: string) => new Promise(() => undefined),
-    setDisplayName: (displayName: string) => new Promise(() => undefined),
+    setProfileAttribute: (displayName: string) => new Promise(() => undefined),
 })
 
 interface Props {
@@ -87,12 +87,12 @@ export const FirebaseProvider = ({ children }: Props) => {
         setLoadingClaims(false)
     }
 
-    const setDisplayName = async (displayName: string) => {
+    const setProfileAttribute = async (displayName: string) => {
         const currentUser = getAuth().currentUser
         if (!currentUser) return
         const authToken = await currentUser.getIdToken()
         currentUser.updateProfile({ displayName })
-        return await callFirebaseFunction('setDisplayName', {
+        return await callFirebaseFunction('setProfileAttribute', {
             displayName,
             authToken,
         })
@@ -118,7 +118,7 @@ export const FirebaseProvider = ({ children }: Props) => {
                 addClaim,
                 removeClaim,
                 getClaims,
-                setDisplayName,
+                setProfileAttribute,
                 authToken,
             }}
         >

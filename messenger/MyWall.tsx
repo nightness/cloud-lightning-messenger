@@ -11,7 +11,7 @@ import { TextInput as NativeTextInput } from 'react-native'
 import { Styles } from '../shared/Styles'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
-import { createMessage, useMessenger } from './MessengerReducer'
+import { createMessage } from '../firebase/Firebase'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native'
 
@@ -22,8 +22,13 @@ interface Props {
 export default ({ navigation }: Props) => {
     const { currentUser } = useContext(FirebaseContext)
     const [messageText, setMessageText] = useState('')
-    const [messenger, messengerDispatch] = useMessenger(currentUser?.uid || '', 25)
     const textInput = useRef<NativeTextInput>()
+    const [messageCollectionPath, setMessageCollectionPath] = useState<string>('/public')
+
+    useEffect(() => {
+        if (currentUser)
+            setMessageCollectionPath(`/walls/${currentUser.uid}/messages`)
+    }, [currentUser])
 
     useEffect(() => {
         textInput.current?.focus()
@@ -33,7 +38,7 @@ export default ({ navigation }: Props) => {
         if (!currentUser) return
         const text = messageText
         setMessageText('')
-        createMessage('/members', currentUser.uid, text)
+        createMessage('/walls', currentUser.uid, text)
             .then((results) => {
                 const data = results.data
                 if (typeof data.type === 'string') {
@@ -54,9 +59,10 @@ export default ({ navigation }: Props) => {
         <Screen navigation={navigation} title={'My Wall'}>
             <Container>
                 <FirestoreCollectionView<Message>
-                    collectionPath={messenger.messageCollectionPath}
+                    collectionPath={messageCollectionPath}
                     autoScrollToEnd={true}
                     orderBy="postedAt"
+                    limitLength={25}
                     // @ts-ignore
                     renderItem={({ item }) => <Message item={item} />}
                 />

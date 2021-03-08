@@ -72,7 +72,7 @@ const RegistrationScheme = Yup.object({
 })
 
 export const Authentication = ({ navigation, customToken }: AuthenticationProps) => {
-    const { setDisplayName: firestoreSetDisplayName } = useContext(FirebaseContext)
+    const { setProfileAttribute: firestoreSetDisplayName } = useContext(FirebaseContext)
     const [mode, setMode] = useState<'login' | 'register' | 'password-reset'>('login')
     const [scheme, setScheme] = useState<object>()
     const [submitted, setSubmitted] = useState(false)
@@ -113,7 +113,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
     }
 
     const onRegisterPress = (values: AuthenticationFields) => {
-        const setDisplayName = async () => {
+        const setProfileAttribute = async () => {
             await firestoreSetDisplayName(values.displayName)
             navigation.replace('Main')
         }
@@ -121,7 +121,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         auth.createUserWithEmailAndPassword(values.eMail, values.password)
             .then(() => {
                 setIsLoading(true)
-                setDisplayName()
+                setProfileAttribute()
             })
             .catch((error) => {
                 alert(error)

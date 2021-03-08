@@ -55,9 +55,6 @@ export const getCurrentTimeStamp = () => firebase.firestore.FieldValue.serverTim
 export const getCurrentUser = () => firebaseAuth().currentUser
 
 export const useAuthState = () => FirebaseAuth.useAuthState(firebaseAuth())
-export const useAuthRest = () => {
-    // useReducer
-}
 
 export const getCollection = (collectionPath: string) =>
     getFirestore().collection(collectionPath)
@@ -163,15 +160,13 @@ export const callFirebaseFunction = (funcName: string, data: any) => {
     return firebaseFunctions().httpsCallable(funcName)(data)
 }
 
-// export const useFunctions = () => useReducer(reducer, createFunctions)
-
-// function reducer(state, action) {
-//     console.log(state)
-//     switch (action.type) {
-//         case 'invoke':
-//             console.log("invoke action")
-//             return state
-//         default:
-//             return state
-//     }
-// }
+export const createMessage = (
+    collectionPath: string,
+    documentId: string,
+    message: string
+) =>
+    callFirebaseFunction('addMessage', {
+        collectionPath,
+        documentId,
+        message,
+    })

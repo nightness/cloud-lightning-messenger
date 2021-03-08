@@ -17,6 +17,7 @@ interface Props<T> {
     collectionPath: string
     renderItem: ListRenderItem<T>
     orderBy?: string
+    limitLength?: number
     initialNumToRender?: number
     autoScrollToEnd?: boolean
 }
@@ -26,6 +27,7 @@ export default function _<T>({
     collectionPath,
     renderItem,
     orderBy,
+    limitLength,
     initialNumToRender,
     autoScrollToEnd,
     ...restProps
@@ -37,7 +39,7 @@ export default function _<T>({
 
     const fetchData = () => {
         const querySnapshot = snapshot as QuerySnapshot<DocumentData>
-        getData(querySnapshot, orderBy)
+        getData(querySnapshot, orderBy, limitLength)
             .then((documentRef) => {
                 // @ts-ignore
                 setMessages(getDocumentsDataWithId(documentRef))
