@@ -114,6 +114,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
 
     const onRegisterPress = (values: AuthenticationFields) => {
         const setProfileAttribute = async () => {
+            console.log(values)
             await firestoreSetDisplayName(values.displayName)
             navigation.replace('Main')
         }
