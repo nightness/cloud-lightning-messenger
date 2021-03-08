@@ -77,15 +77,15 @@ service cloud.firestore {
 
 		// Messages Match
     	match /messages/{senderMemberId} {			
-			allow list: if isAuthorized()
 			allow read, write: if isAuthorized() && (request.auth.uid == senderMemberId)
 
       		match /receipient/{receipientMemberId} {
 				function canRead() { return ((request.auth.uid == senderMemberId) || (request.auth.uid == receipientMemberId)) }
-				function isAuthor() { return ((request.resource.data.authorUID == request.auth.uid) || (resource.data.authorUID == request.auth.uid)) }
+				function isAuthorOf() { return ((request.resource.data.authorUID == request.auth.uid) || (resource.data.authorUID == request.auth.uid)) }
+				function isAuthorConstant() { return (request.resource.data.authorUID == resource.data.authorUID) }
 	    		match /{document=**} {
     	  			allow read, create: if isAuthorized() && canRead()
-					allow update: if isAuthorized() && canRead() && isAuthor()
+					allow update: if isAuthorized() && canRead() && isAuthorOf() && isAuthorConstant()
     			}	  			
 			}
     	}    
