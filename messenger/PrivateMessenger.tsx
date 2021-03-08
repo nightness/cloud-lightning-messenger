@@ -57,7 +57,7 @@ export default ({ navigation }: Props) => {
 
     useEffect(() => {
         if (currentUser && selectedMember && selectedMember.value)
-            setMessageCollectionPath(`/messages/${currentUser.uid}/${selectedMember.value}/`)
+            setMessageCollectionPath(`/messages/${currentUser.uid}/recipient/`)
         console.log(selectedMember)
     }, [selectedMember])
 
