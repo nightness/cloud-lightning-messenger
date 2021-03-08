@@ -76,12 +76,18 @@ service cloud.firestore {
     	}
 
 		// Messages Match
-    	match /messages/{memberId} {			
-			allow read, write: if isAuthorized() && (request.auth.uid == memberId)
-      
-    		match /{document=**} {
-      			allow read, write: if isAuthorized() && ((request.auth.uid == memberId) || (request.resource.data.authorUID == request.auth.uid))
-    		}	  			
+    	match /messages/{senderMemberId} {			
+			allow list: if isAuthorized()
+			allow read, write: if isAuthorized() && (request.auth.uid == senderMemberId)
+
+      		match /receipient/{receipientMemberId} {
+				function canRead() { return ((request.auth.uid == senderMemberId) || (request.auth.uid == receipientMemberId)) }
+				function isAuthor() { return ((request.resource.data.authorUID == request.auth.uid) || (resource.data.authorUID == request.auth.uid)) }
+	    		match /{document=**} {
+    	  			allow read, create: if isAuthorized() && canRead()
+					allow update: if isAuthorized() && canRead() && isAuthor()
+    			}	  			
+			}
     	}    
 
 		// Walls Match
