@@ -11,7 +11,7 @@ import { TextInput as NativeTextInput } from 'react-native'
 import { Styles } from '../shared/Styles'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
-import { createMessage } from '../firebase/Firebase'
+import { callFirebaseFunction } from '../firebase/Firebase'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native'
 
@@ -38,21 +38,23 @@ export default ({ navigation }: Props) => {
         if (!currentUser) return
         const text = messageText
         setMessageText('')
-        createMessage('/walls', currentUser.uid, text)
-            .then((results) => {
-                const data = results.data
-                if (typeof data.type === 'string') {
-                    console.error(data.message)
-                    if (data.type === 'silent') return
-                    alert(data.message)
-                } else {
-                    console.log(data)
-                }
-                textInput.current?.focus()
-            })
-            .catch((error) => {
-                alert('Unhandled exception')
-            })
+        callFirebaseFunction('addMessage', {
+            collectionPath: `/walls`,
+            documentId: currentUser.uid,
+            message: text,
+        }).then((results) => {
+            const data = results.data
+            if (typeof data.type === 'string') {
+                console.error(data.message)
+                if (data.type === 'silent') return
+                alert(data.message)
+            } else {
+                console.log(data)
+            }
+            textInput.current?.focus()
+        }).catch((error) => {
+            alert('Unhandled exception')
+        })
     }
 
     return (

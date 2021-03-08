@@ -10,7 +10,7 @@ import {
     PickerItem,
 } from '../components/Components'
 import { Styles } from '../shared/Styles'
-import { DocumentData, QuerySnapshot, useCollection, createMessage } from '../firebase/Firebase'
+import { DocumentData, QuerySnapshot, useCollection, callFirebaseFunction } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
 import {
@@ -43,6 +43,7 @@ export default ({ navigation }: Props) => {
         const querySnapshot = snapshot as QuerySnapshot<DocumentData>
         querySnapshot.docs.forEach((docRef) => {
             const push = async (docRef: DocumentData) => {
+                if (docRef.id == currentUser?.uid) return
                 const name = await docRef.get('displayName')
                 newState.push({
                     label: name || `{${docRef.id}}`,
@@ -57,7 +58,7 @@ export default ({ navigation }: Props) => {
 
     useEffect(() => {
         if (currentUser && selectedMember && selectedMember.value)
-            setMessageCollectionPath(`/messages/${currentUser.uid}/recipient/`)
+            setMessageCollectionPath(`/messages/${currentUser.uid}/${selectedMember.value}/`)
         console.log(selectedMember)
     }, [selectedMember])
 
@@ -66,24 +67,26 @@ export default ({ navigation }: Props) => {
     }, [claims])
 
     const sendMessage = () => {
-        if (!selectedMember) return
-        // const text = messageText
-        // setMessageText('')
-        // createMessage('/members', selectedMember.value, text)
-        //     .then((results) => {
-        //         const data = results.data
-        //         if (typeof data.type === 'string') {
-        //             console.error(data.message)
-        //             if (data.type === 'silent') return
-        //             alert(data.message)
-        //         } else {
-        //             console.log(data)
-        //         }
-        //         textInput.current?.focus()
-        //     })
-        //     .catch((error) => {
-        //         console.error(error)
-        //     })
+        if (!selectedMember || !currentUser) return
+        const text = messageText
+        setMessageText('')
+        callFirebaseFunction('addMessage', {
+            collectionPath: `/messages/${currentUser.uid}/${selectedMember.value}`,
+            duplicationPath: `/messages/${selectedMember.value}/${currentUser.uid}`,
+            message: text,
+        }).then((results) => {
+            const data = results.data
+            if (typeof data.type === 'string') {
+                console.error(data.message)
+                if (data.type === 'silent') return
+                alert(data.message)
+            } else {
+                console.log(data)
+            }
+            textInput.current?.focus()
+        }).catch((error) => {
+            console.error(error)
+        })
     }
 
     const onMessageKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {

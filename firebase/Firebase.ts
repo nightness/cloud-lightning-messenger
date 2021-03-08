@@ -159,14 +159,3 @@ export const collectionContains = async (collection: string, docId: string) => {
 export const callFirebaseFunction = (funcName: string, data: any) => {
     return firebaseFunctions().httpsCallable(funcName)(data)
 }
-
-export const createMessage = (
-    collectionPath: string,
-    documentId: string,
-    message: string
-) =>
-    callFirebaseFunction('addMessage', {
-        collectionPath,
-        documentId,
-        message,
-    })

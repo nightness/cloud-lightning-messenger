@@ -10,7 +10,7 @@ import {
     FirestoreCollectionView,
 } from '../components/Components'
 import { Styles } from '../shared/Styles'
-import { DocumentData, QuerySnapshot, useCollection, createMessage } from '../firebase/Firebase'
+import { DocumentData, QuerySnapshot, useCollection, callFirebaseFunction } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -69,21 +69,23 @@ export default ({ navigation }: Props) => {
         if (!selectedGroup) return
         const text = messageText
         setMessageText('')
-        createMessage('/groups', selectedGroup.value, text)
-            .then((results) => {
-                const data = results.data
-                if (typeof data.type === 'string') {
-                    console.error(data.message)
-                    if (data.type === 'silent') return
-                    alert(data.message)
-                } else {
-                    console.log(data)
-                }
-                textInput.current?.focus()
-            })
-            .catch((error) => {
-                alert('Unhandled exception')
-            })
+        callFirebaseFunction('addMessage', {
+            collectionPath: `/groups`,
+            documentId: selectedGroup.value,
+            message: text,
+        }).then((results) => {
+            const data = results.data
+            if (typeof data.type === 'string') {
+                console.error(data.message)
+                if (data.type === 'silent') return
+                alert(data.message)
+            } else {
+                console.log(data)
+            }
+            textInput.current?.focus()
+        }).catch((error) => {
+            alert('Unhandled exception')
+        })
     }
 
     const onMessageKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
