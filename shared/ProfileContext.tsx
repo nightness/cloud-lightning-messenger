@@ -120,7 +120,7 @@ export const useProfiler = () => {
         }
         setIsLoadingCollection(false)
         if (!hasAccess)
-            setCollectionError(exception ? exception : new Error('permission-denied'))
+            setCollectionError(exception ?? new Error('permission-denied'))
     }
     // On component mounted
     useEffect(() => {

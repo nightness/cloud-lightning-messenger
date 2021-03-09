@@ -103,7 +103,7 @@ export default ({ navigation, ...restProps }: Props) => {
         }
         Promise.all(promises).then(() => {
             setMembers(groupMembers)
-            setSelectedMember(groupMembers.length > 0 ? groupMembers[0] : undefined)
+            setSelectedMember(groupMembers?.[0])
         }) //.catch(() => undefined)
     }
 

@@ -9,8 +9,7 @@ interface Props {
 }
 
 export default ({ permissionDenied, error }: Props) => {
-    let _errorMessage = error ? error.message : undefined
-    let errorMessageText = permissionDenied ? 'Permission Denied' : _errorMessage
+    let errorMessageText = permissionDenied ? 'Permission Denied' : error?.message
     console.error(error)
     return (
         <Container style={Styles.views.filletedBorderView}>
