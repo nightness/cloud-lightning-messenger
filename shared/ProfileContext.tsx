@@ -122,6 +122,7 @@ export const useProfiler = () => {
         if (!hasAccess)
             setCollectionError(exception ?? new Error('permission-denied'))
     }
+    
     // On component mounted
     useEffect(() => {
         //verifyAccess()
