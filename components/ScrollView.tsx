@@ -6,7 +6,7 @@ import { Themes } from '../shared/Themes'
 import { StyleProp, ViewStyle } from 'react-native'
 
 interface Props {
-    children: JSX.Element[]
+    children: JSX.Element | JSX.Element[]
     style?: StyleProp<ViewStyle>
     bounces?: boolean
     keyboardShouldPersistTaps?: boolean | "always" | "never" | "handled"
