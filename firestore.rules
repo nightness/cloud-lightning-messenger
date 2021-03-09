@@ -63,18 +63,6 @@ service cloud.firestore {
       		allow read: if isAuthorized()
     	}
 
-    	// Member Match
-    	match /members/{memberId} {
-      		allow write: if (request.auth.uid == memberId)
-      		allow read: if isAuthorized()
-      
-			// Member Messages Match
-      		match /messages/{messageId} {
-        		allow write: if isAuthorized() && (request.resource.data.authorUID == request.auth.uid) && (request.resource.data.authorUID == resource.data.authorUID)
-        		allow read: if isAuthorized() && ((request.auth.uid == memberId) || (resource.data.authorUID == request.auth.uid))
-      		}      
-    	}
-
 		// Messages Match
     	match /messages/{senderMemberId} {			
 			allow read: if isAuthorized()
