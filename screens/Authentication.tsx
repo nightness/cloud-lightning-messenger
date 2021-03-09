@@ -17,7 +17,7 @@ import {
     GoogleAuthProvider,
     callFirebaseFunction,
 } from '../firebase/Firebase'
-import { Formik, FormikProps } from 'formik'
+import { Formik, FormikHelpers, FormikProps, useFormik } from 'formik'
 import * as Yup from 'yup'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import { Styles } from '../shared/Styles'
@@ -79,6 +79,8 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
     const { theme, setTheme } = useContext(GlobalContext)
+
+
     const auth = firebaseAuth()
 
     const softReset = (formikProps: FormikProps<any>) => {
@@ -112,7 +114,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         softReset(formikProps)
     }
 
-    const onRegisterPress = (values: AuthenticationFields) => {
+    const onRegisterPress = (values: AuthenticationFields, helpers: FormikHelpers<any>) => {
         const setProfileAttribute = async () => {
             console.log(values)
             await firestoreSetDisplayName(values.displayName)
@@ -127,6 +129,8 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
             .catch((error) => {
                 alert(error)
             })
+
+        helpers.resetForm()
     }
 
     const onPasswordKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
@@ -134,7 +138,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         //onLoginPress()
     }
 
-    const signInWithGoogle = () => {
+    const signInWithGoogle = (formikProps: FormikProps<any>) => {
         const provider = new GoogleAuthProvider()
         auth.signInWithRedirect(provider)
             .then(() => {
@@ -143,9 +147,10 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
             .catch((error) => {
                 alert(error)
             })
+        formikProps.resetForm()
     }
 
-    const onLoginPress = (values: AuthenticationFields) => {
+    const onLoginPress = (values: AuthenticationFields, helpers: FormikHelpers<any>) => {
         auth.signInWithEmailAndPassword(values.eMail, values.password)
             .then(() => {
                 navigation.replace('Main')
@@ -153,9 +158,10 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
             .catch((error) => {
                 alert(error)
             })
+        helpers.resetForm()
     }
 
-    const sendPasswordReset = (values: AuthenticationFields) => {
+    const sendPasswordReset = (values: AuthenticationFields, helpers: FormikHelpers<any>) => {
         setSubmitted(true)
         auth.sendPasswordResetEmail(values.eMail)
             .then(() => {
@@ -165,6 +171,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                 alert(error)
                 setSubmitted(false)
             })
+        helpers.resetForm()
     }
 
     useEffect(() => {
@@ -225,16 +232,16 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                 confirmPassword: ''
                             }}
                             validationSchema={scheme}
-                            onSubmit={(values) => {
+                            onSubmit={(values, helpers) => {
                                 switch (mode) {
                                     case 'login':
-                                        onLoginPress(values)
+                                        onLoginPress(values, helpers)
                                         break
                                     case 'register':
-                                        onRegisterPress(values)
+                                        onRegisterPress(values, helpers)
                                         break;
                                     case 'password-reset':
-                                        sendPasswordReset(values)
+                                        sendPasswordReset(values, helpers)
                                 }
                             }}
                         >
@@ -329,7 +336,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                                             <Text fontSize={16}>Google Sign-In?</Text>
                                                             <Button
                                                                 title="Google Sign-In"
-                                                                onPress={signInWithGoogle}
+                                                                onPress={() => signInWithGoogle(formikProps)}
                                                             />
                                                         </View>
                                                     </>
