@@ -35,6 +35,7 @@ service cloud.firestore {
 		// General Documents
     	match /public/{publicDoc=**} {
       		allow read: if isAuthorized()
+			allow write: if isAdmin()
     	}
 
   		// Group Match 
@@ -65,18 +66,15 @@ service cloud.firestore {
 
 		// Messages Match
     	match /messages/{senderMemberId} {			
-			allow read: if isAuthorized()
-
-      		match /recipient/{recipientMemberId} {
-				function canRead() { return ((request.auth.uid == senderMemberId) || (request.auth.uid == receipientMemberId)) }
+    		match /{receipientMemberId}/{messageId} {
+				function canRead() { return (request.auth.uid == senderMemberId) || (request.auth.uid == receipientMemberId) }
 				function isAuthorOf() { return ((request.resource.data.authorUID == request.auth.uid) || (resource.data.authorUID == request.auth.uid)) }
 				function isAuthorConstant() { return (request.resource.data.authorUID == resource.data.authorUID) }
-	    		match /{document=**} {
-    	  			allow read: if isAuthorized() && canRead()
-					allow create: if isAuthorized() && canRead() && isAuthorOf()
-					allow update: if isAuthorized() && canRead() && isAuthorOf() && isAuthorConstant()
-    			}	  			
-			}
+				
+   	  			allow read: if isAuthorized() && canRead()
+				allow create: if isAuthorized() && canRead() && isAuthorOf()
+				allow update: if isAuthorized() && canRead() && isAuthorOf() && isAuthorConstant()
+  			}	  			
     	}    
 
 		// Walls Match
