@@ -52,8 +52,7 @@ Yup.addMethod(
       }
 
       // This is what .required() is for
-      if (!value || (typeof value === 'string' && value.length === 0))
-        return true
+      if (value === null || value === '') return true
 
       try {
         const phoneNumber = phoneUtil.parseAndKeepRawInput(value, countryCode)
