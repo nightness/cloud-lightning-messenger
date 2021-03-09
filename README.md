@@ -36,31 +36,41 @@ expo start
 
 | Name    | Type   | Description                                         |
 | ------- | ------ | --------------------------------------------------- |
-| name    | string | Name for the group (optional)                       |
+| name    | string | Name for the group                                  |
 | members | array  | Contains an array memberId's                        |
 | recent  | array  | Contains an array of the most recent group messages |
 
 #
 
-## Fields for /groups/{groupId}/messages/{messageId}
+## Fields for walls and groups
+
+### /groups/{groupId}/messages/{messageId}
+
+### /walls/{memberId}/messages/{messageId}
 
 | Name           | Type        | Description                  |
 | -------------- | ----------- | ---------------------------- |
-| senderName     | string      | Display name                 |
-| senderId       | string      | member's ID token            |
-| senderPhotoUrl | string      | member's Photo URL           |
+| authorName     | string      | Display name                 |
+| authorUid      | string      | member's ID token            |
+| authorPhotoUrl | string      | member's Photo URL           |
 | message        | string      | The text of the message      |
 | postedAt       | timestamp   | When the message was posted  |
 | location       | geolocation | Where the message was posted |
 
 #
 
-## Fields for /messages/{ownerMemberId}/{sendingMemberId}/{messageId}
+## Fields for private messages
+
+### Private message are duplicated...
+
+### /messages/{ownerMemberId}/{sendingMemberId}/{messageId}
+
+### /messages/{sendingMemberId}/{ownerMemberId}/{messageId}
 
 | Name           | Type        | Description                                     |
 | -------------- | ----------- | ----------------------------------------------- |
-| senderName     | string      | Display name                                    |
-| senderId       | string      | member's ID token                               |
+| authorName     | string      | Display name                                    |
+| authorUid      | string      | member's ID token                               |
 | senderPhotoUrl | string      | member's Photo URL                              |
 | message        | string      | The text of the message                         |
 | postedAt       | timestamp   | When the message was posted                     |
