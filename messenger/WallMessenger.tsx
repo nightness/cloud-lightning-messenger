@@ -70,7 +70,7 @@ export default ({ navigation }: Props) => {
         if (!selectedMember) return
         const text = messageText
         setMessageText('')
-        callFirebaseFunction('addMessage', {
+        callFirebaseFunction('setMessage', {
             collectionPath: `/walls`,
             documentId: selectedMember.value,
             message: text,

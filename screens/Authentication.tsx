@@ -334,16 +334,16 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                         </>
                                     ) : <></>}
                                     {mode !== 'password-reset' && Platform.OS === 'web' ?
-                                                <>
-                                                    <View style={Styles.auth.footerView}>
-                                                        <Text fontSize={16}>Google Sign-In?</Text>
-                                                        <Button
-                                                            title="Google Sign-In"
-                                                            onPress={() => signInWithGoogle(formikProps)}
-                                                        />
-                                                    </View>
-                                                </>
-                                            : <></>
+                                        <>
+                                            <View style={Styles.auth.footerView}>
+                                                <Text fontSize={16}>Google Sign-In?</Text>
+                                                <Button
+                                                    title="Google Sign-In"
+                                                    onPress={() => signInWithGoogle(formikProps)}
+                                                />
+                                            </View>
+                                        </>
+                                        : <></>
                                     }
                                 </>
                             )}

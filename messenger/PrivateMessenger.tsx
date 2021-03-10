@@ -70,7 +70,7 @@ export default ({ navigation }: Props) => {
         if (!selectedMember || !currentUser) return
         const text = messageText
         setMessageText('')
-        callFirebaseFunction('addMessage', {
+        callFirebaseFunction('setMessage', {
             collectionPath: `/messages/${currentUser.uid}/${selectedMember.value}`,
             duplicationPath: `/messages/${selectedMember.value}/${currentUser.uid}`,
             message: text,

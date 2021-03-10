@@ -38,7 +38,7 @@ export default ({ navigation }: Props) => {
         if (!currentUser) return
         const text = messageText
         setMessageText('')
-        callFirebaseFunction('addMessage', {
+        callFirebaseFunction('setMessage', {
             collectionPath: `/walls`,
             documentId: currentUser.uid,
             message: text,

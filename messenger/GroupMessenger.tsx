@@ -69,7 +69,7 @@ export default ({ navigation }: Props) => {
         if (!selectedGroup) return
         const text = messageText
         setMessageText('')
-        callFirebaseFunction('addMessage', {
+        callFirebaseFunction('setMessage', {
             collectionPath: `/groups`,
             documentId: selectedGroup.value,
             message: text,
