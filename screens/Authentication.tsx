@@ -63,7 +63,7 @@ const LoginScheme = Yup.object({
 
 const RegistrationScheme = Yup.object({
     displayName: Yup.string().required().min(3),
-    eMail: Yup.string().required().email(),
+    eMail: Yup.string().required().email().matches(/^((?!@gmail.com).)*$/igm, 'Use the Google Sign-In button to automatically sign-in with your Google'),
     password: Yup.string().required().min(8),
     confirmPassword: Yup.string()
         // @ts-ignore
@@ -330,20 +330,21 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                                         onPress={() => setMode('password-reset')}
                                                     />
                                                 </View>
-                                                {Platform.OS === 'web' ? (
-                                                    <>
-                                                        <View style={Styles.auth.footerView}>
-                                                            <Text fontSize={16}>Google Sign-In?</Text>
-                                                            <Button
-                                                                title="Google Sign-In"
-                                                                onPress={() => signInWithGoogle(formikProps)}
-                                                            />
-                                                        </View>
-                                                    </>
-                                                ) : <></>}
                                             </View>
                                         </>
                                     ) : <></>}
+                                    {mode !== 'password-reset' && Platform.OS === 'web' ?
+                                                <>
+                                                    <View style={Styles.auth.footerView}>
+                                                        <Text fontSize={16}>Google Sign-In?</Text>
+                                                        <Button
+                                                            title="Google Sign-In"
+                                                            onPress={() => signInWithGoogle(formikProps)}
+                                                        />
+                                                    </View>
+                                                </>
+                                            : <></>
+                                    }
                                 </>
                             )}
                         </Formik>
