@@ -28,6 +28,7 @@ expo start
 -   Firestore used in this way is very affordable.
 -   Handles isSeen and seenCounts
 -   Can be integrated with existing authentication systems. While it does require logging in with Firebase Authentication; this process can be completely automated away with a member creation REST API. When a new member is added, the REST API will return a custom authentication token for that member.
+-   [Future] Encrypted messages, this can always be done client side too.
 
 # Firestore Database Layout
 
