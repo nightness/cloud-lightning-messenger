@@ -13,8 +13,8 @@ interface Props {
     title: string
 }
 
-export default ({ children, style, navigation, title, ...restProps }: Props) => {
-    const { theme } = useContext(GlobalContext)
+export default ({ children, style, navigation, title }: Props) => {
+    const { theme, hamburgerBadgeText } = useContext(GlobalContext)
     const { currentUser } = useContext(FirebaseContext)
 
     return (
@@ -23,7 +23,7 @@ export default ({ children, style, navigation, title, ...restProps }: Props) => 
                 navigation={navigation}
                 title={title}
                 photoURL={currentUser && currentUser.photoURL}
-                {...restProps}
+                hamburgerBadgeText={hamburgerBadgeText}
             />
             {children}
         </View>

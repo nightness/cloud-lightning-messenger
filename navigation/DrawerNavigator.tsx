@@ -10,6 +10,7 @@ import ManageGroups from '../messenger/ManageGroups'
 import ManageUserRoles from '../messenger/ManageUserRoles'
 import MyWall from '../messenger/MyWall'
 import { Playground } from '../screens/Playground'
+import DrawerContent from './DrawerContent'
 
 const Drawer = createDrawerNavigator()
 
@@ -17,7 +18,7 @@ export default () => {
     return (
         <ProfileProvider>
             <Drawer.Navigator
-            //drawerContent={props => <DrawerContent {...props} />}
+            drawerContent={DrawerContent}
             >
                 <Drawer.Screen name="Home" component={Home} />
                 <Drawer.Screen name="Messages" component={PrivateMessenger} />

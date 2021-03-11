@@ -5,7 +5,7 @@ import { UserProfile } from '../firebase/DataTypes'
 export interface ProfileContextType {
     cachedUsers: { [index: string]: UserProfile }
     isFetching?: boolean
-    getUserName: (userId: string) => string
+    getUserName: (userId?: string) => string
     fetchUser: (userId: string) => Promise<void>
     hasProfile: (userId: string) => Promise<boolean>
     getUserProfile: (userId: string) => Promise<DocumentData | undefined>
@@ -14,7 +14,7 @@ export interface ProfileContextType {
 
 export const ProfileContext = createContext<ProfileContextType>({
     cachedUsers: {},
-    getUserName: (userId: string) => '',
+    getUserName: (userId?: string) => '',
     fetchUser: (userId: string) => new Promise<void>(() => undefined),
     hasProfile: (userId: string) => new Promise<boolean>(() => false),
     getUserProfile: (userId: string) =>

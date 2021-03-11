@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
+import { Badge } from 'react-native-paper'
 import { View } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Header } from 'react-native-elements'
@@ -11,6 +12,7 @@ import { useAuthState } from '../firebase/Firebase'
 interface Props {
     navigation: StackNavigationProp<any>
     title: string
+    hamburgerBadgeText?: string
     photoURL?: string | null
     hasDrawerNavigation?: boolean
     hasHome?: boolean
@@ -21,6 +23,7 @@ export default ({
     navigation,
     title,
     photoURL,
+    hamburgerBadgeText,
     hasDrawerNavigation = true,
     hasHome = false,
     hasBack = false,
@@ -53,12 +56,18 @@ export default ({
     const leftComponent = (
         <View style={{ flexDirection: 'row' }}>
             {hasDrawerNavigation ? (
-                <MaterialIcons
-                    name="menu"
-                    size={iconSize}
-                    // @ts-ignore
-                    onPress={navigation.openDrawer}
-                />
+                <>
+                    <MaterialIcons
+                        name="menu"
+                        size={iconSize}
+                        // @ts-ignore
+                        onPress={navigation.openDrawer}
+                    />
+                    { hamburgerBadgeText ?
+                        <Badge style={{ marginLeft: -15 }} size={16} visible={true}>{hamburgerBadgeText}</Badge>
+                        : <></>
+                    }
+                </>
             ) : (
                 <></>
             )}

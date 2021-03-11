@@ -18,6 +18,8 @@ type ContextType = {
     theme: Theme
     setTheme?: (theme: Theme) => void
     screenOrientation?: ScreenOrientation.Orientation
+    hamburgerBadgeText?: string
+    setHamburgerBadgeText?: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
 export const GlobalContext = createContext<ContextType>({
@@ -30,6 +32,7 @@ interface Props {
 
 export const GlobalProvider = ({ children }: Props) => {
     const [theme, setTheme] = useState<Theme>(Defaults.defaultTheme)
+    const [hamburgerBadgeText, setHamburgerBadgeText] = useState<string>()
     const [
         screenOrientation,
         setScreenOrientation,
@@ -55,7 +58,7 @@ export const GlobalProvider = ({ children }: Props) => {
     useEffect(() => () => ScreenOrientation.removeOrientationChangeListeners())
 
     return (
-        <GlobalContext.Provider value={{ theme, setTheme, screenOrientation }}>
+        <GlobalContext.Provider value={{ theme, setTheme, screenOrientation, hamburgerBadgeText, setHamburgerBadgeText }}>
             {children}
         </GlobalContext.Provider>
     )

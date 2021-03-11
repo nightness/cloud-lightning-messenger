@@ -15,9 +15,13 @@ interface Props {
 }
 
 export default ({ navigation }: Props) => {
-    const [name, setName] = useState()
+    const [name, setName] = useState<string>()
     const profileCache = useContext(ProfileContext)
-    const { screenOrientation } = useContext(GlobalContext)
+    const { screenOrientation, setHamburgerBadgeText } = useContext(GlobalContext)
+
+    // useEffect(() => {
+    //     setHamburgerBadgeText?.('I love programming')
+    // }, [])
 
     useEffect(() => {
         console.log(`ScreenOrientation: ${screenOrientation}`)
@@ -33,7 +37,7 @@ export default ({ navigation }: Props) => {
 
     let children = <ActivityIndicator />
     if (!profileCache.isFetching) {
-        children = <Text>Welcome {name}</Text>
+        children = <Text>{ `Welcome ${name}`}</Text>
     }
 
     return (
