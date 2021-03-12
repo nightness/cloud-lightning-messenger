@@ -26,7 +26,7 @@ expo start
 -   Isolates critical text communications by keeping everything cloud based. Firebase / Firestore have excellent offline support as well.
 -   Firestore (used in this way) is very affordable.
 -   Can be integrated with existing authentication systems. While it does require logging in with Firebase Authentication; this process can be completely automated away with a member creation REST API. When a new member is added, the REST API will return a custom authentication token for that member.
--   [In Development] Each document's with a messages    sub-collection should contain a 'recent' (messages) field. This will allows a single document read to initialize the state of the entire (message) view component on the front-end.
+-   [In Development] Each document with a messages    sub-collection should contain a 'recent' (messages) field. This will allows a single document read to initialize the state of the entire (message) view component on the front-end.
 -   [Future] Handles isSeen and seenCounts
 -   [Future] Encrypted messages, this can always be done client side too.
 
