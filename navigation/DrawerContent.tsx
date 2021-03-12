@@ -27,7 +27,7 @@ export const DrawerContent = ({ navigation, ...restProps }: DrawerContentCompone
     return (
         <ImageBackground
             resizeMode='repeat'
-            source={require('../assets/ddd0da2a.png')}
+            source={require('../assets/dd426684.png')}
             style={{ flex: 1 }}
         >
             <DrawerContentScrollView {...restProps}>
