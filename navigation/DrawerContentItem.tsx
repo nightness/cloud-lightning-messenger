@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { StyleProp, TextStyle, ViewStyle } from 'react-native'
-import { DrawerItem, DrawerNavigationProp } from '@react-navigation/drawer'
+import { DrawerItem } from '@react-navigation/drawer'
 import { Icon } from 'react-native-elements'
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types'
 
@@ -73,24 +73,21 @@ declare type Props = {
     navigation: DrawerNavigationHelpers
 }
 
-export default ({ focusedIconName, iconName, focused, onPress, ...restProps }: Props) => {
-    const [name, setName] = useState<string>(iconName)
+export default ({ focusedIconName, iconName, focused, ...restProps }: Props) => {
+    // const [name, setName] = useState<string>(iconName)
 
-    useEffect(() => {
-        setName(focused && focusedIconName ? focusedIconName : iconName)
-    }, [focused])
+    // useEffect(() => {
+    //     setName(focused && focusedIconName ? focusedIconName : iconName)
+    // }, [focused])
 
     return (
         <DrawerItem
+            pressOpacity='90%'
             focused={focused}
-            onPress={() => {
-                console.log('DrawerItem onPress')
-                onPress()
-            }}
             icon={({ focused, color, size }) => {
                 console.log(`focused=${focused}, color=${color}, size=${size}, iconName=${iconName} focusedIconName=${focusedIconName}`)
                 return (
-                    <Icon color={color} size={size} name={name} />
+                    <Icon color={color} size={size} name={iconName} />
                 )
             }}
             {...restProps}

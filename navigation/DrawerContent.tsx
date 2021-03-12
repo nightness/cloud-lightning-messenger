@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     View,
     Text,
-    StyleSheet
+    StyleSheet,
+    ImageBackground
 } from 'react-native'
 import {
     DrawerContentScrollView,
@@ -13,21 +14,31 @@ import {
 import { Icon } from 'react-native-elements'
 import DrawerContentItem from './DrawerContentItem'
 
+const randomColor = () => '#' + (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0')
+// Homer photoURL: https://yt3.ggpht.com/yti/ANoDKi75CjXyn5Omt5Z22dCgKdM_Ey2f9nraM4bYrxuu3A=s88-c-k-c0x00ffffff-no-rj-mo
+export const DrawerContent = ({ navigation, ...restProps }: DrawerContentComponentProps) => {
+    // Need to grab the theme to determine the best background image
+    // Like ../assets/ddd0da2a.png for dark mode
 
-export default (props: DrawerContentComponentProps) => {
     return (
-        <DrawerContentScrollView {...props}>
-            <DrawerItemList {...props} />
-            <DrawerContentItem
-                {...props}
-                activeTintColor='#d55'
-                inactiveTintColor='#055'
-                label='Help'
-                iconName='help'
-                focusedIconName='help_outline'
-                onPress={() => console.log('click')}
-            />
+        <ImageBackground
+            resizeMode='repeat'
+            source={require('../assets/ddd0da2a.png')}
+        >
+            <DrawerContentScrollView {...restProps}>
+                <DrawerItemList navigation={navigation} {...restProps} />
+                <DrawerContentItem
+                    navigation={navigation}
+                    {...restProps}
+                    activeTintColor={randomColor()}
+                    inactiveTintColor={randomColor()}
+                    label='Help'
+                    iconName='help'
+                    focusedIconName='help_outline'
+                    onPress={() => console.log('click')}
+                />
 
-        </DrawerContentScrollView>
+            </DrawerContentScrollView>
+        </ImageBackground>
     )
 }

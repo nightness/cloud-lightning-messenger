@@ -10,7 +10,7 @@ import ManageGroups from '../messenger/ManageGroups'
 import ManageUserRoles from '../messenger/ManageUserRoles'
 import MyWall from '../messenger/MyWall'
 import { Playground } from '../screens/Playground'
-import DrawerContent from './DrawerContent'
+import { DrawerContent } from './DrawerContent'
 
 const Drawer = createDrawerNavigator()
 
