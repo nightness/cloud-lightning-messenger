@@ -16,6 +16,7 @@ import DrawerContentItem from './DrawerContentItem'
 
 const randomColor = () => '#' + (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0')
 // Homer photoURL: https://yt3.ggpht.com/yti/ANoDKi75CjXyn5Omt5Z22dCgKdM_Ey2f9nraM4bYrxuu3A=s88-c-k-c0x00ffffff-no-rj-mo
+
 export const DrawerContent = ({ navigation, ...restProps }: DrawerContentComponentProps) => {
     // Need to grab the theme to determine the best background image
     // Like ../assets/ddd0da2a.png for dark mode
@@ -24,6 +25,7 @@ export const DrawerContent = ({ navigation, ...restProps }: DrawerContentCompone
         <ImageBackground
             resizeMode='repeat'
             source={require('../assets/ddd0da2a.png')}
+            style={{ flex: 1 }}
         >
             <DrawerContentScrollView {...restProps}>
                 <DrawerItemList navigation={navigation} {...restProps} />
