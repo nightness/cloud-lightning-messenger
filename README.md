@@ -26,8 +26,8 @@ expo start
 -   [In Development] Each document should have a 'recent' (messages) field for it's messages sub-collection. This will allows a single document read to initialize the state of the entire (message) view component on the front-end.
 -   Isolates critical text communications by keeping everything cloud based. Firebase / Firestore have excellent offline support as well.
 -   Firestore used in this way is very affordable.
--   Handles isSeen and seenCounts
 -   Can be integrated with existing authentication systems. While it does require logging in with Firebase Authentication; this process can be completely automated away with a member creation REST API. When a new member is added, the REST API will return a custom authentication token for that member.
+-   [Future] Handles isSeen and seenCounts
 -   [Future] Encrypted messages, this can always be done client side too.
 
 # Firestore Database Layout
