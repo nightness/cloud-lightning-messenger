@@ -23,10 +23,10 @@ expo start
 -   Each message is in it's own document in a collection.
 -   All message posting is handled using firebase functions.
 -   While walls and groups are not, the data for private messages is duplicated (normal for a non-SQL database). This makes new message detection simpler.
--   [In Development] Each document should have a 'recent' (messages) field for it's messages sub-collection. This will allows a single document read to initialize the state of the entire (message) view component on the front-end.
 -   Isolates critical text communications by keeping everything cloud based. Firebase / Firestore have excellent offline support as well.
 -   Firestore used in this way is very affordable.
 -   Can be integrated with existing authentication systems. While it does require logging in with Firebase Authentication; this process can be completely automated away with a member creation REST API. When a new member is added, the REST API will return a custom authentication token for that member.
+-   [In Development] Each document should have a 'recent' (messages) field for it's messages sub-collection. This will allows a single document read to initialize the state of the entire (message) view component on the front-end.
 -   [Future] Handles isSeen and seenCounts
 -   [Future] Encrypted messages, this can always be done client side too.
 
