@@ -85,11 +85,11 @@ export default ({ focusedIconName, iconName, focused, labelText, badgeText, ...r
         <DrawerItem
             pressOpacity='90%'
             focused={focused}
-            label={() => (
-                <View style={{ flex: 1, marginLeft: -15, flexDirection: 'row', alignItems: 'stretch', justifyContent: 'space-between' }}>
+            label={({ focused, color }) => (
+                <View style={{ flex: 1, marginLeft: -15, flexDirection: 'row' }}>
                     <Text fontWeight='600' style={{ flex: 3 }}>{labelText}</Text>
                     { badgeText ?
-                        <Badge style={{ alignSelf: 'stretch' }} size={22} visible={true}>{badgeText}</Badge>
+                        <Badge size={22} visible={true}>{badgeText}</Badge>
                         : <></>
                     }
                 </View>

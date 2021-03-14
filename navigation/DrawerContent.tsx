@@ -39,7 +39,7 @@ export const DrawerContent = ({ navigation, ...restProps }: DrawerContentCompone
                     {...restProps}
                     activeTintColor={randomColor()}
                     inactiveTintColor={randomColor()}
-                    labelText='Custom Drawer Item'
+                    labelText='Custom Nav'
                     badgeText='Testing'
                     iconName='help'
                     focusedIconName='help_outline'
