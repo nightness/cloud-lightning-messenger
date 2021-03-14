@@ -57,14 +57,21 @@ const PasswordResetScheme = Yup.object({
 })
 
 const LoginScheme = Yup.object({
-    eMail: Yup.string().required().email(),
-    password: Yup.string().required().min(6)
+    eMail: Yup.string()
+        .required('E-mail is a required field')
+        .email('Please enter a valid e-mail address')
+        .matches(/^((?!@gmail.com).)*$/igm, 'Use the Google Sign-In button to automatically sign-in with your Google'),
+    password: Yup.string()
+        .required('Password is a required field')
+        .min(8),
 })
 
 const RegistrationScheme = Yup.object({
     displayName: Yup.string().required().min(3),
     eMail: Yup.string().required().email().matches(/^((?!@gmail.com).)*$/igm, 'Use the Google Sign-In button to automatically sign-in with your Google'),
-    password: Yup.string().required().min(8),
+    password: Yup.string()
+        .required('Password is a required field')
+        .min(8),
     confirmPassword: Yup.string()
         // @ts-ignore
         .equalTo(Yup.ref('password'), 'Both passwords must match')

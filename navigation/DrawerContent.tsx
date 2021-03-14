@@ -39,7 +39,8 @@ export const DrawerContent = ({ navigation, ...restProps }: DrawerContentCompone
                     {...restProps}
                     activeTintColor={randomColor()}
                     inactiveTintColor={randomColor()}
-                    label='Help'
+                    labelText='Custom Drawer Item'
+                    badgeText='Testing'
                     iconName='help'
                     focusedIconName='help_outline'
                     onPress={() => console.log('click')}

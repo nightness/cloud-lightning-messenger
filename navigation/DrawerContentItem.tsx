@@ -3,15 +3,16 @@ import { StyleProp, TextStyle, ViewStyle } from 'react-native'
 import { DrawerItem } from '@react-navigation/drawer'
 import { Icon } from 'react-native-elements'
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types'
+import { View, Text } from '../components/Components'
+import { Badge } from 'react-native-paper'
+import { Styles } from '../shared/Styles'
 
 declare type Props = {
     /**
      * The label text of the item.
      */
-    label: string | ((props: {
-        focused: boolean;
-        color: string;
-    }) => React.ReactNode);
+    labelText: string;
+    badgeText?: string;
     /**
      * Icons to display for the `DrawerItem`.
      */
@@ -73,7 +74,7 @@ declare type Props = {
     navigation: DrawerNavigationHelpers
 }
 
-export default ({ focusedIconName, iconName, focused, ...restProps }: Props) => {
+export default ({ focusedIconName, iconName, focused, labelText, badgeText, ...restProps }: Props) => {
     // const [name, setName] = useState<string>(iconName)
 
     // useEffect(() => {
@@ -84,6 +85,15 @@ export default ({ focusedIconName, iconName, focused, ...restProps }: Props) => 
         <DrawerItem
             pressOpacity='90%'
             focused={focused}
+            label={() => (
+                <View style={{ flex: 1, marginLeft: -15, flexDirection: 'row', alignItems: 'stretch', justifyContent: 'space-between' }}>
+                    <Text fontWeight='600' style={{ flex: 3 }}>{labelText}</Text>
+                    { badgeText ?
+                        <Badge style={{ alignSelf: 'stretch' }} size={22} visible={true}>{badgeText}</Badge>
+                        : <></>
+                    }
+                </View>
+            )}
             icon={({ focused, color, size }) => {
                 console.log(`focused=${focused}, color=${color}, size=${size}, iconName=${iconName} focusedIconName=${focusedIconName}`)
                 return (
