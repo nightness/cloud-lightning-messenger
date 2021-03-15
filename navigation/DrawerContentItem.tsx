@@ -6,6 +6,7 @@ import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript
 import { View, Text } from '../components/Components'
 import { Badge } from 'react-native-paper'
 import { Styles } from '../shared/Styles'
+//import { Ionicons } from '@expo/vector-icons'
 
 declare type Props = {
     /**
@@ -16,6 +17,7 @@ declare type Props = {
     /**
      * Icons to display for the `DrawerItem`.
      */
+    iconGroup?: string;
     iconName: string;
     focusedIconName?: string;
     /**
@@ -74,15 +76,9 @@ declare type Props = {
     navigation: DrawerNavigationHelpers
 }
 
-export default ({ focusedIconName, iconName, focused, labelText, badgeText, ...restProps }: Props) => {
-    // const [name, setName] = useState<string>(iconName)
-
-    // useEffect(() => {
-    //     setName(focused && focusedIconName ? focusedIconName : iconName)
-    // }, [focused])
-
+export default ({ focusedIconName, iconGroup, iconName, focused, labelText, badgeText, ...restProps }: Props) => {
     return (
-        <DrawerItem
+        <DrawerItem            
             pressOpacity='90%'
             focused={focused}
             label={({ focused, color }) => (
@@ -95,9 +91,8 @@ export default ({ focusedIconName, iconName, focused, labelText, badgeText, ...r
                 </View>
             )}
             icon={({ focused, color, size }) => {
-                console.log(`focused=${focused}, color=${color}, size=${size}, iconName=${iconName} focusedIconName=${focusedIconName}`)
                 return (
-                    <Icon color={color} size={size} name={iconName} />
+                    <Icon color={color} size={size} name={iconName} type={iconGroup} />
                 )
             }}
             {...restProps}

@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler'
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { ProfileContext, ProfileContextType, ProfileProvider } from '../shared/ProfileContext'
 import Home from '../screens/Home'
@@ -11,26 +11,42 @@ import ManageUserRoles from '../messenger/ManageUserRoles'
 import MyWall from '../messenger/MyWall'
 import { Playground } from '../screens/Playground'
 import { DrawerContent } from './DrawerContent'
+import { GlobalContext } from '../shared/GlobalContext'
+import { FirebaseContext } from '../firebase/FirebaseContext'
+import {
+    homeParams,
+    messagesParams,
+    myWallParams,
+    memberWallParams,
+    groupChatParams,
+    manageGroupsParams,
+    manageUserRolesParams,
+    playgroundParams
+} from './DrawerParams'
 
 const Drawer = createDrawerNavigator()
 
 export default () => {
+    const { claims } = useContext(FirebaseContext)
+    const context = useContext(GlobalContext)
+
     return (
         <ProfileProvider>
             <Drawer.Navigator
-            drawerContent={DrawerContent}
+                drawerContent={DrawerContent}
             >
-                <Drawer.Screen name="Home" component={Home} />
-                <Drawer.Screen name="Messages" component={PrivateMessenger} />
-                <Drawer.Screen name="My Wall" component={MyWall} />
-                <Drawer.Screen name="Member Walls" component={WallMessenger} />
-                <Drawer.Screen name="Group Chat" component={GroupMessenger} />
-
-
-                {/* Hide if not admin!
-                <Drawer.Screen name="Manage Groups" component={ManageGroups} />
-                <Drawer.Screen name="Manage User Roles" component={ManageUserRoles} />
-                <Drawer.Screen name="Playground" component={Playground} /> */}
+                <Drawer.Screen name="Home" component={Home} initialParams={homeParams} />
+                <Drawer.Screen name="My Wall" component={MyWall} initialParams={myWallParams} />
+                <Drawer.Screen name="Member Walls" component={WallMessenger} initialParams={memberWallParams} />
+                <Drawer.Screen name="Messages" component={PrivateMessenger} initialParams={messagesParams} />
+                <Drawer.Screen name="Group Chat" component={GroupMessenger} initialParams={groupChatParams} />
+                {claims?.admin ?
+                    <>
+                        <Drawer.Screen name="Manage Groups" component={ManageGroups} initialParams={manageGroupsParams} />
+                        <Drawer.Screen name="Manage User Roles" component={ManageUserRoles} initialParams={manageUserRolesParams} />
+                        <Drawer.Screen name="Playground" component={Playground} initialParams={playgroundParams} />
+                    </> : <></>
+                }
             </Drawer.Navigator>
         </ProfileProvider>
     )

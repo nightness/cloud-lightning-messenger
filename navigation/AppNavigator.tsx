@@ -7,11 +7,15 @@ import { useAuthState } from '../firebase/Firebase'
 import { GlobalContext } from '../shared/GlobalContext'
 import DrawerNavigator from './DrawerNavigator'
 import Authentication from '../screens/Authentication'
+import { useTheme } from '@react-navigation/native';
 
 const Stack = createStackNavigator()
 export default () => {
+    const { colors } = useTheme()
     const [user, firebaseLoading, firebaseError] = useAuthState()
     const { theme } = useContext(GlobalContext)
+
+    console.log(colors)
 
     if (firebaseLoading) return <ActivityIndicator />
     if (firebaseError) return <DisplayError error={firebaseError} />
