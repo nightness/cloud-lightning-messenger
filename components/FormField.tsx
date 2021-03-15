@@ -35,6 +35,10 @@ export default ({
                     //if (fieldType) onChangeHandler(text)
                     formikProps.handleChange(fieldName)(text)
                 }}
+                onKeyPress={(event) => {
+                    if (event.nativeEvent.key == 'Enter')
+                        return formikProps.handleSubmit()
+                }}
                 secureTextEntry={secureTextEntry}
                 placeholder={placeholder}
                 value={formikProps.values[fieldName]}

@@ -282,7 +282,6 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                                 secureTextEntry={true}
                                                 placeholder="Confirm Password"
                                                 fieldName='confirmPassword'
-
                                             />
                                             <Button
                                                 title="Create Account"
