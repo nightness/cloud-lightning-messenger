@@ -1,60 +1,45 @@
-import React, { useContext, useState, useRef, useEffect } from 'react'
+import React from 'react'
 import View from './View'
 import TextInput from './TextInput'
 import HelperText from './HelperText'
-import { GlobalContext } from '../shared/GlobalContext'
-import { Theme } from '../shared/Themes'
+import { ReturnKeyTypeOptions } from 'react-native'
 
 interface Props {
     formikProps: any
     fieldName: string
-    //fieldType: any
+    label?: string
     placeholder?: string
+    returnKeyType?: ReturnKeyTypeOptions
     secureTextEntry?: boolean
-    preventDefault?: boolean
 }
 
 export default ({
     formikProps,
     fieldName,
-    //fieldType,
-    placeholder,
+    label,
+    returnKeyType,
     secureTextEntry = false,
-    preventDefault = false,
     ...restProps
-}: Props) => {
-    const { theme } = useContext(GlobalContext)
-
-    const onChangeHandler = (text: string) => {
-        //if (fieldType === 'phone-number')
-        //    formatPhoneNumber(text)
-    }
-
-    return (
-        <View>
-            <TextInput
-                onChangeText={(text) => {
-                    //if (fieldType) onChangeHandler(text)
-                    formikProps.handleChange(fieldName)(text)
-                }}
-                onSubmit={(event) => {
-                    
-                }}
-                onKeyPress={(event) => {                    
-                    if (!preventDefault && (event.nativeEvent.key == 'Enter')) {
+}: Props) =>
+    <View>
+        <TextInput
+            label={label}
+            returnKeyType={returnKeyType}
+            onChangeText={formikProps.handleChange(fieldName)}
+            onKeyPress={(event) => {
+                if (event.nativeEvent.key === 'Enter') {
+                    if (returnKeyType === 'done')
                         formikProps.handleSubmit()
-                    }
-                }}
-                secureTextEntry={secureTextEntry}
-                placeholder={placeholder}
-                value={formikProps.values[fieldName]}
-                onBlur={formikProps.handleBlur(fieldName)}
-                keyboardAppearance={theme}
-                {...restProps}
-            />
-            <HelperText fontSize={10} type="error">
-                {formikProps.touched[fieldName] && formikProps.errors[fieldName]}
-            </HelperText>
-        </View>
-    )
-}
+                    formikProps.preventDefault = true
+                    formikProps.stopPropagation = true
+                }
+            }}
+            secureTextEntry={secureTextEntry}
+            value={formikProps.values[fieldName]}
+            onBlur={formikProps.handleBlur(fieldName)}
+            {...restProps}
+        />
+        <HelperText fontSize={10} type="error">
+            {formikProps.touched[fieldName] && formikProps.errors[fieldName]}
+        </HelperText>
+    </View>

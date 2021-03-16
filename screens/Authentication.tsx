@@ -257,24 +257,25 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                 <>
                                     {mode === 'register' ? (
                                         <FormField
+                                            label='Full Name'
                                             formikProps={formikProps}
                                             fieldName='displayName'
-                                            placeholder="Full Name"
+                                            returnKeyType='none'
                                         />
                                     ) : <></>}
                                     <FormField
                                         formikProps={formikProps}
                                         fieldName='eMail'
-                                        placeholder="E-mail"
-                                        preventDefault={true}                                        
+                                        label="E-Mail"
+                                        returnKeyType={ mode === 'password-reset' ? 'done' : 'none'}                                                                          
                                     />
                                     {mode !== 'password-reset' ?
                                         <FormField
                                             formikProps={formikProps}
                                             secureTextEntry={true}
-                                            placeholder='Password'
+                                            label='Password'
                                             fieldName='password'
-                                        //onKeyPress={onPasswordKeyPress}
+                                            returnKeyType={ mode !== 'register' ? 'done' : 'none'}
                                         /> : <></>}
 
                                     {mode === 'register' ? (
@@ -282,8 +283,9 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                             <FormField
                                                 formikProps={formikProps}
                                                 secureTextEntry={true}
-                                                placeholder="Confirm Password"
+                                                label="Confirm Password"
                                                 fieldName='confirmPassword'
+                                                returnKeyType='done'
                                             />
                                             <Button
                                                 title="Create Account"
@@ -356,6 +358,9 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                 </>
                             )}
                         </Formik>
+                        <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 10 }}>
+                            <Text>{`Cloud Lightning Messenger - Beta`}</Text>
+                        </View>
                     </ScrollView>
                 </Container>
             </>

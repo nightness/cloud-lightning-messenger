@@ -32,10 +32,11 @@ export class Styles {
     static readonly auth = StyleSheet.create({
         logo: {
             flex: 1,
-            height: 180,
-            width: 180,
+            height: 100,
+            width: 130,
             alignSelf: 'center',
             margin: 30,
+            resizeMode: 'stretch',            
         },
         footerView: {
             flex: 1,
@@ -100,12 +101,8 @@ export class Styles {
 
     static readonly textInput = StyleSheet.create({
         input: {
-            height: 32,
-            borderRadius: 5,
-            overflow: 'hidden',
-            marginTop: 5,
-            marginHorizontal: 5,
-            paddingLeft: 10,
+            marginHorizontal: 15,
+            marginBottom: 10
         },
     })
 
