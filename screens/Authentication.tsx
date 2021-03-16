@@ -133,15 +133,9 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                 setProfileAttribute()
             })
             .catch((error) => {
+                setSubmitted(false)
                 alert(error)
             })
-
-        helpers.resetForm()
-    }
-
-    const onPasswordKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
-        //if (e.nativeEvent.key != 'Enter') return
-        //onLoginPress()
     }
 
     const signInWithGoogle = (formikProps: FormikProps<any>) => {
@@ -151,6 +145,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                 navigation.replace('Main')
             })
             .catch((error) => {
+                setSubmitted(false)
                 alert(error)
             })
         formikProps.resetForm()
@@ -160,26 +155,25 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         setSubmitted(true)
         try {
             await auth.signInWithEmailAndPassword(values.eMail, values.password)
-            //helpers.resetForm()
             navigation.replace('Main')
         }
         catch (error) {
             setSubmitted(false)
             alert(error)
-        }        
+        }
     }
 
     const sendPasswordReset = (values: AuthenticationFields, helpers: FormikHelpers<any>) => {
         setSubmitted(true)
         auth.sendPasswordResetEmail(values.eMail)
             .then(() => {
+                setMode('login')
                 setSubmitted(false)
             })
             .catch((error) => {
                 alert(error)
                 setSubmitted(false)
             })
-        helpers.resetForm()
     }
 
     useEffect(() => {
@@ -215,7 +209,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
 
     }, [mode])
 
-    if (isLoading || submitted) {
+    if (isLoading) {
         return <ActivityIndicator />
     } else if (error) {
         return <DisplayError error={error} />
@@ -267,7 +261,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                         formikProps={formikProps}
                                         fieldName='eMail'
                                         label="E-Mail"
-                                        returnKeyType={ mode === 'password-reset' ? 'done' : 'none'}                                                                          
+                                        returnKeyType={mode === 'password-reset' ? 'done' : 'none'}
                                     />
                                     {mode !== 'password-reset' ?
                                         <FormField
@@ -275,7 +269,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                             secureTextEntry={true}
                                             label='Password'
                                             fieldName='password'
-                                            returnKeyType={ mode !== 'register' ? 'done' : 'none'}
+                                            returnKeyType={mode !== 'register' ? 'done' : 'none'}
                                         /> : <></>}
 
                                     {mode === 'register' ? (
