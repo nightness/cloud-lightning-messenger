@@ -32,7 +32,7 @@ interface Props {
 }
 
 export default ({
-    returnKeyType = 'next',
+    returnKeyType = 'done',
     secureTextEntry = false,
     autoCompleteType = 'off',
     autoCapitalize = 'none',
