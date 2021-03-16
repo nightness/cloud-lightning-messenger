@@ -59,8 +59,7 @@ const PasswordResetScheme = Yup.object({
 const LoginScheme = Yup.object({
     eMail: Yup.string()
         .required('E-mail is a required field')
-        .email('Please enter a valid e-mail address')
-        .matches(/^((?!@gmail.com).)*$/igm, 'Use the Google Sign-In button to automatically sign-in with your Google'),
+        .email('Please enter a valid e-mail address'),
     password: Yup.string()
         .required('Password is a required field')
         .min(8),
