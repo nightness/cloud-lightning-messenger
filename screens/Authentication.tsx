@@ -87,7 +87,6 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
     const [error, setError] = useState(null)
     const { theme, setTheme } = useContext(GlobalContext)
 
-
     const auth = firebaseAuth()
 
     const softReset = (formikProps: FormikProps<any>) => {
@@ -157,15 +156,17 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         formikProps.resetForm()
     }
 
-    const onLoginPress = (values: AuthenticationFields, helpers: FormikHelpers<any>) => {
-        auth.signInWithEmailAndPassword(values.eMail, values.password)
-            .then(() => {
-                navigation.replace('Main')
-            })
-            .catch((error) => {
-                alert(error)
-            })
-        helpers.resetForm()
+    const onLoginPress = async (values: AuthenticationFields, helpers: FormikHelpers<any>) => {
+        setSubmitted(true)
+        try {
+            await auth.signInWithEmailAndPassword(values.eMail, values.password)
+            //helpers.resetForm()
+            navigation.replace('Main')
+        }
+        catch (error) {
+            setSubmitted(false)
+            alert(error)
+        }        
     }
 
     const sendPasswordReset = (values: AuthenticationFields, helpers: FormikHelpers<any>) => {
@@ -214,7 +215,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
 
     }, [mode])
 
-    if (isLoading) {
+    if (isLoading || submitted) {
         return <ActivityIndicator />
     } else if (error) {
         return <DisplayError error={error} />
@@ -265,6 +266,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                         formikProps={formikProps}
                                         fieldName='eMail'
                                         placeholder="E-mail"
+                                        preventDefault={true}                                        
                                     />
                                     {mode !== 'password-reset' ?
                                         <FormField

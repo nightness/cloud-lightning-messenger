@@ -11,6 +11,7 @@ interface Props {
     //fieldType: any
     placeholder?: string
     secureTextEntry?: boolean
+    preventDefault?: boolean
 }
 
 export default ({
@@ -19,6 +20,7 @@ export default ({
     //fieldType,
     placeholder,
     secureTextEntry = false,
+    preventDefault = false,
     ...restProps
 }: Props) => {
     const { theme } = useContext(GlobalContext)
@@ -35,9 +37,13 @@ export default ({
                     //if (fieldType) onChangeHandler(text)
                     formikProps.handleChange(fieldName)(text)
                 }}
+                onSubmit={(event) => {
+                    console.log(event)
+                }}
                 onKeyPress={(event) => {
-                    if (event.nativeEvent.key == 'Enter')
-                        return formikProps.handleSubmit()
+                    if (!preventDefault && (event.nativeEvent.key == 'Enter')) {
+                        formikProps.handleSubmit()
+                    }
                 }}
                 secureTextEntry={secureTextEntry}
                 placeholder={placeholder}
