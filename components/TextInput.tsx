@@ -113,8 +113,7 @@ export default ({
     }, [historyIndex])
 
     return (
-        // Anything before restProps are defaults, can be overwritten by restProps
-        <TextInput
+        <TextInput            
             returnKeyType={returnKeyType}            
             secureTextEntry={secureTextEntry}
             autoCompleteType={autoCompleteType}
