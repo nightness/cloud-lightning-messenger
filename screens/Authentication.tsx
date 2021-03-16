@@ -53,7 +53,9 @@ function equalTo(ref: any, msg: any) {
 Yup.addMethod(Yup.string, 'equalTo', equalTo);
 
 const PasswordResetScheme = Yup.object({
-    eMail: Yup.string().required().email()
+    eMail: Yup.string()
+        .required('E-mail is a required field')
+        .email('Please enter a valid e-mail address')
 })
 
 const LoginScheme = Yup.object({
@@ -67,7 +69,10 @@ const LoginScheme = Yup.object({
 
 const RegistrationScheme = Yup.object({
     displayName: Yup.string().required().min(3),
-    eMail: Yup.string().required().email().matches(/^((?!@gmail.com).)*$/igm, 'Use the Google Sign-In button to automatically sign-in with your Google'),
+    eMail: Yup.string()
+        .required('E-mail is a required field')
+        .email('Please enter a valid e-mail address')
+        .matches(/^((?!@gmail.com).)*$/igm, 'Use the Google Sign-In button to automatically sign-in with your Google'),
     password: Yup.string()
         .required('Password is a required field')
         .min(8),
