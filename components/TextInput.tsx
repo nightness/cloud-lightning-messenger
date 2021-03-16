@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import {
     NativeSyntheticEvent,
+    ReturnKeyTypeOptions,
     StyleProp,
     TextInput,
     TextInputFocusEventData,
@@ -11,6 +12,7 @@ import { Styles } from '../shared/Styles'
 import { Theme, Themes } from '../shared/Themes'
 
 interface Props {
+    returnKeyType?: ReturnKeyTypeOptions
     secureTextEntry?: boolean
     autoCompleteType?: "off" | "cc-csc" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-number" | "email" | "name" | "password" | "postal-code" | "street-address" | "tel" | "username"
     autoCapitalize?: "none" | "sentences" | "words" | "characters"
@@ -30,6 +32,7 @@ interface Props {
 }
 
 export default ({
+    returnKeyType = 'next',
     secureTextEntry = false,
     autoCompleteType = 'off',
     autoCapitalize = 'none',
@@ -112,6 +115,7 @@ export default ({
     return (
         // Anything before restProps are defaults, can be overwritten by restProps
         <TextInput
+            returnKeyType={returnKeyType}            
             secureTextEntry={secureTextEntry}
             autoCompleteType={autoCompleteType}
             autoCapitalize={autoCapitalize}

@@ -38,9 +38,9 @@ export default ({
                     formikProps.handleChange(fieldName)(text)
                 }}
                 onSubmit={(event) => {
-                    console.log(event)
+                    
                 }}
-                onKeyPress={(event) => {
+                onKeyPress={(event) => {                    
                     if (!preventDefault && (event.nativeEvent.key == 'Enter')) {
                         formikProps.handleSubmit()
                     }
