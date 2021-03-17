@@ -3,7 +3,7 @@ import 'firebase/firestore'
 import 'firebase/functions'
 import * as FirebaseAuth from 'react-firebase-hooks/auth'
 import * as FirebaseFirestore from 'react-firebase-hooks/firestore'
-import { firebaseConfig } from '../private/FirebaseConfig'
+import { firebaseConfig } from './FirebaseConfig'
 import * as Defaults from '../shared/Defaults'
 
 export type AuthError = firebase.auth.Error
