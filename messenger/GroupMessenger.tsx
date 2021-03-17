@@ -119,21 +119,24 @@ export default ({ navigation }: Props) => {
                     // @ts-ignore
                     renderItem={({ item }) => <Message item={item} />}
                 />
-                <View style={Styles.messenger.views}>
-                    <TextInput
-                        value={messageText}
-                        style={Styles.messenger.textInput}
-                        onChangeText={(msg) => setMessageText(msg)}
-                        onKeyPress={onMessageKeyPress}
-                        classRef={textInput}
-                    />
-                    <Button
-                        title="Send"
-                        style={Styles.messenger.sendButton}
-                        disabled={messageText.length < 1}
-                        onPress={sendMessage}
-                    />
-                </View>
+                <LinearGradient
+                    colors={GradientColors[theme].secondary}>
+                    <View style={Styles.messenger.views}>
+                        <TextInput
+                            value={messageText}
+                            style={Styles.messenger.textInput}
+                            onChangeText={(msg) => setMessageText(msg)}
+                            onKeyPress={onMessageKeyPress}
+                            classRef={textInput}
+                        />
+                        <Button
+                            title="Send"
+                            style={Styles.messenger.sendButton}
+                            disabled={messageText.length < 1}
+                            onPress={sendMessage}
+                        />
+                    </View>
+                </LinearGradient>
             </Container>
         </Screen>
     )

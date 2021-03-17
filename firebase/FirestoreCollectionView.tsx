@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {
     useCollection,
     getDocumentsDataWithId,
@@ -12,6 +12,8 @@ import { ListRenderItem, StyleProp, ViewStyle } from 'react-native'
 import { FirebaseError } from 'firebase'
 import FlatList from '../components/FlatList'
 import { LinearGradient } from 'expo-linear-gradient'
+import { GradientColors } from '../shared/GradientColors'
+import { GlobalContext } from '../shared/GlobalContext'
 
 interface Props<T> {
     style?: StyleProp<ViewStyle> | object
@@ -37,6 +39,7 @@ export default function _<T>({
     const [messages, setMessages] = useState([])
     const [loadingData, setDataLoading] = useState(true)
     const [errorData, setDataError] = useState(false)
+    const { theme } = useContext(GlobalContext)
 
     const fetchData = () => {
         const querySnapshot = snapshot as QuerySnapshot<DocumentData>
@@ -72,7 +75,7 @@ export default function _<T>({
     } else if (!loadingCollection && !loadingData) {
         return (
             <LinearGradient
-                colors={['#d5d4f1', '#d1e8f5', '#eff4fa']}
+                colors={GradientColors[theme].secondary}
                 style={{ flex: 1 }}
             >
 

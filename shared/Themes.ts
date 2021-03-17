@@ -162,22 +162,22 @@ export class Themes {
 
     static readonly button: ThemeType = {
         Light: {
-            color: 'white',
-            backgroundColor: '#999',
+            color: 'black',
+            backgroundColor: '#ccc',
         },
         Dark: {
             color: '#eee',
-            backgroundColor: '#899eec',
+            backgroundColor: '#222',
         },
     }
 
     static readonly buttonDisabled: ThemeType = {
         Light: {
-            color: '#aaa',
-            backgroundColor: '#444',
+            color: '#222',
+            backgroundColor: '#aaa',
         },
         Dark: {
-            color: '#999',
+            color: '#aaa',
             backgroundColor: '#777',
         },
     }
