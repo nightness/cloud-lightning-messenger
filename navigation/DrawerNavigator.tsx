@@ -28,23 +28,23 @@ const Drawer = createDrawerNavigator()
 
 export default () => {
     const { claims } = useContext(FirebaseContext)
-    const context = useContext(GlobalContext)
-
+    const { theme, isKeyboardOpen, screenOrientation } = useContext(GlobalContext)
+    const globals = { theme: (theme as 'Light' | 'Dark') , isKeyboardOpen, screenOrientation }
     return (
         <ProfileProvider>
             <Drawer.Navigator
                 drawerContent={DrawerContent}
             >
-                <Drawer.Screen name="Home" component={Home} initialParams={homeParams} />
-                <Drawer.Screen name="My Wall" component={MyWall} initialParams={myWallParams} />
-                <Drawer.Screen name="Member Walls" component={WallMessenger} initialParams={memberWallParams} />
-                <Drawer.Screen name="Messages" component={PrivateMessenger} initialParams={messagesParams} />
-                <Drawer.Screen name="Group Chat" component={GroupMessenger} initialParams={groupChatParams} />
+                <Drawer.Screen name="Home" component={Home} initialParams={{ ...globals,  ...homeParams}} />
+                <Drawer.Screen name="My Wall" component={MyWall} initialParams={{ ...globals, ...myWallParams}} />
+                <Drawer.Screen name="Member Walls" component={WallMessenger} initialParams={{ ...globals, ...memberWallParams}} />
+                <Drawer.Screen name="Messages" component={PrivateMessenger} initialParams={{ ...globals, ...messagesParams}} />
+                <Drawer.Screen name="Group Chat" component={GroupMessenger} initialParams={{ ...globals, ...groupChatParams}} />
                 {claims?.admin ?
                     <>
-                        <Drawer.Screen name="Manage Groups" component={ManageGroups} initialParams={manageGroupsParams} />
-                        <Drawer.Screen name="Manage User Roles" component={ManageUserRoles} initialParams={manageUserRolesParams} />
-                        <Drawer.Screen name="Playground" component={Playground} initialParams={playgroundParams} />
+                        <Drawer.Screen name="Manage Groups" component={ManageGroups} initialParams={{ ...globals, ...manageGroupsParams}} />
+                        <Drawer.Screen name="Manage User Roles" component={ManageUserRoles} initialParams={{ ...globals, ...manageUserRolesParams}} />
+                        <Drawer.Screen name="Playground" component={Playground} initialParams={{ ...globals, ...playgroundParams}} />
                     </> : <></>
                 }
             </Drawer.Navigator>

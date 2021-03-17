@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
-import {
-    ImageBackground, View,
-} from 'react-native'
+import React, { useContext, useState } from 'react'
+import { ImageBackground, View } from 'react-native'
+import { Orientation } from 'expo-screen-orientation'
 import {
     DrawerContentScrollView,
     DrawerContentComponentProps,
@@ -10,9 +9,17 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import DrawerContentItem from './DrawerContentItem'
 import { NavigationParams } from './DrawerParams'
+import { GlobalContext } from '../shared/GlobalContext'
+import { GradientColors } from '../shared/GradientColors'
 
 const randomColor = () => '#' + (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0')
 // Homer photoURL: https://yt3.ggpht.com/yti/ANoDKi75CjXyn5Omt5Z22dCgKdM_Ey2f9nraM4bYrxuu3A=s88-c-k-c0x00ffffff-no-rj-mo
+
+interface RouteParameters {
+    theme: 'Light' | 'Dark'
+    isDrawerOpen: boolean
+    screenOrientation: Orientation
+}
 
 export const DrawerContent = ({ navigation, ...restProps }: DrawerContentComponentProps) => {
     // Need to grab the stateful theme to determine the best background image
@@ -20,6 +27,10 @@ export const DrawerContent = ({ navigation, ...restProps }: DrawerContentCompone
     // Like ../assets/dd426684.png for light mode
     const routeNames = restProps.state.routeNames
     const routes = restProps.state.routes
+    const routeParams = routes?.[0].params as RouteParameters
+    const theme: 'Light' | 'Dark' = routeParams?.theme ? routeParams.theme : 'Light'
+
+    console.log(theme)
 
     const navigateTo = (screenName: string) => {
         navigation.closeDrawer()
@@ -31,8 +42,8 @@ export const DrawerContent = ({ navigation, ...restProps }: DrawerContentCompone
             flex: 1,
         }}>
             <LinearGradient
-                colors={['#ada9f0', '#88ddd2', '#8ccfdd']}
-                style={{
+                colors={GradientColors[theme].drawer}
+                    style={{
                     flex: 1,
                 }}
             >

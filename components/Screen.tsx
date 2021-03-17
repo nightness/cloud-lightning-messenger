@@ -7,6 +7,7 @@ import { Dimensions, StyleProp, ViewStyle } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useKeyboard } from '../shared/Hooks'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { GradientColors } from '../shared/GradientColors'
 
 
 interface Props {
@@ -40,7 +41,7 @@ export default ({ children, style, navigation, title }: Props) => {
     return (
         <KeyboardAwareScrollView bounces={false} style={screenStyle}>
             <LinearGradient
-                colors={['#ada9f0', '#88ddd2', '#8ccfdd']}
+                colors={GradientColors[theme].background}
                 style={screenStyle}
             >
                 <SafeAreaView style={screenStyle}>
