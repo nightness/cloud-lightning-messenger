@@ -18,7 +18,7 @@ interface Props {
 
 export default ({ children, style, navigation, title }: Props) => {
     const { width, height } = Dimensions.get('window')
-    const { theme, hamburgerBadgeText } = useContext(GlobalContext)
+    const { theme, hamburgerBadgeText, screenOrientation } = useContext(GlobalContext)
     const { currentUser } = useContext(FirebaseContext)
     const [isKeyboardOpen, setIsKeyboardOpen] = useState<boolean>(false)
     const [keyboardHeight] = useKeyboard()
@@ -27,6 +27,7 @@ export default ({ children, style, navigation, title }: Props) => {
     })
 
     useEffect(() => {
+        console.log(screenOrientation)
         if (isKeyboardOpen) {
             console.log(keyboardHeight)
             setScreenStyle({
@@ -37,7 +38,7 @@ export default ({ children, style, navigation, title }: Props) => {
                 height, width, position: 'absolute'
             })
         }
-    }, [isKeyboardOpen, keyboardHeight])
+    }, [isKeyboardOpen, keyboardHeight, screenOrientation])
 
     return (
         <KeyboardAwareScrollView bounces={false}>

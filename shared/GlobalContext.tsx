@@ -43,19 +43,21 @@ export const GlobalProvider = ({ children }: Props) => {
         ScreenOrientation.unlockAsync().catch((err) => console.warn(err))
         ScreenOrientation.getOrientationAsync()
             .then((value: ScreenOrientation.Orientation) => {
+                console.info(screenOrientation)
                 setScreenOrientation(value)
                 // @ts-ignore
-                ScreenOrientation.lockAsync(value).catch((err) => console.warn(err))
+                //ScreenOrientation.lockAsync(value).catch((err) => console.warn(err))
             })
             .catch((err) => console.warn(err))
 
         ScreenOrientation.addOrientationChangeListener((value) =>
             setScreenOrientation(value.orientationInfo.orientation)
         )
-    }, [])
 
-    // Clean-up
-    useEffect(() => () => ScreenOrientation.removeOrientationChangeListeners())
+        return ScreenOrientation.removeOrientationChangeListeners
+    })
+
+    
 
     return (
         <GlobalContext.Provider value={{ theme, setTheme, screenOrientation, hamburgerBadgeText, setHamburgerBadgeText }}>
