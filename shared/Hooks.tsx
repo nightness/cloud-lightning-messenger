@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { Keyboard, KeyboardEvent } from 'react-native';
 
+// Source: https://stackoverflow.com/questions/46587006/how-to-get-a-height-of-a-keyboard-in-react-native
 export const useKeyboard = (): [number] => {
     const [keyboardHeight, setKeyboardHeight] = useState(0)
 
@@ -13,11 +14,11 @@ export const useKeyboard = (): [number] => {
     }
 
     useEffect(() => {
-        Keyboard.addListener('keyboardDidShow', onKeyboardDidShow);
-        Keyboard.addListener('keyboardDidHide', onKeyboardDidHide);
+        Keyboard.addListener('keyboardDidShow', onKeyboardDidShow)
+        Keyboard.addListener('keyboardDidHide', onKeyboardDidHide)
         return (): void => {
-            Keyboard.removeListener('keyboardDidShow', onKeyboardDidShow);
-            Keyboard.removeListener('keyboardDidHide', onKeyboardDidHide);
+            Keyboard.removeListener('keyboardDidShow', onKeyboardDidShow)
+            Keyboard.removeListener('keyboardDidHide', onKeyboardDidHide)
         }
     }, [])
 
