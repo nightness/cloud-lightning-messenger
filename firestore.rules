@@ -68,24 +68,20 @@ service cloud.firestore {
     	match /messages/{senderMemberId} {			
     		match /{receipientMemberId}/{messageId} {
 				function canRead() { return (request.auth.uid == senderMemberId) || (request.auth.uid == receipientMemberId) }
-				function isAuthorOf() { return ((request.resource.data.authorUID == request.auth.uid) || (resource.data.authorUID == request.auth.uid)) }
-				function isAuthorConstant() { return (request.resource.data.authorUID == resource.data.authorUID) }
 				
-   	  			allow read: if isAuthorized() && canRead()
-				allow create: if isAuthorized() && canRead() && isAuthorOf()
-				allow update: if isAuthorized() && canRead() && isAuthorOf() && isAuthorConstant()
+   				allow read: if isAuthorized() && canRead()
   			}	  			
-    	}    
+    	}   
 
 		// Walls Match
     	match /walls/{memberId} {
-      		allow write: if isAuthorized() && (request.auth.uid == memberId)
+      		//allow write: if isAuthorized() && (request.auth.uid == memberId)
       		allow read: if isAuthorized()
       
 			// Wall Messages Match
       		match /messages/{messageId} {
-        		allow create: if isAuthorized()
-				allow update: if (request.resource.data.authorUID == resource.data.authorUID)
+        		//allow create: if isAuthorized()
+				//allow update: if (request.resource.data.authorUID == resource.data.authorUID)
         		allow read: if isAuthorized()
       		}      
     	}  
