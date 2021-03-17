@@ -222,150 +222,148 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
     } else {
         return (
             <>
-                <View style={{ flex: 1 }}>
-                    <LinearGradient
-                        colors={['#ada9f0', '#88ddd2', '#8ccfdd']}
-                        style={{
-                            flex: 1,
+                <LinearGradient
+                    colors={['#ada9f0', '#88ddd2', '#8ccfdd']}
+                    style={{
+                        flex: 1,
+                    }}
+                >
+                    <Image
+                        style={Styles.auth.logo}
+                        source={require('../assets/icon.png')}
+                    />
+                    <Formik
+                        initialValues={{
+                            displayName: '',
+                            eMail: '',
+                            password: '',
+                            confirmPassword: ''
+                        }}
+                        validationSchema={scheme}
+                        onSubmit={(values, helpers) => {
+                            switch (mode) {
+                                case 'login':
+                                    onLoginPress(values, helpers)
+                                    break
+                                case 'register':
+                                    onRegisterPress(values, helpers)
+                                    break;
+                                case 'password-reset':
+                                    sendPasswordReset(values, helpers)
+                            }
                         }}
                     >
-                        <Image
-                            style={Styles.auth.logo}
-                            source={require('../assets/icon.png')}
-                        />
-                        <Formik
-                            initialValues={{
-                                displayName: '',
-                                eMail: '',
-                                password: '',
-                                confirmPassword: ''
-                            }}
-                            validationSchema={scheme}
-                            onSubmit={(values, helpers) => {
-                                switch (mode) {
-                                    case 'login':
-                                        onLoginPress(values, helpers)
-                                        break
-                                    case 'register':
-                                        onRegisterPress(values, helpers)
-                                        break;
-                                    case 'password-reset':
-                                        sendPasswordReset(values, helpers)
-                                }
-                            }}
-                        >
-                            {(formikProps) => (
-                                <>
-                                    {mode === 'register' ? (
-                                        <FormField
-                                            label='Full Name'
-                                            formikProps={formikProps}
-                                            fieldName='displayName'
-                                            returnKeyType='none'
-                                        />
-                                    ) : <></>}
+                        {(formikProps) => (
+                            <>
+                                {mode === 'register' ? (
+                                    <FormField
+                                        label='Full Name'
+                                        formikProps={formikProps}
+                                        fieldName='displayName'
+                                        returnKeyType='none'
+                                    />
+                                ) : <></>}
+                                <FormField
+                                    formikProps={formikProps}
+                                    fieldName='eMail'
+                                    label="E-Mail"
+                                    returnKeyType={mode === 'password-reset' ? 'done' : 'none'}
+                                />
+                                {mode !== 'password-reset' ?
                                     <FormField
                                         formikProps={formikProps}
-                                        fieldName='eMail'
-                                        label="E-Mail"
-                                        returnKeyType={mode === 'password-reset' ? 'done' : 'none'}
-                                    />
-                                    {mode !== 'password-reset' ?
+                                        secureTextEntry={true}
+                                        label='Password'
+                                        fieldName='password'
+                                        returnKeyType={mode !== 'register' ? 'done' : 'none'}
+                                    /> : <></>}
+
+                                {mode === 'register' ? (
+                                    <>
                                         <FormField
                                             formikProps={formikProps}
                                             secureTextEntry={true}
-                                            label='Password'
-                                            fieldName='password'
-                                            returnKeyType={mode !== 'register' ? 'done' : 'none'}
-                                        /> : <></>}
-
-                                    {mode === 'register' ? (
-                                        <>
-                                            <FormField
-                                                formikProps={formikProps}
-                                                secureTextEntry={true}
-                                                label="Confirm Password"
-                                                fieldName='confirmPassword'
-                                                returnKeyType='done'
+                                            label="Confirm Password"
+                                            fieldName='confirmPassword'
+                                            returnKeyType='done'
+                                        />
+                                        <Button
+                                            title="Create Account"
+                                            disabled={submitted}
+                                            onPress={formikProps.handleSubmit}
+                                        />
+                                        <View style={Styles.auth.footerView}>
+                                            <Text fontSize={16}>Already got an account?</Text>
+                                            <Button title="Log in" onPress={() => onGotoLoginPress(formikProps)} />
+                                        </View>
+                                    </>
+                                ) : <></>}
+                                {mode === 'password-reset' ? (
+                                    <>
+                                        <View style={Styles.auth.footerView}>
+                                            <Button
+                                                disabled={submitted}
+                                                title="Reset Password"
+                                                onPress={formikProps.handleSubmit}
+                                                style={{ marginTop: 5 }}
                                             />
                                             <Button
-                                                title="Create Account"
                                                 disabled={submitted}
+                                                title="Cancel"
+                                                onPress={() => onGotoLoginPress(formikProps)}
+                                                style={{ marginTop: 5 }}
+                                            />
+                                        </View>
+                                    </>
+                                ) : <></>}
+                                {mode === 'login' ? (
+                                    <>
+                                        <View style={Styles.auth.footerView}>
+                                            <Button
+                                                title="Log in"
+                                                disabled={submitted}
+                                                //onPress={onLoginPress}
                                                 onPress={formikProps.handleSubmit}
                                             />
-                                            <View style={Styles.auth.footerView}>
-                                                <Text fontSize={16}>Already got an account?</Text>
-                                                <Button title="Log in" onPress={() => onGotoLoginPress(formikProps)} />
-                                            </View>
-                                        </>
-                                    ) : <></>}
-                                    {mode === 'password-reset' ? (
-                                        <>
-                                            <View style={Styles.auth.footerView}>
+                                            {Platform.OS === 'web' ?
                                                 <Button
-                                                    disabled={submitted}
-                                                    title="Reset Password"
-                                                    onPress={formikProps.handleSubmit}
-                                                    style={{ marginTop: 5 }}
-                                                />
-                                                <Button
-                                                    disabled={submitted}
-                                                    title="Cancel"
-                                                    onPress={() => onGotoLoginPress(formikProps)}
-                                                    style={{ marginTop: 5 }}
-                                                />
-                                            </View>
-                                        </>
-                                    ) : <></>}
-                                    {mode === 'login' ? (
-                                        <>
-                                            <View style={Styles.auth.footerView}>
-                                                <Button
-                                                    title="Log in"
-                                                    disabled={submitted}
-                                                    //onPress={onLoginPress}
-                                                    onPress={formikProps.handleSubmit}
-                                                />
-                                                {Platform.OS === 'web' ?
-                                                    <Button
-                                                        //title="Google Sign-In"                                                    
-                                                        onPress={() => signInWithGoogle(formikProps)}
-                                                        style={{ margin: 5 }}
-                                                    >
-                                                        <View style={{ flexDirection: 'row' }}>
-                                                            <Icon color={'white'} size={24} name='logo-google' type='ionicon' />
-                                                            <Text>oogle Sign-In</Text>
-                                                        </View>
-                                                    </Button>
-                                                    : <></>
-                                                }
+                                                    //title="Google Sign-In"                                                    
+                                                    onPress={() => signInWithGoogle(formikProps)}
+                                                    style={{ margin: 5 }}
+                                                >
+                                                    <View style={{ flexDirection: 'row' }}>
+                                                        <Icon color={'white'} size={24} name='logo-google' type='ionicon' />
+                                                        <Text>oogle Sign-In</Text>
+                                                    </View>
+                                                </Button>
+                                                : <></>
+                                            }
 
+                                        </View>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <View style={Styles.auth.footerView}>
+                                                <Text fontSize={16}>Don't have an account?</Text>
+                                                <Button title="Sign up" onPress={() => onSignUpPress(formikProps)} />
                                             </View>
-                                            <View style={{ flexDirection: 'row'}}>
-                                                <View style={Styles.auth.footerView}>
-                                                    <Text fontSize={16}>Don't have an account?</Text>
-                                                    <Button title="Sign up" onPress={() => onSignUpPress(formikProps)} />
-                                                </View>
-                                                <View style={Styles.auth.footerView}>
-                                                    <Text fontSize={16}>
-                                                        Did you forget your password?
+                                            <View style={Styles.auth.footerView}>
+                                                <Text fontSize={16}>
+                                                    Did you forget your password?
                                                 </Text>
-                                                    <Button
-                                                        title="Password Reset"
-                                                        onPress={() => setMode('password-reset')}
-                                                    />
-                                                </View>
+                                                <Button
+                                                    title="Password Reset"
+                                                    onPress={() => setMode('password-reset')}
+                                                />
                                             </View>
-                                        </>
-                                    ) : <></>}
-                                </>
-                            )}
-                        </Formik>
-                        <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 10 }}>
-                            <Text>{`Cloud Lightning Messenger - Beta`}</Text>
-                        </View>
-                    </LinearGradient>
-                </View>
+                                        </View>
+                                    </>
+                                ) : <></>}
+                            </>
+                        )}
+                    </Formik>
+                    <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 10 }}>
+                        <Text>{`Cloud Lightning Messenger - Beta`}</Text>
+                    </View>
+                </LinearGradient>
             </>
         )
     }

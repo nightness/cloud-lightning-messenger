@@ -136,15 +136,7 @@ export class Styles {
     })
 
     static readonly messenger = StyleSheet.create({
-        viewChat: {
-            flex: 1,
-            margin: 5,
-            padding: 5,
-            borderWidth: 1,
-            borderRadius: 5,
-            width: '100%',
-        },
-        views: {
+            views: {
             flexDirection: 'row',
             //alignContent: 'stretch',
             width: '100%',
@@ -152,6 +144,7 @@ export class Styles {
             borderRadius: 5,
             borderBottomWidth: 0,
             borderTopWidth: 0,
+            backgroundColor: 'transparent',
         },
         textInput: {
             flex: 5,
