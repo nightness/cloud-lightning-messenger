@@ -5,6 +5,7 @@ import * as Defaults from './Defaults'
 import { Theme } from './Themes'
 import { Platform } from 'react-native'
 import { Constants } from 'expo'
+import KeyboardListener from 'react-native-keyboard-listener'
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -17,13 +18,16 @@ Notifications.setNotificationHandler({
 type ContextType = {
     theme: Theme
     setTheme?: (theme: Theme) => void
-    screenOrientation?: ScreenOrientation.Orientation
+    screenOrientation: ScreenOrientation.Orientation
+    isKeyboardOpen: boolean
     hamburgerBadgeText?: string
     setHamburgerBadgeText?: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
 export const GlobalContext = createContext<ContextType>({
     theme: Defaults.defaultTheme,
+    isKeyboardOpen: false,
+    screenOrientation: ScreenOrientation.Orientation.UNKNOWN
 })
 
 interface Props {
@@ -33,6 +37,7 @@ interface Props {
 export const GlobalProvider = ({ children }: Props) => {
     const [theme, setTheme] = useState<Theme>(Defaults.defaultTheme)
     const [hamburgerBadgeText, setHamburgerBadgeText] = useState<string>()
+    const [isKeyboardOpen, setIsKeyboardOpen] = useState<boolean>(false)
     const [
         screenOrientation,
         setScreenOrientation,
@@ -55,10 +60,14 @@ export const GlobalProvider = ({ children }: Props) => {
         return ScreenOrientation.removeOrientationChangeListeners
     })
 
-    
+
 
     return (
-        <GlobalContext.Provider value={{ theme, setTheme, screenOrientation, hamburgerBadgeText, setHamburgerBadgeText }}>
+        <GlobalContext.Provider value={{ theme, setTheme, screenOrientation, isKeyboardOpen, hamburgerBadgeText, setHamburgerBadgeText }}>
+            <KeyboardListener
+                onWillShow={() => setIsKeyboardOpen(true)}
+                onWillHide={() => setIsKeyboardOpen(false)}
+            />
             {children}
         </GlobalContext.Provider>
     )

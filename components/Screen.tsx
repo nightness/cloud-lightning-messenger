@@ -4,7 +4,6 @@ import { FirebaseContext } from '../firebase/FirebaseContext'
 import ScreenHeader from './ScreenHeader'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Dimensions, Keyboard, StyleProp, ViewStyle } from 'react-native'
-import KeyboardListener from 'react-native-keyboard-listener'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useKeyboard } from '../shared/Hooks'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
@@ -19,9 +18,8 @@ interface Props {
 
 export default ({ children, style, navigation, title }: Props) => {
     const { width, height } = Dimensions.get('window')
-    const { theme, hamburgerBadgeText, screenOrientation } = useContext(GlobalContext)
+    const { theme, hamburgerBadgeText, screenOrientation, isKeyboardOpen } = useContext(GlobalContext)
     const { currentUser } = useContext(FirebaseContext)
-    const [isKeyboardOpen, setIsKeyboardOpen] = useState<boolean>(false)
     const [keyboardHeight] = useKeyboard()
     const [screenStyle, setScreenStyle] = useState<StyleProp<ViewStyle>>({
         height, width, position: 'absolute'
@@ -47,10 +45,6 @@ export default ({ children, style, navigation, title }: Props) => {
                 colors={['#ada9f0', '#88ddd2', '#8ccfdd']}
                 style={screenStyle}
             >
-                <KeyboardListener
-                    onWillShow={() => setIsKeyboardOpen(true)}
-                    onWillHide={() => setIsKeyboardOpen(false)}
-                />
                 <SafeAreaView style={screenStyle}>
                     <ScreenHeader
                         navigation={navigation}
