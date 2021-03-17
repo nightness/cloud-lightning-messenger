@@ -19,6 +19,7 @@ import {
     TextInput as NativeTextInput
 } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { LinearGradient } from 'expo-linear-gradient'
 
 interface Props {
     navigation: StackNavigationProp<any>

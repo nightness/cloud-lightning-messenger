@@ -108,13 +108,13 @@ export class Styles {
 
     static readonly picker = StyleSheet.create({
         toggleBox: {
-            backgroundColor: '#ddd',
+            backgroundColor: 'transparent',
             borderColor: 'rgb(178,181,189)',
             borderBottomWidth: 1,
         },
         picker: {
             margin: 5,
-            backgroundColor: '#fff',
+            backgroundColor: 'transparent',
             paddingHorizontal: 2,
         },
     })
@@ -136,7 +136,7 @@ export class Styles {
     })
 
     static readonly messenger = StyleSheet.create({
-            views: {
+        views: {
             flexDirection: 'row',
             //alignContent: 'stretch',
             width: '100%',

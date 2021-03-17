@@ -58,11 +58,11 @@ export class Themes {
 
     static readonly container: ThemeType = {
         Light: {
-            backgroundColor: '#ddd',
+            backgroundColor: 'transparent',
             borderColor: 'black',
         },
         Dark: {
-            backgroundColor: '#212121',
+            backgroundColor: 'transparent',
             borderColor: '#aaa',
         },
     }
@@ -184,12 +184,12 @@ export class Themes {
 
     static readonly picker: ThemeType = {
         Light: {
-            color: '#888',
-            backgroundColor: '#eee',
+            color: '#000',
+            backgroundColor: 'transparent',
         },
         Dark: {
-            color: '#eee',
-            backgroundColor: '#222',
+            color: '#fff',
+            backgroundColor: 'transparent',
         },
     }
 

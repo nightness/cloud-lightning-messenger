@@ -11,6 +11,7 @@ import DisplayError from '../components/DisplayError'
 import { ListRenderItem, StyleProp, ViewStyle } from 'react-native'
 import { FirebaseError } from 'firebase'
 import FlatList from '../components/FlatList'
+import { LinearGradient } from 'expo-linear-gradient'
 
 interface Props<T> {
     style?: StyleProp<ViewStyle> | object
@@ -70,14 +71,20 @@ export default function _<T>({
         )
     } else if (!loadingCollection && !loadingData) {
         return (
-            <FlatList<T>
-                renderItem={renderItem}
-                style={style}
-                data={messages}
-                onStartReached={loadMoreMessages}
-                autoScrollToEnd={autoScrollToEnd}
-                {...restProps}
-            />
+            <LinearGradient
+                colors={['#d5d4f1', '#d1e8f5', '#eff4fa']}
+                style={{ flex: 1 }}
+            >
+
+                <FlatList<T>
+                    renderItem={renderItem}
+                    style={style}
+                    data={messages}
+                    onStartReached={loadMoreMessages}
+                    autoScrollToEnd={autoScrollToEnd}
+                    {...restProps}
+                />
+            </LinearGradient>
         )
     }
     return <ActivityIndicator />
