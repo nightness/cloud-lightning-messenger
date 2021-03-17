@@ -5,6 +5,7 @@ import { FirebaseContext } from '../firebase/FirebaseContext'
 import { Styles } from '../shared/Styles'
 import { Themes } from '../shared/Themes'
 import ScreenHeader from './ScreenHeader'
+import { LinearGradient } from 'expo-linear-gradient'
 
 interface Props {
     children: JSX.Element
@@ -18,7 +19,12 @@ export default ({ children, style, navigation, title }: Props) => {
     const { currentUser } = useContext(FirebaseContext)
 
     return (
-        <View style={[Styles.views.screen, Themes.screen[theme], style]}>
+        <LinearGradient
+            colors={['#ada9f0', '#88ddd2', '#8ccfdd']}
+            style={{
+                flex: 1,
+            }}
+        >
             <ScreenHeader
                 navigation={navigation}
                 title={title}
@@ -26,6 +32,6 @@ export default ({ children, style, navigation, title }: Props) => {
                 hamburgerBadgeText={hamburgerBadgeText}
             />
             {children}
-        </View>
+        </LinearGradient>
     )
 }
