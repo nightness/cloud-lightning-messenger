@@ -40,7 +40,6 @@ export default ({
                 {
                     fontWeight, // String
                     fontSize, // Integer
-                    color: 'red'
                 },
                 style,
             ]}
