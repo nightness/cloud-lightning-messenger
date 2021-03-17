@@ -341,7 +341,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                                 }
 
                                             </View>
-                                            <View>
+                                            <View style={{ flexDirection: 'row'}}>
                                                 <View style={Styles.auth.footerView}>
                                                     <Text fontSize={16}>Don't have an account?</Text>
                                                     <Button title="Sign up" onPress={() => onSignUpPress(formikProps)} />
