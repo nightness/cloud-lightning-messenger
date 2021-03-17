@@ -1,9 +1,8 @@
 import React, { useContext } from 'react'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Styles } from '../shared/Styles'
 import { Themes } from '../shared/Themes'
-import { StyleProp, ViewStyle } from 'react-native'
+import { ScrollView, StyleProp, ViewStyle } from 'react-native'
 
 interface Props {
     children: JSX.Element | JSX.Element[]
@@ -17,13 +16,13 @@ export default ({ children, style, bounces, keyboardShouldPersistTaps, ...restPr
     const { theme } = useContext(GlobalContext)
 
     return (
-        <KeyboardAwareScrollView
+        <ScrollView
             style={[Styles.views.scrollView, Themes.screen[theme], style]}
             bounces={bounces}
             keyboardShouldPersistTaps={keyboardShouldPersistTaps}
             {...restProps}
         >
             {children}
-        </KeyboardAwareScrollView>
+        </ScrollView>
     )
 }

@@ -1,4 +1,28 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
+import { Keyboard, KeyboardEvent } from 'react-native';
+
+export const useKeyboard = (): [number] => {
+    const [keyboardHeight, setKeyboardHeight] = useState(0)
+
+    function onKeyboardDidShow(e: KeyboardEvent): void {
+        setKeyboardHeight(e.endCoordinates.height)
+    }
+
+    function onKeyboardDidHide(): void {
+        setKeyboardHeight(0)
+    }
+
+    useEffect(() => {
+        Keyboard.addListener('keyboardDidShow', onKeyboardDidShow);
+        Keyboard.addListener('keyboardDidHide', onKeyboardDidHide);
+        return (): void => {
+            Keyboard.removeListener('keyboardDidShow', onKeyboardDidShow);
+            Keyboard.removeListener('keyboardDidHide', onKeyboardDidHide);
+        }
+    }, [])
+
+    return [keyboardHeight]
+}
 
 export const useValidatedState = (
     initialValue: any,
@@ -62,31 +86,31 @@ export const useStateDifferences = (initialState: [any] | null | undefined) => {
     added =
         state && previousState.current
             ? state.flatMap((value) => {
-                  const after = _previousValue
-                  _previousValue = value
-                  if (!previousState.current || previousState.current.includes(value))
-                      return []
-                  return [{ after, value }]
-              })
+                const after = _previousValue
+                _previousValue = value
+                if (!previousState.current || previousState.current.includes(value))
+                    return []
+                return [{ after, value }]
+            })
             : state
-            ? [
-                  {
-                      after: undefined,
-                      value: state[0],
-                  },
-              ]
-            : []
+                ? [
+                    {
+                        after: undefined,
+                        value: state[0],
+                    },
+                ]
+                : []
 
     // Find elements removed from state
     _previousValue = undefined
     removed =
         state && previousState.current
             ? previousState.current.flatMap((value) => {
-                  const after = _previousValue
-                  _previousValue = value
-                  if (state.includes(value)) return []
-                  return [{ after, value }]
-              })
+                const after = _previousValue
+                _previousValue = value
+                if (state.includes(value)) return []
+                return [{ after, value }]
+            })
             : []
 
     return [{ state, added, removed }, setState]

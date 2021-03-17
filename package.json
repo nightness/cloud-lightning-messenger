@@ -44,6 +44,7 @@
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
+    "react-native-keyboard-listener": "^1.1.0",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-locale-detector": "^1.0.1",
     "react-native-modals": "^0.22.3",

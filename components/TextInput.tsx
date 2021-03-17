@@ -1,10 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { TextInputProps } from 'react-native'
+import { TextInputProps, Keyboard } from 'react-native'
 import { TextInput } from 'react-native-paper'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Styles } from '../shared/Styles'
 import { Theme, Themes } from '../shared/Themes'
-
 interface Props extends TextInputProps {
     label?: string
     classRef?: any
@@ -41,6 +40,7 @@ export default ({
             ref={classRef}
             style={[Styles.textInput.input, Themes.textInput[theme], style]}
             placeholderTextColor={Themes.placeHolderText[theme].color}
+            onSubmitEditing={Keyboard.dismiss}
             {...restProps}
         />
     )
