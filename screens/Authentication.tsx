@@ -23,6 +23,8 @@ import { FirebaseContext } from '../firebase/FirebaseContext'
 import { Styles } from '../shared/Styles'
 import { GlobalContext } from '../shared/GlobalContext'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { LinearGradient } from 'expo-linear-gradient'
+import { Icon } from 'react-native-elements'
 
 interface AuthenticationProps {
     navigation: StackNavigationProp<any>
@@ -220,11 +222,12 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
     } else {
         return (
             <>
-                <Container>
-                    <ScrollView
-                        bounces={false}
-                        style={{ flex: 1, width: '100%' }}
-                        keyboardShouldPersistTaps="always"
+                <View style={{ flex: 1 }}>
+                    <LinearGradient
+                        colors={['#ada9f0', '#88ddd2', '#8ccfdd']}
+                        style={{
+                            flex: 1,
+                        }}
                     >
                         <Image
                             style={Styles.auth.logo}
@@ -346,9 +349,14 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                             <View style={Styles.auth.footerView}>
                                                 <Text fontSize={16}>Google Sign-In?</Text>
                                                 <Button
-                                                    title="Google Sign-In"
+                                                    //title="Google Sign-In"                                                    
                                                     onPress={() => signInWithGoogle(formikProps)}
-                                                />
+                                                >
+                                                    <View style={{ flexDirection: 'row' }}>
+                                                        <Icon color={'white'} size={24} name='logo-google' type='ionicon' />
+                                                        <Text>oogle</Text>
+                                                    </View>
+                                                </Button>
                                             </View>
                                         </>
                                         : <></>
@@ -359,8 +367,8 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                         <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 10 }}>
                             <Text>{`Cloud Lightning Messenger - Beta`}</Text>
                         </View>
-                    </ScrollView>
-                </Container>
+                    </LinearGradient>
+                </View>
             </>
         )
     }

@@ -7,10 +7,11 @@ import { Themes } from '../shared/Themes'
 
 interface Props {
     style?: StyleProp<ViewStyle>
-    title: string
+    title?: string
     disabled?: boolean
     reactNativeButton?: any
     onPress: () => any
+    children?: JSX.Element | JSX.Element[]
 }
 
 export default ({
@@ -19,6 +20,7 @@ export default ({
     disabled,
     reactNativeButton,
     onPress,
+    children,
     ...restProps
 }: Props) => {
     const { theme } = useContext(GlobalContext)
@@ -36,7 +38,7 @@ export default ({
             onPress={onPress}
             {...restProps}
         >
-            <Text style={[properTheme, Styles.button.text]}>{title}</Text>
+            { title ? <Text style={[properTheme, Styles.button.text]}>{title}</Text> : children }
         </TouchableOpacity>
     )
 }

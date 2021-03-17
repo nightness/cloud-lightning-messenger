@@ -103,6 +103,17 @@ export class Themes {
         },
     }
 
+    static readonly navigationItem: ThemeType = {
+        Light: {
+            activeTintColor: '#123',
+            inactiveTintColor: '#123'
+        },
+        Dark: {
+            activeTintColor: '#123',
+            inactiveTintColor: '#123'
+        }
+    }
+    
     static readonly themedSwitch: ThemeType = {
         Light: {
             trackColorOn: '#81b0ff',

@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import {
-    ImageBackground,
+    ImageBackground, View,
 } from 'react-native'
 import {
     DrawerContentScrollView,
     DrawerContentComponentProps,
 } from '@react-navigation/drawer'
+import { LinearGradient } from 'expo-linear-gradient'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import DrawerContentItem from './DrawerContentItem'
 import { NavigationParams } from './DrawerParams'
@@ -26,31 +27,36 @@ export const DrawerContent = ({ navigation, ...restProps }: DrawerContentCompone
     }
 
     return (
-        <ImageBackground
-            resizeMode='repeat'
-            source={require('../assets/dd426684.png')}
-            style={{ flex: 1 }}
-        >
-            <DrawerContentScrollView {...restProps}>
-                {routeNames.map((routeName) => {
-                    const currentRoute = routes.filter(value => value.name === routeName)?.[0]
-                    const params = currentRoute.params as NavigationParams
-                    return (
-                        <DrawerContentItem
-                            navigation={navigation}
-                            {...restProps}
-                            activeTintColor={params?.activeTintColor}
-                            inactiveTintColor={params?.inactiveTintColor}
-                            labelText={routeName}
-                            iconGroup={params?.iconGroup}
-                            iconName={params?.iconName}
-                            focusedIconName={params?.focusedIconName}
-                            onPress={() => navigateTo(routeName)}
-                            key={`route-${routeName}`}
-                        />
-                    )
-                })}
-            </DrawerContentScrollView>
-        </ImageBackground>
+        <View style={{
+            flex: 1,
+        }}>
+            <LinearGradient
+                colors={['#ada9f0', '#88ddd2', '#8ccfdd']}
+                style={{
+                    flex: 1,
+                }}
+            >
+                <DrawerContentScrollView {...restProps}>
+                    {routeNames.map((routeName) => {
+                        const currentRoute = routes.filter(value => value.name === routeName)?.[0]
+                        const params = currentRoute.params as NavigationParams
+                        return (
+                            <DrawerContentItem
+                                navigation={navigation}
+                                {...restProps}
+                                activeTintColor={params?.activeTintColor}
+                                inactiveTintColor={params?.inactiveTintColor}
+                                labelText={routeName}
+                                iconGroup={params?.iconGroup}
+                                iconName={params?.iconName}
+                                focusedIconName={params?.focusedIconName}
+                                onPress={() => navigateTo(routeName)}
+                                key={`route-${routeName}`}
+                            />
+                        )
+                    })}
+                </DrawerContentScrollView>
+            </LinearGradient>
+        </View>
     )
 }
