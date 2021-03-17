@@ -45,8 +45,6 @@ export const GlobalProvider = ({ children }: Props) => {
             .then((value: ScreenOrientation.Orientation) => {
                 console.info(screenOrientation)
                 setScreenOrientation(value)
-                // @ts-ignore
-                //ScreenOrientation.lockAsync(value).catch((err) => console.warn(err))
             })
             .catch((err) => console.warn(err))
 
