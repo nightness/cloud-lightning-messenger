@@ -11,6 +11,7 @@ import {
 } from '../components/Components'
 import { Styles } from '../shared/Styles'
 import { DocumentData, QuerySnapshot, useCollection, callFirebaseFunction } from '../firebase/Firebase'
+import { GlobalContext } from '../shared/GlobalContext'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import Message from './Message'
 import {
@@ -19,6 +20,8 @@ import {
     TextInput as NativeTextInput
 } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { LinearGradient } from 'expo-linear-gradient'
+import { GradientColors } from '../shared/GradientColors'
 
 interface Props {
     navigation: StackNavigationProp<any>
@@ -26,6 +29,7 @@ interface Props {
 
 export default ({ navigation }: Props) => {
     const { currentUser, claims } = useContext(FirebaseContext)
+    const { theme } = useContext(GlobalContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('/profiles')
     const [members, setMembers] = useState<PickerItem[]>([])
     const [selectedMember, setSelectedMember] = useState<PickerItem>()
@@ -98,12 +102,15 @@ export default ({ navigation }: Props) => {
     return (
         <Screen navigation={navigation} title={'Private Messages'}>
             <Container>
-                <View style={Styles.messenger.views}>
-                    <Picker
-                        data={members}
-                        onValueChanged={setSelectedMember}
-                    />
-                </View>
+                <LinearGradient
+                    colors={GradientColors[theme].secondary}>
+                    <View style={Styles.messenger.views}>
+                        <Picker
+                            data={members}
+                            onValueChanged={setSelectedMember}
+                        />
+                    </View>
+                </LinearGradient>
                 <FirestoreCollectionView<Message>
                     collectionPath={messageCollectionPath}
                     autoScrollToEnd={true}
@@ -112,21 +119,24 @@ export default ({ navigation }: Props) => {
                     // @ts-ignore
                     renderItem={({ item }) => <Message item={item} />}
                 />
-                <View style={Styles.messenger.views}>
-                    <TextInput
-                        value={messageText}
-                        style={Styles.messenger.textInput}
-                        onChangeText={(msg: string) => setMessageText(msg)}
-                        onKeyPress={onMessageKeyPress}
-                        classRef={textInput}
-                    />
-                    <Button
-                        title="Send"
-                        style={Styles.messenger.sendButton}
-                        disabled={messageText.length < 1}
-                        onPress={sendMessage}
-                    />
-                </View>
+                <LinearGradient
+                    colors={GradientColors[theme].secondary}>
+                    <View style={Styles.messenger.views}>
+                        <TextInput
+                            value={messageText}
+                            style={Styles.messenger.textInput}
+                            onChangeText={(msg: string) => setMessageText(msg)}
+                            onKeyPress={onMessageKeyPress}
+                            classRef={textInput}
+                        />
+                        <Button
+                            title="Send"
+                            style={Styles.messenger.sendButton}
+                            disabled={messageText.length < 1}
+                            onPress={sendMessage}
+                        />
+                    </View>
+                </LinearGradient>
             </Container>
         </Screen>
     )

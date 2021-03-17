@@ -10,10 +10,13 @@ import {
 import { TextInput as NativeTextInput } from 'react-native'
 import { Styles } from '../shared/Styles'
 import { FirebaseContext } from '../firebase/FirebaseContext'
+import { GlobalContext } from '../shared/GlobalContext'
 import Message from './Message'
 import { callFirebaseFunction } from '../firebase/Firebase'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
+import { GradientColors } from '../shared/GradientColors'
 
 interface Props {
     navigation: StackNavigationProp<any>
@@ -21,6 +24,7 @@ interface Props {
 
 export default ({ navigation }: Props) => {
     const { currentUser } = useContext(FirebaseContext)
+    const { theme } = useContext(GlobalContext)
     const [messageText, setMessageText] = useState('')
     const textInput = useRef<NativeTextInput>()
     const [messageCollectionPath, setMessageCollectionPath] = useState<string>('/public')
@@ -68,21 +72,24 @@ export default ({ navigation }: Props) => {
                     // @ts-ignore
                     renderItem={({ item }) => <Message item={item} />}
                 />
-                <View style={Styles.messenger.views}>
-                    <TextInput
-                        classRef={textInput}
-                        value={messageText}
-                        style={Styles.messenger.textInput}
-                        onChangeText={(msg) => setMessageText(msg)}
-                        underlineColorAndroid="transparent"
-                    />
-                    <Button
-                        title="Send"
-                        style={Styles.messenger.sendButton}
-                        disabled={messageText.length < 1}
-                        onPress={sendMessage}
-                    />
-                </View>
+                <LinearGradient
+                    colors={GradientColors[theme].secondary}>
+                    <View style={Styles.messenger.views}>
+                        <TextInput
+                            classRef={textInput}
+                            value={messageText}
+                            style={Styles.messenger.textInput}
+                            onChangeText={(msg) => setMessageText(msg)}
+                            underlineColorAndroid="transparent"
+                        />
+                        <Button
+                            title="Send"
+                            style={Styles.messenger.sendButton}
+                            disabled={messageText.length < 1}
+                            onPress={sendMessage}
+                        />
+                    </View>
+                </LinearGradient>
             </Container>
         </Screen>
     )

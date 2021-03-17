@@ -12,6 +12,7 @@ import {
 import { Styles } from '../shared/Styles'
 import { DocumentData, QuerySnapshot, useCollection, callFirebaseFunction } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
+import { GlobalContext } from '../shared/GlobalContext'
 import Message from './Message'
 import { StackNavigationProp } from '@react-navigation/stack'
 import {
@@ -19,6 +20,8 @@ import {
     TextInputKeyPressEventData,
     TextInput as NativeTextInput
 } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
+import { GradientColors } from '../shared/GradientColors'
 
 interface Props {
     navigation: StackNavigationProp<any>
@@ -26,6 +29,7 @@ interface Props {
 
 export default ({ navigation }: Props) => {
     const { currentUser, claims } = useContext(FirebaseContext)
+    const { theme } = useContext(GlobalContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('/groups')
     const [groups, setGroups] = useState<PickerItem[]>([])
     const [selectedGroup, setSelectedGroup] = useState<PickerItem>()
@@ -97,12 +101,16 @@ export default ({ navigation }: Props) => {
     return (
         <Screen navigation={navigation} title={'Group Messenger'}>
             <Container>
-                <View style={Styles.messenger.views}>
-                    <Picker
-                        data={groups}
-                        onValueChanged={setSelectedGroup}
-                    />
-                </View>
+                <LinearGradient
+                    colors={GradientColors[theme].secondary}>
+
+                    <View style={Styles.messenger.views}>
+                        <Picker
+                            data={groups}
+                            onValueChanged={setSelectedGroup}
+                        />
+                    </View>
+                </LinearGradient>
                 <FirestoreCollectionView<Message>
                     collectionPath={groupCollectionPath}
                     autoScrollToEnd={true}
