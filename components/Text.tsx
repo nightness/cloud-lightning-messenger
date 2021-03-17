@@ -1,14 +1,15 @@
 import React, { useContext, useRef, useEffect } from 'react'
-import { Text, View, StyleSheet, StyleProp, TextStyle } from 'react-native'
+import { Text, View, StyleSheet, StyleProp, TextStyle, ColorValue } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Themes } from '../shared/Themes'
 
 interface Props {
-    children: JSX.Element[] | string
+    children: JSX.Element | JSX.Element[] | string
     style?: StyleProp<TextStyle> | object
     classRef?: any
     fontWeight?: string
     fontSize?: number
+    color?: ColorValue
 }
 
 export default ({
@@ -17,6 +18,7 @@ export default ({
     classRef,
     fontWeight,
     fontSize,
+    color,
     ...restProps
 }: Props) => {
     const { theme } = useContext(GlobalContext)
@@ -36,8 +38,9 @@ export default ({
             style={[
                 Themes.text[theme],
                 {
-                    fontWeight: fontWeight, // String
-                    fontSize: fontSize, // Integer
+                    fontWeight, // String
+                    fontSize, // Integer
+                    color: 'red'
                 },
                 style,
             ]}

@@ -326,6 +326,20 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                                     //onPress={onLoginPress}
                                                     onPress={formikProps.handleSubmit}
                                                 />
+                                                {Platform.OS === 'web' ?
+                                                    <Button
+                                                        //title="Google Sign-In"                                                    
+                                                        onPress={() => signInWithGoogle(formikProps)}
+                                                        style={{ margin: 5 }}
+                                                    >
+                                                        <View style={{ flexDirection: 'row' }}>
+                                                            <Icon color={'white'} size={24} name='logo-google' type='ionicon' />
+                                                            <Text>oogle Sign-In</Text>
+                                                        </View>
+                                                    </Button>
+                                                    : <></>
+                                                }
+
                                             </View>
                                             <View>
                                                 <View style={Styles.auth.footerView}>
@@ -344,23 +358,6 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                             </View>
                                         </>
                                     ) : <></>}
-                                    {mode !== 'password-reset' && Platform.OS === 'web' ?
-                                        <>
-                                            <View style={Styles.auth.footerView}>
-                                                <Text fontSize={16}>Google Sign-In?</Text>
-                                                <Button
-                                                    //title="Google Sign-In"                                                    
-                                                    onPress={() => signInWithGoogle(formikProps)}
-                                                >
-                                                    <View style={{ flexDirection: 'row' }}>
-                                                        <Icon color={'white'} size={24} name='logo-google' type='ionicon' />
-                                                        <Text>oogle</Text>
-                                                    </View>
-                                                </Button>
-                                            </View>
-                                        </>
-                                        : <></>
-                                    }
                                 </>
                             )}
                         </Formik>

@@ -72,10 +72,8 @@ export default ({ navigation }: Props) => {
                     <TextInput
                         classRef={textInput}
                         value={messageText}
-                        saveHistory={true}
                         style={Styles.messenger.textInput}
                         onChangeText={(msg) => setMessageText(msg)}
-                        onSubmit={sendMessage}
                         underlineColorAndroid="transparent"
                     />
                     <Button
