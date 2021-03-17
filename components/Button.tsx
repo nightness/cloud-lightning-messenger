@@ -27,7 +27,7 @@ export default ({
     const properTheme = !disabled ? Themes.button[theme] : Themes.buttonDisabled[theme]
 
     // Use the native button
-    if (reactNativeButton) {
+    if (reactNativeButton && title) {
         return <Button title={title} disabled={disabled} onPress={onPress} />
     }
     // TouchableHighlight is another option, this works nice though
