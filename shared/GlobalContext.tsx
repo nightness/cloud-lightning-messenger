@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useRef } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
 import * as ScreenOrientation from 'expo-screen-orientation'
 import * as Notifications from 'expo-notifications'
 import * as Defaults from './Defaults'

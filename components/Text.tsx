@@ -1,9 +1,9 @@
 import React, { useContext, useRef, useEffect } from 'react'
-import { Text, View, StyleSheet, StyleProp, TextStyle, ColorValue } from 'react-native'
+import { Text, View, StyleSheet, StyleProp, TextStyle, ColorValue, TextProps } from 'react-native'
 import { GlobalContext } from '../shared/GlobalContext'
 import { Themes } from '../shared/Themes'
 
-interface Props {
+interface Props extends TextProps {
     children: JSX.Element | JSX.Element[] | string
     style?: StyleProp<TextStyle> | object
     classRef?: any
