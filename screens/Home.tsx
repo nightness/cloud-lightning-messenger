@@ -20,16 +20,16 @@ interface Props {
 export default ({ navigation }: Props) => {
     const [name, setName] = useState<string>()
     const profileCache = useContext(ProfileContext)
-    const { screenOrientation, setHamburgerBadgeText } = useContext(GlobalContext)
+    const { screenOrientation, setHamburgerBadgeText, baseOperatingSystem, systemName } = useContext(GlobalContext)
     const expoURL = 'exp://exp.host/@nightness/cloud-lightning-messenger'
 
     // useEffect(() => {
     //     setHamburgerBadgeText?.('I love programming')
     // }, [])
 
-    useEffect(() => {
-        console.log(`ScreenOrientation: ${screenOrientation}`)
-    }, [screenOrientation])
+    // useEffect(() => {
+    //     console.log(`ScreenOrientation: ${screenOrientation}`)
+    // }, [screenOrientation])
 
     useEffect(() => {
         if (!profileCache) return
@@ -42,42 +42,61 @@ export default ({ navigation }: Props) => {
     return (
         <Screen navigation={navigation} title="Home">
             { profileCache.isFetching ? <ActivityIndicator /> :
-                <View>
+                <View style={{ margin: 3 }}>
                     <Text>{`Welcome ${name}`}</Text>
                     {Platform.OS === 'web' ?
                         <>
                             <Text>{
-                                `Beta 1 of the mobile apps is available though the Expo app (available in both the ` +
-                                `Google Play Store and Apple App Store). ` +
-                                `If you are viewing this from a mobile device click the button below. ` +
-                                `If you are viewing this on a desktop, access your camera and scan the QR code instead.`
+                                `\nBeta 1 of the mobile app is available. To try it, first install the 'Expo Go' app on your mobile device. ` +
+                                `Expo Go is a free app that allows for distribution and testing of others apps during development. ` +
+                                `It's available on both the Google Play Store and iOS App Store. ` +
+                                `After installing Expo Go, ` +
+                                (baseOperatingSystem == 'iOS' || baseOperatingSystem == 'Android' ?
+                                    `click the button below.` :
+                                    `access your camera and scan the QR code below.`)
                             }</Text>
-                            <Button
-                                style={{ margin: 25 }}
-                                title='Run Native App'
-                                onPress={() => {
-                                    Linking.canOpenURL(expoURL).then(supported => {
-                                        if (supported) {
-                                            Linking.openURL(expoURL);
-                                        } else {
+                            {(baseOperatingSystem == 'iOS' || baseOperatingSystem == 'Android' ?
+                                <Button
+                                    style={{ margin: 25 }}
+                                    title='Launch Cloud Lightning Messenger'
+                                    onPress={() => {
+                                        try {
+                                            Linking.canOpenURL(expoURL).then(supported => {
+                                                if (supported) {
+                                                    Linking.openURL(expoURL);
+                                                } else {
+                                                    alert('You need to install the Expo app first!')
+                                                }
+                                            });
+                                        } catch (err) {
                                             alert('You need to install the Expo app first!')
+                                            console.log(err)
                                         }
-                                    });
-                                }}
-                            />
-                            <Image
-                                style={{
-                                    height: 200,
-                                    width: 200,
-                                    alignSelf: 'center',
-                                    margin: 30,
-                                    resizeMode: 'center',
-                                }}
-                                source={require('../assets/expo-qr.png')}
-                            />
+                                    }}
+                                /> :
+                                <Image
+                                    style={{
+                                        height: 200,
+                                        width: 200,
+                                        alignSelf: 'center',
+                                        margin: 30,
+                                        resizeMode: 'center',
+                                    }}
+                                    source={require('../assets/expo-qr.png')}
+                                />
+                            )}
                         </>
                         : <></>
                     }
+                    {/* <Text style={{ textDecorationLine: 'underline', fontWeight: 'bold' }}>System Information</Text>
+                    <Text>
+                        {
+                            `\tBaseOperatingSystem: ${baseOperatingSystem}\n` +
+                            `\tsystemName: ${systemName}\n` +
+                            `\tscreenOrientation: ${screenOrientation}\n` +
+                            ``
+                        }
+                    </Text> */}
                 </View>
             }
         </Screen>

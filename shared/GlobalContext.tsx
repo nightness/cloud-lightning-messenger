@@ -6,6 +6,7 @@ import { Theme } from './Themes'
 import { Platform } from 'react-native'
 import { Constants } from 'expo'
 import KeyboardListener from 'react-native-keyboard-listener'
+import * as devInfo from 'react-native-device-info'
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -22,12 +23,16 @@ type ContextType = {
     isKeyboardOpen: boolean
     hamburgerBadgeText?: string
     setHamburgerBadgeText?: React.Dispatch<React.SetStateAction<string | undefined>>
+    baseOperatingSystem: string
+    systemName: string
 }
 
 export const GlobalContext = createContext<ContextType>({
     theme: Defaults.defaultTheme,
     isKeyboardOpen: false,
-    screenOrientation: ScreenOrientation.Orientation.UNKNOWN
+    screenOrientation: ScreenOrientation.Orientation.UNKNOWN,
+    baseOperatingSystem: 'unknown',
+    systemName: 'unknown'
 })
 
 interface Props {
@@ -35,6 +40,8 @@ interface Props {
 }
 
 export const GlobalProvider = ({ children }: Props) => {
+    const [baseOperatingSystem, setBaseOperatingSystem] = useState<string>('unknown')
+    const [systemName, setSystemName] = useState<string>('unknown')
     const [theme, setTheme] = useState<Theme>(Defaults.defaultTheme)
     const [hamburgerBadgeText, setHamburgerBadgeText] = useState<string>()
     const [isKeyboardOpen, setIsKeyboardOpen] = useState<boolean>(false)
@@ -42,6 +49,19 @@ export const GlobalProvider = ({ children }: Props) => {
         screenOrientation,
         setScreenOrientation,
     ] = useState<ScreenOrientation.Orientation>(ScreenOrientation.Orientation.UNKNOWN)
+    
+    //
+    useEffect(() => {
+        devInfo.getBaseOs()
+            .then((name) => setBaseOperatingSystem(name))
+            .catch(() => undefined)
+
+        setSystemName(devInfo.getSystemName())
+    }, [])
+
+    useEffect(() => {
+        console.log(systemName)
+    }, [systemName])
 
     // Screen orientation state handling
     useEffect(() => {
@@ -60,10 +80,8 @@ export const GlobalProvider = ({ children }: Props) => {
         return ScreenOrientation.removeOrientationChangeListeners
     })
 
-
-
     return (
-        <GlobalContext.Provider value={{ theme, setTheme, screenOrientation, isKeyboardOpen, hamburgerBadgeText, setHamburgerBadgeText }}>
+        <GlobalContext.Provider value={{ theme, setTheme, systemName, baseOperatingSystem, screenOrientation, isKeyboardOpen, hamburgerBadgeText, setHamburgerBadgeText }}>
             <KeyboardListener
                 onWillShow={() => setIsKeyboardOpen(true)}
                 onWillHide={() => setIsKeyboardOpen(false)}

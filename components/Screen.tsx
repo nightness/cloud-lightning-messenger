@@ -3,12 +3,11 @@ import { GlobalContext } from '../shared/GlobalContext'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import ScreenHeader from './ScreenHeader'
 import { LinearGradient } from 'expo-linear-gradient'
-import { Dimensions, StyleProp, ViewStyle } from 'react-native'
+import { useWindowDimensions, Dimensions, StyleProp, ViewStyle } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useKeyboard } from '../shared/Hooks'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { GradientColors } from '../shared/GradientColors'
-
 
 interface Props {
     children: JSX.Element
@@ -18,7 +17,7 @@ interface Props {
 }
 
 export default ({ children, style, navigation, title }: Props) => {
-    const { width, height } = Dimensions.get('window')
+    const { width, height } = useWindowDimensions()
     const { theme, hamburgerBadgeText, screenOrientation, isKeyboardOpen } = useContext(GlobalContext)
     const { currentUser } = useContext(FirebaseContext)
     const [keyboardHeight] = useKeyboard()
@@ -36,7 +35,7 @@ export default ({ children, style, navigation, title }: Props) => {
                 height, width, position: 'absolute'
             })
         }
-    }, [isKeyboardOpen, keyboardHeight, screenOrientation])
+    }, [isKeyboardOpen, keyboardHeight, screenOrientation, width, height])
 
     return (
         <KeyboardAwareScrollView bounces={false} style={screenStyle}>

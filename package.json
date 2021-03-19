@@ -41,6 +41,7 @@
     "react-firebase-hooks": "^2.2.0",
     "react-i18next": "^11.7.3",
     "react-native": "^0.63.3",
+    "react-native-device-info": "^8.0.6",
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
