@@ -20,8 +20,20 @@ interface Props {
 export default ({ navigation }: Props) => {
     const [name, setName] = useState<string>()
     const profileCache = useContext(ProfileContext)
-    const { screenOrientation, setHamburgerBadgeText, baseOperatingSystem, systemName } = useContext(GlobalContext)
     const expoURL = 'exp://exp.host/@nightness/cloud-lightning-messenger'
+    const [baseOperatingSystem, setBaseOperatingSystem] = useState<string>('unknown')
+
+    useEffect(() => {
+        /*  This is used by the web version of the app to either display
+            a QR code or a button to launch Expo Go */         
+        if (Platform.OS === 'web') {
+            // Loading this module is crashing the native apps so it being loaded dynamically
+            const devInfo = require('react-native-device-info')
+            devInfo.getBaseOs()
+                .then((os: string) => setBaseOperatingSystem(os))
+                .catch(() => undefined)
+        }
+    }, [])
 
     // useEffect(() => {
     //     setHamburgerBadgeText?.('I love programming')

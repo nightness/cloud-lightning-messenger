@@ -22,7 +22,6 @@ type ContextType = {
     keyboardHeight: number
     hamburgerBadgeText?: string
     setHamburgerBadgeText?: React.Dispatch<React.SetStateAction<string | undefined>>
-    baseOperatingSystem: string
     window: Size
 }
 
@@ -49,7 +48,6 @@ interface Props {
 
 export const GlobalProvider = ({ children }: Props) => {
     const { width, height } = useWindowDimensions()
-    const [baseOperatingSystem, setBaseOperatingSystem] = useState<string>('unknown')
     const [theme, setTheme] = useState<Theme>(Defaults.defaultTheme)
     const [hamburgerBadgeText, setHamburgerBadgeText] = useState<string>()
     const [isKeyboardOpen, setIsKeyboardOpen] = useState<boolean>(false)
@@ -58,22 +56,6 @@ export const GlobalProvider = ({ children }: Props) => {
         screenOrientation,
         setScreenOrientation,
     ] = useState<ScreenOrientation.Orientation>(ScreenOrientation.Orientation.UNKNOWN)
-
-    useEffect(() => {
-        /*  This is used by the web version of the app to either display
-            a QR code or a button to launch Expo Go */         
-        if (Platform.OS === 'web') {
-            // Loading this module is crashing the native apps so it being loaded dynamically
-            const devInfo = require('react-native-device-info')
-            devInfo.getBaseOs()
-                .then((os: string) => setBaseOperatingSystem(os))
-                .catch(() => undefined)
-        }
-    }, [])
-
-    useEffect(() => {
-        console.log(`Window width = ${width}, windowHeight = ${height}`)
-    }, [width, height])
 
     // Screen orientation state handling
     useEffect(() => {
@@ -95,7 +77,7 @@ export const GlobalProvider = ({ children }: Props) => {
     return (
         <GlobalContext.Provider value={{
             theme, setTheme,
-            baseOperatingSystem, screenOrientation,
+            screenOrientation,
             isKeyboardOpen, keyboardHeight,
             hamburgerBadgeText, setHamburgerBadgeText,
             window: {
