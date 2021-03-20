@@ -5,7 +5,6 @@ import * as Defaults from './Defaults'
 import { Theme } from './Themes'
 import { Platform, useWindowDimensions } from 'react-native'
 import { Constants } from 'expo'
-import * as devInfo from 'react-native-device-info'
 import { useKeyboardHeight } from './Hooks'
 
 type Orientation = ScreenOrientation.Orientation
@@ -41,7 +40,7 @@ export const GlobalContext = createContext<ContextType>({
     keyboardHeight: 0,
     screenOrientation: ScreenOrientation.Orientation.UNKNOWN,
     baseOperatingSystem: 'unknown',
-    window: { }
+    window: {}
 })
 
 interface Props {
@@ -60,10 +59,14 @@ export const GlobalProvider = ({ children }: Props) => {
         setScreenOrientation,
     ] = useState<ScreenOrientation.Orientation>(ScreenOrientation.Orientation.UNKNOWN)
 
-    // useEffect(() => {
-    //     if (Platform.OS === 'web')
-    //         setBaseOperatingSystem(devInfo.getSystemName())
-    // }, [])
+    useEffect(() => {
+        if (Platform.OS === 'web') {
+            const devInfo = require('react-native-device-info')
+            devInfo.getBaseOs()
+                .then((os: string) => setBaseOperatingSystem(os))
+                .catch(() => undefined)
+        }
+    }, [])
 
     useEffect(() => {
         console.log(`Window width = ${width}, windowHeight = ${height}`)
