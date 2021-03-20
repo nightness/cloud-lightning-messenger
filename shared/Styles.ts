@@ -33,7 +33,7 @@ export class Styles {
         logo: {
             flex: 1,
             height: 100,
-            width: 240,
+            width: 140,
             alignSelf: 'center',
             margin: 30,
             resizeMode: 'stretch',            
