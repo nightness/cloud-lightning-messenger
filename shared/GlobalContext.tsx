@@ -38,7 +38,6 @@ export const GlobalContext = createContext<ContextType>({
     isKeyboardOpen: false,
     keyboardHeight: 0,
     screenOrientation: ScreenOrientation.Orientation.UNKNOWN,
-    baseOperatingSystem: 'unknown',
     window: {}
 })
 
