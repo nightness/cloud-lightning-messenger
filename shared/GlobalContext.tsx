@@ -3,36 +3,45 @@ import * as ScreenOrientation from 'expo-screen-orientation'
 import * as Notifications from 'expo-notifications'
 import * as Defaults from './Defaults'
 import { Theme } from './Themes'
-import { Platform } from 'react-native'
+import { Platform, useWindowDimensions } from 'react-native'
 import { Constants } from 'expo'
-import KeyboardListener from 'react-native-keyboard-listener'
 import * as devInfo from 'react-native-device-info'
+import { useKeyboardHeight } from './Hooks'
 
-Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: false,
-        shouldSetBadge: false,
-    }),
-});
+type Orientation = ScreenOrientation.Orientation
+
+export interface Size {
+    width?: number
+    height?: number
+}
 
 type ContextType = {
     theme: Theme
     setTheme?: (theme: Theme) => void
     screenOrientation: ScreenOrientation.Orientation
     isKeyboardOpen: boolean
+    keyboardHeight: number
     hamburgerBadgeText?: string
     setHamburgerBadgeText?: React.Dispatch<React.SetStateAction<string | undefined>>
     baseOperatingSystem: string
-    systemName: string
+    window: Size
 }
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
+    }),
+});
 
 export const GlobalContext = createContext<ContextType>({
     theme: Defaults.defaultTheme,
     isKeyboardOpen: false,
+    keyboardHeight: 0,
     screenOrientation: ScreenOrientation.Orientation.UNKNOWN,
     baseOperatingSystem: 'unknown',
-    systemName: 'unknown'
+    window: { }
 })
 
 interface Props {
@@ -40,34 +49,31 @@ interface Props {
 }
 
 export const GlobalProvider = ({ children }: Props) => {
+    const { width, height } = useWindowDimensions()
     const [baseOperatingSystem, setBaseOperatingSystem] = useState<string>('unknown')
-    const [systemName, setSystemName] = useState<string>('unknown')
     const [theme, setTheme] = useState<Theme>(Defaults.defaultTheme)
     const [hamburgerBadgeText, setHamburgerBadgeText] = useState<string>()
     const [isKeyboardOpen, setIsKeyboardOpen] = useState<boolean>(false)
+    const keyboardHeight = useKeyboardHeight()
     const [
         screenOrientation,
         setScreenOrientation,
     ] = useState<ScreenOrientation.Orientation>(ScreenOrientation.Orientation.UNKNOWN)
-    
-    //
-    useEffect(() => {
-        devInfo.getBaseOs()
-            .then((name) => setBaseOperatingSystem(name))
-            .catch(() => undefined)
 
-        setSystemName(devInfo.getSystemName())
-    }, [])
+    // useEffect(() => {
+    //     if (Platform.OS === 'web')
+    //         setBaseOperatingSystem(devInfo.getSystemName())
+    // }, [])
 
     useEffect(() => {
-        console.log(systemName)
-    }, [systemName])
+        console.log(`Window width = ${width}, windowHeight = ${height}`)
+    }, [width, height])
 
     // Screen orientation state handling
     useEffect(() => {
         ScreenOrientation.unlockAsync().catch((err) => console.warn(err))
         ScreenOrientation.getOrientationAsync()
-            .then((value: ScreenOrientation.Orientation) => {
+            .then((value: Orientation) => {
                 console.info(screenOrientation)
                 setScreenOrientation(value)
             })
@@ -81,11 +87,16 @@ export const GlobalProvider = ({ children }: Props) => {
     })
 
     return (
-        <GlobalContext.Provider value={{ theme, setTheme, systemName, baseOperatingSystem, screenOrientation, isKeyboardOpen, hamburgerBadgeText, setHamburgerBadgeText }}>
-            <KeyboardListener
-                onWillShow={() => setIsKeyboardOpen(true)}
-                onWillHide={() => setIsKeyboardOpen(false)}
-            />
+        <GlobalContext.Provider value={{
+            theme, setTheme,
+            baseOperatingSystem, screenOrientation,
+            isKeyboardOpen, keyboardHeight,
+            hamburgerBadgeText, setHamburgerBadgeText,
+            window: {
+                height,
+                width
+            }
+        }}>
             {children}
         </GlobalContext.Provider>
     )

@@ -5923,6 +5923,11 @@ react-native-togglebox@^1.0.3:
     prop-types "^15.5.10"
     react-style-proptype "^3.0.0"
 
+react-native-use-keyboard-height@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-use-keyboard-height/-/react-native-use-keyboard-height-0.1.1.tgz#d6da2a475a0328d2212a801950566a85d4ba3204"
+  integrity sha512-Sof2fk4YmuIuU7NYq2btaAmtQYVI67xtP5EZDsvrEq+58t4mwRoKCLcjbf1xqiY1vmd9+8ckzwpO5z5dmcokOA==
+
 react-native-vector-icons@^7.1.0:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-7.1.0.tgz#145487d617b2a81d395d2cf64e6e065fcab3a454"
