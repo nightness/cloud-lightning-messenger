@@ -60,7 +60,10 @@ export const GlobalProvider = ({ children }: Props) => {
     ] = useState<ScreenOrientation.Orientation>(ScreenOrientation.Orientation.UNKNOWN)
 
     useEffect(() => {
+        /*  This is used by the web version of the app to either display
+            a QR code or a button to launch Expo Go */         
         if (Platform.OS === 'web') {
+            // Loading this module is crashing the native apps so it being loaded dynamically
             const devInfo = require('react-native-device-info')
             devInfo.getBaseOs()
                 .then((os: string) => setBaseOperatingSystem(os))
