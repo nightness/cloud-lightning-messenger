@@ -1,3 +1,4 @@
+import * as Google from 'expo-google-app-auth'
 import React, { useState, useContext, useEffect } from 'react'
 import { Image, ScrollView, Platform, StyleProp, ViewStyle } from 'react-native'
 import {
@@ -15,7 +16,7 @@ import {
 import {
     firebaseAuth,
     GoogleAuthProvider,
-    callFirebaseFunction,
+    signInWithGoogleAsync,
 } from '../firebase/Firebase'
 import { Formik, FormikHelpers, FormikProps, useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -26,6 +27,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Icon } from 'react-native-elements'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { GradientColors } from '../shared/GradientColors'
 
 interface AuthenticationProps {
     navigation: StackNavigationProp<any>
@@ -148,16 +150,27 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
             })
     }
 
-    const signInWithGoogle = (formikProps: FormikProps<any>) => {
-        const provider = new GoogleAuthProvider()
-        auth.signInWithRedirect(provider)
-            .then(() => {
+    const signInWithGoogle = async (formikProps: FormikProps<any>) => {
+        if (Platform.OS === 'web') {
+            const provider = new GoogleAuthProvider()
+            auth.signInWithRedirect(provider)
+                .then(() => {
+                    navigation.replace('Main')
+                })
+                .catch((error) => {
+                    setSubmitted(false)
+                    alert(error)
+                })
+        } else if (Platform.OS === 'android' || Platform.OS === 'ios') {
+            signInWithGoogleAsync().then(() => {
                 navigation.replace('Main')
             })
             .catch((error) => {
-                setSubmitted(false)
                 alert(error)
+                setIsLoading(false)
             })
+
+        }
         formikProps.resetForm()
     }
 
@@ -237,9 +250,9 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         return <DisplayError error={error} />
     } else {
         return (
-            <Screen navigation={navigation} title="Home">
+            <Screen navigation={navigation} title=''>
                 <LinearGradient
-                    colors={['#ada9f0', '#88ddd2', '#8ccfdd']}
+                    colors={GradientColors[theme].authentication}
                     style={screenStyle}
                 >
                     <SafeAreaView style={{ flex: 1 }}>
@@ -341,20 +354,16 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                                         //onPress={onLoginPress}
                                                         onPress={formikProps.handleSubmit}
                                                     />
-                                                    {Platform.OS === 'web' ?
-                                                        <Button
-                                                            //title="Google Sign-In"                                                    
-                                                            onPress={() => signInWithGoogle(formikProps)}
-                                                            style={{ margin: 5 }}
-                                                        >
-                                                            <View style={{ flexDirection: 'row' }}>
-                                                                <Icon color={'white'} size={24} name='logo-google' type='ionicon' />
-                                                                <Text>oogle Sign-In</Text>
-                                                            </View>
-                                                        </Button>
-                                                        : <></>
-                                                    }
-
+                                                    <Button
+                                                        //title="Google Sign-In"                                                    
+                                                        onPress={() => signInWithGoogle(formikProps)}
+                                                        style={{ margin: 5 }}
+                                                    >
+                                                        <View style={{ flexDirection: 'row' }}>
+                                                            <Icon color={'white'} size={24} name='logo-google' type='ionicon' />
+                                                            <Text>oogle Sign-In</Text>
+                                                        </View>
+                                                    </Button>
                                                 </View>
                                                 <View style={{ flexDirection: 'row' }}>
                                                     <View style={Styles.auth.footerView}>

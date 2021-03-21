@@ -5,6 +5,12 @@ import * as FirebaseAuth from 'react-firebase-hooks/auth'
 import * as FirebaseFirestore from 'react-firebase-hooks/firestore'
 import { firebaseConfig } from './FirebaseConfig'
 import * as Defaults from '../shared/Defaults'
+import * as Google from 'expo-google-app-auth'
+
+const androidClientId =
+    '357266467361-77fhea6ov6bhkdtqmtp4nqb6f1q087s6.apps.googleusercontent.com'
+const iosClientId =
+    '357266467361-9lklfaka12j8g8o3acj4dilvcile0vmd.apps.googleusercontent.com'
 
 export type AuthError = firebase.auth.Error
 export type DocumentData = firebase.firestore.DocumentData
@@ -12,6 +18,14 @@ export type DocumentSnapshot<T> = firebase.firestore.DocumentSnapshot<T>
 export type Timestamp = firebase.firestore.Timestamp
 export type QuerySnapshot<T> = firebase.firestore.QuerySnapshot<T>
 export type QueryDocumentSnapshot<T> = firebase.firestore.QueryDocumentSnapshot<T>
+
+interface LoginSuccess {
+    type: 'success'
+    accessToken?: string
+    idToken?: string
+    refreshToken?: string
+    user: Google.GoogleUser
+}
 
 export const getFirestore = () => {
     var firestore = firebase.firestore()
@@ -158,4 +172,24 @@ export const collectionContains = async (collection: string, docId: string) => {
 // Returns a promise
 export const callFirebaseFunction = (funcName: string, data: any) => {
     return firebaseFunctions().httpsCallable(funcName)(data)
+}
+
+export async function signInWithGoogleAsync() {
+    //logOutAsync({ accessToken, iosClientId, androidClientId, iosStandaloneAppClientId, androidStandaloneAppClientId }): Promise<any>
+
+    try {
+        const result = await Google.logInAsync({
+            behavior: 'web',
+            androidClientId,
+            iosClientId,
+            scopes: ['profile', 'email'],
+        })
+        if (result.type === 'success') {
+            const { idToken } = result as LoginSuccess
+            let credential = GoogleAuthProvider.credential(idToken)
+            return firebase.auth().signInWithCredential(credential)
+        }
+    } catch (error) {
+        console.error(error)
+    }
 }
