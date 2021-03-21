@@ -19,7 +19,7 @@ interface Props {
 export default ({ children, style, navigation, title }: Props) => {
 
     const { theme, hamburgerBadgeText, screenOrientation, isKeyboardOpen, keyboardHeight, window } = useContext(GlobalContext)
-    const { width, height } = window
+    const { width, height } = window //useWindowDimensions()
     const { currentUser } = useContext(FirebaseContext)
     const [screenStyle, setScreenStyle] = useState<StyleProp<ViewStyle>>({
         height, width, position: 'absolute'

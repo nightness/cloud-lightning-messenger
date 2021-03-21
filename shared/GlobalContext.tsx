@@ -3,7 +3,7 @@ import * as ScreenOrientation from 'expo-screen-orientation'
 import * as Notifications from 'expo-notifications'
 import * as Defaults from './Defaults'
 import { Theme } from './Themes'
-import { Platform, useWindowDimensions } from 'react-native'
+import { Keyboard, Platform, useWindowDimensions } from 'react-native'
 import { Constants } from 'expo'
 import { useKeyboardHeight } from './Hooks'
 
@@ -50,11 +50,33 @@ export const GlobalProvider = ({ children }: Props) => {
     const [theme, setTheme] = useState<Theme>(Defaults.defaultTheme)
     const [hamburgerBadgeText, setHamburgerBadgeText] = useState<string>()
     const [isKeyboardOpen, setIsKeyboardOpen] = useState<boolean>(false)
-    const keyboardHeight = useKeyboardHeight()
     const [
         screenOrientation,
         setScreenOrientation,
     ] = useState<ScreenOrientation.Orientation>(ScreenOrientation.Orientation.UNKNOWN)
+
+    const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
+    useEffect(() => {
+        Keyboard.addListener('keyboardDidShow', keyboardDidShow);
+        Keyboard.addListener('keyboardDidHide', keyboardDidHide);
+
+        // cleanup function
+        return () => {
+            Keyboard.removeListener('keyboardDidShow', keyboardDidShow);
+            Keyboard.removeListener('keyboardDidHide', keyboardDidHide);
+        }
+    }, [])
+
+    const keyboardDidShow = (frames: any) => {
+        setIsKeyboardOpen(true)
+        setKeyboardHeight(frames.endCoordinates.height)
+    }
+
+    const keyboardDidHide = () => {
+        setIsKeyboardOpen(false)
+        setKeyboardHeight(0)
+    }
+
 
     // Screen orientation state handling
     useEffect(() => {
