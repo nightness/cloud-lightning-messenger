@@ -6,11 +6,7 @@ import * as FirebaseFirestore from 'react-firebase-hooks/firestore'
 import { firebaseConfig } from './FirebaseConfig'
 import * as Defaults from '../shared/Defaults'
 import * as Google from 'expo-google-app-auth'
-
-const androidClientId =
-    '357266467361-77fhea6ov6bhkdtqmtp4nqb6f1q087s6.apps.googleusercontent.com'
-const iosClientId =
-    '357266467361-9lklfaka12j8g8o3acj4dilvcile0vmd.apps.googleusercontent.com'
+import { androidClientId, iosClientId } from '../private/FirebaseAuth'
 
 export type AuthError = firebase.auth.Error
 export type DocumentData = firebase.firestore.DocumentData
