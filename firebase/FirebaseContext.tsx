@@ -42,10 +42,12 @@ export const FirebaseProvider = ({ children }: Props) => {
         manager: false,
         moderator: false,
     })
-    const [savingTheme, setSavingTheme] = useState(false)
     const [loadingClaims, setLoadingClaims] = useState(true)
     const [loadingTheme, setLoadingTheme] = useState(true)
     const [authToken, setAuthToken] = useState()
+
+    // Setter here is being used to prevent an async race condition with component state
+    const [savingTheme, setSavingTheme] = useState(false)
 
     // User requires the .admin token to use this function
     const getClaims = async (uid: string) => {
