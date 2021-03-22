@@ -17,12 +17,12 @@ interface Props {
 }
 
 export const DrawerProvider = ({ children }: Props) => {
-    const [badges, _setBadges] = useState<Badges>({})
+    const [badges, setBadges] = useState<Badges>({})
 
     const setBadge = (routeName: string, value: string): void => {
         let newState = {...badges}
         newState[routeName].value = value
-        _setBadges(newState)
+        setBadges(newState)
     }
 
     return (
