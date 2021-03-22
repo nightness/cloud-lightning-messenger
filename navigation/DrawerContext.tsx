@@ -1,13 +1,15 @@
 import React, { createContext, useState, useEffect } from 'react'
 
+type Badges = { [routeName: string] : {value: string} }
+
 type ContextType = {
-    // getBadge: (routeName: string) => string
-    // setBadge: (routeName: string, value: string) => void
+    badges: Badges
+    setBadge: (routeName: string, value: string) => void
 }
 
 export const DrawerContext = createContext<ContextType>({
-    // getBadge: ,
-    // setBadge: (routeName: string, value: string) => undefined
+    badges: {},
+    setBadge: (routeName: string, value: string) => undefined
 })
 
 interface Props {
@@ -15,12 +17,19 @@ interface Props {
 }
 
 export const DrawerProvider = ({ children }: Props) => {
-    const [badges, setBadges] = useState<string[]>([])
+    const [badges, _setBadges] = useState<Badges>({})
+
+    const setBadge = (routeName: string, value: string): void => {
+        let newState = {...badges}
+        newState[routeName].value = value
+        _setBadges(newState)
+    }
+
     return (
         <DrawerContext.Provider
             value={{
-                getBadges: (value: string) => '0',
-                setBadges
+                badges,
+                setBadge
             }}
         >
             {children}

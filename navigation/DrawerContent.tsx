@@ -25,7 +25,7 @@ interface RouteParameters {
 }
 
 export const DrawerContent = ({ navigation, ...restProps }: DrawerContentComponentProps) => {
-    const { getBadges } = useContext(DrawerContext)
+    const { badges, setBadge } = useContext(DrawerContext)
     const { theme } = useContext(GlobalContext)
 
     const state = restProps.state;
@@ -43,7 +43,7 @@ export const DrawerContent = ({ navigation, ...restProps }: DrawerContentCompone
             style={{ flex: 1 }}
         >
             <SafeAreaView style={{ flex: 1 }}>
-                <DrawerContentScrollView {...restProps}>
+                <DrawerContentScrollView bounces={false} {...restProps}>
                     {routeNames.map((routeName) => {
                         const currentRoute = routes.filter(value => value.name === routeName)?.[0]
                         const params = currentRoute.params as NavigationParams
@@ -59,7 +59,7 @@ export const DrawerContent = ({ navigation, ...restProps }: DrawerContentCompone
                                 focusedIconName={params?.focusedIconName}
                                 onPress={() => navigateTo(routeName)}
                                 key={`route-${routeName}`}
-                                badgeText={getBadges(routeName)}
+                                badgeText={badges[routeName]?.value}
                             />
                         )
                     })}
