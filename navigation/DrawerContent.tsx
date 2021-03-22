@@ -44,9 +44,7 @@ export const DrawerContent = ({ navigation, ...restProps }: DrawerContentCompone
     return (
         <LinearGradient
             colors={GradientColors[theme].drawer}
-            style={{
-                flex: 1,
-            }}
+            style={{ flex: 1 }}
         >
             <SafeAreaView style={{ flex: 1 }}>
                 <DrawerContentScrollView {...restProps}>
