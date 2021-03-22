@@ -142,7 +142,7 @@ export const FirebaseProvider = ({ children }: Props) => {
             getCurrentUsersTheme(currentUser.uid).then((usersTheme: Theme) => {
                 if (usersTheme && setTheme && usersTheme != theme)
                     setProfileAttribute()
-            }).catch((error) => {                
+            }).catch(() => {                
                 setSavingTheme(false)
             })
         }        
