@@ -59,7 +59,7 @@ export const DrawerContent = ({ navigation, ...restProps }: DrawerContentCompone
                                 focusedIconName={params?.focusedIconName}
                                 onPress={() => navigateTo(routeName)}
                                 key={`route-${routeName}`}
-                                badgeText={badges[routeName]?.value}
+                                badgeText={badges[routeName] as string}
                             />
                         )
                     })}

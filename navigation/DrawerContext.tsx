@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react'
 
-type Badges = { [routeName: string] : {value: string} }
+type Badges = { [routeName: string] : {} }
 
 type ContextType = {
     badges: Badges
@@ -21,7 +21,7 @@ export const DrawerProvider = ({ children }: Props) => {
 
     const setBadge = (routeName: string, value: string): void => {
         let newState = {...badges}
-        newState[routeName].value = value
+        newState[routeName] = value
         setBadges(newState)
     }
 
