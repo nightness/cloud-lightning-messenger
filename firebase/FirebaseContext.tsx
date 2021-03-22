@@ -103,9 +103,9 @@ export const FirebaseProvider = ({ children }: Props) => {
         const authToken = await currentUser.getIdToken()
         setSavingTheme(true)
         currentUser.updateProfile({ displayName })
-        const result = await callFirebaseFunction('setProfileAttribute', {
-            displayName,
+        const result = await callFirebaseFunction('setProfileAttribute', {            
             authToken,
+            displayName,
             theme
         })
         setSavingTheme(false)
