@@ -34,6 +34,9 @@ export default () => {
         <ProfileProvider>
             <Drawer.Navigator
                 drawerContent={props => <DrawerContent {...props} />}
+                drawerStyle={{
+                    //width: '200' --- Find and remove padding to the right of the badges
+                }}
             >
                 <Drawer.Screen name="Home" component={Home} initialParams={homeParams} />
                 <Drawer.Screen name="My Wall" component={MyWall} initialParams={myWallParams} />

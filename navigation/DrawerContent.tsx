@@ -25,7 +25,7 @@ interface RouteParameters {
 }
 
 export const DrawerContent = ({ navigation, ...restProps }: DrawerContentComponentProps) => {
-    const { test } = useContext(DrawerContext)
+    const { getBadges } = useContext(DrawerContext)
     const { theme } = useContext(GlobalContext)
 
     const state = restProps.state;
@@ -59,6 +59,7 @@ export const DrawerContent = ({ navigation, ...restProps }: DrawerContentCompone
                                 focusedIconName={params?.focusedIconName}
                                 onPress={() => navigateTo(routeName)}
                                 key={`route-${routeName}`}
+                                badgeText={getBadges(routeName)}
                             />
                         )
                     })}

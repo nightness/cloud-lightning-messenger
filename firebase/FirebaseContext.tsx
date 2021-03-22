@@ -1,7 +1,9 @@
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect, useContext } from 'react'
 import { ActivityIndicator, DisplayError } from '../components/Components'
 import { UserClaims } from './DataTypes'
-import { useAuthState, callFirebaseFunction, getAuth } from './Firebase'
+import { useAuthState, callFirebaseFunction, getAuth, getFirestore } from './Firebase'
+import { GlobalContext } from '../shared/GlobalContext'
+import { Theme } from '../shared/Themes'
 
 type ContextType = {
     currentUser?: firebase.User
@@ -33,13 +35,16 @@ interface Props {
 }
 
 export const FirebaseProvider = ({ children }: Props) => {
+    const { theme, setTheme } = useContext(GlobalContext)
     const [currentUser, loadingUser, errorUser] = useAuthState()
     const [claims, setClaims] = useState<UserClaims>({
         admin: false,
         manager: false,
         moderator: false,
     })
+    const [savingTheme, setSavingTheme] = useState(false)
     const [loadingClaims, setLoadingClaims] = useState(true)
+    const [loadingTheme, setLoadingTheme] = useState(true)
     const [authToken, setAuthToken] = useState()
 
     // User requires the .admin token to use this function
@@ -87,22 +92,61 @@ export const FirebaseProvider = ({ children }: Props) => {
         setLoadingClaims(false)
     }
 
-    const setProfileAttribute = async (displayName: string) => {
+    const setProfileAttribute = async (displayName?: string) => {
         const currentUser = getAuth().currentUser
         if (!currentUser) return
+        if (!displayName)
+            displayName = currentUser.displayName as string
         const authToken = await currentUser.getIdToken()
+        setSavingTheme(true)
         currentUser.updateProfile({ displayName })
-        return await callFirebaseFunction('setProfileAttribute', {
+        const result = await callFirebaseFunction('setProfileAttribute', {
             displayName,
             authToken,
+            theme
         })
+        setSavingTheme(false)
+        return result
+    }
+
+    // Save the current user's theme when it changes
+    const getCurrentUsersTheme = async (uid: string) => {
+        const snapshot = await getFirestore()
+            .collection('profiles')
+            .doc(uid)
+            .get()
+        const data = snapshot.data()
+        if (data) return data.theme as Theme
+        return 'Light' as Theme
     }
 
     useEffect(() => {
         updateUserToken()
+        if (currentUser) {
+            getCurrentUsersTheme(currentUser.uid).then((usersTheme: Theme) => {
+                if (usersTheme && setTheme && usersTheme != theme)
+                    setTheme(usersTheme)
+                setLoadingTheme(false)
+            }).catch((error) => {
+                console.error(error)
+                setLoadingTheme(false)
+            })
+        }
     }, [currentUser])
 
-    const isLoading = loadingUser || loadingClaims
+    useEffect(() => {
+        if (currentUser) {
+            getCurrentUsersTheme(currentUser.uid).then((usersTheme: Theme) => {
+                if (usersTheme && setTheme && usersTheme != theme)
+                    setProfileAttribute()
+            }).catch((error) => {
+                console.error(error)
+                setSavingTheme(false)
+            })
+        }        
+    }, [theme])
+
+    const isLoading = loadingUser || loadingClaims || loadingTheme
     const error = errorUser
 
     if (loadingUser) return <ActivityIndicator />
