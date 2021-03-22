@@ -28,10 +28,6 @@ export const DrawerContent = ({ navigation, ...restProps }: DrawerContentCompone
     const { test } = useContext(DrawerContext)
     const { theme } = useContext(GlobalContext)
 
-    console.log(test)
-    // Need to grab the stateful theme to determine the best background image
-    // Like ../assets/ddd0da2a.png for dark mode
-    // Like ../assets/dd426684.png for light mode
     const state = restProps.state;
     const routeNames = state.routeNames
     const routes = state.routes
