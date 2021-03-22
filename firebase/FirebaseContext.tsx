@@ -94,6 +94,7 @@ export const FirebaseProvider = ({ children }: Props) => {
         setLoadingClaims(false)
     }
 
+    // Because of ContextType, displayName is required when being called non-locally
     const setProfileAttribute = async (displayName?: string) => {
         const currentUser = getAuth().currentUser
         if (!currentUser) return
