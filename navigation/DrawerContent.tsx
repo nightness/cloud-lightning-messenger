@@ -8,6 +8,7 @@ import {
 } from '@react-navigation/drawer'
 import { LinearGradient } from 'expo-linear-gradient'
 import { FirebaseContext } from '../firebase/FirebaseContext'
+import { DrawerContext } from './DrawerContext'
 import DrawerContentItem from './DrawerContentItem'
 import { NavigationParams } from './DrawerParams'
 import { GlobalContext } from '../shared/GlobalContext'
@@ -24,16 +25,16 @@ interface RouteParameters {
 }
 
 export const DrawerContent = ({ navigation, ...restProps }: DrawerContentComponentProps) => {
+    const { test } = useContext(DrawerContext)
+    const { theme } = useContext(GlobalContext)
+
+    console.log(test)
     // Need to grab the stateful theme to determine the best background image
     // Like ../assets/ddd0da2a.png for dark mode
     // Like ../assets/dd426684.png for light mode
     const state = restProps.state;
     const routeNames = state.routeNames
     const routes = state.routes
-    const routeParams = routes?.[0].params as RouteParameters
-    const theme = routeParams?.theme ? routeParams.theme : 'Light'
-
-    console.log(state)
 
     const navigateTo = (screenName: string) => {
         navigation.closeDrawer()

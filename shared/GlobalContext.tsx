@@ -5,7 +5,6 @@ import * as Defaults from './Defaults'
 import { Theme } from './Themes'
 import { Keyboard, Platform, useWindowDimensions } from 'react-native'
 import { Constants } from 'expo'
-import { useKeyboardHeight } from './Hooks'
 
 type Orientation = ScreenOrientation.Orientation
 
@@ -76,7 +75,6 @@ export const GlobalProvider = ({ children }: Props) => {
         setIsKeyboardOpen(false)
         setKeyboardHeight(0)
     }
-
 
     // Screen orientation state handling
     useEffect(() => {

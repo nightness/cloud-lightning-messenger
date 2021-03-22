@@ -33,7 +33,7 @@ export default () => {
     return (
         <ProfileProvider>
             <Drawer.Navigator
-                drawerContent={DrawerContent}
+                drawerContent={props => <DrawerContent {...props} />}
             >
                 <Drawer.Screen name="Home" component={Home} initialParams={homeParams} />
                 <Drawer.Screen name="My Wall" component={MyWall} initialParams={myWallParams} />
