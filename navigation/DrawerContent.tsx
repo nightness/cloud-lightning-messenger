@@ -11,8 +11,8 @@ import { FirebaseContext } from '../firebase/FirebaseContext'
 import { DrawerContext } from './DrawerContext'
 import DrawerContentItem from './DrawerContentItem'
 import { NavigationParams } from './DrawerParams'
-import { GlobalContext } from '../shared/GlobalContext'
-import { GradientColors } from '../shared/GradientColors'
+import { GlobalContext } from '../app/GlobalContext'
+import { GradientColors } from '../app/GradientColors'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const randomColor = () => '#' + (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0')

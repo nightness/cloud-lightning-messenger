@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import { GlobalContext } from '../shared/GlobalContext'
-import { Styles } from '../shared/Styles'
-import { Themes } from '../shared/Themes'
+import { GlobalContext } from '../app/GlobalContext'
+import { Styles } from '../app/Styles'
+import { Themes } from '../app/Themes'
 import { ScrollView, StyleProp, ViewStyle } from 'react-native'
 
 interface Props {

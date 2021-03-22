@@ -21,13 +21,13 @@ import {
 import { Formik, FormikHelpers, FormikProps, useFormik } from 'formik'
 import * as Yup from 'yup'
 import { FirebaseContext } from '../firebase/FirebaseContext'
-import { Styles } from '../shared/Styles'
-import { GlobalContext } from '../shared/GlobalContext'
+import { Styles } from '../app/Styles'
+import { GlobalContext } from '../app/GlobalContext'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Icon } from 'react-native-elements'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { GradientColors } from '../shared/GradientColors'
+import { GradientColors } from '../app/GradientColors'
 
 interface AuthenticationProps {
     navigation: StackNavigationProp<any>

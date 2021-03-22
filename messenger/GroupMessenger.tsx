@@ -9,10 +9,10 @@ import {
     Button,
     FirestoreCollectionView,
 } from '../components/Components'
-import { Styles } from '../shared/Styles'
+import { Styles } from '../app/Styles'
 import { DocumentData, QuerySnapshot, useCollection, callFirebaseFunction } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
-import { GlobalContext } from '../shared/GlobalContext'
+import { GlobalContext } from '../app/GlobalContext'
 import Message from './Message'
 import { StackNavigationProp } from '@react-navigation/stack'
 import {
@@ -21,7 +21,7 @@ import {
     TextInput as NativeTextInput
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import { GradientColors } from '../shared/GradientColors'
+import { GradientColors } from '../app/GradientColors'
 
 interface Props {
     navigation: StackNavigationProp<any>

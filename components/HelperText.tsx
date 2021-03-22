@@ -1,8 +1,8 @@
 import React, { useContext, useRef, useEffect } from 'react'
 import { StyleProp, TextStyle } from 'react-native'
 import { HelperText } from 'react-native-paper'
-import { GlobalContext } from '../shared/GlobalContext'
-import { Themes } from '../shared/Themes'
+import { GlobalContext } from '../app/GlobalContext'
+import { Themes } from '../app/Themes'
 
 interface Props {
     children: JSX.Element

@@ -9,7 +9,7 @@ import {
     LabeledSwitch,
     PickerItem,
 } from '../components/Components'
-import { Styles } from '../shared/Styles'
+import { Styles } from '../app/Styles'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import { DocumentData, QuerySnapshot, useCollection } from '../firebase/Firebase'
 import { StackNavigationProp } from '@react-navigation/stack'

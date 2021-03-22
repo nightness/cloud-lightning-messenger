@@ -5,7 +5,7 @@ import { ModalPortal } from 'react-native-modals'
 import { AppLoading } from 'expo'
 import * as Fonts from 'expo-font'
 import { FirebaseProvider } from './firebase/FirebaseContext'
-import { GlobalProvider } from './shared/GlobalContext'
+import { GlobalProvider } from './app/GlobalContext'
 import { DrawerProvider } from './navigation/DrawerContext'
 import AppNavigator from './navigation/AppNavigator'
 

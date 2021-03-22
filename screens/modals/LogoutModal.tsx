@@ -2,7 +2,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
 import { Text, Button, View, Modal } from '../../components/Components'
 import { firebaseAuth } from '../../firebase/Firebase'
-import { Styles } from '../../shared/Styles'
+import { Styles } from '../../app/Styles'
 
 interface Props {
     navigation: StackNavigationProp<any>

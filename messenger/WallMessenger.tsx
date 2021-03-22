@@ -9,10 +9,10 @@ import {
     FirestoreCollectionView,
     PickerItem,
 } from '../components/Components'
-import { Styles } from '../shared/Styles'
+import { Styles } from '../app/Styles'
 import { DocumentData, QuerySnapshot, useCollection, callFirebaseFunction } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
-import { GlobalContext } from '../shared/GlobalContext'
+import { GlobalContext } from '../app/GlobalContext'
 import Message from './Message'
 import {
     NativeSyntheticEvent,
@@ -21,7 +21,7 @@ import {
 } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { LinearGradient } from 'expo-linear-gradient'
-import { GradientColors } from '../shared/GradientColors'
+import { GradientColors } from '../app/GradientColors'
 
 interface Props {
     navigation: StackNavigationProp<any>

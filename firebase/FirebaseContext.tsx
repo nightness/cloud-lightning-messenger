@@ -2,8 +2,8 @@ import React, { createContext, useState, useEffect, useContext } from 'react'
 import { ActivityIndicator, DisplayError } from '../components/Components'
 import { UserClaims } from './DataTypes'
 import { useAuthState, callFirebaseFunction, getAuth, getFirestore } from './Firebase'
-import { GlobalContext } from '../shared/GlobalContext'
-import { Theme } from '../shared/Themes'
+import { GlobalContext } from '../app/GlobalContext'
+import { Theme } from '../app/Themes'
 
 type ContextType = {
     currentUser?: firebase.User

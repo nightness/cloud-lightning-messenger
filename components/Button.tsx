@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { Button, StyleProp, TouchableOpacity, ViewStyle } from 'react-native'
 import { Text } from './Components'
-import { GlobalContext } from '../shared/GlobalContext'
-import { Styles } from '../shared/Styles'
-import { Themes } from '../shared/Themes'
+import { GlobalContext } from '../app/GlobalContext'
+import { Styles } from '../app/Styles'
+import { Themes } from '../app/Themes'
 
 interface Props {
     style?: StyleProp<ViewStyle>

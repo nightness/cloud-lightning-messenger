@@ -1,8 +1,8 @@
 import React, { useContext, useRef } from 'react'
 import { View, SafeAreaView, StyleProp, ViewStyle } from 'react-native'
-import { GlobalContext } from '../shared/GlobalContext'
-import { Styles } from '../shared/Styles'
-import { Theme, Themes } from '../shared/Themes'
+import { GlobalContext } from '../app/GlobalContext'
+import { Styles } from '../app/Styles'
+import { Theme, Themes } from '../app/Themes'
 
 interface Props {
     children: JSX.Element | JSX.Element[]

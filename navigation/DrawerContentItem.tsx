@@ -5,7 +5,7 @@ import { Icon } from 'react-native-elements'
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types'
 import { View, Text } from '../components/Components'
 import { Badge } from 'react-native-paper'
-import { Styles } from '../shared/Styles'
+import { Styles } from '../app/Styles'
 //import { Ionicons } from '@expo/vector-icons'
 
 declare type Props = {

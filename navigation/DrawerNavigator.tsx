@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler'
 import React, { useContext, useEffect, useState } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { ProfileContext, ProfileContextType, ProfileProvider } from '../shared/ProfileContext'
+import { ProfileContext, ProfileContextType, ProfileProvider } from '../app/ProfileContext'
 import Home from '../screens/Home'
 import PrivateMessenger from '../messenger/PrivateMessenger'
 import WallMessenger from '../messenger/WallMessenger'
@@ -11,7 +11,7 @@ import ManageUserRoles from '../messenger/ManageUserRoles'
 import MyWall from '../messenger/MyWall'
 import { Playground } from '../screens/Playground'
 import { DrawerContent } from './DrawerContent'
-import { GlobalContext } from '../shared/GlobalContext'
+import { GlobalContext } from '../app/GlobalContext'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import {
     homeParams,

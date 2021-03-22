@@ -13,15 +13,15 @@ import {
     DisplayError,
     PickerItem,
 } from '../components/Components'
-import { Styles } from '../shared/Styles'
-import { GlobalContext } from '../shared/GlobalContext'
+import { Styles } from '../app/Styles'
+import { GlobalContext } from '../app/GlobalContext'
 import {
     useCollection,
     getFirestore,
     DocumentData,
     QuerySnapshot,
 } from '../firebase/Firebase'
-import { ProfileContext } from '../shared/ProfileContext'
+import { ProfileContext } from '../app/ProfileContext'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { GroupDocument } from '../firebase/DataTypes'
 //import { ScrollView } from 'react-native-gesture-handler'

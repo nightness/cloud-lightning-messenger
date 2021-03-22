@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import Modal, { ModalContent } from 'react-native-modals'
-import { GlobalContext } from '../shared/GlobalContext'
-import { Styles } from '../shared/Styles'
-import { Themes } from '../shared/Themes'
+import { GlobalContext } from '../app/GlobalContext'
+import { Styles } from '../app/Styles'
+import { Themes } from '../app/Themes'
 import { StyleProp, ViewStyle } from 'react-native'
 
 interface Props {

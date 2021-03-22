@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { GlobalContext } from '../shared/GlobalContext'
+import { GlobalContext } from '../app/GlobalContext'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import ScreenHeader from './ScreenHeader'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useWindowDimensions, Dimensions, StyleProp, ViewStyle, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { useKeyboardHeight } from '../shared/Hooks'
+import { useKeyboardHeight } from '../app/Hooks'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { GradientColors } from '../shared/GradientColors'
+import { GradientColors } from '../app/GradientColors'
 
 interface Props {
     children: JSX.Element

@@ -1,4 +1,4 @@
-import { Themes } from '../shared/Themes'
+import { Themes } from '../app/Themes'
 
 export interface NavigationParams {
     activeTintColor?: string

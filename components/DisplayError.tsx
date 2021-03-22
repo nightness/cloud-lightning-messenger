@@ -1,7 +1,7 @@
 import React from 'react'
 import Container from './Container'
 import Text from './Text'
-import { Styles } from '../shared/Styles'
+import { Styles } from '../app/Styles'
 
 interface Props {
     permissionDenied?: boolean

@@ -4,7 +4,7 @@ import 'firebase/functions'
 import * as FirebaseAuth from 'react-firebase-hooks/auth'
 import * as FirebaseFirestore from 'react-firebase-hooks/firestore'
 import { firebaseConfig } from './FirebaseConfig'
-import * as Defaults from '../shared/Defaults'
+import * as Defaults from '../app/Defaults'
 import * as Google from 'expo-google-app-auth'
 import { androidClientId, iosClientId } from '../private/FirebaseAuth'
 

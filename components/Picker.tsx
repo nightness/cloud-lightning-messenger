@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { ScrollView, Platform, StyleProp, TextStyle } from 'react-native'
-import { GlobalContext } from '../shared/GlobalContext'
-import { Styles } from '../shared/Styles'
-import { Theme, Themes } from '../shared/Themes'
+import { GlobalContext } from '../app/GlobalContext'
+import { Styles } from '../app/Styles'
+import { Theme, Themes } from '../app/Themes'
 import { Picker, PickerIOS } from '@react-native-picker/picker'
 // @ts-ignore - No Types found yet
 import ToggleBox from 'react-native-togglebox'

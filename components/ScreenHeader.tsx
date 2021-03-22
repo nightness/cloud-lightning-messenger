@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Badge } from 'react-native-paper'
 import { View } from 'react-native'
-import { GlobalContext } from '../shared/GlobalContext'
+import { GlobalContext } from '../app/GlobalContext'
 import { Header } from 'react-native-elements'
 import { Image, Text, MaterialIcons } from './Components'
 import { LogoutModal } from '../screens/modals/LogoutModal'
-import { Themes } from '../shared/Themes'
+import { Themes } from '../app/Themes'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useAuthState } from '../firebase/Firebase'
 

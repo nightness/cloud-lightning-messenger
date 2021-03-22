@@ -1,5 +1,5 @@
 import React, { StyleHTMLAttributes } from 'react'
-import { Styles } from '../shared/Styles'
+import { Styles } from '../app/Styles'
 import View from './View'
 import Switch from './Switch'
 import Text from './Text'

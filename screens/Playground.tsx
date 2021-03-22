@@ -19,8 +19,8 @@ import {
 } from '../components/Components'
 import { useAuthState } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
-import '../shared/FormValidation'
-import { Theme } from '../shared/Themes'
+import '../app/FormValidation'
+import { Theme } from '../app/Themes'
 
 interface Props {
     navigation: DefaultRouterOptions

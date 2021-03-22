@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { StyleProp, View, ViewStyle } from 'react-native'
-import { GlobalContext } from '../shared/GlobalContext'
-import { Styles } from '../shared/Styles'
-import { Themes } from '../shared/Themes'
+import { GlobalContext } from '../app/GlobalContext'
+import { Styles } from '../app/Styles'
+import { Themes } from '../app/Themes'
 
 export interface ViewProps {
     children: JSX.Element | JSX.Element[]

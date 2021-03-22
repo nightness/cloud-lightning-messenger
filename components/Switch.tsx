@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { ColorValue, StyleProp, Switch, ViewStyle } from 'react-native'
-import { Styles } from '../shared/Styles'
-import { Themes } from '../shared/Themes'
-import { GlobalContext } from '../shared/GlobalContext'
+import { Styles } from '../app/Styles'
+import { Themes } from '../app/Themes'
+import { GlobalContext } from '../app/GlobalContext'
 
 interface Props {
     style?: StyleProp<ViewStyle>

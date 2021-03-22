@@ -4,7 +4,7 @@ import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/
 import { createStackNavigator } from '@react-navigation/stack'
 import { ActivityIndicator, DisplayError } from '../components/Components'
 import { useAuthState } from '../firebase/Firebase'
-import { GlobalContext } from '../shared/GlobalContext'
+import { GlobalContext } from '../app/GlobalContext'
 import DrawerNavigator from './DrawerNavigator'
 import Authentication from '../screens/Authentication'
 import { useTheme } from '@react-navigation/native';

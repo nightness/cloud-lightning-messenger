@@ -12,8 +12,8 @@ import { ListRenderItem, StyleProp, ViewStyle } from 'react-native'
 import { FirebaseError } from 'firebase'
 import FlatList from '../components/FlatList'
 import { LinearGradient } from 'expo-linear-gradient'
-import { GradientColors } from '../shared/GradientColors'
-import { GlobalContext } from '../shared/GlobalContext'
+import { GradientColors } from '../app/GradientColors'
+import { GlobalContext } from '../app/GlobalContext'
 
 interface Props<T> {
     style?: StyleProp<ViewStyle> | object

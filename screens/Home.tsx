@@ -10,8 +10,8 @@ import {
     View,
     Image
 } from '../components/Components'
-import { GlobalContext } from '../shared/GlobalContext'
-import { ProfileContext } from '../shared/ProfileContext'
+import { GlobalContext } from '../app/GlobalContext'
+import { ProfileContext } from '../app/ProfileContext'
 
 interface Props {
     navigation: StackNavigationProp<any>

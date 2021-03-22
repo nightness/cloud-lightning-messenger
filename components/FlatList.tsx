@@ -9,9 +9,9 @@ import {
     ViewStyle,
     LayoutChangeEvent,
 } from 'react-native'
-import { Styles } from '../shared/Styles'
-import { Theme, Themes } from '../shared/Themes'
-import { GlobalContext } from '../shared/GlobalContext'
+import { Styles } from '../app/Styles'
+import { Theme, Themes } from '../app/Themes'
+import { GlobalContext } from '../app/GlobalContext'
 
 interface Props<T> {
     style?: StyleProp<ViewStyle> | object

@@ -1,6 +1,6 @@
 import React from 'react'
 import { ActivityIndicator } from 'react-native'
-import { Styles } from '../shared/Styles'
+import { Styles } from '../app/Styles'
 import View from './View'
 
 export default () => {
