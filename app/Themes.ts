@@ -193,6 +193,17 @@ export class Themes {
         },
     }
 
+    static readonly pickerItem: ThemeType = {
+        Light: {
+            color: '#000',
+            backgroundColor: 'transparent',
+        },
+        Dark: {
+            color: '#fff',
+            backgroundColor: 'transparent',
+        },
+    }    
+
     static readonly pickerDisabled: ThemeType = {
         Light: {
             color: '#444',

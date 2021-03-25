@@ -107,15 +107,20 @@ export class Styles {
     })
 
     static readonly picker = StyleSheet.create({
-        toggleBox: {
-            backgroundColor: 'transparent',
-            borderColor: 'rgb(178,181,189)',
-            borderBottomWidth: 1,
-        },
         picker: {
             margin: 5,
             backgroundColor: 'transparent',
             paddingHorizontal: 2,
+        },
+        pickerItem: {
+            backgroundColor: 'transparent',
+            borderColor: 'rgb(178,181,189)',
+            borderBottomWidth: 1,
+        },
+        toggleBox: {
+            backgroundColor: 'transparent',
+            borderColor: 'rgb(178,181,189)',
+            borderBottomWidth: 1,
         },
     })
 

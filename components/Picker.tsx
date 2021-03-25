@@ -42,6 +42,7 @@ export default ({
     const PickerCommon = () => (
         <Picker
             style={[Styles.picker.picker, Themes.picker[theme], style]}
+            itemStyle={[Styles.picker.pickerItem, Themes.pickerItem[theme], style]}
             {...restProps}
             selectedValue={selectedValue}
             onValueChange={(value, index) => {
@@ -51,7 +52,9 @@ export default ({
         >
             {data.map((item) => {
                 return (
-                    <Picker.Item label={item.label} value={item.value} key={item.value} />
+                    <Picker.Item
+                        label={item.label} value={item.value} key={item.value}
+                    />
                 )
             })}
         </Picker>

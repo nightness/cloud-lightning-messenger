@@ -11,11 +11,8 @@ import { useTheme } from '@react-navigation/native';
 
 const Stack = createStackNavigator()
 export default () => {
-    const { colors } = useTheme()
     const [user, firebaseLoading, firebaseError] = useAuthState()
     const { theme } = useContext(GlobalContext)
-
-    console.log(colors)
 
     if (firebaseLoading) return <ActivityIndicator />
     if (firebaseError) return <DisplayError error={firebaseError} />
