@@ -3,14 +3,12 @@ import { GlobalContext } from '../app/GlobalContext'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import ScreenHeader from './ScreenHeader'
 import { LinearGradient } from 'expo-linear-gradient'
-import { useWindowDimensions, Dimensions, StyleProp, ViewStyle, View } from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { useKeyboardHeight } from '../app/Hooks'
+import { StyleProp, ViewStyle, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { GradientColors } from '../app/GradientColors'
 
 interface Props {
-    children: JSX.Element
+    children: JSX.Element | JSX.Element[]
     style?: object
     navigation?: any
     title: string
@@ -43,7 +41,7 @@ export default ({ children, style, navigation, title }: Props) => {
                 colors={GradientColors[theme].background}
                 style={screenStyle}
             >
-                <SafeAreaView style={screenStyle}>
+                <SafeAreaView style={[screenStyle, style]}>
                     <ScreenHeader
                         navigation={navigation}
                         title={title}
