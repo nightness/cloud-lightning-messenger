@@ -103,7 +103,7 @@ export default ({
                 photoURL ? (
                     <Image
                         source={{ uri: photoURL }}
-                        style={{ width: 28, height: 28, borderRadius: '50%' }}
+                        style={{ width: 28, height: 28, borderRadius: 14 }}
                         onPress={() => setShowLogoutModal(true)}
                     />
                 ) : (
