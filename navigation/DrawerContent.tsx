@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ImageBackground, View } from 'react-native'
 import { Orientation } from 'expo-screen-orientation'
 import {
@@ -25,7 +25,7 @@ interface RouteParameters {
 }
 
 export const DrawerContent = ({ navigation, ...restProps }: DrawerContentComponentProps) => {
-    const { badges, setBadge } = useContext(DrawerContext)
+    const { badges, setDrawerContent } = useContext(DrawerContext)
     const { theme } = useContext(GlobalContext)
 
     const state = restProps.state;
@@ -36,6 +36,10 @@ export const DrawerContent = ({ navigation, ...restProps }: DrawerContentCompone
         navigation.closeDrawer()
         navigation.navigate(screenName)
     }
+
+    useEffect(() => {
+        setDrawerContent(navigation, state)
+    })
 
     return (
         <LinearGradient
@@ -60,6 +64,7 @@ export const DrawerContent = ({ navigation, ...restProps }: DrawerContentCompone
                                 onPress={() => navigateTo(routeName)}
                                 key={`route-${routeName}`}
                                 badgeText={badges[routeName] as string}
+                                style={{ marginLeft: false ? 25 : 0 }}  // ToDo
                             />
                         )
                     })}

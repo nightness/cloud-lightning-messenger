@@ -58,6 +58,11 @@ service cloud.firestore {
       			allow read: if isGroupMember() || isAuthorized()
       		}
     	}
+		
+    	// Notifications Match
+    	match /notifications/{memberId} {
+      		allow read: if (request.auth.uid == memberId)
+    	}    
 
     	// Profiles Match
     	match /profiles/{memberId} {
