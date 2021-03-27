@@ -73,10 +73,10 @@ export const Playground = ({ navigation }: Props) => {
                 }}
             />
             <Button
-                title='Delete the Home Screen'
+                title='Delete the Playground Screen'
                 onPress={() => {
                     if (screensManager) {
-                        screensManager('remove', 0)
+                        screensManager('remove', 7)
                     }
                 }}
             />

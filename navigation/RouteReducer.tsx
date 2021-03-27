@@ -20,7 +20,7 @@ export const RoutingReducer = (currentState: Screens, action: ReducerAction) => 
         }
         case 'remove': {
             // requires only type and (index or name)
-            if (typeof action.index === 'number') {
+            if (typeof action.index === 'number' && action.index < currentState.length) {
                 currentState.splice(action.index, 1)
                 return [...currentState]
             }

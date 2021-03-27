@@ -15,7 +15,7 @@ type ContextType = {
     screensManager?: (action: ReducerActionType, index: number, screen?: ScreenConfig) => boolean
     navigation?: DrawerNavigationHelpers
     state?: DrawerNavigationState<ParamListBase>
-    index?: number
+    screenIndex?: number
     setDrawerContent: (navigation: DrawerNavigationHelpers, state: DrawerNavigationState<ParamListBase>) => void
 }
 
@@ -38,7 +38,7 @@ export const DrawerProvider = ({ children, screens, screensDispatch }: Props) =>
     const [badges, setBadges] = useState<Badges>({})
     const [navigation, setNavigation] = useState<DrawerNavigationHelpers>()
     const [state, setState] = useState<DrawerNavigationState<ParamListBase>>()
-    const [index, setIndex] = useState<number>()
+    const [screenIndex, setScreenIndex] = useState<number>()
 
     const setBadge = (routeName: string, value: string): void => {
         let newState = {...badges}
@@ -48,24 +48,26 @@ export const DrawerProvider = ({ children, screens, screensDispatch }: Props) =>
 
     const setDrawerContent = (navigation: DrawerNavigationHelpers, state: DrawerNavigationState<ParamListBase>) => {
         setNavigation(navigation)
-        setIndex(state.index)
+        setScreenIndex(state.index)
         setState(state)
     }
 
     const screensManager = (action: ReducerActionType, index: number, screen?: ScreenConfig) => {
-        if (!screensDispatch) return false
+        // If removing the current screen, go back in the history first, then remove
+        if (action === 'remove' && index === screenIndex)
+            navigation?.goBack()
         screensDispatch({
             type: action,
             index,
             screen
-        })
+        })        
         return true
     }
 
     // Used for watching for route index changes
     useEffect(() => {
-        if (state && state.index != index)
-            setIndex(state.index)
+        if (state && state.index != screenIndex)
+            setScreenIndex(state.index)
     }, [state?.index])
 
     useEffect(() => {
@@ -83,7 +85,7 @@ export const DrawerProvider = ({ children, screens, screensDispatch }: Props) =>
                 setBadge,
                 navigation,
                 state,
-                index,
+                screenIndex,
                 screens,
                 screensManager,
                 setDrawerContent
