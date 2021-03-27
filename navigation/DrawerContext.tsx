@@ -106,7 +106,7 @@ interface Props {
 }
 
 type ReducerAction = {
-    type: string
+    type: 'insert' | 'remove'
     index: number
     screen: JSX.Element
 }
