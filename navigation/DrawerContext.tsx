@@ -32,7 +32,7 @@ type ContextType = {
     badges: Badges
     setBadge: (routeName: string, value: string) => void
     screens: Screens
-    screensManager?: React.Dispatch<ReducerAction>
+    screensManager?: (action: ReducerActions, index: number, screen: JSX.Element) => boolean
     navigation?: DrawerNavigationHelpers
     state?: DrawerNavigationState<ParamListBase>
     index?: number
@@ -105,8 +105,10 @@ interface Props {
     children: JSX.Element | JSX.Element[]
 }
 
+type ReducerActions = 'insert' | 'remove'
+
 type ReducerAction = {
-    type: 'insert' | 'remove'
+    type: ReducerActions
     index: number
     screen: JSX.Element
 }
@@ -133,7 +135,7 @@ export const DrawerProvider = ({ children }: Props) => {
     const [state, setState] = useState<DrawerNavigationState<ParamListBase>>()
     const [index, setIndex] = useState<number>()
     //const [screens, setScreens] = useState<Screens>(rootScreens)
-    const [screens, screensManager] = useReducer(screensReducer, rootScreens)
+    const [screens, screensDispatch] = useReducer(screensReducer, rootScreens)
 
     const setBadge = (routeName: string, value: string): void => {
         let newState = {...badges}
@@ -145,6 +147,10 @@ export const DrawerProvider = ({ children }: Props) => {
         setNavigation(navigation)
         setIndex(state.index)
         setState(state)
+    }
+
+    const screensManager = (action: ReducerActions, index: number, screen: JSX.Element) => {
+        return true
     }
 
     // Used for watching for route index changes
