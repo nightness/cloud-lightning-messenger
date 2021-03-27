@@ -14,7 +14,7 @@ interface Props {
 
 // Playground
 export const Playground = ({ navigation }: Props) => {
-    const { setBadge } = useContext(DrawerContext)
+    const { setBadge, screensManager } = useContext(DrawerContext)
     return (
         <Screen navigation={navigation} title="Playground">
             <Button
@@ -70,6 +70,14 @@ export const Playground = ({ navigation }: Props) => {
                     }).catch((error) => {
                         alert('Unhandled exception')
                     })
+                }}
+            />
+            <Button
+                title='Delete the Home Screen'
+                onPress={() => {
+                    if (screensManager) {
+                        screensManager('remove', 0)
+                    }
                 }}
             />
         </Screen>

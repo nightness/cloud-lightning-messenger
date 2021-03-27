@@ -1,23 +1,26 @@
 import 'react-native-gesture-handler'
-import React, { useContext } from 'react'
+import React, { ReducerAction, useContext, useEffect, useReducer } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { DrawerProvider } from '../navigation/DrawerContext'
 import { ProfileProvider } from '../app/ProfileContext'
 import { DrawerContent } from './DrawerContent'
 import { DrawerContext } from './DrawerContext'
 import { FirebaseContext } from '../firebase/FirebaseContext'
+import { RoutingReducer } from './RouteReducer'
+import { rootScreens } from './DefaultRoutes'
 
 const Drawer = createDrawerNavigator()
 
 export default () => {
+    const [screens, screensDispatch] = useReducer(RoutingReducer, rootScreens)
     const { claims } = useContext(FirebaseContext)
-    const { screens } = useContext(DrawerContext)
 
     return (
         <ProfileProvider>
-            <DrawerProvider>
+            <DrawerProvider screens={screens} screensDispatch={screensDispatch}>
                 <Drawer.Navigator
                     drawerContent={props => <DrawerContent {...props} />}
+                    sceneContainerStyle={{ padding: 0, paddingLeft: 0, paddingRight: 0 }}
                     drawerStyle={{
                         //width: '200' --- Find and remove padding to the right of the badges
                     }}
