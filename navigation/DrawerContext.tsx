@@ -3,9 +3,6 @@ import { DrawerNavigationState, ParamListBase } from '@react-navigation/native'
 import React, { ComponentType, createContext, useContext, useEffect, useState, useReducer } from 'react'
 import { useDocumentData } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
-import Screen from '../components/Screen'
-
-//import 'react-native-gesture-handler'
 import Home from '../screens/Home'
 import PrivateMessenger from '../messenger/PrivateMessenger'
 import WallMessenger from '../messenger/WallMessenger'
@@ -25,8 +22,6 @@ import {
     playgroundParams,
     NavigationParams
 } from './DrawerParams'
-
-
 
 type Notifications = {
     groups: { [routeName: string] : {} }
@@ -113,12 +108,19 @@ interface Props {
 type ReducerAction = {
     type: string
     location: any
-    value: any
+    screen: JSX.Element
 }
 
 const screensReducer = (currentState: Screens, action: ReducerAction) => {
-    if (action.type === 'insert') {
+    switch (action.type) {
+        case 'insert': {
 
+            return currentState
+        }
+        case 'remove': {
+
+            return currentState
+        }
     }
     return currentState
 }
