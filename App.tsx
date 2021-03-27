@@ -6,7 +6,6 @@ import { AppLoading } from 'expo'
 import * as Fonts from 'expo-font'
 import { FirebaseProvider } from './firebase/FirebaseContext'
 import { GlobalProvider } from './app/GlobalContext'
-import { DrawerProvider } from './navigation/DrawerContext'
 import AppNavigator from './navigation/AppNavigator'
 
 const getFonts = () =>
@@ -24,10 +23,8 @@ export default function App() {
         return (
             <GlobalProvider>
                 <FirebaseProvider>
-                    <DrawerProvider>
-                        <AppNavigator />
-                        <ModalPortal />
-                    </DrawerProvider>
+                    <AppNavigator />
+                    <ModalPortal />
                 </FirebaseProvider>
             </GlobalProvider>
         )

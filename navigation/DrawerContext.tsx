@@ -1,8 +1,32 @@
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types'
 import { DrawerNavigationState, ParamListBase } from '@react-navigation/native'
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { ComponentType, createContext, useContext, useEffect, useState, useReducer } from 'react'
 import { useDocumentData } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
+import Screen from '../components/Screen'
+
+//import 'react-native-gesture-handler'
+import Home from '../screens/Home'
+import PrivateMessenger from '../messenger/PrivateMessenger'
+import WallMessenger from '../messenger/WallMessenger'
+import GroupMessenger from '../messenger/GroupMessenger'
+import ManageGroups from '../messenger/ManageGroups'
+import ManageUserRoles from '../messenger/ManageUserRoles'
+import MyWall from '../messenger/MyWall'
+import { Playground } from '../screens/Playground'
+import {
+    homeParams,
+    messagesParams,
+    myWallParams,
+    memberWallParams,
+    groupChatParams,
+    manageGroupsParams,
+    manageUserRolesParams,
+    playgroundParams,
+    NavigationParams
+} from './DrawerParams'
+
+
 
 type Notifications = {
     groups: { [routeName: string] : {} }
@@ -12,20 +36,91 @@ type Badges = { [routeName: string] : {} }
 type ContextType = {
     badges: Badges
     setBadge: (routeName: string, value: string) => void
+    screens: Screens
+    screensManager?: React.Dispatch<ReducerAction>
     navigation?: DrawerNavigationHelpers
     state?: DrawerNavigationState<ParamListBase>
     index?: number
     setDrawerContent: (navigation: DrawerNavigationHelpers, state: DrawerNavigationState<ParamListBase>) => void
 }
 
+type ScreenConfig = {
+    name: string
+    component: ComponentType<any>,
+    initialParams: NavigationParams,
+    claims?: string[]
+}
+
+type Screens = ScreenConfig[]
+
+const rootScreens: Screens = [
+    {
+        name: "Home",
+        component: Home,
+        initialParams: homeParams
+    },
+    {
+        name: "My Wall",
+        component: MyWall,
+        initialParams: myWallParams
+    },
+    {
+        name: "Member Walls",
+        component: WallMessenger,
+        initialParams: memberWallParams
+    },
+    {
+        name: "Messages",
+        component: PrivateMessenger,
+        initialParams: messagesParams
+    },
+    {
+        name: "Group Chat",
+        component: GroupMessenger,
+        initialParams: groupChatParams
+    },
+    {
+        name: "Manage Groups",
+        component: ManageGroups,
+        initialParams: manageGroupsParams,
+        claims: [ 'admin' ]
+    },
+    {
+        name: "Manage User Roles",
+        component: ManageUserRoles,
+        initialParams: manageUserRolesParams,
+        claims: [ 'admin' ]
+    },
+    {
+        name: "Playground",
+        component: Playground,
+        initialParams: playgroundParams,
+        claims: [ 'admin' ]
+    }
+]
+
 export const DrawerContext = createContext<ContextType>({
     badges: {},
+    screens: rootScreens,
     setBadge: (routeName: string, value: string) => undefined,
     setDrawerContent: (navigation: DrawerNavigationHelpers, state: DrawerNavigationState<ParamListBase>) => undefined
 })
 
 interface Props {
     children: JSX.Element | JSX.Element[]
+}
+
+type ReducerAction = {
+    type: string
+    location: any
+    value: any
+}
+
+const screensReducer = (currentState: Screens, action: ReducerAction) => {
+    if (action.type === 'insert') {
+
+    }
+    return currentState
 }
 
 export const DrawerProvider = ({ children }: Props) => {
@@ -35,6 +130,8 @@ export const DrawerProvider = ({ children }: Props) => {
     const [navigation, setNavigation] = useState<DrawerNavigationHelpers>()
     const [state, setState] = useState<DrawerNavigationState<ParamListBase>>()
     const [index, setIndex] = useState<number>()
+    //const [screens, setScreens] = useState<Screens>(rootScreens)
+    const [screens, screensManager] = useReducer(screensReducer, rootScreens)
 
     const setBadge = (routeName: string, value: string): void => {
         let newState = {...badges}
@@ -70,6 +167,8 @@ export const DrawerProvider = ({ children }: Props) => {
                 navigation,
                 state,
                 index,
+                screens,
+                screensManager,
                 setDrawerContent
             }}
         >
