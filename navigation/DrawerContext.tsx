@@ -107,7 +107,7 @@ interface Props {
 
 type ReducerAction = {
     type: string
-    location: any
+    index: number
     screen: JSX.Element
 }
 

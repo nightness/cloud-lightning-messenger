@@ -1,28 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ImageBackground, View } from 'react-native'
-import { Orientation } from 'expo-screen-orientation'
 import {
     DrawerContentScrollView,
-    // DrawerContent,
     DrawerContentComponentProps,
 } from '@react-navigation/drawer'
 import { LinearGradient } from 'expo-linear-gradient'
-import { FirebaseContext } from '../firebase/FirebaseContext'
 import { DrawerContext } from './DrawerContext'
 import DrawerContentItem from './DrawerContentItem'
 import { NavigationParams } from './DrawerParams'
 import { GlobalContext } from '../app/GlobalContext'
 import { GradientColors } from '../app/GradientColors'
 import { SafeAreaView } from 'react-native-safe-area-context'
-
-const randomColor = () => '#' + (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0')
-// Homer photoURL: https://yt3.ggpht.com/yti/ANoDKi75CjXyn5Omt5Z22dCgKdM_Ey2f9nraM4bYrxuu3A=s88-c-k-c0x00ffffff-no-rj-mo
-
-interface RouteParameters {
-    theme: 'Light' | 'Dark'
-    isDrawerOpen: boolean
-    screenOrientation: Orientation
-}
 
 export const DrawerContent = ({ navigation, ...restProps }: DrawerContentComponentProps) => {
     const { badges, setDrawerContent } = useContext(DrawerContext)
