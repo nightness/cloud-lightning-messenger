@@ -150,6 +150,11 @@ export const DrawerProvider = ({ children }: Props) => {
     }
 
     const screensManager = (action: ReducerActions, index: number, screen: JSX.Element) => {
+        screensDispatch({
+            type: action,
+            index,
+            screen
+        })
         return true
     }
 
