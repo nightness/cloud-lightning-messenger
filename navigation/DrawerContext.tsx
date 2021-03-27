@@ -53,7 +53,6 @@ export const DrawerProvider = ({ children, screens, screensDispatch }: Props) =>
     }
 
     const screensManager = (action: ReducerActionType, index: number, screen?: ScreenConfig) => {
-        console.log({ location: 'screensManager', action, index, screen, screensDispatch })
         if (!screensDispatch) return false
         screensDispatch({
             type: action,
