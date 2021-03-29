@@ -18,7 +18,7 @@ import {
     playgroundParams
 } from './DrawerParams'
 
-export const rootScreens: Screens = [
+export const initialScreens: Screens = [
     {
         name: "Home",
         component: Home,

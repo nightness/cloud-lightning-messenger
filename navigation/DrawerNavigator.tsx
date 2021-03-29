@@ -6,23 +6,26 @@ import { ProfileProvider } from '../app/ProfileContext'
 import { DrawerContent } from './DrawerContent'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import { RoutingReducer } from './RouteReducer'
-import { rootScreens } from './DefaultRoutes'
+import { Screens } from './NavigationTypes'
+import { StyleProp, ViewStyle } from 'react-native'
 
 const Drawer = createDrawerNavigator()
 
-export default () => {
-    const [screens, screensDispatch] = useReducer(RoutingReducer, rootScreens)
+interface Props {
+    initialScreens: Screens,
+    drawerStyle?: StyleProp<ViewStyle>
+}
+
+export default ({ initialScreens, ...restProps }: Props) => {
+    const [screens, screensDispatch] = useReducer(RoutingReducer, initialScreens)
     const { claims } = useContext(FirebaseContext)
 
     return (
         <ProfileProvider>
             <DrawerProvider screens={screens} screensDispatch={screensDispatch}>
                 <Drawer.Navigator
+                    {...restProps}
                     drawerContent={props => <DrawerContent {...props} />}
-                    sceneContainerStyle={{ padding: 0, paddingLeft: 0, paddingRight: 0 }}
-                    drawerStyle={{
-                        //width: '200' --- Find and remove padding to the right of the badges
-                    }}
                 >
                     {
                         screens.map((screen) => {

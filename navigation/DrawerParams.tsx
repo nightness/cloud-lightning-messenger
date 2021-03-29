@@ -1,12 +1,5 @@
 import { Themes } from '../app/Themes'
-
-export interface NavigationParams {
-    activeTintColor?: string
-    inactiveTintColor?: string
-    iconGroup?: string
-    iconName: string
-    focusedIconName?: string
-}
+import { NavigationParams } from './NavigationTypes'
 
 export const homeParams: NavigationParams = {
     activeTintColor: '#5c3703',

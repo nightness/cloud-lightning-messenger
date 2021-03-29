@@ -1,5 +1,4 @@
 import { ComponentType } from 'react'
-import { NavigationParams } from './DrawerParams'
 
 export type Notifications = {
     groups: { [routeName: string] : {} }
@@ -7,8 +6,16 @@ export type Notifications = {
 
 export type Badges = { [routeName: string] : {} }
 
+export interface NavigationParams {
+    activeTintColor?: string
+    inactiveTintColor?: string
+    iconGroup?: string
+    iconName: string
+    focusedIconName?: string
+}
+
 export type ScreenConfig = {
-    name: string
+    name: string,
     component: ComponentType<any>,
     initialParams: NavigationParams,
     claims?: string[]

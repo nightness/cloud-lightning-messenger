@@ -1,29 +1,27 @@
-import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types'
-import { DrawerNavigationState, ParamListBase } from '@react-navigation/native'
-import React, { ComponentType, createContext, useContext, useEffect, useState, useReducer, ReducerAction } from 'react'
+import { DrawerNavigationState, NavigationHelpers, ParamListBase } from '@react-navigation/native'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useDocumentData } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
-//import { NavigationParams } from './DrawerParams'
-import { rootScreens } from './DefaultRoutes'
 import { Badges, Screens, ScreenConfig, Notifications } from './NavigationTypes'
 import { ReducerActionType } from './RouteReducer'
+import { initialScreens } from './DefaultRoutes'
 
 type ContextType = {
     badges: Badges
     setBadge: (routeName: string, value: string) => void
     screens: Screens
     screensManager?: (action: ReducerActionType, index: number, screen?: ScreenConfig) => boolean
-    navigation?: DrawerNavigationHelpers
+    navigation?: NavigationHelpers<any>
     state?: DrawerNavigationState<ParamListBase>
     screenIndex?: number
-    setDrawerContent: (navigation: DrawerNavigationHelpers, state: DrawerNavigationState<ParamListBase>) => void
+    setDrawerContent: (navigation: NavigationHelpers<any>, state: DrawerNavigationState<ParamListBase>) => void
 }
 
 export const DrawerContext = createContext<ContextType>({
     badges: {},
-    screens: rootScreens,
+    screens: initialScreens,
     setBadge: (routeName: string, value: string) => undefined,
-    setDrawerContent: (navigation: DrawerNavigationHelpers, state: DrawerNavigationState<ParamListBase>) => undefined
+    setDrawerContent: (navigation: NavigationHelpers<any>, state: DrawerNavigationState<ParamListBase>) => undefined
 })
 
 interface Props {
@@ -36,7 +34,7 @@ export const DrawerProvider = ({ children, screens, screensDispatch }: Props) =>
     const { currentUser } = useContext(FirebaseContext)
     const [document, loadingDocument, errorDocument] = useDocumentData(`notifications/${currentUser?.uid}`)
     const [badges, setBadges] = useState<Badges>({})
-    const [navigation, setNavigation] = useState<DrawerNavigationHelpers>()
+    const [navigation, setNavigation] = useState<NavigationHelpers<any>>()
     const [state, setState] = useState<DrawerNavigationState<ParamListBase>>()
     const [screenIndex, setScreenIndex] = useState<number>()
 
@@ -46,8 +44,9 @@ export const DrawerProvider = ({ children, screens, screensDispatch }: Props) =>
         setBadges(newState)
     }
 
-    const setDrawerContent = (navigation: DrawerNavigationHelpers, state: DrawerNavigationState<ParamListBase>) => {
-        setNavigation(navigation)
+    const setDrawerContent = (currentNavigation: NavigationHelpers<any>, state: DrawerNavigationState<ParamListBase>) => {
+        if (currentNavigation != navigation)
+            setNavigation(currentNavigation)
         setScreenIndex(state.index)
         setState(state)
     }

@@ -8,6 +8,7 @@ import { GlobalContext } from '../app/GlobalContext'
 import DrawerNavigator from './DrawerNavigator'
 import Authentication from '../screens/Authentication'
 import { useTheme } from '@react-navigation/native';
+import { initialScreens } from './DefaultRoutes'
 
 const Stack = createStackNavigator()
 export default () => {
@@ -23,7 +24,9 @@ export default () => {
                 initialRouteName={user ? 'Main' : 'Authentication'}
             >
                 <Stack.Screen name="Authentication" component={Authentication} />
-                <Stack.Screen name="Main" component={DrawerNavigator} />
+                <Stack.Screen name="Main">
+                    {props => <DrawerNavigator {...props} initialScreens={initialScreens}></DrawerNavigator>}
+                </Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>
     )

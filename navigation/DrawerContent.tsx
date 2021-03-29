@@ -6,7 +6,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient'
 import { DrawerContext } from './DrawerContext'
 import DrawerContentItem from './DrawerContentItem'
-import { NavigationParams } from './DrawerParams'
+import { NavigationParams } from './NavigationTypes'
 import { GlobalContext } from '../app/GlobalContext'
 import { GradientColors } from '../app/GradientColors'
 import { SafeAreaView } from 'react-native-safe-area-context'
