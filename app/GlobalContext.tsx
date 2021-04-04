@@ -8,11 +8,6 @@ import { Constants } from 'expo'
 
 type Orientation = ScreenOrientation.Orientation
 
-export interface Size {
-    width?: number
-    height?: number
-}
-
 type ContextType = {
     theme: Theme
     setTheme?: (theme: Theme) => void
@@ -21,7 +16,6 @@ type ContextType = {
     keyboardHeight: number
     hamburgerBadgeText?: string
     setHamburgerBadgeText?: React.Dispatch<React.SetStateAction<string | undefined>>
-    window: Size
 }
 
 Notifications.setNotificationHandler({
@@ -37,7 +31,6 @@ export const GlobalContext = createContext<ContextType>({
     isKeyboardOpen: false,
     keyboardHeight: 0,
     screenOrientation: ScreenOrientation.Orientation.UNKNOWN,
-    window: {}
 })
 
 interface Props {
@@ -45,7 +38,6 @@ interface Props {
 }
 
 export const GlobalProvider = ({ children }: Props) => {
-    const { width, height } = useWindowDimensions()
     const [theme, setTheme] = useState<Theme>(Defaults.defaultTheme)
     const [hamburgerBadgeText, setHamburgerBadgeText] = useState<string>()
     const [isKeyboardOpen, setIsKeyboardOpen] = useState<boolean>(false)
@@ -97,11 +89,7 @@ export const GlobalProvider = ({ children }: Props) => {
             theme, setTheme,
             screenOrientation,
             isKeyboardOpen, keyboardHeight,
-            hamburgerBadgeText, setHamburgerBadgeText,
-            window: {
-                height,
-                width
-            }
+            hamburgerBadgeText, setHamburgerBadgeText
         }}>
             {children}
         </GlobalContext.Provider>
