@@ -6,7 +6,7 @@ import { Themes } from '../app/Themes'
 import { StyleProp, ViewStyle } from 'react-native'
 
 interface Props {
-    children: JSX.Element[]
+    children: JSX.Element | JSX.Element[]
     style?: StyleProp<ViewStyle>
     visible: boolean
     onTouchOutside?: () => void

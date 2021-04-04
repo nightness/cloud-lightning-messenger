@@ -1,10 +1,9 @@
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useState, useEffect, useContext, PureComponent } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Linking, Platform } from 'react-native'
 import {
     Screen,
     Button,
-    Container,
     Text,
     ActivityIndicator,
     View,

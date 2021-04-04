@@ -1,4 +1,19 @@
-export const GradientColors = {
+export type Gradient = [string, string, string]
+
+export interface GradientColorSet {
+    background: Gradient,
+    primary: Gradient,
+    secondary: Gradient,
+    drawer: Gradient,
+    authentication: Gradient
+}
+
+export type GradientThemeSet = {
+    Light: GradientColorSet,
+    Dark: GradientColorSet
+}
+
+export const GradientColors: GradientThemeSet = {
     Light: {
         background: ['#ada9f0', '#88ddd2', '#8ccfdd'],
         primary: ['#ada9f0', '#88ddd2', '#8ccfdd'],

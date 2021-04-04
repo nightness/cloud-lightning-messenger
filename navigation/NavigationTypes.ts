@@ -14,11 +14,15 @@ export interface NavigationParams {
     focusedIconName?: string
 }
 
-export type ScreenConfig = {
-    name: string,
+export interface NavigationElement {
+    label: string,
+    routeName: string,
     component: ComponentType<any>,
     initialParams: NavigationParams,
+    depth: number,
     claims?: string[]
+    isHidden?: boolean,
+    isCollapsed?: boolean
 }
 
-export type Screens = ScreenConfig[]
+export type NavigationElements = NavigationElement[]

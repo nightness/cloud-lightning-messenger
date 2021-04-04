@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { StyleProp, TextStyle, ViewStyle } from 'react-native'
+import React from 'react'
+import { StyleProp, TextStyle, ViewStyle, View } from 'react-native'
 import { DrawerItem } from '@react-navigation/drawer'
 import { Icon } from 'react-native-elements'
 import { DrawerNavigationHelpers } from '@react-navigation/drawer/lib/typescript/src/types'
-import { View, Text } from '../components/Components'
-import { Badge } from 'react-native-paper'
-import { Styles } from '../app/Styles'
-//import { Ionicons } from '@expo/vector-icons'
+import { Text, Badge } from 'react-native-elements'
 
 declare type Props = {
     /**
@@ -83,9 +80,9 @@ export default ({ focusedIconName, iconGroup, iconName, focused, labelText, badg
             focused={focused}
             label={({ focused, color }) => (
                 <View style={{ flex: 1, marginLeft: -15, flexDirection: 'row' }}>
-                    <Text fontWeight='600' style={{ flex: 3 }}>{labelText}</Text>
+                    <Text style={{ flex: 3, fontWeight: '600' }}>{labelText}</Text>
                     { badgeText ?
-                        <Badge size={22} visible={true}>{badgeText}</Badge>
+                        <Badge badgeStyle={{ height: 22 }}>{badgeText}</Badge>
                         : <></>
                     }
                 </View>

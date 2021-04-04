@@ -1,3 +1,4 @@
+import Empty from '../screens/Empty'
 import Home from '../screens/Home'
 import PrivateMessenger from '../messenger/PrivateMessenger'
 import WallMessenger from '../messenger/WallMessenger'
@@ -6,7 +7,7 @@ import ManageGroups from '../messenger/ManageGroups'
 import ManageUserRoles from '../messenger/ManageUserRoles'
 import MyWall from '../messenger/MyWall'
 import { Playground } from '../screens/Playground'
-import { Screens } from './NavigationTypes'
+import { NavigationElements } from './NavigationTypes'
 import {
     homeParams,
     messagesParams,
@@ -18,48 +19,70 @@ import {
     playgroundParams
 } from './DrawerParams'
 
-export const initialScreens: Screens = [
+export const initialNavigationElements: NavigationElements = [
     {
-        name: "Home",
+        label: 'Home',
+        routeName: 'Home',
         component: Home,
-        initialParams: homeParams
+        initialParams: homeParams,
+        depth: 0
     },
     {
-        name: "My Wall",
+        label: 'Walls',
+        routeName: 'MyWall',
         component: MyWall,
-        initialParams: myWallParams
+        initialParams: myWallParams,
+        depth: 0
     },
+    // {
+    //     name: 'Member Walls',
+    //     component: WallMessenger,
+    //     initialParams: memberWallParams
+    // },
     {
-        name: "Member Walls",
-        component: WallMessenger,
-        initialParams: memberWallParams
-    },
-    {
-        name: "Messages",
+        label: 'Messages',
+        routeName: 'Messages',
         component: PrivateMessenger,
-        initialParams: messagesParams
+        initialParams: messagesParams,
+        depth: 0
     },
     {
-        name: "Group Chat",
+        label: 'Group Chat',
+        routeName: 'GroupChat',
         component: GroupMessenger,
-        initialParams: groupChatParams
+        initialParams: groupChatParams,
+        depth: 0
     },
     {
-        name: "Manage Groups",
+        label: 'Admin Settings',
+        routeName: 'AdminHome',
+        component: Empty,
+        initialParams: manageGroupsParams,
+        depth: 0,
+        claims: [ 'admin' ]
+    },
+    {
+        label: 'Manage Groups',
+        routeName: 'ManageGroups',
         component: ManageGroups,
         initialParams: manageGroupsParams,
+        depth: 1,
         claims: [ 'admin' ]
     },
     {
-        name: "Manage User Roles",
+        label: 'Manage User Roles',
+        routeName: 'ManageUserRoles',
         component: ManageUserRoles,
         initialParams: manageUserRolesParams,
+        depth: 1,
         claims: [ 'admin' ]
     },
     {
-        name: "Playground",
+        label: 'Playground',
+        routeName: 'Playground',
         component: Playground,
         initialParams: playgroundParams,
+        depth: 0,
         claims: [ 'admin' ]
     }
 ]

@@ -3,7 +3,7 @@ import { GlobalContext } from '../app/GlobalContext'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import ScreenHeader from './ScreenHeader'
 import { LinearGradient } from 'expo-linear-gradient'
-import { StyleProp, ViewStyle, View } from 'react-native'
+import { StyleProp, ViewStyle, View, useWindowDimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { GradientColors } from '../app/GradientColors'
 
@@ -17,7 +17,7 @@ interface Props {
 export default ({ children, style, navigation, title }: Props) => {
 
     const { theme, hamburgerBadgeText, screenOrientation, isKeyboardOpen, keyboardHeight, window } = useContext(GlobalContext)
-    const { width, height } = window //useWindowDimensions()
+    const { width, height } = useWindowDimensions()
     const { currentUser } = useContext(FirebaseContext)
     const [screenStyle, setScreenStyle] = useState<StyleProp<ViewStyle>>({
         height, width, position: 'absolute'
