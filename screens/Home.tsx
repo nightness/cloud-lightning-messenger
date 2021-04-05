@@ -54,13 +54,14 @@ export default ({ navigation }: Props) => {
         <Screen navigation={navigation} title="Home">
             { profileCache.isFetching ? <ActivityIndicator /> :
                 <View style={{ margin: 3 }}>
-                    <Text>{`Welcome ${name}`}</Text>
+                    <Text>Home Screen</Text>
+                    {/* <Text>{`Welcome ${name}`}</Text> */}
                     {Platform.OS === 'web' ?
                         <>
                             <Text>{
                                 `\nBeta 1 of the mobile app is available. To try it, first install the 'Expo Go' app on your mobile device. ` +
                                 `Expo Go is a free app that allows for distribution and testing of others apps during development. ` +
-                                `It's available on both the Google Play Store and iOS App Store. ` +
+                                `Expo Go is available on both the Google Play Store and iOS App Store. ` +
                                 `After installing Expo Go, ` +
                                 (baseOperatingSystem == 'iOS' || baseOperatingSystem == 'Android' ?
                                     `click the button below.` :

@@ -14,7 +14,7 @@ interface Props {
 
 // Playground
 export const Playground = ({ navigation }: Props) => {
-    const { setBadge, screensManager } = useContext(DrawerContext)
+    const { setBadge, ScreenManager, screenIndex } = useContext(DrawerContext)
     return (
         <Screen navigation={navigation} title="Playground">
             <Button
@@ -75,8 +75,8 @@ export const Playground = ({ navigation }: Props) => {
             <Button
                 title='Delete the Playground Screen'
                 onPress={() => {
-                    if (screensManager) {
-                        screensManager('remove', 7)
+                    if (ScreenManager?.removeScreen && screenIndex) {
+                        ScreenManager.removeScreen(screenIndex)
                     }
                 }}
             />
