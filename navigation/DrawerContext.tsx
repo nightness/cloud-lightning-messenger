@@ -9,11 +9,26 @@ interface Props {
     screensDispatch: React.Dispatch<any>
 }
 
+interface ReducerProps {
+    type: ScreenActions,
+    index?: number,
+    screen?: NavigationElement
+}
+
 interface ScreenManagerProps {
-    getIndex: (screenPath: [number]) => number | undefined,
+    removeScreen: (index: number) => void,
+    insertScreen: (index: number, screen?: NavigationElement) => void,
+    appendScreen: (screen?: NavigationElement) => void,
+    getScreenIndex: (screenPath: [number]) => number | undefined,
     getScreenPath: (index: number) => [number] | undefined,
-    addChild: (screenPath: [number], index: number, screenConfig: NavigationElement) => boolean,
-    reducer: (type: ScreenActions, index: number, screen?: NavigationElement) => boolean
+    addChild: (screenPath: [number], screenConfig: NavigationElement) => void,
+    insertChild: (screenPath: [number], index: number, screenConfig: NavigationElement) => void,
+    removeChild: (screenPath: [number]) => void,
+    collapse: (child: number | [number]) => void,
+    expand: (node: number | [number]) => void,
+    hide: (node: number | [number]) => void,
+    show: (node: number | [number]) => void,
+    rename: (node: number | [number], label: string) => void
 }
 
 type ContextType = {
@@ -36,7 +51,7 @@ export const DrawerContext = createContext<ContextType>({
     setDrawerContent: (navigation: NavigationHelpers<any>, state: DrawerNavigationState<ParamListBase>) => undefined
 })
 
-const equals = (a:[number], b:[number]) => a.length === b.length && a.every((v, i) => v === b[i])
+const equals = (a: [number], b: [number]) => a.length === b.length && a.every((v, i) => v === b[i])
 
 export const DrawerProvider = ({ children, screens, screensDispatch }: Props) => {
     const [badges, setBadges] = useState<Badges>({})
@@ -57,20 +72,82 @@ export const DrawerProvider = ({ children, screens, screensDispatch }: Props) =>
         setState(state)
     }
 
+    const nodeHandler = (type: ScreenActions, node: number | [number], name?: string) => {
+        if (Array.isArray(node)) {
+            const index = ScreenManager.getScreenIndex(node)
+            if (index === undefined)
+                throw new Error(`${type}: path is invalid`)
+            node = index
+        }
+        // At this point node is for sure an index
+        screensDispatch({ type, index: node, name })
+    }
+
+    const dispatcher = (type: ScreenActions, index?: number, screen?: NavigationElement) => {
+        // If removing the current screen, go back in the history first, then remove
+        if (type === 'remove' && index === screenIndex && navigation && navigation.canGoBack())
+            navigation.goBack()
+        screensDispatch({ type, index, screen })
+    }
+    
     const ScreenManager: ScreenManagerProps = {
-        reducer: (type: ScreenActions, index: number, screen?: NavigationElement) => {
-            // If removing the current screen, go back in the history first, then remove
-            if (type === 'remove' && index === screenIndex && navigation && navigation.canGoBack())
+        removeScreen: (index: number) => {
+            const type = 'remove'
+            if (index === screenIndex && navigation && navigation.canGoBack())
                 navigation.goBack()
             screensDispatch({ type, index, screen })
-            return true
         },
-        addChild: (parentScreenPath: [number], index: number, screenConfig: NavigationElement) => {
-            const parentIndex = ScreenManager.getIndex(parentScreenPath)
-            if (!parentIndex) throw new Error(`addChild: Parent index not found`)
-            return false
+        insertScreen: (index: number, screen?: NavigationElement) =>
+            screensDispatch({ type: 'insert', index, screen }),
+        appendScreen: (screen?: NavigationElement) =>
+            screensDispatch({ type: 'append', screen }),
+        collapse: (node: number | [number]) => nodeHandler('collapse', node),
+        expand: (node: number | [number]) => nodeHandler('expand', node),
+        hide: (node: number | [number]) => nodeHandler('hide', node),
+        show: (node: number | [number]) => nodeHandler('show', node),
+        rename: (node: number | [number], label: string) => nodeHandler('rename', node, label),
+        addChild: (parentScreenPath: [number], screenConfig: NavigationElement) => {
+            const parentIndex = ScreenManager.getScreenIndex(parentScreenPath)
+            if (parentIndex === undefined) throw new Error(`addChild: Parent index not found`)
+            const childDepth = screens[parentIndex].depth + 1
+            var childIndex = -1
+            for (let index = parentIndex + 1; index <= screens.length; index++) {
+                const node = screens[index]
+                if (node.depth > childDepth) continue
+                childIndex++
+
+                if (node.depth < childDepth) {
+                    screenConfig.depth = childDepth
+                    dispatcher('insert', index, screenConfig)
+                    break
+                }
+            }
         },
-        getIndex: (screenPath: [number]) => {
+        insertChild: (parentScreenPath: [number], insertChildIndex: number, screenConfig: NavigationElement) => {
+            const parentIndex = ScreenManager.getScreenIndex(parentScreenPath)
+            if (parentIndex === undefined) throw new Error(`insertChild: Parent index not found`)
+            const childDepth = screens[parentIndex].depth + 1
+            var childIndex = -1
+            for (let index = parentIndex + 1; index <= screens.length; index++) {
+                const node = screens[index]
+                console.log(node)
+                if (node.depth > childDepth) continue
+                if (node.depth < childDepth) break
+                childIndex++
+                if (childIndex == insertChildIndex) {
+                    screenConfig.depth = node.depth
+                    dispatcher('insert', index, screenConfig)
+                    break
+                }
+            }
+        },
+        removeChild: (child: [number]) => {
+            const index = ScreenManager.getScreenIndex(child)
+            if (index === undefined)
+                throw new Error('removeChild: invalid screen path')
+            ScreenManager.removeScreen(index)
+        },
+        getScreenIndex: (screenPath: [number]) => {
             let path: [number] = [0]
             let currentDepth = 0
 

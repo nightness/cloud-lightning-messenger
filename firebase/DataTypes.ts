@@ -8,8 +8,11 @@ export interface GroupDocument {
     members?: []
 }
 
+export type Claims = 'admin' | 'manager' | 'moderator'
+
 export interface UserClaims {
     admin: boolean
     manager: boolean
     moderator: boolean
 }
+

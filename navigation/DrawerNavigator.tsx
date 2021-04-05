@@ -2,12 +2,12 @@ import 'react-native-gesture-handler'
 import React, { useContext, useReducer } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { DrawerProvider } from '../navigation/DrawerContext'
-import { ProfileProvider } from '../app/ProfileContext'
 import { DrawerContent } from './DrawerContent'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import { ScreensReducer } from './RoutingReducer'
 import { NavigationElements } from './NavigationTypes'
 import { StyleProp, ViewStyle } from 'react-native'
+import { Claims } from '../firebase/DataTypes'
 
 const Drawer = createDrawerNavigator()
 
@@ -30,21 +30,32 @@ export default ({ initialScreens, ...restProps }: Props) => {
                 {...restProps}
                 drawerContent={props => <DrawerContent {...props} />}>
                 {screens.map((screen) => {
+                    const depthDelta = screen.depth - currentDepth
+                    // Depth increased since last screen
                     if (screen.depth > currentDepth) {
-                        if (screen.depth !== (currentDepth + 1))
-                            throw new Error('depth step change does not equal 1');
+                        // Can't have grandchildren without children
+                        if (depthDelta !== 1)
+                            throw new Error('depth step up change does not equal 1');                          
                         currentDepth++
                         parentStack.push(screen.routeName)
                     }
+                    // Depth decreased since last screen
                     if (screen.depth < currentDepth) {
-                        if (screen.depth !== (currentDepth - 1))
-                            throw new Error('depth step change does not equal 1');
-                        currentDepth--
-                        parentStack.pop()
+                        for (let i = depthDelta; i < 0; i++) {
+                            currentDepth--
+                            parentStack.pop()
+                        }
                     }
                     if (screen.claims) {
-                        if (screen.claims.indexOf('admin') !== -1 && !claims?.admin) return
-                    }
+                        let hasClaim = false
+                        screen.claims.forEach((claim) => {                            
+                            // @ts-expect-error
+                            if (claims[claim]) {
+                                hasClaim = true
+                            }
+                        })
+                        if (!hasClaim) return
+                    }                    
                     return (
                         <Drawer.Screen
                             name={screen.routeName}
@@ -57,34 +68,3 @@ export default ({ initialScreens, ...restProps }: Props) => {
         </DrawerProvider>
     )
 }
-
-// export default ({ initialScreens, ...restProps }: Props) => {
-//     const [screens, screensDispatch] = useReducer(RoutingReducer, initialScreens)
-//     const { claims } = useContext(FirebaseContext)
-
-//     return (
-//         <ProfileProvider>
-//             <DrawerProvider screens={screens} screensDispatch={screensDispatch}>
-//                 <Drawer.Navigator
-//                     {...restProps}
-//                     drawerContent={props => <DrawerContent {...props} />}
-//                 >
-//                     {
-//                         screens.map((screen) => {
-//                             if (screen.claims) {
-//                                 if (screen.claims.indexOf('admin') !== -1 && !claims?.admin) return
-//                             }
-//                             return (
-//                                 <Drawer.Screen
-//                                     name={screen.name}
-//                                     component={screen.component}
-//                                     initialParams={screen.initialParams}
-//                                     key={`root-${screen.name}`} />
-//                             )
-//                         })
-//                     }
-//                 </Drawer.Navigator>
-//             </DrawerProvider>
-//         </ProfileProvider>
-//     )
-// }
