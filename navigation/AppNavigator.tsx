@@ -7,13 +7,14 @@ import { useAuthState } from '../firebase/Firebase'
 import { GlobalContext } from '../app/GlobalContext'
 import { DrawerNavigator } from 'react-navigation-dynamic-drawer'
 import Authentication from '../screens/Authentication'
-import { useTheme } from '@react-navigation/native';
 import { initialNavigationElements } from './DefaultRoutes'
+import { FirebaseContext } from '../firebase/FirebaseContext'
 
 const Stack = createStackNavigator()
 export default () => {
     const [user, firebaseLoading, firebaseError] = useAuthState()
     const { theme } = useContext(GlobalContext)
+    const { claims } = useContext(FirebaseContext)
 
     if (firebaseLoading) return <ActivityIndicator />
     if (firebaseError) return <DisplayError error={firebaseError} />
@@ -25,7 +26,7 @@ export default () => {
             >
                 <Stack.Screen name="Authentication" component={Authentication} />
                 <Stack.Screen name="Main">
-                    {props => <DrawerNavigator {...props} initialScreens={initialNavigationElements}></DrawerNavigator>}
+                    {props => <DrawerNavigator {...props} claims={claims} initialScreens={initialNavigationElements} />}
                 </Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>

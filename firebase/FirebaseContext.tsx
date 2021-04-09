@@ -7,7 +7,7 @@ import { Theme } from '../app/Themes'
 
 type ContextType = {
     currentUser?: firebase.User
-    claims: UserClaims
+    claims?: [string]
     isLoading: boolean
     error?: any
     authToken?: string
@@ -18,11 +18,6 @@ type ContextType = {
 }
 
 export const FirebaseContext = createContext<ContextType>({
-    claims: {
-        admin: false,
-        manager: false,
-        moderator: false,
-    },
     isLoading: true,
     addClaim: (uid: string, claimName: string) => new Promise(() => undefined),
     removeClaim: (uid: string, claimName: string) => new Promise(() => undefined),
@@ -37,11 +32,7 @@ interface Props {
 export const FirebaseProvider = ({ children }: Props) => {
     const { theme, setTheme } = useContext(GlobalContext)
     const [currentUser, loadingUser, errorUser] = useAuthState()
-    const [claims, setClaims] = useState<UserClaims>({
-        admin: false,
-        manager: false,
-        moderator: false,
-    })
+    const [claims, setClaims] = useState<[string]>()
     const [loadingClaims, setLoadingClaims] = useState(true)
     const [loadingTheme, setLoadingTheme] = useState(true)
     const [authToken, setAuthToken] = useState()
@@ -55,6 +46,7 @@ export const FirebaseProvider = ({ children }: Props) => {
             userId: uid,
             authToken: authToken,
         })
+        console.log(result.data.customClaims)
         return result.data.customClaims as UserClaims
     }
 
@@ -88,9 +80,14 @@ export const FirebaseProvider = ({ children }: Props) => {
         const token: any = await currentUser.getIdToken(true)
         setAuthToken(token)
 
-        const idTokenResult = await currentUser.getIdTokenResult()
-        if (idTokenResult.claims !== undefined)
-            setClaims(idTokenResult.claims as UserClaims)
+        const { claims } = await currentUser.getIdTokenResult()
+        console.log(claims)
+
+        if (claims !== undefined) { 
+            const newClaims = []
+            if (claims.admin === true) newClaims.push('admin')
+            setClaims(newClaims as [string])
+        }
         setLoadingClaims(false)
     }
 

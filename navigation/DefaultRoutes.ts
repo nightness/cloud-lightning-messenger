@@ -59,7 +59,7 @@ export const initialNavigationElements: NavigationElements = [
         component: Empty,
         initialParams: manageGroupsParams,
         depth: 0,
-        //claims: [ 'admin' ]
+        claims: [ 'admin' ]
     },
     {
         label: 'Manage Groups',
@@ -67,7 +67,7 @@ export const initialNavigationElements: NavigationElements = [
         component: ManageGroups,
         initialParams: manageGroupsParams,
         depth: 1,
-        //claims: [ 'admin' ]
+        claims: [ 'admin' ]
     },
     {
         label: 'Manage User Roles',
@@ -75,7 +75,7 @@ export const initialNavigationElements: NavigationElements = [
         component: ManageUserRoles,
         initialParams: manageUserRolesParams,
         depth: 1,
-        //claims: [ 'admin' ]
+        claims: [ 'admin' ]
     },
     {
         label: 'Playground',
@@ -83,6 +83,6 @@ export const initialNavigationElements: NavigationElements = [
         component: Playground,
         initialParams: playgroundParams,
         depth: 0,
-        //claims: [ 'admin' ]
+        claims: [ 'admin' ]
     }
 ]
