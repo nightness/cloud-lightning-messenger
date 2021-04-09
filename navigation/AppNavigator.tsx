@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { ActivityIndicator, DisplayError } from '../components/Components'
 import { useAuthState } from '../firebase/Firebase'
 import { GlobalContext } from '../app/GlobalContext'
-import DrawerNavigator from './DrawerNavigator'
+import { DrawerNavigator } from 'react-navigation-dynamic-drawer'
 import Authentication from '../screens/Authentication'
 import { useTheme } from '@react-navigation/native';
 import { initialNavigationElements } from './DefaultRoutes'

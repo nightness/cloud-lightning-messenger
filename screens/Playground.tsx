@@ -5,7 +5,7 @@ import {
     Screen,
     Text,
 } from '../components/Components'
-import { DrawerContext } from '../navigation/DrawerContext'
+import { DrawerContext } from 'react-navigation-dynamic-drawer'
 import { callFirebaseFunction } from '../firebase/Firebase'
 
 interface Props {

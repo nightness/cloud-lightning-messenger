@@ -7,7 +7,7 @@ import ManageGroups from '../messenger/ManageGroups'
 import ManageUserRoles from '../messenger/ManageUserRoles'
 import MyWall from '../messenger/MyWall'
 import { Playground } from '../screens/Playground'
-import { NavigationElements } from './NavigationTypes'
+import { NavigationElements } from 'react-navigation-dynamic-drawer'
 import {
     homeParams,
     messagesParams,
@@ -59,7 +59,7 @@ export const initialNavigationElements: NavigationElements = [
         component: Empty,
         initialParams: manageGroupsParams,
         depth: 0,
-        claims: [ 'admin' ]
+        //claims: [ 'admin' ]
     },
     {
         label: 'Manage Groups',
@@ -67,7 +67,7 @@ export const initialNavigationElements: NavigationElements = [
         component: ManageGroups,
         initialParams: manageGroupsParams,
         depth: 1,
-        claims: [ 'admin' ]
+        //claims: [ 'admin' ]
     },
     {
         label: 'Manage User Roles',
@@ -75,7 +75,7 @@ export const initialNavigationElements: NavigationElements = [
         component: ManageUserRoles,
         initialParams: manageUserRolesParams,
         depth: 1,
-        claims: [ 'admin' ]
+        //claims: [ 'admin' ]
     },
     {
         label: 'Playground',
@@ -83,6 +83,6 @@ export const initialNavigationElements: NavigationElements = [
         component: Playground,
         initialParams: playgroundParams,
         depth: 0,
-        claims: [ 'admin' ]
+        //claims: [ 'admin' ]
     }
 ]
