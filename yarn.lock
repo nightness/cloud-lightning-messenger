@@ -1730,6 +1730,14 @@
     "@types/react" "*"
     "@types/react-native" "*"
 
+"@types/react-native-webrtc@^1.75.2":
+  version "1.75.2"
+  resolved "https://registry.yarnpkg.com/@types/react-native-webrtc/-/react-native-webrtc-1.75.2.tgz#ba8b030ecd65b32992458af6a1397dc46fd3600a"
+  integrity sha512-JYRZVFFvj86lFWDH+ZJpMcy2B9FQIDXaKwP7IwyiXPro+qeud94elHYlF92VoOdzeUwWP/qse2Oz6KhFEhHELw==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+
 "@types/react-native@*", "@types/react-native@~0.63.3":
   version "0.63.52"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.63.52.tgz#449beb4a413ec0f2c172cbf676a95f5b0952adf4"
@@ -2833,6 +2841,11 @@ cross-fetch@^3.0.4:
   dependencies:
     node-fetch "2.6.1"
 
+cross-os@^1.3.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/cross-os/-/cross-os-1.4.0.tgz#350f03fccb4bd9178777b6ae20160c1c7c79dbed"
+  integrity sha512-nuARAXqbsizhsqo3qo1bpYW2S6ohxJICjo/5Q/mq5xQ9dn1uWoRQ855DZrBAWgVfg7liPLdatnY2KMZwZYuxsQ==
+
 cross-spawn@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
@@ -3227,6 +3240,11 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
+
+event-target-shim@^1.0.5:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-1.1.1.tgz#a86e5ee6bdaa16054475da797ccddf0c55698491"
+  integrity sha1-qG5e5r2qFgVEddp5fM3fDFVphJE=
 
 event-target-shim@^5.0.0, event-target-shim@^5.0.1:
   version "5.0.1"
@@ -6055,6 +6073,17 @@ react-native-web@^0.13.12:
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.4"
 
+react-native-webrtc@^1.89.1:
+  version "1.89.1"
+  resolved "https://registry.yarnpkg.com/react-native-webrtc/-/react-native-webrtc-1.89.1.tgz#355c20a979076cc67aeec045b2293e722ddf84ab"
+  integrity sha512-YBvSoSpw3dvRQr5LcOmdS/56arCBwtrIqdgPuYURbGheJbGAE/wYfeqMKa2fiIQ6EoYkFNZPDV5n4M7/f3KvlQ==
+  dependencies:
+    base64-js "^1.1.2"
+    cross-os "^1.3.0"
+    event-target-shim "^1.0.5"
+    prop-types "^15.5.10"
+    uuid "^3.3.2"
+
 react-native@^0.63.3:
   version "0.63.4"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.63.4.tgz#2210fdd404c94a5fa6b423c6de86f8e48810ec36"
@@ -6125,10 +6154,10 @@ react-navigation-drawer@^2.6.0, react-navigation-drawer@^2.7.0:
   resolved "https://registry.yarnpkg.com/react-navigation-drawer/-/react-navigation-drawer-2.7.0.tgz#794b4214a6b5debde1f8f90e18e3e63aa738e628"
   integrity sha512-BKQSTpFPGVI3caFlIbY921NYTRDAf9XFCCmyy4aDlxZLI5FNh8FqzrG10voc5AGy7RegjLdNkkJa40ugu0I5jA==
 
-react-navigation-dynamic-drawer@1.0.14:
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/react-navigation-dynamic-drawer/-/react-navigation-dynamic-drawer-1.0.14.tgz#1a28623f3bbee23777893388ca406b074e94ca0c"
-  integrity sha512-KMHxsrBPJKOn7XAZhrRB9xE88rr9tPYPhuytZhkmEqyxJXpXS4BVR4aa/OigfDe9qNeC+v7MJ5rZiPDB/jf1Uw==
+react-navigation-dynamic-drawer@^1.0.31:
+  version "1.0.31"
+  resolved "https://registry.yarnpkg.com/react-navigation-dynamic-drawer/-/react-navigation-dynamic-drawer-1.0.31.tgz#ea3f8f149ba2d27b833232db854ca714aaa9bc87"
+  integrity sha512-pn4zCS/EhJP/DdeJCiMaJa2vJRr1J3aBLkQOtpBNOEMYwCQ2tA2N3xSWZ5D8QBT2IKI8YouiGASsHfQCiqfXXg==
   dependencies:
     "@react-native-community/masked-view" "^0.1.10"
     "@react-navigation/drawer" "^5.12.5"

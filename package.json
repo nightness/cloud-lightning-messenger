@@ -59,9 +59,10 @@
     "react-native-use-keyboard-height": "^0.1.1",
     "react-native-vector-icons": "^7.1.0",
     "react-native-web": "^0.13.12",
+    "react-native-webrtc": "^1.89.1",
     "react-navigation": "^4.4.3",
     "react-navigation-drawer": "^2.6.0",
-    "react-navigation-dynamic-drawer": "1.0.14",
+    "react-navigation-dynamic-drawer": "^1.0.31",
     "react-navigation-stack": "^2.10.0",
     "react-use-lifecycles": "^1.1.0",
     "recyclerlistview": "^3.0.0",
@@ -73,6 +74,7 @@
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.3",
     "@types/react-native-modals": "^0.19.0",
+    "@types/react-native-webrtc": "^1.75.2",
     "typescript": "~4.0.0"
   },
   "private": true
