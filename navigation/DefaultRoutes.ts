@@ -6,6 +6,7 @@ import GroupMessenger from '../messenger/GroupMessenger'
 import ManageGroups from '../messenger/ManageGroups'
 import ManageUserRoles from '../messenger/ManageUserRoles'
 import MyWall from '../messenger/MyWall'
+import Room from '../webrtc/Room'
 import { Playground } from '../screens/Playground'
 import { NavigationElements } from 'react-navigation-dynamic-drawer'
 import {
@@ -50,6 +51,13 @@ export const initialNavigationElements: NavigationElements = [
         label: 'Group Chat',
         routeName: 'GroupChat',
         component: GroupMessenger,
+        initialParams: groupChatParams,
+        depth: 0
+    },
+    {
+        label: 'Video Conference',
+        routeName: 'Video Conference',
+        component: Room,
         initialParams: groupChatParams,
         depth: 0
     },
