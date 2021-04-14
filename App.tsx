@@ -2,7 +2,7 @@ import 'react-native-gesture-handler'
 import React, { useState } from 'react'
 // @ts-ignore
 import { ModalPortal } from 'react-native-modals'
-import { AppLoading } from 'expo'
+import AppLoading from 'expo-app-loading'
 import * as Fonts from 'expo-font'
 import { FirebaseProvider } from './firebase/FirebaseContext'
 import { GlobalProvider } from './app/GlobalContext'
@@ -18,7 +18,11 @@ export default function App() {
     const [fontsLoaded, setFontsLoaded] = useState(false)
 
     if (!fontsLoaded) {
-        return <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
+        return <AppLoading
+            startAsync={getFonts}
+            onFinish={() => setFontsLoaded(true)}
+            onError={(error) => console.error(error)}
+        />
     } else {
         return (
             <GlobalProvider>
