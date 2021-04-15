@@ -6579,11 +6579,6 @@ react-native-safe-area-context@3.1.9:
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.1.9.tgz#48864ea976b0fa57142a2cc523e1fd3314e7247e"
   integrity sha512-wmcGbdyE/vBSL5IjDPReoJUEqxkZsywZw5gPwsVUV1NBpw5eTIdnL6Y0uNKHE25Z661moxPHQz6kwAkYQyorxA==
 
-react-native-safe-area-context@^3.1.9:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.2.0.tgz#06113c6b208f982d68ab5c3cebd199ca93db6941"
-  integrity sha512-k2Nty4PwSnrg9HwrYeeE+EYqViYJoOFwEy9LxL5RIRfoqxAq/uQXNGwpUg2/u4gnKpBbEPa9eRh15KKMe/VHkA==
-
 react-native-safe-area-view@^0.14.9:
   version "0.14.9"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.14.9.tgz#90ee8383037010d9a5055a97cf97e4c1da1f0c3d"
@@ -6675,14 +6670,15 @@ react-navigation-drawer@^2.7.0:
   resolved "https://registry.yarnpkg.com/react-navigation-drawer/-/react-navigation-drawer-2.7.0.tgz#794b4214a6b5debde1f8f90e18e3e63aa738e628"
   integrity sha512-BKQSTpFPGVI3caFlIbY921NYTRDAf9XFCCmyy4aDlxZLI5FNh8FqzrG10voc5AGy7RegjLdNkkJa40ugu0I5jA==
 
-react-navigation-dynamic-drawer@^1.0.38:
-  version "1.0.38"
-  resolved "https://registry.yarnpkg.com/react-navigation-dynamic-drawer/-/react-navigation-dynamic-drawer-1.0.38.tgz#876d29ecc0cddb5a5cf6e951ef4ef7c3b94c3838"
-  integrity sha512-g++I8jDTs0GoIpusntdRAvXb9NWFsQ+ariELbQg/ljdkxc8cDvh+KCwnEjzddd7CBDuAyeADtRgQwaHP0N3kvQ==
+react-navigation-dynamic-drawer@^1.0.49:
+  version "1.0.49"
+  resolved "https://registry.yarnpkg.com/react-navigation-dynamic-drawer/-/react-navigation-dynamic-drawer-1.0.49.tgz#e78c2ef660abdec1fdca078543944b86f3c769ec"
+  integrity sha512-xuKz0FgH7md1L5PGykpyGr2qiR+xw6O/8g63eMDnQ3VjrzqNkr2CkOwraehmj30vNE0tx4kLM4esjxEViuWgAg==
   dependencies:
     "@react-native-community/masked-view" "^0.1.10"
     "@react-navigation/drawer" "^5.12.5"
     "@react-navigation/native" "^5.9.4"
+    expo-linear-gradient "~8.4.0"
     react-native "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz"
     react-native-elements "^3.3.2"
     react-native-gesture-handler "~1.8.0"

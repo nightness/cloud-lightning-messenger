@@ -26,7 +26,6 @@ import { GlobalContext } from '../app/GlobalContext'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Icon } from 'react-native-elements'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { GradientColors } from '../app/GradientColors'
 
 interface AuthenticationProps {
@@ -255,7 +254,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                     colors={GradientColors[theme].authentication}
                     style={screenStyle}
                 >
-                    <SafeAreaView style={{ flex: 1 }}>
+                    <View style={{ flex: 1 }}>
                         <ScrollView style={{ flex: 1 }}>
                             <Image
                                 style={Styles.auth.logo}
@@ -389,7 +388,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                 <Text>{`Cloud Lightning Messenger - Beta`}</Text>
                             </View>
                         </ScrollView>
-                    </SafeAreaView>
+                    </View>
                 </LinearGradient>
             </Screen>
         )

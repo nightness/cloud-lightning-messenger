@@ -9,12 +9,14 @@ import { DrawerNavigator } from 'react-navigation-dynamic-drawer'
 import Authentication from '../screens/Authentication'
 import { initialNavigationElements } from './DefaultRoutes'
 import { FirebaseContext } from '../firebase/FirebaseContext'
+import { GradientColors } from '../app/GradientColors'
 
 const Stack = createStackNavigator()
 export default () => {
     const [user, firebaseLoading, firebaseError] = useAuthState()
     const { theme } = useContext(GlobalContext)
     const { claims } = useContext(FirebaseContext)
+    const colorSet = GradientColors[theme]
 
     if (firebaseLoading) return <ActivityIndicator />
     if (firebaseError) return <DisplayError error={firebaseError} />
@@ -26,7 +28,12 @@ export default () => {
             >
                 <Stack.Screen name="Authentication" component={Authentication} />
                 <Stack.Screen name="Main">
-                    {props => <DrawerNavigator {...props} claims={claims} initialScreens={initialNavigationElements} />}
+                    {props => <DrawerNavigator
+                        {...props}
+                        linearGradientBackgroundColors={colorSet.drawer}
+                        claims={claims}
+                        initialScreens={initialNavigationElements}
+                    />}
                 </Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>

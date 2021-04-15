@@ -4,7 +4,6 @@ import { FirebaseContext } from '../firebase/FirebaseContext'
 import ScreenHeader from './ScreenHeader'
 import { LinearGradient } from 'expo-linear-gradient'
 import { StyleProp, ViewStyle, View, useWindowDimensions } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { GradientColors } from '../app/GradientColors'
 
 interface Props {
@@ -41,7 +40,7 @@ export default ({ children, style, navigation, title }: Props) => {
                 colors={GradientColors[theme].background}
                 style={screenStyle}
             >
-                <SafeAreaView style={[screenStyle, style]}>
+                <View style={[screenStyle, style]}>
                     <ScreenHeader
                         navigation={navigation}
                         title={title}
@@ -49,7 +48,7 @@ export default ({ children, style, navigation, title }: Props) => {
                         hamburgerBadgeText={hamburgerBadgeText}
                     />
                     {children}
-                </SafeAreaView>
+                </View>
             </LinearGradient>
         </View>
     )
