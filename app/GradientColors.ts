@@ -1,4 +1,4 @@
-export type Gradient = [string, string, string]
+ type Gradient = [string, string, ...string[]]
 
 export interface GradientColorSet {
     background: Gradient,

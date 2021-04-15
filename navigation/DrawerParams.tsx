@@ -1,5 +1,5 @@
 import { Themes } from '../app/Themes'
-import { NavigationParams } from './NavigationTypes'
+import { NavigationParams } from 'react-navigation-dynamic-drawer'
 
 export const homeParams: NavigationParams = {
     activeTintColor: '#5c3703',
