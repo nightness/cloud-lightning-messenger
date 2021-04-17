@@ -6,8 +6,8 @@ import { GlobalContext } from '../app/GlobalContext'
 import { Theme } from '../app/Themes'
 
 type ContextType = {
-    currentUser?: firebase.User
-    claims?: [string]
+    currentUser?: firebase.User | null
+    claims?: string[]
     isLoading: boolean
     error?: any
     authToken?: string

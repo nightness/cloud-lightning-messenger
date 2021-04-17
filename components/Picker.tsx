@@ -6,6 +6,7 @@ import { Theme, Themes } from '../app/Themes'
 import { Picker, PickerIOS } from '@react-native-picker/picker'
 // @ts-ignore - No Types found yet
 import ToggleBox from 'react-native-togglebox'
+import { ItemValue } from '@react-native-picker/picker/typings/Picker'
 
 export interface PickerItem {
     label: string
@@ -27,7 +28,7 @@ export default ({
     ...restProps
 }: Props) => {
     const { theme } = useContext(GlobalContext)
-    const [selectedValue, setSelectedValue] = useState()
+    const [selectedValue, setSelectedValue] = useState<ItemValue>()
     const [selectedItem, setSelectedItem] = useState<PickerItem>()
     //const properTheme = enabled ? Themes.picker[theme] : Themes.pickerDisabled[theme]
 
@@ -42,7 +43,7 @@ export default ({
     const PickerCommon = () => (
         <Picker
             style={[Styles.picker.picker, Themes.picker[theme], style]}
-            itemStyle={[Styles.picker.pickerItem, Themes.pickerItem[theme], style]}
+            ///itemStyle={[Styles.picker.pickerItem, Themes.pickerItem[theme], style]}            
             {...restProps}
             selectedValue={selectedValue}
             onValueChange={(value, index) => {
@@ -53,6 +54,7 @@ export default ({
             {data.map((item) => {
                 return (
                     <Picker.Item
+                        color={Themes.picker[theme].color}
                         label={item.label} value={item.value} key={item.value}
                     />
                 )
@@ -61,7 +63,7 @@ export default ({
     )
 
     return (
-        <ScrollView bounces={false}>
+        <ScrollView style={[Styles.container.scrollView, Themes.container[theme]]} bounces={false}>
             {Platform.OS === 'ios' && (
                 <ToggleBox
                     label={

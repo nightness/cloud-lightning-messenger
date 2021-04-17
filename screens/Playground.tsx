@@ -22,54 +22,52 @@ export const Playground = ({ navigation }: Props) => {
                 onPress={() => {
                     callFirebaseFunction('joinGroup', {
                         groupId: `gZxCKotZO82cvDOdAfHW`,
-                    }).then((results) => {
-                        const data = results.data
-                        if (typeof data.type === 'string') {
-                            console.error(data.message)
-                            if (data.type === 'silent') return
-                            alert(data.message)
-                        } else {
-                            console.log(data)
-                        }
-                    }).catch((error) => {
-                        alert('Unhandled exception')
                     })
+                        .then((results) => {
+                            const data = results.data
+                            if (typeof data.type === 'string') {
+                                console.error(data.message)
+                                if (data.type === 'silent') return
+                                alert(data.message)
+                            } else {
+                                console.log(data)
+                            }
+                        })
+                        .catch((err) => console.warn(err))
                 }}
             />
             <Button
                 title='Leave a channel'
                 onPress={() => {
-                    callFirebaseFunction('leaveGroup', {
-                        groupId: `gZxCKotZO82cvDOdAfHW`,
-                    }).then((results) => {
-                        const data = results.data
-                        if (typeof data.type === 'string') {
-                            console.error(data.message)
-                            if (data.type === 'silent') return
-                            alert(data.message)
-                        } else {
-                            console.log(data)
-                        }
-                    }).catch((error) => {
-                        alert('Unhandled exception')
-                    })
+                    callFirebaseFunction('leaveGroup', { groupId: `gZxCKotZO82cvDOdAfHW`, })
+                        .then((results) => {
+                            const data = results.data
+                            if (typeof data.type === 'string') {
+                                console.error(data.message)
+                                if (data.type === 'silent') return
+                                alert(data.message)
+                            } else {
+                                console.log(data)
+                            }
+                        })
+                        .catch((err) => console.warn(err))
                 }}
             />
             <Button
                 title='Get Notifications'
                 onPress={() => {
-                    callFirebaseFunction('getNotifications', {}).then((results) => {
-                        const data = results.data
-                        if (typeof data.type === 'string') {
-                            console.error(data.message)
-                            if (data.type === 'silent') return
-                            alert(data.message)
-                        } else {
-                            console.log(data)
-                        }
-                    }).catch((error) => {
-                        alert('Unhandled exception')
-                    })
+                    callFirebaseFunction('getNotifications', {})
+                        .then((results) => {
+                            const data = results.data
+                            if (typeof data.type === 'string') {
+                                console.error(data.message)
+                                if (data.type === 'silent') return
+                                alert(data.message)
+                            } else {
+                                console.log(data)
+                            }
+                        })
+                        .catch((err) => console.warn(err))
                 }}
             />
             <Button
@@ -78,6 +76,12 @@ export const Playground = ({ navigation }: Props) => {
                     if (ScreenManager?.removeScreen && screenIndex) {
                         ScreenManager.removeScreen(screenIndex)
                     }
+                }}
+            />
+            <Button
+                title='Toast Test'
+                onPress={() => {
+
                 }}
             />
         </Screen>

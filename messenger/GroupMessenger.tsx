@@ -55,7 +55,9 @@ export default ({ navigation }: Props) => {
                     value: docRef.id,
                 })
             }
-            push(docRef).then(() => setGroups(newState))
+            push(docRef)
+                .then(() => setGroups(newState))
+                .catch((err) => console.warn(err))
         })
     }, [snapshot])
 

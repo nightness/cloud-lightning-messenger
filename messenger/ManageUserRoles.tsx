@@ -27,7 +27,7 @@ export default ({ navigation, ...restProps }: Props) => {
     const [isAdmin, setIsAdmin] = useState(false)
     const [isManager, setIsManager] = useState(false)
     const [isModerator, setIsModerator] = useState(false)
-    const [permissionDenied, setPermissionDenied] = useState(!claims.admin)
+    const [permissionDenied, setPermissionDenied] = useState(!claims?.admin)
 
     const setClaim = (uid: string, claimName: string, value: boolean) => {
         let promise = value ? addClaim(uid, claimName) : removeClaim(uid, claimName)
@@ -95,7 +95,7 @@ export default ({ navigation, ...restProps }: Props) => {
             setIsManager(claims?.manager)
             setIsModerator(claims?.moderator)
             setLoadingClaims(false)
-        })
+        }).catch((err) => console.warn(err))
     }, [selectedMember])
 
     let render = <ActivityIndicator />

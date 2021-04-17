@@ -41,7 +41,7 @@
 //                 let videoSourceId;
 //                 for (let i = 0; i < sourceInfos.length; i++) {
 //                     const sourceInfo = sourceInfos[i];
-//                     if (sourceInfo.kind == "videoinput" && sourceInfo.facing == (isFront ? "front" : "environment")) {
+//                     if (sourceInfo.kind === "videoinput" && sourceInfo.facing === (isFront ? "front" : "environment")) {
 //                         videoSourceId = sourceInfo.deviceId;
 //                     }
 //                 }

@@ -132,14 +132,14 @@ export default ({
                     borderBottomColor: Themes.screen[theme].borderBottomColor,
                 }}
                 backgroundColor="none"
-                backgroundImageStyle={{}}
+                //backgroundImageStyle={{}}
                 centerComponent={centerComponent}
                 leftComponent={leftComponent}
-                leftContainerStyle={{}}
+                //leftContainerStyle={{}}
                 placement="center"
                 rightComponent={rightComponent}
-                rightContainerStyle={{}}
-                statusBarProps={{}}
+                //rightContainerStyle={{}}
+                //statusBarProps={{}}
             />
         </>
     )

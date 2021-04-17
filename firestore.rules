@@ -61,7 +61,7 @@ service cloud.firestore {
 		
     	// Notifications Match
     	match /notifications/{memberId} {
-      		allow read: if (request.auth.uid == memberId)
+      		allow read: if (request.auth.uid === memberId)
     	}    
 
     	// Profiles Match
@@ -72,7 +72,7 @@ service cloud.firestore {
 		// Messages Match
     	match /messages/{senderMemberId} {			
     		match /{receipientMemberId}/{messageId} {
-				function canRead() { return (request.auth.uid == senderMemberId) || (request.auth.uid == receipientMemberId) }
+				function canRead() { return (request.auth.uid === senderMemberId) || (request.auth.uid === receipientMemberId) }
 				
    				allow read: if isAuthorized() && canRead()
   			}	  			
@@ -80,13 +80,13 @@ service cloud.firestore {
 
 		// Walls Match
     	match /walls/{memberId} {
-      		//allow write: if isAuthorized() && (request.auth.uid == memberId)
+      		//allow write: if isAuthorized() && (request.auth.uid === memberId)
       		allow read: if isAuthorized()
       
 			// Wall Messages Match
       		match /messages/{messageId} {
         		//allow create: if isAuthorized()
-				//allow update: if (request.resource.data.authorUID == resource.data.authorUID)
+				//allow update: if (request.resource.data.authorUID === resource.data.authorUID)
         		allow read: if isAuthorized()
       		}      
     	}  

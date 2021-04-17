@@ -104,7 +104,7 @@ export default ({ navigation, ...restProps }: Props) => {
         Promise.all(promises).then(() => {
             setMembers(groupMembers)
             setSelectedMember(groupMembers?.[0])
-        }) //.catch(() => undefined)
+        }).catch((err) => console.warn(err))
     }
 
     const addGroup = () => {
@@ -116,6 +116,7 @@ export default ({ navigation, ...restProps }: Props) => {
             .then(() => setGroupName(''))
             .catch((error) => {
                 if (error.code === 'permission-denied') alert('Permission Denied')
+                else console.error(error)
             })
     }
 
@@ -172,10 +173,12 @@ export default ({ navigation, ...restProps }: Props) => {
                     value: docRef.id,
                 })
             }
-            push(docRef).then(() => {
-                setGroups(newState)
-                setSelectedGroup(newState[0])
-            }) // .catch(() => undefined)
+            push(docRef)
+                .then(() => {
+                    setGroups(newState)
+                    setSelectedGroup(newState[0])
+                })
+                .catch((err) => console.warn(err))
         })
     }, [snapshot])
 

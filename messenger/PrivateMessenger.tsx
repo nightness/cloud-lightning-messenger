@@ -47,7 +47,7 @@ export default ({ navigation }: Props) => {
         const querySnapshot = snapshot as QuerySnapshot<DocumentData>
         querySnapshot.docs.forEach((docRef) => {
             const push = async (docRef: DocumentData) => {
-                if (docRef.id == currentUser?.uid) return
+                if (docRef.id === currentUser?.uid) return
                 const name = await docRef.get('displayName')
                 newState.push({
                     label: name || `{${docRef.id}}`,

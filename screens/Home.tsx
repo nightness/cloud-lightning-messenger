@@ -63,11 +63,11 @@ export default ({ navigation }: Props) => {
                                 `Expo Go is a free app that allows for distribution and testing of others apps during development. ` +
                                 `Expo Go is available on both the Google Play Store and iOS App Store. ` +
                                 `After installing Expo Go, ` +
-                                (baseOperatingSystem == 'iOS' || baseOperatingSystem == 'Android' ?
+                                (baseOperatingSystem === 'iOS' || baseOperatingSystem === 'Android' ?
                                     `click the button below.` :
                                     `access your camera and scan the QR code below.`)
                             }</Text>
-                            {(baseOperatingSystem == 'iOS' || baseOperatingSystem == 'Android' ?
+                            {(baseOperatingSystem === 'iOS' || baseOperatingSystem === 'Android' ?
                                 <Button
                                     style={{ margin: 25 }}
                                     title='Launch Cloud Lightning Messenger'
@@ -79,7 +79,7 @@ export default ({ navigation }: Props) => {
                                                 } else {
                                                     alert('You need to install the Expo app first!')
                                                 }
-                                            });
+                                            }).catch((err) => console.warn(err))
                                         } catch (err) {
                                             alert('You need to install the Expo app first!')
                                             console.log(err)

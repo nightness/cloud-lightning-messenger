@@ -10,6 +10,7 @@ import {
     PickerItem,
 } from '../components/Components'
 import { Styles } from '../app/Styles'
+import { Themes } from '../app/Themes'
 import { DocumentData, QuerySnapshot, useCollection, callFirebaseFunction } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import { GlobalContext } from '../app/GlobalContext'
@@ -47,7 +48,7 @@ export default ({ navigation }: Props) => {
         const querySnapshot = snapshot as QuerySnapshot<DocumentData>
         querySnapshot.docs.forEach((docRef) => {
             const push = async (docRef: DocumentData) => {
-                if (docRef.id == currentUser?.uid) return
+                //if (docRef.id === currentUser?.uid) return
                 const name = await docRef.get('displayName')
                 newState.push({
                     label: name || `{${docRef.id}}`,
@@ -104,9 +105,9 @@ export default ({ navigation }: Props) => {
             <Container>
                 <LinearGradient
                     colors={GradientColors[theme].secondary}>
-
-                    <View style={Styles.messenger.views}>
-                        <Picker
+                    <View style={[Styles.messenger.views, Themes.container[theme]]}>
+                        <Picker                            
+                            style={Themes.text[theme]}
                             data={members}
                             onValueChanged={setSelectedMember}
                         />

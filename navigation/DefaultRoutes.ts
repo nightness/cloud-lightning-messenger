@@ -27,18 +27,20 @@ export const initialNavigationElements: NavigationElements = [
         initialParams: homeParams,
         depth: 0
     },
+    // {
+    //     label: 'Walls',
+    //     routeName: 'MyWall',
+    //     component: MyWall,
+    //     initialParams: myWallParams,
+    //     depth: 0
+    // },
     {
-        label: 'Walls',
-        routeName: 'MyWall',
-        component: MyWall,
-        initialParams: myWallParams,
+        label: 'Member Walls',
+        routeName: 'MemberWalls',
+        component: WallMessenger,
+        initialParams: memberWallParams,
         depth: 0
     },
-    // {
-    //     name: 'Member Walls',
-    //     component: WallMessenger,
-    //     initialParams: memberWallParams
-    // },
     {
         label: 'Messages',
         routeName: 'Messages',
