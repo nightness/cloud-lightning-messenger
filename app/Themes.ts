@@ -66,10 +66,10 @@ export const themes: Themes = [
         'Icon',
         {
             Light: {
-                color: '#555',
+                color: 'black',
             },
             Dark: {
-                color: 'red',
+                color: 'white',
             },
         },
     ],
