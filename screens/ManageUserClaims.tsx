@@ -1,12 +1,12 @@
 import React, { useEffect, useContext, useState } from 'react'
+import { View } from 'react-native'
 import { DefaultRouterOptions } from '@react-navigation/native'
+import Screen from '../components/Screen'
+import Picker from '../components/Picker'
 import {
-    Screen,
     Button,
     TextInput,
-    View,
-    Picker,
-} from '../components/Components'
+} from 'cloud-lightning-themed-ui'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 
 interface Props {

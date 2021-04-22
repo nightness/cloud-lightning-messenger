@@ -1,6 +1,6 @@
 import React from 'react'
-import View from './View'
-import TextInput from './TextInput'
+import { View } from 'react-native'
+import { TextInput }  from 'cloud-lightning-themed-ui'
 import HelperText from './HelperText'
 import { ReturnKeyTypeOptions } from 'react-native'
 
@@ -23,7 +23,7 @@ export default ({
 }: Props) =>
     <View>
         <TextInput
-            label={label}
+            placeholder={label}
             returnKeyType={returnKeyType}
             onChangeText={formikProps.handleChange(fieldName)}
             onKeyPress={(event) => {

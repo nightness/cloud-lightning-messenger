@@ -1,8 +1,8 @@
 import React, { useContext, useRef, useEffect } from 'react'
 import { StyleProp, TextStyle } from 'react-native'
 import { HelperText } from 'react-native-paper'
-import { GlobalContext } from '../app/GlobalContext'
-import { Themes } from '../app/Themes'
+import { ThemeContext } from 'cloud-lightning-themed-ui'
+
 
 interface Props {
     children: JSX.Element
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default ({ children, style, fontWeight, fontSize, type, ...restProps }: Props) => {
-    const { theme } = useContext(GlobalContext)
+    const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
 
     // Setup defaults
     if (!fontWeight) {
@@ -28,7 +28,7 @@ export default ({ children, style, fontWeight, fontSize, type, ...restProps }: P
             {...restProps}
             type={type}
             style={[
-                Themes.helperText[theme],
+                getThemedComponentStyle('HelperText')[activeTheme],
                 style,
                 {
                     fontWeight: fontWeight, // String

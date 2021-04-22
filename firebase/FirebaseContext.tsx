@@ -1,9 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
-import { ActivityIndicator, DisplayError } from '../components/Components'
+import { ActivityIndicator, DisplayError, ThemeContext, Theme } from 'cloud-lightning-themed-ui'
 import { UserClaims } from './DataTypes'
 import { useAuthState, callFirebaseFunction, getAuth, getFirestore } from './Firebase'
-import { GlobalContext } from '../app/GlobalContext'
-import { Theme } from '../app/Themes'
 
 type ContextType = {
     currentUser?: firebase.User | null
@@ -30,7 +28,7 @@ interface Props {
 }
 
 export const FirebaseProvider = ({ children }: Props) => {
-    const { theme, setTheme } = useContext(GlobalContext)
+    const { activeTheme, setActiveTheme, getThemedComponentStyle } = useContext(ThemeContext)
     const [currentUser, loadingUser, errorUser] = useAuthState()
     const [claims, setClaims] = useState<[string]>()
     const [loadingClaims, setLoadingClaims] = useState(true)
@@ -103,7 +101,7 @@ export const FirebaseProvider = ({ children }: Props) => {
         const result = await callFirebaseFunction('setProfileAttribute', {            
             authToken,
             displayName,
-            theme
+            activeTheme
         })
         setSavingTheme(false)
         return result
@@ -124,8 +122,8 @@ export const FirebaseProvider = ({ children }: Props) => {
         updateUserToken()
         if (currentUser) {
             getCurrentUsersTheme(currentUser.uid).then((usersTheme: Theme) => {
-                if (usersTheme && setTheme && usersTheme != theme)
-                    setTheme(usersTheme)
+                if (usersTheme && usersTheme != activeTheme)
+                    setActiveTheme(usersTheme)
                 setLoadingTheme(false)
             }).catch((error) => {
                 console.error(error)
@@ -137,13 +135,13 @@ export const FirebaseProvider = ({ children }: Props) => {
     useEffect(() => {
         if (currentUser && !savingTheme) {
             getCurrentUsersTheme(currentUser.uid).then((usersTheme: Theme) => {
-                if (usersTheme && setTheme && usersTheme != theme)
+                if (usersTheme && usersTheme != activeTheme)
                     setProfileAttribute()
             }).catch(() => {                
                 setSavingTheme(false)
             })
         }        
-    }, [theme])
+    }, [activeTheme])
 
     const isLoading = loadingUser || loadingClaims || loadingTheme
     const error = errorUser

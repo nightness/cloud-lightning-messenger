@@ -1,9 +1,7 @@
 import React from 'react'
 import { useDocumentData } from './Firebase'
-import ActivityIndicator from '../components/ActivityIndicator'
-import DisplayError from '../components/DisplayError'
+import { ActivityIndicator, DisplayError, FlatList } from 'cloud-lightning-themed-ui'
 import { ListRenderItem, StyleProp, ViewStyle } from 'react-native'
-import FlatList from '../components/FlatList'
 import { FirebaseError } from 'firebase'
 
 interface Props<T> {

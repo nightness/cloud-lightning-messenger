@@ -1,14 +1,14 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
+import { View } from 'react-native'
+import Screen from '../components/Screen'
+import Picker, { PickerItem } from '../components/Picker'
+import FirestoreCollectionView from '../firebase/FirestoreCollectionView'
 import {
-    View,
-    Screen,
     Container,
-    Picker,
-    PickerItem,
     TextInput,
     Button,
-    FirestoreCollectionView,
-} from '../components/Components'
+    ThemeContext
+} from 'cloud-lightning-themed-ui'
 import { Styles } from '../app/Styles'
 import { DocumentData, QuerySnapshot, useCollection, callFirebaseFunction } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
@@ -29,7 +29,7 @@ interface Props {
 
 export default ({ navigation }: Props) => {
     const { currentUser, claims } = useContext(FirebaseContext)
-    const { theme } = useContext(GlobalContext)
+    const { activeTheme } = useContext(ThemeContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('/groups')
     const [groups, setGroups] = useState<PickerItem[]>([])
     const [selectedGroup, setSelectedGroup] = useState<PickerItem>()
@@ -104,7 +104,7 @@ export default ({ navigation }: Props) => {
         <Screen navigation={navigation} title={'Group Messenger'}>
             <Container>
                 <LinearGradient
-                    colors={GradientColors[theme].secondary}>
+                    colors={GradientColors[activeTheme].secondary}>
 
                     <View style={Styles.messenger.views}>
                         <Picker
@@ -122,7 +122,7 @@ export default ({ navigation }: Props) => {
                     renderItem={({ item }) => <Message item={item} />}
                 />
                 <LinearGradient
-                    colors={GradientColors[theme].secondary}>
+                    colors={GradientColors[activeTheme].secondary}>
                     <View style={Styles.messenger.views}>
                         <TextInput
                             value={messageText}

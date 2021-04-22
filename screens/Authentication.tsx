@@ -1,18 +1,14 @@
-import * as Google from 'expo-google-app-auth'
 import React, { useState, useContext, useEffect } from 'react'
-import { Image, ScrollView, Platform, StyleProp, ViewStyle } from 'react-native'
+import { Image, ScrollView, Platform, StyleProp, ViewStyle, View } from 'react-native'
+import Screen from '../components/Screen'
+import FormField from '../components/FormField'
 import {
-    Container,
     Text,
-    TextInput,
     Button,
-    View,
-    Modal,
-    Screen,
     ActivityIndicator,
     DisplayError,
-    FormField,
-} from '../components/Components'
+    ThemeContext
+} from 'cloud-lightning-themed-ui'
 import {
     firebaseAuth,
     GoogleAuthProvider,
@@ -22,7 +18,6 @@ import { Formik, FormikHelpers, FormikProps, useFormik } from 'formik'
 import * as Yup from 'yup'
 import { FirebaseContext } from '../firebase/FirebaseContext'
 import { Styles } from '../app/Styles'
-import { GlobalContext } from '../app/GlobalContext'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Icon } from 'react-native-elements'
@@ -93,8 +88,8 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
     const [submitted, setSubmitted] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
-    const { theme, setTheme, isKeyboardOpen, keyboardHeight, screenOrientation, window } = useContext(GlobalContext)
-    const { width, height } = window
+    const { activeTheme, setActiveTheme, isKeyboardOpen, keyboardHeight, screenOrientation, window } = useContext(ThemeContext)
+    const { width, height } = window ? window : { width: 0, height: 0 }
     const [screenStyle, setScreenStyle] = useState<StyleProp<ViewStyle>>({
         height, width, position: 'absolute'
     })
@@ -199,7 +194,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
     }
 
     useEffect(() => {
-        if (theme === 'Dark' && setTheme) setTheme('Light')
+        if (activeTheme === 'Dark') setActiveTheme('Light')
     })
 
     useEffect(() => {
@@ -251,7 +246,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         return (
             <Screen navigation={navigation} title=''>
                 <LinearGradient
-                    colors={GradientColors[theme].authentication}
+                    colors={GradientColors[activeTheme].authentication}
                     style={screenStyle}
                 >
                     <View style={{ flex: 1 }}>

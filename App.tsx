@@ -1,12 +1,13 @@
 import 'react-native-gesture-handler'
 import React, { useState } from 'react'
 // @ts-ignore
-import { ModalPortal } from 'react-native-modals'
 import AppLoading from 'expo-app-loading'
 import * as Fonts from 'expo-font'
 import { FirebaseProvider } from './firebase/FirebaseContext'
 import { GlobalProvider } from './app/GlobalContext'
 import AppNavigator from './navigation/AppNavigator'
+import { ThemeProvider } from 'cloud-lightning-themed-ui'
+import { themes } from './app/Themes'
 
 const getFonts = () =>
     Fonts.loadAsync({
@@ -26,10 +27,11 @@ export default function App() {
     } else {
         return (
             <GlobalProvider>
+                <ThemeProvider themes={themes}>
                 <FirebaseProvider>
                     <AppNavigator />
-                    <ModalPortal />
                 </FirebaseProvider>
+                </ThemeProvider>
             </GlobalProvider>
         )
     }

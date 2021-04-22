@@ -1,15 +1,14 @@
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState, useEffect, useContext } from 'react'
-import { Linking, Platform } from 'react-native'
+import { Linking, Platform, View } from 'react-native'
+import Screen from '../components/Screen'
 import {
-    Screen,
     Button,
     Text,
     ActivityIndicator,
-    View,
     Image
-} from '../components/Components'
-import { GlobalContext } from '../app/GlobalContext'
+} from 'cloud-lightning-themed-ui'
+
 import { ProfileContext } from '../app/ProfileContext'
 
 interface Props {

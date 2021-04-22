@@ -1,6 +1,7 @@
 // https://github.com/nightness/yup-phone/blob/master/src/yup-phone.ts
 
 import * as Yup from 'yup'
+// @ts-ignore
 import gPhoneNumber from 'google-libphonenumber'
 
 const phoneUtil = gPhoneNumber.PhoneNumberUtil.getInstance()

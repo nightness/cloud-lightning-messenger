@@ -6,14 +6,11 @@ import {
     DocumentData,
     QuerySnapshot,
 } from './Firebase'
-import ActivityIndicator from '../components/ActivityIndicator'
-import DisplayError from '../components/DisplayError'
+import { ActivityIndicator, DisplayError, FlatList, ThemeContext } from 'cloud-lightning-themed-ui'
 import { ListRenderItem, StyleProp, ViewStyle } from 'react-native'
 import { FirebaseError } from 'firebase'
-import FlatList from '../components/FlatList'
 import { LinearGradient } from 'expo-linear-gradient'
 import { GradientColors } from '../app/GradientColors'
-import { GlobalContext } from '../app/GlobalContext'
 
 interface Props<T> {
     style?: StyleProp<ViewStyle> | object
@@ -39,7 +36,7 @@ export default function _<T>({
     const [messages, setMessages] = useState([])
     const [loadingData, setDataLoading] = useState(true)
     const [errorData, setDataError] = useState(false)
-    const { theme } = useContext(GlobalContext)
+    const { activeTheme } = useContext(ThemeContext)
 
     const fetchData = () => {
         const querySnapshot = snapshot as QuerySnapshot<DocumentData>
@@ -75,7 +72,7 @@ export default function _<T>({
     } else if (!loadingCollection && !loadingData) {
         return (
             <LinearGradient
-                colors={GradientColors[theme].secondary}
+                colors={GradientColors[activeTheme].secondary}
                 style={{ flex: 1 }}
             >
 

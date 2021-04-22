@@ -1,11 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Badge } from 'react-native-paper'
 import { View } from 'react-native'
-import { GlobalContext } from '../app/GlobalContext'
 import { Header } from 'react-native-elements'
-import { Image, Text, MaterialIcons } from './Components'
+import { Image, Text, Icon, ThemeContext } from 'cloud-lightning-themed-ui'
 import { LogoutModal } from '../screens/modals/LogoutModal'
-import { Themes } from '../app/Themes'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useAuthState } from '../firebase/Firebase'
 
@@ -29,7 +27,7 @@ export default ({
     hasBack = false,
 }: Props) => {
     const [currentUser, loadingUser, errorUser] = useAuthState()
-    const { theme, setTheme } = useContext(GlobalContext)
+    const { activeTheme, setActiveTheme, getThemedComponentStyle } = useContext(ThemeContext)
     const [showLogoutModal, setShowLogoutModal] = useState(false)
     const [showLogout, setShowLogout] = useState(currentUser ? true : false)
 
@@ -38,12 +36,7 @@ export default ({
     }, [currentUser])
 
     const toggleDarkMode = () => {
-        if (!setTheme) return
-        if (theme === 'Light') {
-            setTheme('Dark')
-        } else {
-            setTheme('Light')
-        }
+        setActiveTheme(activeTheme === 'Dark' ? 'Light' : 'Dark')
     }
 
     const iconSize = 28
@@ -57,8 +50,9 @@ export default ({
         <View style={{ flexDirection: 'row' }}>
             {hasDrawerNavigation ? (
                 <>
-                    <MaterialIcons
-                        name="menu"
+                    <Icon
+                        type='material'
+                        name='menu'
                         size={iconSize}
                         // @ts-ignore
                         onPress={navigation.openDrawer}
@@ -72,8 +66,9 @@ export default ({
                 <></>
             )}
             {hasHome ? (
-                <MaterialIcons
-                    name="home"
+                <Icon
+                    type='material'
+                    name='home'
                     size={iconSize}
                     onPress={() => navigation.popToTop()}
                 />
@@ -81,8 +76,9 @@ export default ({
                 <></>
             )}
             {hasBack ? (
-                <MaterialIcons
-                    name="navigate-before"
+                <Icon
+                    type='material'
+                    name='navigate-before'
                     size={iconSize}
                     onPress={() => navigation.pop()}
                 />
@@ -94,8 +90,9 @@ export default ({
 
     const rightComponent = (
         <View style={{ flexDirection: 'row' }}>
-            <MaterialIcons
-                name="settings-brightness"
+            <Icon
+                type='material'
+                name='settings-brightness'
                 size={iconSize}
                 onPress={toggleDarkMode}
             />
@@ -107,8 +104,9 @@ export default ({
                         onPress={() => setShowLogoutModal(true)}
                     />
                 ) : (
-                    <MaterialIcons
-                        name="face"
+                    <Icon
+                        type='material'
+                        name='face'
                         size={iconSize}
                         onPress={() => setShowLogoutModal(true)}
                     />
@@ -129,7 +127,7 @@ export default ({
             <Header
                 containerStyle={{
                     width: '100%',
-                    borderBottomColor: Themes.screen[theme].borderBottomColor,
+                    borderBottomColor: getThemedComponentStyle('ScreenHeader')[activeTheme].borderBottomColor,
                 }}
                 backgroundColor="none"
                 //backgroundImageStyle={{}}

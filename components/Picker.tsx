@@ -2,11 +2,11 @@ import React, { useState, useContext, useEffect } from 'react'
 import { ScrollView, Platform, StyleProp, TextStyle } from 'react-native'
 import { GlobalContext } from '../app/GlobalContext'
 import { Styles } from '../app/Styles'
-import { Theme, Themes } from '../app/Themes'
 import { Picker, PickerIOS } from '@react-native-picker/picker'
 // @ts-ignore - No Types found yet
 import ToggleBox from 'react-native-togglebox'
 import { ItemValue } from '@react-native-picker/picker/typings/Picker'
+import { ThemeContext } from 'cloud-lightning-themed-ui'
 
 export interface PickerItem {
     label: string
@@ -27,10 +27,11 @@ export default ({
     onValueChanged,
     ...restProps
 }: Props) => {
-    const { theme } = useContext(GlobalContext)
+    const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
     const [selectedValue, setSelectedValue] = useState<ItemValue>()
     const [selectedItem, setSelectedItem] = useState<PickerItem>()
-    //const properTheme = enabled ? Themes.picker[theme] : Themes.pickerDisabled[theme]
+    const themedStyles = getThemedComponentStyle('Picker')[activeTheme]
+        // enabled ? Themes.picker[theme] : Themes.pickerDisabled[theme]
 
     useEffect(() => {
         setSelectedItem(data?.[selectedIndex])
@@ -42,7 +43,7 @@ export default ({
 
     const PickerCommon = () => (
         <Picker
-            style={[Styles.picker.picker, Themes.picker[theme], style]}
+            style={[Styles.picker.picker, themedStyles, style]}
             ///itemStyle={[Styles.picker.pickerItem, Themes.pickerItem[theme], style]}            
             {...restProps}
             selectedValue={selectedValue}
@@ -54,7 +55,7 @@ export default ({
             {data.map((item) => {
                 return (
                     <Picker.Item
-                        color={Themes.picker[theme].color}
+                        color={themedStyles.color}
                         label={item.label} value={item.value} key={item.value}
                     />
                 )
@@ -63,7 +64,7 @@ export default ({
     )
 
     return (
-        <ScrollView style={[Styles.container.scrollView, Themes.container[theme]]} bounces={false}>
+        <ScrollView style={[Styles.container.scrollView, themedStyles]} bounces={false}>
             {Platform.OS === 'ios' && (
                 <ToggleBox
                     label={

@@ -1,19 +1,17 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
+import { View } from 'react-native'
 import {
-    View,
-    Screen,
     Container,
-    Picker,
     TextInput,
     Button,
-    FirestoreCollectionView,
-    PickerItem,
-} from '../components/Components'
+    ThemeContext
+} from 'cloud-lightning-themed-ui'
+import Screen from '../components/Screen'
+import Picker, { PickerItem } from '../components/Picker'
+import FirestoreCollectionView from '../firebase/FirestoreCollectionView'
 import { Styles } from '../app/Styles'
-import { Themes } from '../app/Themes'
 import { DocumentData, QuerySnapshot, useCollection, callFirebaseFunction } from '../firebase/Firebase'
 import { FirebaseContext } from '../firebase/FirebaseContext'
-import { GlobalContext } from '../app/GlobalContext'
 import Message from './Message'
 import {
     NativeSyntheticEvent,
@@ -30,7 +28,7 @@ interface Props {
 
 export default ({ navigation }: Props) => {
     const { currentUser, claims } = useContext(FirebaseContext)
-    const { theme } = useContext(GlobalContext)
+    const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('/profiles')
     const [members, setMembers] = useState<PickerItem[]>([])
     const [selectedMember, setSelectedMember] = useState<PickerItem>()
@@ -104,10 +102,10 @@ export default ({ navigation }: Props) => {
         <Screen navigation={navigation} title={'Member Walls'}>
             <Container>
                 <LinearGradient
-                    colors={GradientColors[theme].secondary}>
-                    <View style={[Styles.messenger.views, Themes.container[theme]]}>
+                    colors={GradientColors[activeTheme].secondary}>
+                    <View style={[Styles.messenger.views, getThemedComponentStyle('Container')[activeTheme]]}>
                         <Picker                            
-                            style={Themes.text[theme]}
+                            style={getThemedComponentStyle('Text')[activeTheme]}
                             data={members}
                             onValueChanged={setSelectedMember}
                         />
@@ -122,7 +120,7 @@ export default ({ navigation }: Props) => {
                     renderItem={({ item }) => <Message item={item} />}
                 />
                 <LinearGradient
-                    colors={GradientColors[theme].secondary}>
+                    colors={GradientColors[activeTheme].secondary}>
                     <View style={Styles.messenger.views}>
                         <TextInput
                             value={messageText}

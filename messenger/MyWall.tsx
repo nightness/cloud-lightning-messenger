@@ -1,20 +1,19 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
+import { View } from 'react-native'
+import Screen from '../components/Screen'
+import FirestoreCollectionView from '../firebase/FirestoreCollectionView'
 import {
-    View,
-    Screen,
     Container,
     TextInput,
     Button,
-    FirestoreCollectionView,
-} from '../components/Components'
+    ThemeContext
+} from 'cloud-lightning-themed-ui'
 import { TextInput as NativeTextInput } from 'react-native'
 import { Styles } from '../app/Styles'
 import { FirebaseContext } from '../firebase/FirebaseContext'
-import { GlobalContext } from '../app/GlobalContext'
 import Message from './Message'
 import { callFirebaseFunction } from '../firebase/Firebase'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { GradientColors } from '../app/GradientColors'
 
@@ -24,7 +23,7 @@ interface Props {
 
 export default ({ navigation }: Props) => {
     const { currentUser } = useContext(FirebaseContext)
-    const { theme } = useContext(GlobalContext)
+    const { activeTheme } = useContext(ThemeContext)
     const [messageText, setMessageText] = useState('')
     const textInput = useRef<NativeTextInput>()
     const [messageCollectionPath, setMessageCollectionPath] = useState<string>('/public')
@@ -73,7 +72,7 @@ export default ({ navigation }: Props) => {
                     renderItem={({ item }) => <Message item={item} />}
                 />
                 <LinearGradient
-                    colors={GradientColors[theme].secondary}>
+                    colors={GradientColors[activeTheme].secondary}>
                     <View style={Styles.messenger.views}>
                         <TextInput
                             classRef={textInput}

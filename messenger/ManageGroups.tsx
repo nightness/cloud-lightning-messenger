@@ -1,20 +1,19 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
+import { View } from 'react-native'
+import Screen from '../components/Screen'
+import Picker, { PickerItem } from '../components/Picker'
 import {
     ScrollView,
     Text,
     Modal,
     TextInput,
-    View,
     Button,
     Container,
-    Screen,
-    Picker,
     ActivityIndicator,
     DisplayError,
-    PickerItem,
-} from '../components/Components'
+    ThemeContext
+} from 'cloud-lightning-themed-ui'
 import { Styles } from '../app/Styles'
-import { GlobalContext } from '../app/GlobalContext'
 import {
     useCollection,
     getFirestore,
@@ -24,14 +23,13 @@ import {
 import { ProfileContext } from '../app/ProfileContext'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { GroupDocument } from '../firebase/DataTypes'
-//import { ScrollView } from 'react-native-gesture-handler'
 
 interface Props {
     navigation: StackNavigationProp<any>
 }
 
 export default ({ navigation, ...restProps }: Props) => {
-    const { theme } = useContext(GlobalContext)
+    const { activeTheme } = useContext(ThemeContext)
     const profileContext = useContext(ProfileContext)
     const [snapshot, loadingCollection, errorCollection] = useCollection('/groups')
     const [groups, setGroups] = useState<PickerItem[]>()
