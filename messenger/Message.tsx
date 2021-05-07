@@ -34,7 +34,7 @@ export default class Message extends PureComponent<Props> {
     }
     render() {
         return (
-            <View key={this.item.id} style={{ alignItems: 'baseline', alignContent: 'flex-start', justifyContent: 'flex-start', paddingVertical: 5 }}>
+            <View key={this.item.id} style={{ paddingVertical: 5 }}>
                 <Text fontSize={12} fontWeight="100">
                     {`${this.item.authorName} [ ${this.date} @ ${this.time} ] `}
                 </Text>
