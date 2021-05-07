@@ -29,7 +29,7 @@ interface Props {
 }
 
 export const FirebaseProvider = ({ children }: Props) => {
-    const { activeTheme, setActiveTheme, getThemedComponentStyle } = useContext(ThemeContext)
+    const { activeTheme, setActiveTheme } = useContext(ThemeContext)
     const [currentUser, loadingUser, errorUser] = useAuthState()
     const [claims, setClaims] = useState<[string]>()
     const [loadingClaims, setLoadingClaims] = useState(true)

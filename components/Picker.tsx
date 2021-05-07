@@ -31,7 +31,7 @@ export default ({
     const [selectedValue, setSelectedValue] = useState<ItemValue>()
     const [selectedItem, setSelectedItem] = useState<PickerItem>()
     const themedStyles = getThemedComponentStyle('Picker')[activeTheme]
-        // enabled ? Themes.picker[theme] : Themes.pickerDisabled[theme]
+    // enabled ? Themes.picker[theme] : Themes.pickerDisabled[theme]
 
     useEffect(() => {
         setSelectedItem(data?.[selectedIndex])
@@ -41,28 +41,6 @@ export default ({
         onValueChanged && onValueChanged(selectedItem)
     }, [selectedItem])
 
-    const PickerCommon = () => (
-        <Picker
-            style={[Styles.picker.picker, themedStyles, style]}
-            ///itemStyle={[Styles.picker.pickerItem, Themes.pickerItem[theme], style]}            
-            {...restProps}
-            selectedValue={selectedValue}
-            onValueChange={(value, index) => {
-                setSelectedValue(value)
-                setSelectedItem(data?.[index])
-            }}
-        >
-            {data.map((item) => {
-                return (
-                    <Picker.Item
-                        color={themedStyles.color}
-                        label={item.label} value={item.value} key={item.value}
-                    />
-                )
-            })}
-        </Picker>
-    )
-
     return (
         <ScrollView style={[Styles.container.scrollView, themedStyles]} bounces={false}>
             {Platform.OS === 'ios' && (
@@ -71,15 +49,51 @@ export default ({
                         selectedItem && selectedItem.label
                             ? selectedItem.label
                             : selectedItem
-                            ? selectedItem
-                            : ''
+                                ? selectedItem
+                                : ''
                     }
                     style={Styles.picker.toggleBox}
                 >
-                    <PickerCommon />
+                    <PickerIOS
+                        style={[Styles.picker.picker, themedStyles, style]}
+                        ///itemStyle={[Styles.picker.pickerItem, Themes.pickerItem[theme], style]}            
+                        {...restProps}
+                        selectedValue={selectedValue}
+                        onValueChange={(value, index) => {
+                            setSelectedValue(value)
+                            setSelectedItem(data?.[index])
+                        }}
+                    >
+                        {data.map((item) => {
+                            return (
+                                <Picker.Item
+                                    color={themedStyles.color}
+                                    label={item.label} value={item.value} key={item.value}
+                                />
+                            )
+                        })}
+                    </PickerIOS>
                 </ToggleBox>
             )}
-            {Platform.OS !== 'ios' && <PickerCommon />}
+            {Platform.OS !== 'ios' ? <Picker
+                style={[Styles.picker.picker, themedStyles, style]}
+                ///itemStyle={[Styles.picker.pickerItem, Themes.pickerItem[theme], style]}            
+                {...restProps}
+                selectedValue={selectedValue}
+                onValueChange={(value, index) => {
+                    setSelectedValue(value)
+                    setSelectedItem(data?.[index])
+                }}
+            >
+                {data.map((item) => {
+                    return (
+                        <Picker.Item
+                            color={themedStyles.color}
+                            label={item.label} value={item.value} key={item.value}
+                        />
+                    )
+                })}
+            </Picker> : <></>}
         </ScrollView>
     )
 }
