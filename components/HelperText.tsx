@@ -12,17 +12,8 @@ interface Props {
     fontSize?: number
 }
 
-export default ({ children, style, fontWeight, fontSize, type, ...restProps }: Props) => {
+export default ({ children, style, fontWeight = '200', fontSize = 14, type, ...restProps }: Props) => {
     const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
-
-    // Setup defaults
-    if (!fontWeight) {
-        fontWeight = '200'
-    }
-    if (!fontSize) {
-        fontSize = 14
-    }
-
     return (
         <HelperText
             {...restProps}

@@ -3216,10 +3216,10 @@ clone@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
 
-cloud-lightning-themed-ui@^0.0.48:
-  version "0.0.48"
-  resolved "https://registry.yarnpkg.com/cloud-lightning-themed-ui/-/cloud-lightning-themed-ui-0.0.48.tgz#3489815e67655f436607d7514d8ebab40aaeb095"
-  integrity sha512-eEfF6Tqb5AxaYD49LhueJlcDhUZuoiqsMIHzmVqhdYwSja1iqPiMdxsq8mH8bo+b2n4OX+Dp4pcUSzemm52M2Q==
+cloud-lightning-themed-ui@^0.0.53:
+  version "0.0.53"
+  resolved "https://registry.yarnpkg.com/cloud-lightning-themed-ui/-/cloud-lightning-themed-ui-0.0.53.tgz#3d66c560b83260f1416fbae5fabe23ece1c1c3ed"
+  integrity sha512-zID22uj4p2wC0gdcdN/l2Rh/2XL5usWmlLOOEJd9X8gMLh3KK58ndbsYc/hPijY0YHlZ4DjJ5dTpQ4YBOhnvJg==
   dependencies:
     "@expo/vector-icons" "^12.0.4"
     expo-linear-gradient "~8.4.0"

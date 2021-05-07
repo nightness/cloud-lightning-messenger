@@ -127,7 +127,7 @@ export default ({
             <Header
                 containerStyle={{
                     width: '100%',
-                    borderBottomColor: getThemedComponentStyle('ScreenHeader')[activeTheme].borderBottomColor,
+                    borderBottomColor: getThemedComponentStyle('ScreenHeader')[activeTheme]?.borderBottomColor,
                 }}
                 backgroundColor="none"
                 //backgroundImageStyle={{}}
