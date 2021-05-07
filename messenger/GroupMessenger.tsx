@@ -12,7 +12,6 @@ import {
 import { Styles } from '../app/Styles'
 import { DocumentData, QuerySnapshot, useCollection, callFirebaseFunction } from '../database/Firebase'
 import { FirebaseContext } from '../database/FirebaseContext'
-import { GlobalContext } from '../app/GlobalContext'
 import Message from './Message'
 import { StackNavigationProp } from '@react-navigation/stack'
 import {
@@ -129,7 +128,7 @@ export default ({ navigation }: Props) => {
                             style={Styles.messenger.textInput}
                             onChangeText={(msg) => setMessageText(msg)}
                             onKeyPress={onMessageKeyPress}
-                            classRef={textInput}
+                            classRef={textInput as React.LegacyRef<NativeTextInput>}
                         />
                         <Button
                             title="Send"

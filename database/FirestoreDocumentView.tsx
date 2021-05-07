@@ -47,6 +47,7 @@ export default function _<T>({
 
     return (
         <FlatList<T>
+            style={{}}
             renderItem={renderItem}
             //@ts-ignore
             data={document.recentMessages}

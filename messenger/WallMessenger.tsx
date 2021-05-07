@@ -127,7 +127,7 @@ export default ({ navigation }: Props) => {
                             style={Styles.messenger.textInput}
                             onChangeText={(msg: string) => setMessageText(msg)}
                             onKeyPress={onMessageKeyPress}
-                            classRef={textInput}
+                            classRef={textInput as React.LegacyRef<NativeTextInput>}
                         />
                         <Button
                             title="Send"

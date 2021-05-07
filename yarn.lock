@@ -3216,10 +3216,10 @@ clone@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
 
-cloud-lightning-themed-ui@^0.0.44:
-  version "0.0.44"
-  resolved "https://registry.yarnpkg.com/cloud-lightning-themed-ui/-/cloud-lightning-themed-ui-0.0.44.tgz#3b4e9bc8f48c25a8ad60586c9c24e178e8627c20"
-  integrity sha512-2uRW/z6XlpF9p3+7AHaUaWLUtCtsd0J38RO1uCRRFve8yoAMz7UG9lgudN/B7AqnWRWd9i4y7zNKPYhIMI51iQ==
+cloud-lightning-themed-ui@^0.0.48:
+  version "0.0.48"
+  resolved "https://registry.yarnpkg.com/cloud-lightning-themed-ui/-/cloud-lightning-themed-ui-0.0.48.tgz#3489815e67655f436607d7514d8ebab40aaeb095"
+  integrity sha512-eEfF6Tqb5AxaYD49LhueJlcDhUZuoiqsMIHzmVqhdYwSja1iqPiMdxsq8mH8bo+b2n4OX+Dp4pcUSzemm52M2Q==
   dependencies:
     "@expo/vector-icons" "^12.0.4"
     expo-linear-gradient "~8.4.0"
@@ -6851,17 +6851,17 @@ react-navigation-drawer@^2.7.0:
   resolved "https://registry.yarnpkg.com/react-navigation-drawer/-/react-navigation-drawer-2.7.0.tgz#794b4214a6b5debde1f8f90e18e3e63aa738e628"
   integrity sha512-BKQSTpFPGVI3caFlIbY921NYTRDAf9XFCCmyy4aDlxZLI5FNh8FqzrG10voc5AGy7RegjLdNkkJa40ugu0I5jA==
 
-react-navigation-dynamic-drawer@^1.0.57:
-  version "1.0.57"
-  resolved "https://registry.yarnpkg.com/react-navigation-dynamic-drawer/-/react-navigation-dynamic-drawer-1.0.57.tgz#57f7ef7196623f801a44d549422b5f9cb58bfaf2"
-  integrity sha512-KRK5J0RX3HZe2kKzJ6trzVE+5u1HHXa9wIqCQZG3MAzRdTJbVnHVo4hfUl2BXRjjdBLxtDSDZDM9v+/+44rjyQ==
+react-navigation-dynamic-drawer@^1.0.102:
+  version "1.0.102"
+  resolved "https://registry.yarnpkg.com/react-navigation-dynamic-drawer/-/react-navigation-dynamic-drawer-1.0.102.tgz#b5742e23c569bb3d6b8501d80877c8a2b957498a"
+  integrity sha512-AfQbD1bN5l8ala8et5I4sO7tbGMNKgWfE86LFVPhZ/5MB8wyYFHTTykh1E0VJDkWRJ0KAIj9jLNNSPIxOzVQyA==
   dependencies:
+    "@expo/vector-icons" "^12.0.4"
     "@react-native-community/masked-view" "^0.1.10"
     "@react-navigation/drawer" "^5.12.5"
     "@react-navigation/native" "^5.9.4"
     expo-linear-gradient "~8.4.0"
     react-native "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz"
-    react-native-elements "^3.3.2"
     react-native-gesture-handler "~1.8.0"
     react-native-reanimated "~1.13.0"
     react-native-safe-area-context "3.1.9"

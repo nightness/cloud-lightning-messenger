@@ -58,9 +58,6 @@ export class Styles {
             alignContent: 'center',
             alignItems: 'center',
         },
-        scrollView: {
-            flex: 1,
-        },
         flexRowJustifyCenter: {
             flexDirection: 'row',
             justifyContent: 'center',

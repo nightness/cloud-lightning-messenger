@@ -14,7 +14,6 @@ import { GradientColors } from '../app/GradientColors'
 import { Styles } from '../app/Styles'
 
 interface Props<T> {
-    style?: StyleProp<ViewStyle> | object
     collectionPath: string
     renderItem: ListRenderItem<T>
     orderBy?: string
@@ -24,7 +23,6 @@ interface Props<T> {
 }
 
 export default function _<T>({
-    style,
     collectionPath,
     renderItem,
     orderBy,
@@ -79,10 +77,9 @@ export default function _<T>({
                 colors={GradientColors[activeTheme].secondary}
                 style={{ flex: 1 }}
             >
-
                 <FlatList<T>
+                    viewStyle={{ alignItems: 'baseline' }}
                     renderItem={renderItem}
-                    style={style}
                     data={messages}
                     onStartReached={loadMoreMessages}
                     autoScrollToEnd={autoScrollToEnd}
