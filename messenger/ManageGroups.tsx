@@ -19,10 +19,10 @@ import {
     getFirestore,
     DocumentData,
     QuerySnapshot,
-} from '../firebase/Firebase'
+} from '../database/Firebase'
 import { ProfileContext } from '../app/ProfileContext'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { GroupDocument } from '../firebase/DataTypes'
+import { GroupDocument } from '../database/DataTypes'
 
 interface Props {
     navigation: StackNavigationProp<any>
@@ -192,7 +192,7 @@ export default ({ navigation, ...restProps }: Props) => {
         if (selectedMember) console.log(selectedMember)
     }, [selectedMember])
 
-    let render = <ActivityIndicator />
+    let render = <ActivityIndicator viewStyle={Styles.views.activityIndicator} />
     if (errorCollection instanceof Boolean) {
         render = <DisplayError />
     } else if (errorCollection instanceof Error) {

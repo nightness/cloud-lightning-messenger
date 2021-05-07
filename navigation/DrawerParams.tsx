@@ -1,4 +1,3 @@
-import { Themes } from '../app/Themes'
 import { NavigationParams } from 'react-navigation-dynamic-drawer'
 
 export const homeParams: NavigationParams = {

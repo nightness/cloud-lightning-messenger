@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from 'react'
 import { View } from 'react-native'
 import Screen from '../components/Screen'
 import Picker, { PickerItem } from '../components/Picker'
-import FirestoreCollectionView from '../firebase/FirestoreCollectionView'
+import FirestoreCollectionView from '../database/FirestoreCollectionView'
 import {
     Container,
     TextInput,
@@ -10,8 +10,8 @@ import {
     ThemeContext
 } from 'cloud-lightning-themed-ui'
 import { Styles } from '../app/Styles'
-import { DocumentData, QuerySnapshot, useCollection, callFirebaseFunction } from '../firebase/Firebase'
-import { FirebaseContext } from '../firebase/FirebaseContext'
+import { DocumentData, QuerySnapshot, useCollection, callFirebaseFunction } from '../database/Firebase'
+import { FirebaseContext } from '../database/FirebaseContext'
 import { GlobalContext } from '../app/GlobalContext'
 import Message from './Message'
 import { StackNavigationProp } from '@react-navigation/stack'

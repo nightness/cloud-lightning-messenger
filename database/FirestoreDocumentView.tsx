@@ -3,6 +3,7 @@ import { useDocumentData } from './Firebase'
 import { ActivityIndicator, DisplayError, FlatList } from 'cloud-lightning-themed-ui'
 import { ListRenderItem, StyleProp, ViewStyle } from 'react-native'
 import { FirebaseError } from 'firebase'
+import { Styles } from '../app/Styles'
 
 interface Props<T> {
     style: StyleProp<ViewStyle> | object
@@ -29,15 +30,17 @@ export default function _<T>({
         //setRefreshing(true)
     }
 
-    if (loadingDocument) return <ActivityIndicator />
+    if (loadingDocument)
+        return <ActivityIndicator viewStyle={Styles.views.activityIndicator} />
 
     if (errorDocument) {
+        const error = errorDocument === true ? new Error('Unknown Firebase Error') : errorDocument as Error
         return (
             <DisplayError
                 permissionDenied={
                     (errorDocument as FirebaseError)?.code === 'permission-denied'
                 }
-                error={errorDocument}
+                error={error}
             />
         )
     }

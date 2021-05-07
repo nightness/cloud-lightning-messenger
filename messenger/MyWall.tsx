@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
 import { View } from 'react-native'
 import Screen from '../components/Screen'
-import FirestoreCollectionView from '../firebase/FirestoreCollectionView'
+import FirestoreCollectionView from '../database/FirestoreCollectionView'
 import {
     Container,
     TextInput,
@@ -10,9 +10,9 @@ import {
 } from 'cloud-lightning-themed-ui'
 import { TextInput as NativeTextInput } from 'react-native'
 import { Styles } from '../app/Styles'
-import { FirebaseContext } from '../firebase/FirebaseContext'
+import { FirebaseContext } from '../database/FirebaseContext'
 import Message from './Message'
-import { callFirebaseFunction } from '../firebase/Firebase'
+import { callFirebaseFunction } from '../database/Firebase'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { LinearGradient } from 'expo-linear-gradient'
 import { GradientColors } from '../app/GradientColors'
@@ -75,7 +75,7 @@ export default ({ navigation }: Props) => {
                     colors={GradientColors[activeTheme].secondary}>
                     <View style={Styles.messenger.views}>
                         <TextInput
-                            classRef={textInput}
+                            classRef={textInput as React.LegacyRef<NativeTextInput>}
                             value={messageText}
                             style={Styles.messenger.textInput}
                             onChangeText={(msg) => setMessageText(msg)}

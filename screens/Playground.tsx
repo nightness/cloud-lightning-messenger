@@ -3,7 +3,7 @@ import { DefaultRouterOptions } from '@react-navigation/native'
 import Screen from '../components/Screen'
 import { Button } from 'cloud-lightning-themed-ui'
 import { DrawerContext } from 'react-navigation-dynamic-drawer'
-import { callFirebaseFunction } from '../firebase/Firebase'
+import { callFirebaseFunction } from '../database/Firebase'
 
 interface Props {
     navigation: DefaultRouterOptions

@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect, useContext } from 'react'
 import { ActivityIndicator, DisplayError, ThemeContext, Theme } from 'cloud-lightning-themed-ui'
 import { UserClaims } from './DataTypes'
 import { useAuthState, callFirebaseFunction, getAuth, getFirestore } from './Firebase'
+import { Styles } from '../app/Styles'
 
 type ContextType = {
     currentUser?: firebase.User | null
@@ -146,7 +147,8 @@ export const FirebaseProvider = ({ children }: Props) => {
     const isLoading = loadingUser || loadingClaims || loadingTheme
     const error = errorUser
 
-    if (loadingUser) return <ActivityIndicator />
+    if (loadingUser)
+        return <ActivityIndicator viewStyle={Styles.views.activityIndicator} />
     else if (errorUser)
         return <DisplayError permissionDenied={errorUser.code === 'permission-denied'} />
     return (

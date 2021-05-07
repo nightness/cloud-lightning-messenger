@@ -10,6 +10,7 @@ import {
 } from 'cloud-lightning-themed-ui'
 
 import { ProfileContext } from '../app/ProfileContext'
+import { Styles } from '../app/Styles'
 
 interface Props {
     navigation: StackNavigationProp<any>
@@ -51,7 +52,7 @@ export default ({ navigation }: Props) => {
 
     return (
         <Screen navigation={navigation} title="Home">
-            { profileCache.isFetching ? <ActivityIndicator /> :
+            { profileCache.isFetching ? <ActivityIndicator viewStyle={Styles.views.activityIndicator} /> :
                 <View style={{ margin: 3 }}>
                     <Text>Home Screen</Text>
                     {/* <Text>{`Welcome ${name}`}</Text> */}

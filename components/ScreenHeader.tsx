@@ -5,7 +5,7 @@ import { Header } from 'react-native-elements'
 import { Image, Text, Icon, ThemeContext } from 'cloud-lightning-themed-ui'
 import { LogoutModal } from '../screens/modals/LogoutModal'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { useAuthState } from '../firebase/Firebase'
+import { useAuthState } from '../database/Firebase'
 
 interface Props {
     navigation: StackNavigationProp<any>

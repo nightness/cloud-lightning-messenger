@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 // @ts-ignore
 import AppLoading from 'expo-app-loading'
 import * as Fonts from 'expo-font'
-import { FirebaseProvider } from './firebase/FirebaseContext'
+import { FirebaseProvider } from './database/FirebaseContext'
 import { GlobalProvider } from './app/GlobalContext'
 import AppNavigator from './navigation/AppNavigator'
 import { ThemeProvider } from 'cloud-lightning-themed-ui'

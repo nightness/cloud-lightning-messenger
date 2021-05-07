@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useRef } from 'react'
-import { useAuthState, getCollection, DocumentData } from '../firebase/Firebase'
-import { UserProfile } from '../firebase/DataTypes'
+import { useAuthState, getCollection, DocumentData } from '../database/Firebase'
+import { UserProfile } from '../database/DataTypes'
 
 export interface ProfileContextType {
     cachedUsers: { [index: string]: UserProfile }

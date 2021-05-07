@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { View } from 'react-native'
 import { Text } from 'cloud-lightning-themed-ui'
-import { Timestamp } from '../firebase/Firebase'
+import { Timestamp } from '../database/Firebase'
 
 interface MessageProps {
     authorName: string

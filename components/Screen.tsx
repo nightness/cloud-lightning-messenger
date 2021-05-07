@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../app/GlobalContext'
-import { FirebaseContext } from '../firebase/FirebaseContext'
+import { FirebaseContext } from '../database/FirebaseContext'
 import ScreenHeader from './ScreenHeader'
 import { StyleProp, ViewStyle, View, useWindowDimensions } from 'react-native'
 import { GradientColors } from '../app/GradientColors'

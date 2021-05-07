@@ -11,6 +11,7 @@ import { ListRenderItem, StyleProp, ViewStyle } from 'react-native'
 import { FirebaseError } from 'firebase'
 import { LinearGradient } from 'expo-linear-gradient'
 import { GradientColors } from '../app/GradientColors'
+import { Styles } from '../app/Styles'
 
 interface Props<T> {
     style?: StyleProp<ViewStyle> | object
@@ -61,12 +62,15 @@ export default function _<T>({
     }, [snapshot])
 
     if (errorCollection || errorData) {
+        const error = (errorCollection === true ? new Error('Unknown Firebase Error') :
+            (errorCollection !== undefined ? errorCollection as Error : undefined) ||
+            (errorData === true ? new Error('Unknown Firebase Error') : undefined))
         return (
             <DisplayError
                 permissionDenied={
                     (errorCollection as FirebaseError)?.code === 'permission-denied'
                 }
-                error={errorCollection || errorData}
+                error={error}
             />
         )
     } else if (!loadingCollection && !loadingData) {
@@ -87,5 +91,5 @@ export default function _<T>({
             </LinearGradient>
         )
     }
-    return <ActivityIndicator />
+    return <ActivityIndicator viewStyle={Styles.views.activityIndicator} />
 }

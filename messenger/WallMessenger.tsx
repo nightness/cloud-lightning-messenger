@@ -8,10 +8,10 @@ import {
 } from 'cloud-lightning-themed-ui'
 import Screen from '../components/Screen'
 import Picker, { PickerItem } from '../components/Picker'
-import FirestoreCollectionView from '../firebase/FirestoreCollectionView'
+import FirestoreCollectionView from '../database/FirestoreCollectionView'
 import { Styles } from '../app/Styles'
-import { DocumentData, QuerySnapshot, useCollection, callFirebaseFunction } from '../firebase/Firebase'
-import { FirebaseContext } from '../firebase/FirebaseContext'
+import { DocumentData, QuerySnapshot, useCollection, callFirebaseFunction } from '../database/Firebase'
+import { FirebaseContext } from '../database/FirebaseContext'
 import Message from './Message'
 import {
     NativeSyntheticEvent,

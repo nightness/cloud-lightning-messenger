@@ -3,12 +3,14 @@ import React, { useContext, useEffect } from 'react'
 import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { ActivityIndicator, DisplayError, ThemeContext } from 'cloud-lightning-themed-ui'
-import { useAuthState } from '../firebase/Firebase'
+import { useAuthState } from '../database/Firebase'
 import { DrawerNavigator } from 'react-navigation-dynamic-drawer'
 import Authentication from '../screens/Authentication'
 import { initialNavigationElements } from './DefaultRoutes'
-import { FirebaseContext } from '../firebase/FirebaseContext'
+import { FirebaseContext } from '../database/FirebaseContext'
 import { GradientColors } from '../app/GradientColors'
+import { View } from 'react-native'
+import { Styles } from '../app/Styles'
 
 const Stack = createStackNavigator()
 export default () => {
@@ -17,8 +19,13 @@ export default () => {
     const { claims } = useContext(FirebaseContext)
     const colorSet = GradientColors[activeTheme]
 
-    if (firebaseLoading) return <ActivityIndicator />
-    if (firebaseError) return <DisplayError error={firebaseError} />
+    if (firebaseLoading) return (
+        <ActivityIndicator viewStyle={Styles.views.activityIndicator} />
+    )
+    if (firebaseError) {
+        const error = new Error(firebaseError.message ? firebaseError.message : firebaseError.code)
+        return <DisplayError error={error} />
+    }
     return (
         <NavigationContainer theme={activeTheme === 'Dark' ? DarkTheme : DefaultTheme}>
             <Stack.Navigator

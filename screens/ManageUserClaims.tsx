@@ -7,7 +7,7 @@ import {
     Button,
     TextInput,
 } from 'cloud-lightning-themed-ui'
-import { FirebaseContext } from '../firebase/FirebaseContext'
+import { FirebaseContext } from '../database/FirebaseContext'
 
 interface Props {
     navigation: DefaultRouterOptions

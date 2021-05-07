@@ -13,10 +13,10 @@ import {
     firebaseAuth,
     GoogleAuthProvider,
     signInWithGoogleAsync,
-} from '../firebase/Firebase'
+} from '../database/Firebase'
 import { Formik, FormikHelpers, FormikProps, useFormik } from 'formik'
 import * as Yup from 'yup'
-import { FirebaseContext } from '../firebase/FirebaseContext'
+import { FirebaseContext } from '../database/FirebaseContext'
 import { Styles } from '../app/Styles'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -87,7 +87,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
     const [scheme, setScheme] = useState<object>()
     const [submitted, setSubmitted] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState(null)
+    const [error, setError] = useState(undefined)
     const { activeTheme, setActiveTheme, isKeyboardOpen, keyboardHeight, screenOrientation, window } = useContext(ThemeContext)
     const { width, height } = window ? window : { width: 0, height: 0 }
     const [screenStyle, setScreenStyle] = useState<StyleProp<ViewStyle>>({
@@ -239,7 +239,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
     }, [isKeyboardOpen, keyboardHeight, screenOrientation, width, height])
 
     if (isLoading) {
-        return <ActivityIndicator />
+        return <ActivityIndicator viewStyle={Styles.views.activityIndicator} />
     } else if (error) {
         return <DisplayError error={error} />
     } else {

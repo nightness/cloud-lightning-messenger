@@ -9,8 +9,9 @@ import {
 import Screen from '../components/Screen'
 import Picker, { PickerItem } from '../components/Picker'
 import { Styles } from '../app/Styles'
-import { FirebaseContext } from '../firebase/FirebaseContext'
-import { DocumentData, QuerySnapshot, useCollection } from '../firebase/Firebase'
+import { Claims } from '../database/DataTypes'
+import { FirebaseContext } from '../database/FirebaseContext'
+import { DocumentData, QuerySnapshot, useCollection } from '../database/Firebase'
 import { StackNavigationProp } from '@react-navigation/stack'
 
 interface Props {
@@ -26,7 +27,7 @@ export default ({ navigation, ...restProps }: Props) => {
     const [isAdmin, setIsAdmin] = useState(false)
     const [isManager, setIsManager] = useState(false)
     const [isModerator, setIsModerator] = useState(false)
-    const [permissionDenied, setPermissionDenied] = useState(!claims?.admin)
+    const [permissionDenied, setPermissionDenied] = useState<boolean>(!claims?.includes('admin'))
 
     const setClaim = (uid: string, claimName: string, value: boolean) => {
         let promise = value ? addClaim(uid, claimName) : removeClaim(uid, claimName)
@@ -97,7 +98,7 @@ export default ({ navigation, ...restProps }: Props) => {
         }).catch((err) => console.warn(err))
     }, [selectedMember])
 
-    let render = <ActivityIndicator />
+    let render = <ActivityIndicator viewStyle={Styles.views.activityIndicator} />
     if (errorCollection || permissionDenied) {
         render = (
             <DisplayError
