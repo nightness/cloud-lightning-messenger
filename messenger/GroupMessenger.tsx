@@ -61,10 +61,6 @@ export default ({ navigation }: Props) => {
     }, [snapshot])
 
     useEffect(() => {
-        console.log(claims)
-    }, [claims])
-
-    useEffect(() => {
         if (selectedGroup && selectedGroup.value)
             setGroupCollectionPath(`/groups/${selectedGroup.value}/messages/`)
         console.log(selectedGroup)
@@ -82,12 +78,12 @@ export default ({ navigation }: Props) => {
             const data = results.data
             if (typeof data.type === 'string') {
                 console.error(data.message)
-                if (data.type === 'silent') return
-                alert(data.message)
+                if (data.type !== 'silent')
+                    alert(data.message)
             } else {
                 console.log(data)
             }
-            textInput.current?.focus()
+            textInput?.current?.focus()
         }).catch((error) => {
             alert('Unhandled exception')
         })
@@ -120,6 +116,7 @@ export default ({ navigation }: Props) => {
                     // @ts-ignore
                     renderItem={({ item }) => <Message item={item} />}
                 />
+
                 <LinearGradient
                     colors={GradientColors[activeTheme].secondary}>
                     <View style={Styles.messenger.views}>

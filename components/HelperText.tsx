@@ -22,8 +22,8 @@ export default ({ children, style, fontWeight = '200', fontSize = 14, type, ...r
                 getThemedComponentStyle('HelperText')[activeTheme],
                 style,
                 {
-                    fontWeight: fontWeight, // String
-                    fontSize: fontSize, // Integer
+                    fontWeight, // String
+                    fontSize, // Integer
                 },
             ]}
             selectable={false}

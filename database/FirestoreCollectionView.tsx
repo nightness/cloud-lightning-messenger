@@ -7,7 +7,7 @@ import {
     QuerySnapshot,
 } from './Firebase'
 import { ActivityIndicator, DisplayError, FlatList, ThemeContext } from 'cloud-lightning-themed-ui'
-import { ListRenderItem, StyleProp, ViewStyle } from 'react-native'
+import { ListRenderItem, StyleProp, View, ViewStyle } from 'react-native'
 import { FirebaseError } from 'firebase'
 import { LinearGradient } from 'expo-linear-gradient'
 import { GradientColors } from '../app/GradientColors'
@@ -47,6 +47,7 @@ export default function _<T>({
             })
             .catch((e) => {
                 setDataError(e)
+                setDataLoading(false)
             })
     }
 
@@ -59,6 +60,10 @@ export default function _<T>({
         if (!loadingCollection && !errorCollection && snapshot) fetchData()
     }, [snapshot])
 
+    console.log(`loadingCollection ${loadingCollection}, loadingData = ${loadingData}`)
+
+    if (loadingCollection || loadingData)
+        return <ActivityIndicator viewStyle={Styles.views.activityIndicator} />
     if (errorCollection || errorData) {
         const error = (errorCollection === true ? new Error('Unknown Firebase Error') :
             (errorCollection !== undefined ? errorCollection as Error : undefined) ||
@@ -71,22 +76,20 @@ export default function _<T>({
                 error={error}
             />
         )
-    } else if (!loadingCollection && !loadingData) {
-        return (
-            <LinearGradient
-                colors={GradientColors[activeTheme].secondary}
-                style={{ flex: 1 }}
-            >
-                <FlatList<T>
-                    viewStyle={{ alignItems: 'baseline' }}
-                    renderItem={renderItem}
-                    data={messages}
-                    onStartReached={loadMoreMessages}
-                    autoScrollToEnd={autoScrollToEnd}
-                    {...restProps}
-                />
-            </LinearGradient>
-        )
     }
-    return <ActivityIndicator viewStyle={Styles.views.activityIndicator} />
+    return (
+        <LinearGradient
+            colors={GradientColors[activeTheme].secondary}
+            style={{ flex: 1 }}
+        >
+            <FlatList<T>
+                viewStyle={{ alignItems: 'baseline' }}
+                renderItem={renderItem}
+                data={messages}
+                onStartReached={loadMoreMessages}
+                autoScrollToEnd={autoScrollToEnd}
+                {...restProps}
+            />
+        </LinearGradient>
+    )
 }
