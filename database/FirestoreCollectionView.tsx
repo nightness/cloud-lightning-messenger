@@ -83,6 +83,7 @@ export default function _<T>({
             style={{ flex: 1 }}
         >
             <FlatList<T>
+                style={{ width: '100%' }}
                 viewStyle={{ alignItems: 'baseline' }}
                 renderItem={renderItem}
                 data={messages}
