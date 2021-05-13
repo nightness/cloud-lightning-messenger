@@ -33,7 +33,7 @@ export const firebaseConfig = {
     measurementId: "[MEASUREMENT ID"
 }
 ```
-
+7. On the CLI, in the project folder, type `firebase init` and setup hosting (This entire setup is optional if you just want to run locally)
 ## Startup
 
 ```
