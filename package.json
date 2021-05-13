@@ -48,7 +48,8 @@
     "react-navigation-drawer": "^2.7.0",
     "react-navigation-dynamic-drawer": "^1.0.102",
     "react-navigation-stack": "^2.10.4",
-    "yup": "^0.32.9"
+    "yup": "^0.32.9",
+    "yup-phone": "^1.2.19"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

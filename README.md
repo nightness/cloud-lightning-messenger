@@ -30,7 +30,7 @@ export const firebaseConfig = {
     storageBucket: "[STORAGE BUCKET]",
     messagingSenderId: "[MESSAGE SENDER ID]",
     appId: "[APP ID]",
-    measurementId: "[MEASUREMENT ID"
+    measurementId: "[MEASUREMENT ID]"
 }
 ```
 7. From the CLI, in the project folder, type `firebase init` and setup hosting (This entire setup is optional if you just want to run locally)
