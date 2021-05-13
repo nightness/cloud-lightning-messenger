@@ -14,7 +14,7 @@
     "@react-navigation/drawer": "^5.12.5",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.4",
-    "cloud-lightning-themed-ui": "^0.0.53",
+    "cloud-lightning-themed-ui": "^0.0.54",
     "expo": "~41.0.1",
     "expo-app-loading": "^1.0.1",
     "expo-constants": "~10.1.3",

@@ -3139,20 +3139,20 @@ clone@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
 
-cloud-lightning-themed-ui@^0.0.53:
-  version "0.0.53"
-  resolved "https://registry.yarnpkg.com/cloud-lightning-themed-ui/-/cloud-lightning-themed-ui-0.0.53.tgz#3d66c560b83260f1416fbae5fabe23ece1c1c3ed"
-  integrity sha512-zID22uj4p2wC0gdcdN/l2Rh/2XL5usWmlLOOEJd9X8gMLh3KK58ndbsYc/hPijY0YHlZ4DjJ5dTpQ4YBOhnvJg==
+cloud-lightning-themed-ui@^0.0.54:
+  version "0.0.54"
+  resolved "https://registry.yarnpkg.com/cloud-lightning-themed-ui/-/cloud-lightning-themed-ui-0.0.54.tgz#8c58335ba8690d94e6daed6866814379242ebd81"
+  integrity sha512-ptznuqwlH3jrc1+P8gUuwday3n5fglfWUYKWr2CfW/Az9MEXirmDemnbW1F/7a0eFZIWhk0131iNvVnhKs12GQ==
   dependencies:
     "@expo/vector-icons" "^12.0.4"
-    expo-linear-gradient "~8.4.0"
+    expo-linear-gradient "~9.1.0"
     expo-screen-orientation "^3.1.0"
-    react-native "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz"
-    react-native-gesture-handler "~1.8.0"
+    react-native "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz"
+    react-native-gesture-handler "~1.10.2"
     react-native-modals "^0.22.3"
-    react-native-reanimated "~1.13.0"
+    react-native-reanimated "~2.1.0"
     react-native-safe-area-context "3.1.9"
-    react-native-screens "~2.15.2"
+    react-native-screens "~3.0.0"
 
 collection-visit@^1.0.0:
   version "1.0.0"
