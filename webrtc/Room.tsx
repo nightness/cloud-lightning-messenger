@@ -11,9 +11,12 @@ interface Props {
 const html = require('./Room.html')
 
 export default ({ navigation }: Props) => {
+    const  javascript = `
+        window.alert('this is javascript')
+    `
     return (
         <Screen navigation={navigation} title="Video Chat">
-            <WebView
+            <WebView                
                 style={{ flex: 1 }}
                 originWhitelist={['*']}
                 allowsFullscreenVideo={true}
@@ -21,6 +24,18 @@ export default ({ navigation }: Props) => {
                 bounces={false}
                 mediaPlaybackRequiresUserAction={false}
                 source={{ html }}
+                onError={({ nativeEvent }) => {
+                    console.error(`WebView Error: ${nativeEvent.description}`)                    
+                }}
+                onTouchStart={({ nativeEvent }) => {
+                    console.info(`WebView onTouchStart: ${nativeEvent.target}`)
+                }}
+                onLoad={({ target }) => {
+                    console.info(`WebView onTouchStart: ${target}`)
+                }}
+                // onNavigationStateChange={({ }) => {
+
+                // }}
             />
         </Screen>
     )

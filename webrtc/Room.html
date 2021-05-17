@@ -66,6 +66,13 @@
 
         <button id="hangupButton" disabled>Hangup</button>
 
+        <!-- jQuery -->
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"
+        ></script>
+
         <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
         <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
 
@@ -120,30 +127,38 @@
             // 1. Setup media sources
 
             webcamButton.onclick = async () => {
-                localStream = await navigator.mediaDevices.getUserMedia({
-                    video: true,
-                    audio: true,
-                })
-                remoteStream = new MediaStream()
-
-                // Push tracks from local stream to peer connection
-                localStream.getTracks().forEach((track) => {
-                    pc.addTrack(track, localStream)
-                })
-
-                // Pull tracks from remote stream, add to video stream
-                pc.ontrack = (event) => {
-                    event.streams[0].getTracks().forEach((track) => {
-                        remoteStream.addTrack(track)
+                navigator.mediaDevices
+                    .getUserMedia({
+                        video: true,
+                        audio: true,
                     })
-                }
+                    .then((stream) => {
+                        localStream = stream
+                        remoteStream = new MediaStream()
 
-                webcamVideo.srcObject = localStream
-                remoteVideo.srcObject = remoteStream
+                        const tracks = localStream.getTracks()
 
-                callButton.disabled = false
-                answerButton.disabled = false
-                webcamButton.disabled = true
+                        // Push tracks from local stream to peer connection
+                        tracks.forEach((track) => {
+                            pc.addTrack(track, localStream)
+                        })
+
+                        // Pull tracks from remote stream, add to video stream
+                        pc.ontrack = (event) => {
+                            event.streams?.[0].getTracks().forEach((track) => {
+                                remoteStream.addTrack(track)
+                            })
+                        }
+
+                        webcamVideo.srcObject = localStream
+                        remoteVideo.srcObject = remoteStream
+
+                        callButton.disabled = false
+                        answerButton.disabled = false
+                        webcamButton.disabled = true
+                    }).catch((exception) => {
+                        alert(exception)
+                    })
             }
 
             // 2. Create an offer

@@ -57,8 +57,8 @@ export const initialNavigationElements: NavigationElements = [
         depth: 0
     },
     {
-        label: 'Web View',
-        routeName: 'WebView',
+        label: 'Video Chat',
+        routeName: 'VideoChat',
         component: Room,
         initialParams: groupChatParams,
         depth: 0
