@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { Platform } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import WebView from './WebView'
+import { WebView } from 'cloud-lightning-themed-ui'
 import Screen from '../components/Screen'
 
 interface Props {
@@ -10,7 +10,10 @@ interface Props {
 
 const html = require('./Room.html')
 
-export default ({ navigation }: Props) => {    
+export default ({ navigation }: Props) => {
+    const  javascript = `
+        window.alert('this is javascript')
+    `
     return (
         <Screen navigation={navigation} title="Video Chat">
             <WebView                
