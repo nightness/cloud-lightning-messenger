@@ -1207,6 +1207,11 @@
     xcode "^3.0.0"
     xml-js "^1.6.11"
 
+"@expo/html-elements@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@expo/html-elements/-/html-elements-0.0.2.tgz#9e913ab860ebf676cecf200385d126649c7c4496"
+  integrity sha512-sB5mrrL0GKew9EMCBwS12zlBjF4hswqpP42T/bacgxadF8CKWGLru4KLrAi2cmBAkUOC1Z/HGmlVWEOi7Gl+OA==
+
 "@expo/image-utils@0.3.13", "@expo/image-utils@^0.3.10":
   version "0.3.13"
   resolved "https://registry.yarnpkg.com/@expo/image-utils/-/image-utils-0.3.13.tgz#cba070a61ce89e6c113b8e6afd5655cb83da6377"
@@ -3149,11 +3154,12 @@ clone@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
 
-cloud-lightning-themed-ui@^0.0.56:
-  version "0.0.56"
-  resolved "https://registry.yarnpkg.com/cloud-lightning-themed-ui/-/cloud-lightning-themed-ui-0.0.56.tgz#6f951259bd4185dfb8775b7b0a3b0619e926056b"
-  integrity sha512-1UrVcYAWB2ID/JtoTvd4Xt7Ov887/OgeI4RZpHLPwgYJdpxZWObmZpaFR8qvurfu8ue0mzEqmXMGsCMtYoCyIQ==
+cloud-lightning-themed-ui@^0.0.61:
+  version "0.0.61"
+  resolved "https://registry.yarnpkg.com/cloud-lightning-themed-ui/-/cloud-lightning-themed-ui-0.0.61.tgz#972c272fd89d59fabaab5321817320047a1dd711"
+  integrity sha512-92eUe2xh7yEAQWkmFzay6LfLaXbhpzQw0luMfo0rBjZbdT7tKS30P0HTVqTmuSXEDm2oxucYuv9PBFYVcuHa9w==
   dependencies:
+    "@expo/html-elements" "^0.0.2"
     "@expo/vector-icons" "^12.0.4"
     expo-linear-gradient "~9.1.0"
     expo-screen-orientation "^3.1.0"

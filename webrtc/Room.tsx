@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Platform } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { WebView } from 'cloud-lightning-themed-ui'
+import { WebView, WebViewRef } from 'cloud-lightning-themed-ui'
 import Screen from '../components/Screen'
 
 interface Props {
@@ -11,12 +11,24 @@ interface Props {
 const html = require('./Room.html')
 
 export default ({ navigation }: Props) => {
-    const  javascript = `
-        window.alert('this is javascript')
-    `
+    const [isLoading, setIsLoading] = useState(true)
+    const [webView, setWebView] = useState<HTMLIFrameElement>()
+
+
+    useEffect(() => {
+        if (webView !== undefined) {
+            setIsLoading(false)
+            //console.log()
+        }
+    }, [webView])
+
+    useEffect(() => {
+        console.info(`WebView is${isLoading ? ' ' : ' not '}loading`)
+    }, [isLoading])
+    
     return (
         <Screen navigation={navigation} title="Video Chat">
-            <WebView                
+            <WebView
                 style={{ flex: 1 }}
                 originWhitelist={['*']}
                 allowsFullscreenVideo={true}
@@ -31,7 +43,9 @@ export default ({ navigation }: Props) => {
                     console.info(`WebView onTouchStart: ${nativeEvent.target}`)
                 }}
                 onLoad={({ target }) => {
-                    console.info(`WebView onTouchStart: ${target}`)
+                    // @ts-expect-error
+                    setWebView(target)
+                    
                 }}
                 // onNavigationStateChange={({ }) => {
 
