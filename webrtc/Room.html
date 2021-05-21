@@ -247,7 +247,7 @@
 
             hangupButton.onclick = async () => {
 
-                // This stops streaming to the senders, but doesn't not from me seeing them
+                // This stops streaming to the senders, but doesn't not stop me from seeing them
                 const senders = pc.getSenders()
                 senders.forEach((sender) => {
                     pc.removeTrack(sender)
