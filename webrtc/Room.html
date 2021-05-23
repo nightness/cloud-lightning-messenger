@@ -72,6 +72,7 @@
         <!-- Add Firebase products that you want to use -->
         <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-functions.js"></script>
 
         <script type="module">
             // Use your own config please, mine is write protected anyways
@@ -91,6 +92,7 @@
                 firebase.initializeApp(firebaseConfig)
             }
             const firestore = firebase.firestore()
+            const functions = firebase.functions()
 
             const servers = {
                 iceServers: [
@@ -177,12 +179,13 @@
                 const offerDescription = await pc.createOffer()
                 await pc.setLocalDescription(offerDescription)
 
+                // TODO: Add the target of the call to the offer
                 const offer = {
                     sdp: offerDescription.sdp,
                     type: offerDescription.type,
                 }
 
-                await callDoc.set({ offer })
+                await functions.httpsCallable('createCall')({ offer })
 
                 // Listen for remote answer
                 callDoc.onSnapshot((snapshot) => {
@@ -199,11 +202,10 @@
                         if (change.type === 'added') {
                             const candidate = new RTCIceCandidate(change.doc.data())
                             pc.addIceCandidate(candidate)
+                            hangupButton.disabled = false
                         }
                     })
                 })
-
-                hangupButton.disabled = false
             }
 
             // 3. Answer the call with the unique ID
@@ -237,20 +239,26 @@
                         console.log(change)
                         if (change.type === 'added') {
                             let data = change.doc.data()
-                            pc.addIceCandidate(new RTCIceCandidate(data))                            
+                            pc.addIceCandidate(new RTCIceCandidate(data))
+                            hangupButton.disabled = false
                         }
                     })
                 })
-
-                hangupButton.disabled = false
             }
 
             hangupButton.onclick = async () => {
+                const tracks = webcamVideo.srcObject.getTracks()
+                tracks.forEach((track) => {
+                    track.stop()
+                })
 
-                // This stops streaming to the senders, but doesn't not stop me from seeing them
+                if (remoteStream)
+                    remoteStream.getTracks().forEach((track) => track.stop())
+
+                // This stops my stream to the senders, but doesn't not stop me from seeing them
                 const senders = pc.getSenders()
                 senders.forEach((sender) => {
-                    pc.removeTrack(sender)
+                    //pc.removeTrack(sender)
                 })
 
                 // Close the entire connection
