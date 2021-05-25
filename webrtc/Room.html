@@ -53,10 +53,10 @@
         </div>
 
         <button id="webcamButton">Start webcam</button>
-        <h2>2. Create a new Call (server-side disabled)</h2>
+        <h2>2. Create a new Call</h2>
         <button id="callButton" disabled>Create Call (offer)</button>
 
-        <h2>3. Join a Call (server-side disabled)</h2>
+        <h2>3. Join a Call</h2>
         <p>Answer the call from a different browser window or device</p>
 
         <input id="callInput" />
@@ -178,8 +178,8 @@
                 const answerCandidates = callDoc.collection('answerCandidates')
 
                 // Get candidates for caller, save to db
-                pc.onicecandidate = (event) => {
-                    event.candidate && offerCandidates.add(event.candidate.toJSON())
+                pc.onicecandidate = ({ candidate }) => {
+                    candidate && offerCandidates.add(candidate.toJSON())
                 }
 
                 // Create offer
@@ -197,9 +197,9 @@
                     console.error(resultData.error)
                     return
                 }
+
                 // Update textbox
                 callInput.value = call.id
-
 
                 // Listen for remote answer
                 callDoc.onSnapshot((snapshot) => {
@@ -251,12 +251,13 @@
                     return
                 }
 
+                hangupButton.disabled = false
+                
                 offerCandidates.onSnapshot((snapshot) => {
                     snapshot.docChanges().forEach((change) => {
                         if (change.type === 'added') {
                             let data = change.doc.data()
-                            pc.addIceCandidate(new RTCIceCandidate(data))
-                            hangupButton.disabled = false
+                            pc.addIceCandidate(new RTCIceCandidate(data))                            
                         }
                     })
                 })
