@@ -168,7 +168,7 @@
                 const { data: call } = await functions.httpsCallable('createCall')({ target: auth.currentUser.uid })
                 
                 if (call === undefined || call.id === undefined) {
-                    alert("Unable to create calls")
+                    alert("Unable to create call")
                     return
                 }
 
@@ -192,9 +192,12 @@
                     type: offerDescription.type,
                 }
 
-                await functions.httpsCallable('setCallOffer')({ id: call.id, offer })
-
-                // Call is ready to be answered
+                const { data: resultData } = await functions.httpsCallable('setCallOffer')({ id: call.id, offer })
+                if (resultData.error) {
+                    console.error(resultData.error)
+                    return
+                }
+                // Update textbox
                 callInput.value = call.id
 
 
@@ -231,6 +234,7 @@
                 }
 
                 const { offer } = (await callDoc.get()).data()
+                console.log(offer)
                 await pc.setRemoteDescription(new RTCSessionDescription(offer))
 
                 const answerDescription = await pc.createAnswer()
@@ -241,11 +245,14 @@
                     sdp: answerDescription.sdp,
                 }
 
-                await callDoc.update({ answer })
+                const { data: resultData } = await functions.httpsCallable('answerCall')({ id: callId, answer })
+                if (resultData.error) {
+                    console.error(resultData.error)
+                    return
+                }
 
                 offerCandidates.onSnapshot((snapshot) => {
                     snapshot.docChanges().forEach((change) => {
-                        console.log(change)
                         if (change.type === 'added') {
                             let data = change.doc.data()
                             pc.addIceCandidate(new RTCIceCandidate(data))
