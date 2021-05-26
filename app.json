@@ -28,7 +28,8 @@
         "backgroundColor": "#FFFFFF"
       },
       "useNextNotificationsApi": true,
-      "package": "com.nightness.cloudlightningmessenger"
+      "package": "com.nightness.cloudlightningmessenger",
+      "permissions": [ "NOTIFICATIONS" ]
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

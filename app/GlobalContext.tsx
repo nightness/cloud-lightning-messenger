@@ -1,20 +1,40 @@
 import React, { createContext, useState, useEffect } from 'react'
-import * as Notifications from 'expo-notifications'
+//import * as Notifications from 'expo-notifications'
+//import * as Permissions from "expo-permissions"
 import { Keyboard, Platform, useWindowDimensions } from 'react-native'
 
 
 type ContextType = {
     hamburgerBadgeText?: string
     setHamburgerBadgeText?: React.Dispatch<React.SetStateAction<string | undefined>>
+    sendNotificationImmediately?: (title: string, body: string) => Promise<void>
 }
 
-Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: true,
-        shouldSetBadge: true,
-    }),
-});
+// Notifications.setNotificationHandler({
+//     handleNotification: async () => ({
+//         shouldShowAlert: true,
+//         shouldPlaySound: true,
+//         shouldSetBadge: true,
+//     }),
+// });
+
+// const askPermissions = async () => {
+//     const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
+//     let finalStatus = existingStatus
+//     if (existingStatus !== "granted") {
+//         const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
+//         finalStatus = status
+//     }
+//     if (finalStatus !== "granted") {
+//         return false
+//     }
+//     return true
+// }
+
+// const sendNotificationImmediately = async (title: string, body: string) => {
+//     let notificationId = await Notifications.presentNotificationAsync({ title, body });
+//     console.log(notificationId); // can be saved in AsyncStorage or send to server
+// };
 
 export const GlobalContext = createContext<ContextType>({
     // Defaults    
@@ -27,9 +47,18 @@ interface Props {
 export const GlobalProvider = ({ children }: Props) => {
     const [hamburgerBadgeText, setHamburgerBadgeText] = useState<string>()
 
+    useEffect(() => {
+        // askPermissions()
+        //     .then(() => {
+        //         Notifications.addNotificationReceivedListener((event) => {
+        //             console.log(event)
+        //         })
+        //     })
+    }, [])
+
     return (
         <GlobalContext.Provider value={{
-            hamburgerBadgeText, setHamburgerBadgeText,
+            hamburgerBadgeText, setHamburgerBadgeText //, sendNotificationImmediately
         }}>
             {children}
         </GlobalContext.Provider>
