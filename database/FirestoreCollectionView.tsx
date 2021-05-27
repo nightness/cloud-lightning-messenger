@@ -6,7 +6,7 @@ import {
     DocumentData,
     QuerySnapshot,
 } from './Firebase'
-import { ActivityIndicator, DisplayError, FlatList, ThemeContext } from 'cloud-lightning-themed-ui'
+import { ActivityIndicator, DisplayError, FlatList, ThemeContext } from '../components'
 import { ListRenderItem, StyleProp, View, ViewStyle } from 'react-native'
 import { FirebaseError } from 'firebase'
 import { LinearGradient } from 'expo-linear-gradient'

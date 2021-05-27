@@ -1,8 +1,8 @@
 import React, { useEffect, useContext, useState } from 'react'
 import { DefaultRouterOptions } from '@react-navigation/native'
 import Screen from '../components/Screen'
-import { Button } from 'cloud-lightning-themed-ui'
-import { DrawerContext } from 'react-navigation-dynamic-drawer'
+import { Button } from '../components'
+import { DrawerContext } from '../navigation'
 import { callFirebaseFunction } from '../database/Firebase'
 
 interface Props {

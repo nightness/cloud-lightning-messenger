@@ -12,7 +12,7 @@ import {
     ActivityIndicator,
     DisplayError,
     ThemeContext
-} from 'cloud-lightning-themed-ui'
+} from '../components'
 import { Styles } from '../app/Styles'
 import {
     useCollection,

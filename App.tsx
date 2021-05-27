@@ -6,7 +6,7 @@ import * as Fonts from 'expo-font'
 import { FirebaseProvider } from './database/FirebaseContext'
 import { GlobalProvider } from './app/GlobalContext'
 import AppNavigator from './navigation/AppNavigator'
-import { ThemeProvider } from 'cloud-lightning-themed-ui'
+import { ThemeProvider } from './components/ThemeContext'
 import { themes } from './app/Themes'
 
 const getFonts = () =>

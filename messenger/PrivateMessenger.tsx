@@ -5,7 +5,7 @@ import {
     TextInput,
     Button,
     ThemeContext
-} from 'cloud-lightning-themed-ui'
+} from '../components'
 import Screen from '../components/Screen'
 import Picker, { PickerItem } from '../components/Picker'
 import FirestoreCollectionView from '../database/FirestoreCollectionView'

@@ -6,7 +6,7 @@ import { Picker, PickerIOS } from '@react-native-picker/picker'
 // @ts-ignore - No Types found yet
 import ToggleBox from 'react-native-togglebox'
 import { ItemValue } from '@react-native-picker/picker/typings/Picker'
-import { ThemeContext } from 'cloud-lightning-themed-ui'
+import { ThemeContext } from './ThemeContext'
 
 export interface PickerItem {
     label: string

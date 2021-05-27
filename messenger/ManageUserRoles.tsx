@@ -5,7 +5,7 @@ import {
     ActivityIndicator,
     DisplayError,
     LabeledSwitch,
-} from 'cloud-lightning-themed-ui'
+} from '../components'
 import Screen from '../components/Screen'
 import Picker, { PickerItem } from '../components/Picker'
 import { Styles } from '../app/Styles'

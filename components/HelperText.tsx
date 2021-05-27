@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useEffect } from 'react'
 import { StyleProp, TextStyle } from 'react-native'
-import { HelperText } from 'react-native-paper'
-import { ThemeContext } from 'cloud-lightning-themed-ui'
+import { ThemeContext } from './ThemeContext'
+import Text from './Text'
 
 
 interface Props {
@@ -15,9 +15,8 @@ interface Props {
 export default ({ children, style, fontWeight = '200', fontSize = 14, type, ...restProps }: Props) => {
     const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
     return (
-        <HelperText
+        <Text
             {...restProps}
-            type={type}
             style={[
                 getThemedComponentStyle('HelperText')[activeTheme],
                 style,
@@ -29,6 +28,6 @@ export default ({ children, style, fontWeight = '200', fontSize = 14, type, ...r
             selectable={false}
         >
             {children}
-        </HelperText>
+        </Text>
     )
 }

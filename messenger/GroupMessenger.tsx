@@ -8,7 +8,7 @@ import {
     TextInput,
     Button,
     ThemeContext
-} from 'cloud-lightning-themed-ui'
+} from '../components'
 import { Styles } from '../app/Styles'
 import { DocumentData, QuerySnapshot, useCollection, callFirebaseFunction } from '../database/Firebase'
 import { FirebaseContext } from '../database/FirebaseContext'

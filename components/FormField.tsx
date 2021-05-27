@@ -1,6 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
-import { TextInput }  from 'cloud-lightning-themed-ui'
+import TextInput from './TextInput'
 import HelperText from './HelperText'
 import { ReturnKeyTypeOptions } from 'react-native'
 

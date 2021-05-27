@@ -1,4 +1,4 @@
-import { NavigationParams } from 'react-navigation-dynamic-drawer'
+import { NavigationParams } from '../navigation'
 
 export const homeParams: NavigationParams = {
     activeTintColor: '#5c3703',

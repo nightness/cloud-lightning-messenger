@@ -7,7 +7,7 @@ import {
     TextInput,
     Button,
     ThemeContext
-} from 'cloud-lightning-themed-ui'
+} from '../components'
 import { TextInput as NativeTextInput } from 'react-native'
 import { Styles } from '../app/Styles'
 import { FirebaseContext } from '../database/FirebaseContext'

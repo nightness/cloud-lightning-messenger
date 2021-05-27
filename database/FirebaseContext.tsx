@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
-import { ActivityIndicator, DisplayError, ThemeContext, Theme } from 'cloud-lightning-themed-ui'
+import { ActivityIndicator, DisplayError, ThemeContext, Theme } from '../components'
 import { UserClaims } from './DataTypes'
 import { useAuthState, callFirebaseFunction, getAuth, getFirestore } from './Firebase'
 import { Styles } from '../app/Styles'

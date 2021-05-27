@@ -4,7 +4,8 @@ import { FirebaseContext } from '../database/FirebaseContext'
 import ScreenHeader from './ScreenHeader'
 import { StyleProp, ViewStyle, View, useWindowDimensions } from 'react-native'
 import { GradientColors } from '../app/GradientColors'
-import { Container, ThemeContext } from 'cloud-lightning-themed-ui'
+import { ThemeContext } from './ThemeContext'
+import { Container } from '../components'
 
 interface Props {
     children: JSX.Element | JSX.Element[]

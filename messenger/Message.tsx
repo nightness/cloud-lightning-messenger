@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { View } from 'react-native'
-import { Text } from 'cloud-lightning-themed-ui'
+import { Text } from '../components'
 import { Timestamp } from '../database/Firebase'
 
 interface MessageProps {

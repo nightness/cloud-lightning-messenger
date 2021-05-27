@@ -8,7 +8,7 @@ import ManageUserRoles from '../messenger/ManageUserRoles'
 import MyWall from '../messenger/MyWall'
 import Room from '../webrtc/Room'
 import { Playground } from '../screens/Playground'
-import { NavigationElements } from 'react-navigation-dynamic-drawer'
+import { NavigationElements } from '../navigation'
 import {
     homeParams,
     messagesParams,

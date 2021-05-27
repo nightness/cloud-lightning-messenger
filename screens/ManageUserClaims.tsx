@@ -6,7 +6,7 @@ import Picker from '../components/Picker'
 import {
     Button,
     TextInput,
-} from 'cloud-lightning-themed-ui'
+} from '../components'
 import { FirebaseContext } from '../database/FirebaseContext'
 
 interface Props {

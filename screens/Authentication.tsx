@@ -8,7 +8,7 @@ import {
     ActivityIndicator,
     DisplayError,
     ThemeContext
-} from 'cloud-lightning-themed-ui'
+} from '../components'
 import {
     firebaseAuth,
     GoogleAuthProvider,

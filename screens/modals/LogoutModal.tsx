@@ -1,6 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
-import { Text, Button, Modal } from 'cloud-lightning-themed-ui'
+import { Text, Button, Modal } from '../../components'
 import { View } from 'react-native'
 import { firebaseAuth } from '../../database/Firebase'
 import { Styles } from '../../app/Styles'

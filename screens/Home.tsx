@@ -7,7 +7,7 @@ import {
     Text,
     ActivityIndicator,
     Image
-} from 'cloud-lightning-themed-ui'
+} from '../components'
 
 import { ProfileContext } from '../app/ProfileContext'
 import { Styles } from '../app/Styles'

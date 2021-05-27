@@ -1,4 +1,4 @@
-import { Themes } from 'cloud-lightning-themed-ui'
+import { Themes } from '../app/ThemeTypes'
 
 export const themes: Themes = [
     [
