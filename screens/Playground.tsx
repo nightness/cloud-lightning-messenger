@@ -4,8 +4,8 @@ import Screen from '../components/Screen'
 import { Button } from '../components'
 import { DrawerContext } from '../navigation'
 import { callFirebaseFunction } from '../database/Firebase'
-import { GlobalContext } from '../app/GlobalContext'
 import Toast from "react-native-toast-message"
+import { GlobalContext } from '../app/GlobalContext'
 
 interface Props {
     navigation: DefaultRouterOptions
@@ -14,7 +14,7 @@ interface Props {
 // Playground
 export const Playground = ({ navigation }: Props) => {
     const { setBadge, ScreenManager, screenIndex } = useContext(DrawerContext)
-    const { showToast } = useContext(GlobalContext)
+    const { showToast, hideToast, sendNotificationImmediately } = useContext(GlobalContext)
     return (
         <Screen navigation={navigation} title="Playground">
             <Button
@@ -89,6 +89,13 @@ export const Playground = ({ navigation }: Props) => {
                     })
                 }}
             />
+            <Button
+                title='Notification Test'
+                onPress={() => {
+                    sendNotificationImmediately?.('title', 'body')
+                }}
+            />
+
         </Screen>
     )
 }

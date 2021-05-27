@@ -329,6 +329,7 @@ export default ({ navigation }: Props) => {
                     console.info(`WebView onTouchStart: ${nativeEvent.target}`)
                 }}
                 onLoad={({ target }) => {
+                    //@ts-expect-error
                     setWebView(target)                    
                 }}
                 // onNavigationStateChange={({ }) => {
