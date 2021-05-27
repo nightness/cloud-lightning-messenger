@@ -38,10 +38,10 @@ export default ({
         setActiveTheme(activeTheme === 'Dark' ? 'Light' : 'Dark')
     }
 
-    const iconSize = 28
+    const iconSize = 38
 
     const centerComponent = (
-        <Text fontWeight="600" fontSize={20}>
+        <Text style={{ textAlignVertical: 'center' }} fontWeight="700" fontSize={26}>
             {title}
         </Text>
     )
@@ -57,7 +57,7 @@ export default ({
                         onPress={navigation.openDrawer}
                     />
                     { hamburgerBadgeText ?
-                        <Badge style={{ marginLeft: -15 }} size={16} visible={true}>{hamburgerBadgeText}</Badge>
+                        <Badge style={{ marginLeft: -15 }} value={hamburgerBadgeText} />
                         : <></>
                     }
                 </>
@@ -99,8 +99,8 @@ export default ({
                 photoURL ? (
                     <Image
                         source={{ uri: photoURL }}
-                        style={{ width: 28, height: 28, borderRadius: 14 }}
-                        onPress={() => setShowLogoutModal(true)}
+                        style={{ width: iconSize, height: iconSize, borderRadius: (iconSize / 2) }}
+                        onPress={() => setShowLogoutModal(true)}                        
                     />
                 ) : (
                     <Icon

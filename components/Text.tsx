@@ -24,10 +24,10 @@ export default ({
 
     // Setup defaults
     if (!fontWeight) {
-        fontWeight = '200'
+        fontWeight = '300'
     }
     if (!fontSize) {
-        fontSize = 14
+        fontSize = 16
     }
 
     return (

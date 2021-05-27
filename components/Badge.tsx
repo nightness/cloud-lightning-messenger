@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableWithoutFeedback, ColorValue, StyleSheet } from 'react-native'
+import { TouchableWithoutFeedback, ColorValue, StyleSheet, StyleProp, ViewStyle } from 'react-native'
 import Text from './Text'
 
 export type FontWeightValues = "normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900"
@@ -10,6 +10,7 @@ interface Props {
     backgroundColor?: ColorValue
     fontSize?: number
     fontWeight?: FontWeightValues
+    style?: StyleProp<ViewStyle>
     onPress?: () => any
 }
 
@@ -19,13 +20,13 @@ export default ({
     backgroundColor = 'blue',
     fontSize,
     fontWeight = '300',
+    style,
     onPress,
-    ...restProps
 }: Props) => {
     return (
         <TouchableWithoutFeedback
             onPress={onPress}
-            {...restProps}
+            style={style}            
         >
             <Text style={[localStyles.text, { color, fontSize, fontWeight, backgroundColor }]}>{value}</Text>
         </TouchableWithoutFeedback>
