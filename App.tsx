@@ -25,14 +25,16 @@ export default function App() {
             onError={(error) => console.error(error)}
         />
     } else {
-        return (            
-            <GlobalProvider>
-                <ThemeProvider themes={themes}>
-                    <FirebaseProvider>
-                        <AppNavigator />
-                    </FirebaseProvider>
-                </ThemeProvider>
-            </GlobalProvider>
+        return (
+            <>
+                <GlobalProvider>
+                    <ThemeProvider themes={themes}>
+                        <FirebaseProvider>
+                            <AppNavigator />
+                        </FirebaseProvider>
+                    </ThemeProvider>
+                </GlobalProvider>                
+            </>
         )
     }
 }

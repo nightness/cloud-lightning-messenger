@@ -26,8 +26,6 @@ type ContextType = {
     hideToast: () => void
 }
 
-
-
 if (Platform.OS !== 'web') {
     Notifications.setNotificationHandler({
         handleNotification: async () => ({
@@ -57,12 +55,14 @@ const sendNotificationImmediately = async (title: string, body: string) => {
             type: 'info',
             text1: title,
             text2: body,
-            position: 'bottom'
+            position: 'bottom',
+            onHide: () => {
+                
+            }
         })        
     }
-    let notificationId = await Notifications.presentNotificationAsync({ title, body });
-    console.log(notificationId); // can be saved in AsyncStorage or send to server
-};
+    await Notifications.presentNotificationAsync({ title, body });    
+}
 
 export const GlobalContext = createContext<ContextType>({
     // Defaults
@@ -97,7 +97,6 @@ export const GlobalProvider = ({ children }: Props) => {
             hamburgerBadgeText, setHamburgerBadgeText, showToast, hideToast, sendNotificationImmediately
         }}>
             {children}
-            <Toast ref={(ref) => Toast.setRef(ref)} />
         </GlobalContext.Provider>
     )
 }

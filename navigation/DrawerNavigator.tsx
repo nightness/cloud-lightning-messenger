@@ -7,6 +7,7 @@ import DrawerContent from './DrawerContent'
 import { ScreensReducer } from './RoutingReducer'
 import { Gradient, NavigationElements } from './NavigationTypes'
 import { StyleProp, TextStyle, ViewStyle } from 'react-native'
+import Toast from "react-native-toast-message"
 
 const Drawer = createDrawerNavigator()
 
@@ -72,7 +73,7 @@ export default ({
                 lazy={lazy}
                 minSwipeDistance={minSwipeDistance}
                 openByDefault={openByDefault}
-                overlayColor={overlayColor}                
+                overlayColor={overlayColor}
                 drawerContent={props => <DrawerContent {...restProps} {...props} />}>
                 {screens.map((screen, index) => {
                     const depthDelta = screen.depth - currentDepth
@@ -105,6 +106,7 @@ export default ({
                     )
                 })}
             </Drawer.Navigator>
+            <Toast ref={(ref) => Toast.setRef(ref)} />
         </DrawerProvider>
     )
 }
