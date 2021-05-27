@@ -1,7 +1,8 @@
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect, useRef } from 'react'
 //import * as Notifications from 'expo-notifications'
 //import * as Permissions from "expo-permissions"
 import { Keyboard, Platform, useWindowDimensions } from 'react-native'
+import Toast from "react-native-toast-message"
 
 
 type ContextType = {
@@ -46,6 +47,7 @@ interface Props {
 
 export const GlobalProvider = ({ children }: Props) => {
     const [hamburgerBadgeText, setHamburgerBadgeText] = useState<string>()
+    const toast = useRef<Toast>(null);
 
     useEffect(() => {
         // askPermissions()
@@ -58,9 +60,10 @@ export const GlobalProvider = ({ children }: Props) => {
 
     return (
         <GlobalContext.Provider value={{
-            hamburgerBadgeText, setHamburgerBadgeText //, sendNotificationImmediately
+            hamburgerBadgeText, setHamburgerBadgeText, //, sendNotificationImmediately
         }}>
             {children}
+            <Toast ref={(ref) => Toast.setRef(ref)} />
         </GlobalContext.Provider>
     )
 }

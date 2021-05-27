@@ -8,7 +8,293 @@ interface Props {
     navigation: StackNavigationProp<any, string>
 }
 
-const html = require('./Room.html')
+const html = Platform.OS === 'web' ? require('./Room.html') : `
+<!-- 
+
+    Using as proof of concept, for using WebView to have WebRTC support in Expo apps    
+    Original from Jeff Delaney. https://github.com/fireship-io/webrtc-firebase-demo
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>WebRTC Demo</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap');
+
+            body {
+                font-family: 'Syne Mono', monospace;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                text-align: center;
+                color: #2c3e50;
+                margin: 80px 10px;
+            }
+
+            video {
+                width: 40vw;
+                height: 30vw;
+                margin: 2rem;
+                background: #2c3e50;
+            }
+
+            .videos {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>1. Start your Webcam</h2>
+        <div class="videos">
+            <span>
+                <h3>Local Stream</h3>
+                <video id="webcamVideo" autoplay playsinline></video>
+            </span>
+            <span>
+                <h3>Remote Stream</h3>
+                <video id="remoteVideo" autoplay playsinline></video>
+            </span>
+        </div>
+
+        <button id="webcamButton">Start webcam</button>
+        <h2>2. Create a new Call</h2>
+        <button id="callButton" disabled>Create Call (offer)</button>
+
+        <h2>3. Join a Call</h2>
+        <p>Answer the call from a different browser window or device</p>
+
+        <input id="callInput" />
+        <button id="answerButton" disabled>Answer</button>
+
+        <h2>4. Hangup</h2>
+
+        <button id="hangupButton" disabled>Hangup</button>
+
+        <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+
+        <!-- Add Firebase products that you want to use -->
+        <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-functions.js"></script>
+
+        <script type="module">
+            // Use your own config please, mine is write protected anyways
+            // I'll be implementing all writes (create call, join call, and hang up) as cloud functions
+            const firebaseConfig = {
+                apiKey: 'AIzaSyBHpKV6SSJImZK1vJPGiJwKnogLBMkgfro',
+                authDomain: 'cloud-lightning.firebaseapp.com',
+                databaseURL: 'https://cloud-lightning.firebaseio.com',
+                projectId: 'cloud-lightning',
+                storageBucket: 'cloud-lightning.appspot.com',
+                messagingSenderId: '357266467361',
+                appId: '1:357266467361:web:627d7e1b7817256cfbd160',
+                measurementId: 'G-CFXNQMD10X',
+            }
+
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig)
+            }
+            const firestore = firebase.firestore()
+            const functions = firebase.functions()
+            const auth = firebase.auth()
+
+            const servers = {
+                iceServers: [
+                    {
+                        urls: [
+                            'stun:stun1.l.google.com:19302',
+                            'stun:stun2.l.google.com:19302',
+                        ],
+                    },
+                ],
+                iceCandidatePoolSize: 10,
+            }
+
+            // Global State
+            const pc = new RTCPeerConnection(servers)
+            let localStream = null
+            let remoteStream = null
+
+            // HTML elements
+            const webcamButton = document.getElementById('webcamButton')
+            const webcamVideo = document.getElementById('webcamVideo')
+            const callButton = document.getElementById('callButton')
+            const callInput = document.getElementById('callInput')
+            const answerButton = document.getElementById('answerButton')
+            const remoteVideo = document.getElementById('remoteVideo')
+            const hangupButton = document.getElementById('hangupButton')
+
+            // 1. Setup media sources
+            webcamButton.onclick = async () => {
+                navigator.mediaDevices
+                    .getUserMedia({
+                        video: true,
+                        audio: true,
+                    })
+                    .then((stream) => {
+                        localStream = stream
+                        remoteStream = new MediaStream()
+
+                        // Mute the webcamVideo
+                        webcamVideo.muted = true
+
+                        // Mute localStream
+                        const tracks = localStream.getTracks()
+
+                        // Push tracks from local stream to peer connection
+                        tracks.forEach((track) => {
+                            pc.addTrack(track, localStream)
+                        })
+
+                        // Pull tracks from remote stream, add to video stream
+                        pc.ontrack = (event) => {
+                            event.streams?.[0].getTracks().forEach((track) => {
+                                remoteStream.addTrack(track)
+                            })
+                        }
+
+                        webcamVideo.srcObject = localStream
+                        remoteVideo.srcObject = remoteStream
+
+                        callButton.disabled = false
+                        answerButton.disabled = false
+                        webcamButton.disabled = true
+                    })
+                    .catch((exception) => {
+                        alert(exception)
+                    })
+            }
+
+            // 2. Create an offer
+            callButton.onclick = async () => {
+                // Create a new call
+                const { data: call } = await functions.httpsCallable('createCall')({ target: auth.currentUser.uid })
+                
+                if (call === undefined || call.id === undefined) {
+                    alert("Unable to create call")
+                    return
+                }
+
+                // Reference Firestore collections for signaling
+                const callDoc = firestore.collection('calls').doc(call.id)
+                const offerCandidates = callDoc.collection('offerCandidates')
+                const answerCandidates = callDoc.collection('answerCandidates')
+
+                // Get candidates for caller, save to db
+                pc.onicecandidate = ({ candidate }) => {
+                    candidate && offerCandidates.add(candidate.toJSON())
+                }
+
+                // Create offer
+                const offerDescription = await pc.createOffer()
+                await pc.setLocalDescription(offerDescription)
+
+                // TODO: Add the target of the call to the offer
+                const offer = {
+                    sdp: offerDescription.sdp,
+                    type: offerDescription.type,
+                }
+
+                const { data: resultData } = await functions.httpsCallable('setCallOffer')({ id: call.id, offer })
+                if (resultData.error) {
+                    console.error(resultData.error)
+                    return
+                }
+
+                // Update textbox
+                callInput.value = call.id
+
+                // Listen for remote answer
+                callDoc.onSnapshot((snapshot) => {
+                    const data = snapshot.data()
+                    if (!pc.currentRemoteDescription && data?.answer) {
+                        const answerDescription = new RTCSessionDescription(data.answer)
+                        pc.setRemoteDescription(answerDescription)
+                    }
+                })
+
+                // When answered, add candidate to peer connection
+                answerCandidates.onSnapshot((snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === 'added') {
+                            const candidate = new RTCIceCandidate(change.doc.data())
+                            pc.addIceCandidate(candidate)
+                            hangupButton.disabled = false
+                        }
+                    })
+                })
+            }
+
+            // 3. Answer the call with the unique ID
+            answerButton.onclick = async () => {
+                const callId = callInput.value
+                const callDoc = firestore.collection('calls').doc(callId)
+                const answerCandidates = callDoc.collection('answerCandidates')
+                const offerCandidates = callDoc.collection('offerCandidates')
+
+                pc.onicecandidate = (event) => {
+                    event.candidate && answerCandidates.add(event.candidate.toJSON())
+                }
+
+                const { offer } = (await callDoc.get()).data()
+                console.log(offer)
+                await pc.setRemoteDescription(new RTCSessionDescription(offer))
+
+                const answerDescription = await pc.createAnswer()
+                await pc.setLocalDescription(answerDescription)
+
+                const answer = {
+                    type: answerDescription.type,
+                    sdp: answerDescription.sdp,
+                }
+
+                const { data: resultData } = await functions.httpsCallable('answerCall')({ id: callId, answer })
+                if (resultData.error) {
+                    console.error(resultData.error)
+                    return
+                }
+
+                hangupButton.disabled = false
+                
+                offerCandidates.onSnapshot((snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === 'added') {
+                            let data = change.doc.data()
+                            pc.addIceCandidate(new RTCIceCandidate(data))                            
+                        }
+                    })
+                })
+            }
+
+            hangupButton.onclick = async () => {
+                const tracks = webcamVideo.srcObject.getTracks()
+                tracks.forEach((track) => {
+                    track.stop()
+                })
+
+                if (remoteStream)
+                    remoteStream.getTracks().forEach((track) => track.stop())
+
+                // This stops my stream to the senders, but doesn't not stop me from seeing them
+                const senders = pc.getSenders()
+                senders.forEach((sender) => {
+                    pc.removeTrack(sender)
+                })
+
+                // Close the entire connection
+                pc.close()
+                hangupButton.disabled = true
+            }
+        </script>
+    </body>
+</html>
+`
 
 export default ({ navigation }: Props) => {
     const [isLoading, setIsLoading] = useState(true)
@@ -23,7 +309,7 @@ export default ({ navigation }: Props) => {
     }, [webView])
 
     useEffect(() => {
-        console.info(`WebView is${isLoading ? ' ' : ' not '}loading`)
+        console.info(`WebView is ${isLoading ? '' : 'not'} loading`)
     }, [isLoading])
     
     return (
@@ -43,9 +329,7 @@ export default ({ navigation }: Props) => {
                     console.info(`WebView onTouchStart: ${nativeEvent.target}`)
                 }}
                 onLoad={({ target }) => {
-                    // @ts-expect-error
-                    setWebView(target)
-                    
+                    setWebView(target)                    
                 }}
                 // onNavigationStateChange={({ }) => {
 

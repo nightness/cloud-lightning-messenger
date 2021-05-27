@@ -12,7 +12,7 @@ export default ({
     autoCorrect = false,
     spellCheck = false,
     underlineColorAndroid = 'transparent',
-    selectionColor = 'none',
+    //selectionColor = '',
     style,
     classRef,
     keyboardAppearance,

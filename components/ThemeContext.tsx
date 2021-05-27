@@ -108,8 +108,8 @@ export const ThemeProvider = ({ themes, children }: Props) => {
 
     const getStatusBarStyle = () => {
         if (activeTheme === 'Dark')
-            return ('dark' as StatusBarStyle)
-        return ('light' as StatusBarStyle)
+            return ('light' as StatusBarStyle)
+        return ('dark' as StatusBarStyle)
     }
 
     return (
