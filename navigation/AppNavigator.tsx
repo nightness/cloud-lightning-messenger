@@ -10,7 +10,6 @@ import { initialNavigationElements } from './DefaultRoutes'
 import { FirebaseContext } from '../database/FirebaseContext'
 import { GradientColors } from '../app/GradientColors'
 import { Styles } from '../app/Styles'
-import Toast from "react-native-toast-message"
 
 const Stack = createStackNavigator()
 export default () => {
@@ -43,7 +42,6 @@ export default () => {
                     />}
                 </Stack.Screen>
             </Stack.Navigator>
-            <Toast ref={(ref) => Toast.setRef(ref)} />
         </NavigationContainer>
     )
 }

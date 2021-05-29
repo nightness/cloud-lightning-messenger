@@ -4,7 +4,6 @@ import Screen from '../components/Screen'
 import { Button } from '../components'
 import { DrawerContext } from '../navigation'
 import { callFirebaseFunction } from '../database/Firebase'
-import Toast from "react-native-toast-message"
 import { GlobalContext } from '../app/GlobalContext'
 
 interface Props {
@@ -81,7 +80,7 @@ export const Playground = ({ navigation }: Props) => {
             <Button
                 title='Toast Test'
                 onPress={() => {
-                    Toast.show({
+                    showToast({
                         type: 'info',
                         text1: "Hello World!",
                         text2: 'Hello World!',

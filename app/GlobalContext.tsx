@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect, useRef } from 'react'
 import * as Notifications from 'expo-notifications'
+import { Camera } from 'expo-camera'
+import { Audio } from 'expo-av'
 import { Keyboard, Platform, useWindowDimensions, ViewStyle } from 'react-native'
 import Toast, { AnyObject, ToastPosition } from "react-native-toast-message"
 
@@ -36,6 +38,32 @@ if (Platform.OS !== 'web') {
     })
 }
 
+const askMicrophonePermission = async () => {
+    const result = await Audio.getPermissionsAsync()
+    let finalStatus = result.status
+    if (result.status !== "granted") {
+        const { status } = await Audio.requestPermissionsAsync()
+        finalStatus = status
+    }
+    if (finalStatus !== "granted") {
+        return false
+    }
+    return true
+}
+
+const askCameraPermission = async () => {
+    const result = await Camera.getPermissionsAsync()
+    let finalStatus = result.status
+    if (result.status !== "granted") {
+        const { status } = await Camera.requestPermissionsAsync()
+        finalStatus = status
+    }
+    if (finalStatus !== "granted") {
+        return false
+    }
+    return true
+}
+
 const askPermissions = async () => {
     const result = await Notifications.getPermissionsAsync()
     let finalStatus = result.status
@@ -49,24 +77,9 @@ const askPermissions = async () => {
     return true
 }
 
-const sendNotificationImmediately = async (title: string, body: string) => {
-    if (Platform.OS === 'web') {
-        return Toast.show({
-            type: 'info',
-            text1: title,
-            text2: body,
-            position: 'bottom',
-            onHide: () => {
-                
-            }
-        })        
-    }
-    await Notifications.presentNotificationAsync({ title, body });    
-}
-
 export const GlobalContext = createContext<ContextType>({
     // Defaults
-    showToast: (options: IShowToast) => Toast.show(options),
+    showToast: (options: IShowToast) => console.log(options), //Toast.show(options),
     hideToast: () => Toast.hide()
 })
 
@@ -85,12 +98,34 @@ export const GlobalProvider = ({ children }: Props) => {
                         console.log(event)
                     })
                 })
+            askCameraPermission()
+                .then((result) => {
+                    console.log(result)
+                })
+            askMicrophonePermission()
+                .then((result) => {
+                    console.log(result)
+                })
         }
     }, [])
 
     // If finer control is needed, these can be customized more
-    const showToast = (options: IShowToast) => Toast.show(options)
+    const showToast = (options: IShowToast) => console.log(options) // Toast.show(options)
     const hideToast = () => Toast.hide()
+    const sendNotificationImmediately = async (title: string, body: string) => {
+        if (Platform.OS === 'web') {
+            return showToast({
+                type: 'info',
+                text1: title,
+                text2: body,
+                position: 'bottom',
+                onHide: () => {
+
+                }
+            })
+        }
+        await Notifications.presentNotificationAsync({ title, body });
+    }
 
     return (
         <GlobalContext.Provider value={{

@@ -1,11 +1,24 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
 import { ActivityIndicator, DisplayError, ThemeContext, Theme } from '../components'
 import { UserClaims } from './DataTypes'
-import { useAuthState, callFirebaseFunction, getAuth, getFirestore } from './Firebase'
+import {
+    useAuthState,
+    callFirebaseFunction,
+    getAuth,
+    getFirestore,
+    DocumentData,
+    useDocument,
+    DocumentSnapshot,
+    useCollection,
+    QuerySnapshot,
+    FirebaseUser
+} from './Firebase'
 import { Styles } from '../app/Styles'
+import { GlobalContext } from '../app/GlobalContext'
+import FirebaseNotifications from './FirebaseNotifications'
 
 type ContextType = {
-    currentUser?: firebase.User | null
+    currentUser?: FirebaseUser | null
     claims?: string[]
     isLoading: boolean
     error?: any
@@ -35,6 +48,7 @@ export const FirebaseProvider = ({ children }: Props) => {
     const [loadingClaims, setLoadingClaims] = useState(true)
     const [loadingTheme, setLoadingTheme] = useState(true)
     const [authToken, setAuthToken] = useState()
+    const { showToast } = useContext(GlobalContext)
 
     // Setter here is being used to prevent an async race condition with component state
     const [savingTheme, setSavingTheme] = useState(false)
@@ -82,7 +96,7 @@ export const FirebaseProvider = ({ children }: Props) => {
         const { claims } = await currentUser.getIdTokenResult()
         console.log(claims)
 
-        if (claims !== undefined) { 
+        if (claims !== undefined) {
             const newClaims = []
             if (claims.admin === true) newClaims.push('admin')
             setClaims(newClaims as [string])
@@ -99,7 +113,7 @@ export const FirebaseProvider = ({ children }: Props) => {
         const authToken = await currentUser.getIdToken()
         setSavingTheme(true)
         currentUser.updateProfile({ displayName })
-        const result = await callFirebaseFunction('setProfileAttribute', {            
+        const result = await callFirebaseFunction('setProfileAttribute', {
             authToken,
             displayName,
             activeTheme
@@ -138,10 +152,10 @@ export const FirebaseProvider = ({ children }: Props) => {
             getCurrentUsersTheme(currentUser.uid).then((usersTheme: Theme) => {
                 if (usersTheme && usersTheme != activeTheme)
                     setProfileAttribute()
-            }).catch(() => {                
+            }).catch(() => {
                 setSavingTheme(false)
             })
-        }        
+        }
     }, [activeTheme])
 
     const isLoading = loadingUser || loadingClaims || loadingTheme
@@ -152,20 +166,23 @@ export const FirebaseProvider = ({ children }: Props) => {
     else if (errorUser)
         return <DisplayError permissionDenied={errorUser.code === 'permission-denied'} />
     return (
-        <FirebaseContext.Provider
-            value={{
-                currentUser,
-                claims,
-                isLoading,
-                error,
-                addClaim,
-                removeClaim,
-                getClaims,
-                setProfileAttribute,
-                authToken,
-            }}
-        >
-            {children}
-        </FirebaseContext.Provider>
+        <>
+            <FirebaseNotifications currentUser={currentUser} />
+            <FirebaseContext.Provider
+                value={{
+                    currentUser,
+                    claims,
+                    isLoading,
+                    error,
+                    addClaim,
+                    removeClaim,
+                    getClaims,
+                    setProfileAttribute,
+                    authToken,
+                }}
+            >
+                {children}
+            </FirebaseContext.Provider>
+        </>
     )
 }
