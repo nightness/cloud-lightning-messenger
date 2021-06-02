@@ -137,9 +137,6 @@ export const GlobalProvider = ({ children }: Props) => {
             messages,
             setMessages
         }}>
-            {/* { messages.length > 0 ?
-                <Toast messages={messages} /> : <></>
-            } */}
             {children}
         </GlobalContext.Provider>
     )

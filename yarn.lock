@@ -6262,13 +6262,6 @@ react-native-size-matters@^0.3.1:
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.3.1.tgz#24d0cfc335a2c730f6d58bd7b43ea5a41be4b49f"
   integrity sha512-mKOfBLIBFBcs9br1rlZDvxD5+mAl8Gfr5CounwJtxI6Z82rGrMO+Kgl9EIg3RMVf3G855a85YVqHJL2f5EDRlw==
 
-react-native-toast-message@^1.4.9:
-  version "1.4.9"
-  resolved "https://registry.yarnpkg.com/react-native-toast-message/-/react-native-toast-message-1.4.9.tgz#47f33ac312fe2aee5dbdd4ae14745fa0d354102e"
-  integrity sha512-QhHzzsiymKpHEWz2nUKQjQMRuGN+/a8cOwDXJcz3TQFY03p20f6sJW9JKw3KkMfvWiUhGbApCPpNU6tHaAZ32w==
-  dependencies:
-    prop-types "^15.7.2"
-
 react-native-togglebox@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/react-native-togglebox/-/react-native-togglebox-1.0.3.tgz#df8e9370fa360361cf2f84e70a9bfa8a719b4e73"

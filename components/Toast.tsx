@@ -69,6 +69,7 @@ const Message = (props: MessageProps) => {
                 elevation: 6,
             }}
         >
+            <Text style={{ fontWeight: '700', fontSize: 16 }}>{props.title}</Text>
             <Text>{props.message}</Text>
         </Animated.View>
     );
