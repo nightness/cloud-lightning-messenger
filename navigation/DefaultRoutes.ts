@@ -95,7 +95,6 @@ export const initialNavigationElements: NavigationElements = [
         component: Playground,
         initialParams: playgroundParams,
         depth: 0,
-        claims: ['admin'],
     },
     {
         label: 'Toast Example',
@@ -103,6 +102,5 @@ export const initialNavigationElements: NavigationElements = [
         component: ToastExample,
         initialParams: playgroundParams,
         depth: 0,
-        claims: ['admin'],
     },
 ]

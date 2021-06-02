@@ -48,7 +48,7 @@ const Message = (props: MessageProps) => {
                     {
                         translateY: opacity.interpolate({
                             inputRange: [0, 1],
-                            outputRange: [80, 0],
+                            outputRange: [50, 0],
                         }),
                     },
                 ],

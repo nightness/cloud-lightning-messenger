@@ -78,24 +78,10 @@ interface Props {
 export const GlobalProvider = ({ children }: Props) => {
     const [hamburgerBadgeText, setHamburgerBadgeText] = useState<string>()
     const [messages, setMessages] = useState<string[]>([])
-    const [count, setCount] = useState(0)
-
-    const getRandomMessage = () => {
-        const number = Math.trunc(Math.random() * 10000);
-        return `Random message ${number} (${count})`;
-    };
-
-    const addMessage = () => {
-        const message = getRandomMessage();
-        setMessages([...messages, 'Title' + '`' + message + '`' + `${Math.random()}`]);
-    }
 
     useEffect(() => {
-        if (count < 5) {
-            setCount(count + 1)
-            addMessage()
-        }
-    }, [messages])
+        showToast('Cloud Lightning Messenger', 'Welcome to the new app!');
+    }, [])
 
     useEffect(() => {
         if (Platform.OS !== 'web') {
