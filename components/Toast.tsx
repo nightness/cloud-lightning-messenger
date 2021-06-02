@@ -80,6 +80,7 @@ interface Props {
 }
 
 export default ({ messages, setMessages }: Props) => {
+
     return (
         <>
             <View
@@ -91,21 +92,24 @@ export default ({ messages, setMessages }: Props) => {
                 }}
             >
                 {/* {messages.slice(0).reverse().map((message) => ( */}
-                {messages.slice(0).reverse().map((message) => (
-                    <Message
-                        key={message}
-                        message={message}
-                        title='title'
-                        onHide={() => {
-                            setMessages((messages) =>
-                                messages.filter(
-                                    (currentMessage) =>
-                                        currentMessage !== message
-                                )
-                            );
-                        }}
-                    />
-                ))}
+                {messages.slice(0).reverse().map((result) => {
+                    const [title, message] = result.split('`')
+                    return (
+                        <Message
+                            key={result}
+                            message={message}
+                            title={title}
+                            onHide={() => {
+                                setMessages((messages) =>
+                                    messages.filter(
+                                        (currentMessage) =>
+                                            currentMessage !== result
+                                    )
+                                );
+                            }}
+                        />
+                    )
+                })}
             </View>
         </>
     );

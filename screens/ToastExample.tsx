@@ -17,7 +17,7 @@ export const ToastExample = ({ navigation }: Props) => {
             <Button
                 title="Add message"
                 onPress={() => {
-                    showToast(`${Date.now()}`)
+                    showToast('Title', `${Date.now()}`)
                 }}
             />
         </Screen>

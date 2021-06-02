@@ -9,7 +9,7 @@ type ContextType = {
     setHamburgerBadgeText?: React.Dispatch<React.SetStateAction<string | undefined>>
     sendNotificationImmediately?: (title: string, body: string) => Promise<void>
     //showToast: (options: ShowToastProps) => void
-    showToast: (message: string) => void
+    showToast: (title: string, message: string) => void
     messages: string[]
     setMessages: React.Dispatch<React.SetStateAction<string[]>>
 }
@@ -66,7 +66,7 @@ const askPermissions = async () => {
 export const GlobalContext = createContext<ContextType>({
     // Defaults
     //showToast: (options: ShowToastProps) => console.log(options), //Toast.show(options),
-    showToast: (message: string) => console.log(`${message}`),
+    showToast: (title: string, message: string) => console.log(`${message}`),
     messages: [],
     setMessages: (string) => undefined
 })
@@ -87,7 +87,7 @@ export const GlobalProvider = ({ children }: Props) => {
 
     const addMessage = () => {
         const message = getRandomMessage();
-        setMessages([...messages, message]);
+        setMessages([...messages, 'Title' + '`' + message + '`' + `${Math.random()}`]);
     }
 
     useEffect(() => {
@@ -118,10 +118,12 @@ export const GlobalProvider = ({ children }: Props) => {
     }, [])
 
     // If finer control is needed, these can be customized more
-    const showToast = (message: string) => setMessages([...messages, message])
+    const showToast = (title: string, message: string) =>
+        setMessages([...messages, title + '`' + message + '`' + `${Math.random()}`])
+
     const sendNotificationImmediately = async (title: string, body: string) => {
         if (Platform.OS === 'web') {
-            return showToast(body)
+            return showToast(title, body)
         }
         await Notifications.presentNotificationAsync({ title, body });
     }
