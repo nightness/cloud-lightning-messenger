@@ -98,7 +98,7 @@ export default () => {
                     right: 0,
                 }}
             >
-                {messages.map((message) => (
+                {messages.slice(0).reverse().map((message) => (
                     <Message
                         key={message}
                         message={message}
