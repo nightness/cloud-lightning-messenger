@@ -11,7 +11,16 @@ import {
     View,
 } from 'react-native';
 
-const Message = (props) => {
+interface MessageInfo {
+    message: string
+    title: string
+}
+
+interface MessageProps extends MessageInfo {
+    onHide: () => void
+}
+
+const Message = (props: MessageProps) => {
     const opacity = useRef(new Animated.Value(0))
         .current;
 
@@ -19,16 +28,14 @@ const Message = (props) => {
         Animated.sequence([
             Animated.timing(opacity, {
                 toValue: 1,
-                duration: 1000,
+                duration: 100,
                 useNativeDriver: true,
-                delay: 1000
             }),
-            Animated.delay(2000),
+            Animated.delay(5000),
             Animated.timing(opacity, {
                 toValue: 0,
-                duration: 1000,
+                duration: 1500,
                 useNativeDriver: true,
-                delay: 1000
             }),
         ]).start(() => {
             props.onHide();
@@ -67,27 +74,12 @@ const Message = (props) => {
     );
 };
 
-export default () => {
-    const [messages, setMessages] = useState<string[]>([]);
-    const [count, setCount] = useState(0)
+interface Props {
+    messages: string[]
+    setMessages: React.Dispatch<React.SetStateAction<string[]>>
+}
 
-    const getRandomMessage = () => {
-        const number = Math.trunc(Math.random() * 10000);
-        return `Random message ${number} (${count})`;
-    };
-
-    const addMessage = () => {
-        const message = getRandomMessage();
-        setMessages([...messages, message]);
-    }
-
-    useEffect(() => {
-        if (count < 5) {
-            setCount(count + 1)
-            addMessage()
-        }
-    }, [messages])
-
+export default ({ messages, setMessages }: Props) => {
     return (
         <>
             <View
@@ -98,10 +90,12 @@ export default () => {
                     right: 0,
                 }}
             >
+                {/* {messages.slice(0).reverse().map((message) => ( */}
                 {messages.slice(0).reverse().map((message) => (
                     <Message
                         key={message}
                         message={message}
+                        title='title'
                         onHide={() => {
                             setMessages((messages) =>
                                 messages.filter(

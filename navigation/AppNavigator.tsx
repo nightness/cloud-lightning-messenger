@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { ActivityIndicator, DisplayError, ThemeContext } from '../components'
@@ -10,12 +10,14 @@ import { initialNavigationElements } from './DefaultRoutes'
 import { FirebaseContext } from '../database/FirebaseContext'
 import { GradientColors } from '../app/GradientColors'
 import { Styles } from '../app/Styles'
+import { GlobalContext } from '../app/GlobalContext'
 import Toast from '../components/Toast'
 
 const Stack = createStackNavigator()
 export default () => {
     const [user, firebaseLoading, firebaseError] = useAuthState()
     const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
+    const { messages, setMessages } = useContext(GlobalContext)
     const { claims } = useContext(FirebaseContext)
     const colorSet = GradientColors[activeTheme]
 
@@ -43,7 +45,7 @@ export default () => {
                     />}
                 </Stack.Screen>
             </Stack.Navigator>
-            <Toast />
+            <Toast messages={messages} setMessages={setMessages} />
         </NavigationContainer>
     )
 }

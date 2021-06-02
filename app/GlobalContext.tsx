@@ -3,31 +3,15 @@ import * as Notifications from 'expo-notifications'
 import { Camera } from 'expo-camera'
 import { Audio } from 'expo-av'
 import { Keyboard, Platform, useWindowDimensions, ViewStyle } from 'react-native'
-//import Toast, { AnyObject, ToastPosition } from "react-native-toast-message"
-import { Toast, ToastMessageProps } from '../components/Toast'
-
-// interface ShowToastProps {
-//     type: string,
-//     position?: ToastPosition,
-//     text1?: string,
-//     text2?: string,
-//     visibilityTime?: number,
-//     autoHide?: boolean,
-//     topOffset?: number,
-//     bottomOffset?: number,
-//     props?: AnyObject,
-//     onShow?: () => void,
-//     onHide?: () => void,
-//     onPress?: () => void
-// }
 
 type ContextType = {
     hamburgerBadgeText?: string
     setHamburgerBadgeText?: React.Dispatch<React.SetStateAction<string | undefined>>
     sendNotificationImmediately?: (title: string, body: string) => Promise<void>
     //showToast: (options: ShowToastProps) => void
-    showToast: (title: string, body: string) => void
-    hideToast: () => void
+    showToast: (message: string) => void
+    messages: string[]
+    setMessages: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 if (Platform.OS !== 'web') {
@@ -82,8 +66,9 @@ const askPermissions = async () => {
 export const GlobalContext = createContext<ContextType>({
     // Defaults
     //showToast: (options: ShowToastProps) => console.log(options), //Toast.show(options),
-    showToast: (title: string, body: string) => console.log(`${title} - ${body}`),
-    hideToast: () => console.log(`Toast.hide()`)
+    showToast: (message: string) => console.log(`${message}`),
+    messages: [],
+    setMessages: (string) => undefined
 })
 
 interface Props {
@@ -92,7 +77,25 @@ interface Props {
 
 export const GlobalProvider = ({ children }: Props) => {
     const [hamburgerBadgeText, setHamburgerBadgeText] = useState<string>()
-    const [messages, setMessages] = useState<ToastMessageProps[]>([]);
+    const [messages, setMessages] = useState<string[]>([])
+    const [count, setCount] = useState(0)
+
+    const getRandomMessage = () => {
+        const number = Math.trunc(Math.random() * 10000);
+        return `Random message ${number} (${count})`;
+    };
+
+    const addMessage = () => {
+        const message = getRandomMessage();
+        setMessages([...messages, message]);
+    }
+
+    useEffect(() => {
+        if (count < 5) {
+            setCount(count + 1)
+            addMessage()
+        }
+    }, [messages])
 
     useEffect(() => {
         if (Platform.OS !== 'web') {
@@ -115,21 +118,22 @@ export const GlobalProvider = ({ children }: Props) => {
     }, [])
 
     // If finer control is needed, these can be customized more
-    const showToast = (title: string, body: string) => setMessages([...messages, {
-        title,
-        message: body
-    }])
-    const hideToast = () => console.log(`Toast.hide()`)
+    const showToast = (message: string) => setMessages([...messages, message])
     const sendNotificationImmediately = async (title: string, body: string) => {
         if (Platform.OS === 'web') {
-            return showToast(title, body)
+            return showToast(body)
         }
         await Notifications.presentNotificationAsync({ title, body });
     }
 
     return (
         <GlobalContext.Provider value={{
-            hamburgerBadgeText, setHamburgerBadgeText, showToast, hideToast, sendNotificationImmediately
+            hamburgerBadgeText,
+            setHamburgerBadgeText,
+            showToast,
+            sendNotificationImmediately,
+            messages,
+            setMessages
         }}>
             {/* { messages.length > 0 ?
                 <Toast messages={messages} /> : <></>
