@@ -11,11 +11,6 @@ import {
     View,
 } from 'react-native';
 
-const getRandomMessage = () => {
-    const number = Math.trunc(Math.random() * 10000);
-    return 'Random message ' + number;
-};
-
 const Message = (props) => {
     const opacity = useRef(new Animated.Value(0))
         .current;
@@ -75,6 +70,11 @@ const Message = (props) => {
 export default () => {
     const [messages, setMessages] = useState<string[]>([]);
     const [count, setCount] = useState(0)
+
+    const getRandomMessage = () => {
+        const number = Math.trunc(Math.random() * 10000);
+        return `Random message ${number} (${count})`;
+    };
 
     const addMessage = () => {
         const message = getRandomMessage();
