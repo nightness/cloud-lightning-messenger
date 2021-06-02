@@ -17,7 +17,7 @@ export const ToastExample = ({ navigation }: Props) => {
             <Button
                 title="Add message"
                 onPress={() => {
-                    showToast('Title', `${Date.now()}`)
+                    showToast(`Title - ${Math.floor(Math.random() * 10000)}`, `${Date.now()}`)
                 }}
             />
         </Screen>

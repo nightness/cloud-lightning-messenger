@@ -1,12 +1,10 @@
 import React, {
     useEffect,
     useRef,
-    useState,
 } from 'react';
 
 import {
     Animated,
-    Button,
     Text,
     View,
 } from 'react-native';
