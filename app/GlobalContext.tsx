@@ -3,28 +3,30 @@ import * as Notifications from 'expo-notifications'
 import { Camera } from 'expo-camera'
 import { Audio } from 'expo-av'
 import { Keyboard, Platform, useWindowDimensions, ViewStyle } from 'react-native'
-import Toast, { AnyObject, ToastPosition } from "react-native-toast-message"
+//import Toast, { AnyObject, ToastPosition } from "react-native-toast-message"
+import { Toast, ToastMessageProps } from '../components/Toast'
 
-interface IShowToast {
-    type: string,
-    position?: ToastPosition,
-    text1?: string,
-    text2?: string,
-    visibilityTime?: number,
-    autoHide?: boolean,
-    topOffset?: number,
-    bottomOffset?: number,
-    props?: AnyObject,
-    onShow?: () => void,
-    onHide?: () => void,
-    onPress?: () => void
-}
+// interface ShowToastProps {
+//     type: string,
+//     position?: ToastPosition,
+//     text1?: string,
+//     text2?: string,
+//     visibilityTime?: number,
+//     autoHide?: boolean,
+//     topOffset?: number,
+//     bottomOffset?: number,
+//     props?: AnyObject,
+//     onShow?: () => void,
+//     onHide?: () => void,
+//     onPress?: () => void
+// }
 
 type ContextType = {
     hamburgerBadgeText?: string
     setHamburgerBadgeText?: React.Dispatch<React.SetStateAction<string | undefined>>
     sendNotificationImmediately?: (title: string, body: string) => Promise<void>
-    showToast: (options: IShowToast) => void
+    //showToast: (options: ShowToastProps) => void
+    showToast: (title: string, body: string) => void
     hideToast: () => void
 }
 
@@ -79,8 +81,9 @@ const askPermissions = async () => {
 
 export const GlobalContext = createContext<ContextType>({
     // Defaults
-    showToast: (options: IShowToast) => console.log(options), //Toast.show(options),
-    hideToast: () => Toast.hide()
+    //showToast: (options: ShowToastProps) => console.log(options), //Toast.show(options),
+    showToast: (title: string, body: string) => console.log(`${title} - ${body}`),
+    hideToast: () => console.log(`Toast.hide()`)
 })
 
 interface Props {
@@ -89,6 +92,7 @@ interface Props {
 
 export const GlobalProvider = ({ children }: Props) => {
     const [hamburgerBadgeText, setHamburgerBadgeText] = useState<string>()
+    const [messages, setMessages] = useState<ToastMessageProps[]>([]);
 
     useEffect(() => {
         if (Platform.OS !== 'web') {
@@ -98,31 +102,27 @@ export const GlobalProvider = ({ children }: Props) => {
                         console.log(event)
                     })
                 })
-            askCameraPermission()
-                .then((result) => {
-                    console.log(result)
-                })
-            askMicrophonePermission()
-                .then((result) => {
-                    console.log(result)
+                .finally(() => {
+                    askCameraPermission()
+                        .then(() => {
+                            askMicrophonePermission()
+                                .then((result) => {
+                                    console.log(result)
+                                })
+                        })
                 })
         }
     }, [])
 
     // If finer control is needed, these can be customized more
-    const showToast = (options: IShowToast) => console.log(options) // Toast.show(options)
-    const hideToast = () => Toast.hide()
+    const showToast = (title: string, body: string) => setMessages([...messages, {
+        title,
+        message: body
+    }])
+    const hideToast = () => console.log(`Toast.hide()`)
     const sendNotificationImmediately = async (title: string, body: string) => {
         if (Platform.OS === 'web') {
-            return showToast({
-                type: 'info',
-                text1: title,
-                text2: body,
-                position: 'bottom',
-                onHide: () => {
-
-                }
-            })
+            return showToast(title, body)
         }
         await Notifications.presentNotificationAsync({ title, body });
     }
@@ -131,6 +131,9 @@ export const GlobalProvider = ({ children }: Props) => {
         <GlobalContext.Provider value={{
             hamburgerBadgeText, setHamburgerBadgeText, showToast, hideToast, sendNotificationImmediately
         }}>
+            {/* { messages.length > 0 ?
+                <Toast messages={messages} /> : <></>
+            } */}
             {children}
         </GlobalContext.Provider>
     )

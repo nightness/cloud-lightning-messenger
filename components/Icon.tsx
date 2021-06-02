@@ -11,13 +11,9 @@ export type IconFamilies = 'antdesign' | 'entypo' | 'evilicon' | 'feather' |
     'material' | 'material-community' | 'octicon' | 'simple-line-icon' | 'zocial'
 
 interface Props {
-    style?: StyleProp<TextStyle>
     colors?: [ColorValue, ColorValue] // [0] === Light Mode, [1] === Dark Mode
     size?: number
-    name: string
     type: IconFamilies
-    onPress?: () => any,
-    selectable?: boolean
 }
 
 export default ({

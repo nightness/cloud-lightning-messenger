@@ -106,7 +106,6 @@ export default ({
                     )
                 })}
             </Drawer.Navigator>
-            <Toast ref={(ref) => Toast.setRef(ref)} />
         </DrawerProvider>
     )
 }

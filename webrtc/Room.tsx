@@ -300,6 +300,11 @@ export default ({ navigation }: Props) => {
     const [isLoading, setIsLoading] = useState(true)
     const [webView, setWebView] = useState<HTMLIFrameElement>()
 
+    // Sources...
+    const source = (Platform.OS === 'web') ? { html, baseUrl: '' } :
+        { uri: 'https://cloud-lightning.web.app/WebRTC.html', baseUrl: '' }
+    // const source = { uri: 'file:///android_asset/WebRTC.html' } // For Android, but problem... With Expo Go, it's Expo Go's asset folder
+    // const source = { uri: 'https://cloud-lightning.web.app/WebRTC.html', baseUrl: 'https://cloud-lightning.web.app' }
 
     useEffect(() => {
         if (webView !== undefined) {
@@ -311,7 +316,7 @@ export default ({ navigation }: Props) => {
     useEffect(() => {
         console.info(`WebView is ${isLoading ? '' : 'not'} loading`)
     }, [isLoading])
-    
+
     return (
         <Screen navigation={navigation} title="Video Chat">
             <WebView
@@ -321,20 +326,20 @@ export default ({ navigation }: Props) => {
                 allowsInlineMediaPlayback={true}
                 bounces={false}
                 mediaPlaybackRequiresUserAction={false}
-                source={{ html }}
+                source={source}
                 onError={({ nativeEvent }) => {
-                    console.error(`WebView Error: ${nativeEvent.description}`)                    
+                    console.error(`WebView Error: ${nativeEvent.description}`)
                 }}
                 onTouchStart={({ nativeEvent }) => {
                     console.info(`WebView onTouchStart: ${nativeEvent.target}`)
                 }}
                 onLoad={({ target }) => {
                     //@ts-expect-error
-                    setWebView(target)                    
+                    setWebView(target)
                 }}
-                // onNavigationStateChange={({ }) => {
+            // onNavigationStateChange={({ }) => {
 
-                // }}
+            // }}
             />
         </Screen>
     )

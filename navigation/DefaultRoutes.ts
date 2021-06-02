@@ -7,8 +7,10 @@ import ManageGroups from '../messenger/ManageGroups'
 import ManageUserRoles from '../messenger/ManageUserRoles'
 import MyWall from '../messenger/MyWall'
 import Room from '../webrtc/Room'
+import { ToastExample } from '../screens/ToastExample'
 import { Playground } from '../screens/Playground'
 import { NavigationElements } from '../navigation'
+
 import {
     homeParams,
     messagesParams,
@@ -17,7 +19,7 @@ import {
     groupChatParams,
     manageGroupsParams,
     manageUserRolesParams,
-    playgroundParams
+    playgroundParams,
 } from './DrawerParams'
 
 export const initialNavigationElements: NavigationElements = [
@@ -26,7 +28,7 @@ export const initialNavigationElements: NavigationElements = [
         routeName: 'Home',
         component: Home,
         initialParams: homeParams,
-        depth: 0
+        depth: 0,
     },
     // {
     //     label: 'Walls',
@@ -40,28 +42,28 @@ export const initialNavigationElements: NavigationElements = [
         routeName: 'MemberWalls',
         component: WallMessenger,
         initialParams: memberWallParams,
-        depth: 0
+        depth: 0,
     },
     {
         label: 'Messages',
         routeName: 'Messages',
         component: PrivateMessenger,
         initialParams: messagesParams,
-        depth: 0
+        depth: 0,
     },
     {
         label: 'Group Chat',
         routeName: 'GroupChat',
         component: GroupMessenger,
         initialParams: groupChatParams,
-        depth: 0
+        depth: 0,
     },
     {
         label: 'Video Chat',
         routeName: 'VideoChat',
         component: Room,
         initialParams: groupChatParams,
-        depth: 0
+        depth: 0,
     },
     {
         label: 'Admin Settings',
@@ -69,7 +71,7 @@ export const initialNavigationElements: NavigationElements = [
         component: Empty,
         initialParams: manageGroupsParams,
         depth: 0,
-        claims: [ 'admin' ]
+        claims: ['admin'],
     },
     {
         label: 'Manage Groups',
@@ -77,7 +79,7 @@ export const initialNavigationElements: NavigationElements = [
         component: ManageGroups,
         initialParams: manageGroupsParams,
         depth: 1,
-        claims: [ 'admin' ]
+        claims: ['admin'],
     },
     {
         label: 'Manage User Roles',
@@ -85,7 +87,7 @@ export const initialNavigationElements: NavigationElements = [
         component: ManageUserRoles,
         initialParams: manageUserRolesParams,
         depth: 1,
-        claims: [ 'admin' ]
+        claims: ['admin'],
     },
     {
         label: 'Playground',
@@ -93,6 +95,14 @@ export const initialNavigationElements: NavigationElements = [
         component: Playground,
         initialParams: playgroundParams,
         depth: 0,
-        claims: [ 'admin' ]
-    }
+        claims: ['admin'],
+    },
+    {
+        label: 'Toast Example',
+        routeName: 'Toast Example',
+        component: ToastExample,
+        initialParams: playgroundParams,
+        depth: 0,
+        claims: ['admin'],
+    },
 ]

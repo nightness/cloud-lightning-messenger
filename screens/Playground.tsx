@@ -80,12 +80,8 @@ export const Playground = ({ navigation }: Props) => {
             <Button
                 title='Toast Test'
                 onPress={() => {
-                    showToast({
-                        type: 'info',
-                        text1: "Hello World!",
-                        text2: 'Hello World!',
-                        position: 'bottom'
-                    })
+                    showToast("Hello World!",
+                        `Hello World! ${Math.floor(Math.random() * 100)}`)
                 }}
             />
             <Button
