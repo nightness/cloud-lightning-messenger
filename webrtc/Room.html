@@ -118,6 +118,17 @@
             const remoteVideo = document.getElementById('remoteVideo')
             const hangupButton = document.getElementById('hangupButton')
 
+            const resetState = () => {
+                pc = new RTCPeerConnection(servers)
+                if (localStream) localStream.close()
+                localStream = null
+                if (remoteStream) remoteStream.close()
+                remoteStream = null
+                callInput.value = ''
+                hangupButton.disabled = true
+                webcamButton.disabled = false
+            }
+
             // 1. Setup media sources
             webcamButton.onclick = async () => {
                 navigator.mediaDevices
@@ -286,17 +297,11 @@
                 pc.close()
 
                 // Clean-up the database
-                // Create a new call
                 const result = await functions.httpsCallable('hangupCall')({
                     id: callInput.value,
                 })
 
-                pc = new RTCPeerConnection(servers)
-                localStream = null
-                remoteStream = null
-                callInput.value = ''
-                hangupButton.disabled = true
-                webcamButton.disabled = false
+                resetState()
             }
         </script>
     </body>

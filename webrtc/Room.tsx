@@ -338,7 +338,7 @@ export default ({ navigation }: Props) => {
     return (
         <Screen navigation={navigation} title="Video Chat">
             <WebView
-                style={{ flex: 1 }}
+                style={{ flex: 1, backgroundColor: 'transparent' }}
                 originWhitelist={['*']}
                 allowsFullscreenVideo={true}
                 allowsInlineMediaPlayback={true}
@@ -348,9 +348,9 @@ export default ({ navigation }: Props) => {
                 onError={({ nativeEvent }) => {
                     console.error(`WebView Error: ${nativeEvent.description}`)
                 }}
-                onTouchStart={({ nativeEvent }) => {
-                    console.info(`WebView onTouchStart: ${nativeEvent.target}`)
-                }}
+                // onTouchStart={({ nativeEvent }) => {
+                //     console.info(`WebView onTouchStart: ${nativeEvent.target}`)
+                // }}
                 onLoad={({ target }) => {
                     //@ts-expect-error
                     setWebView(target)
