@@ -159,22 +159,18 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         if (Platform.OS === 'web') {
             const provider = new GoogleAuthProvider()
             auth.signInWithRedirect(provider)
-                .then(() => {
-                    navigation.replace('LoginActivity')
-                })
                 .catch((error) => {
                     setSubmitted(false)
                     alert(error)
                 })
+            navigation.replace('LoginActivity')
         } else if (Platform.OS === 'android' || Platform.OS === 'ios') {
-            signInWithGoogleAsync().then(() => {
-                navigation.replace('LoginActivity')
-            })
+            signInWithGoogleAsync()
                 .catch((error) => {
                     alert(error)
                     setIsLoading(false)
                 })
-
+            navigation.replace('LoginActivity')
         }
         formikProps.resetForm()
     }
