@@ -8,6 +8,7 @@ import * as Defaults from '../app/Defaults'
 import * as Google from 'expo-google-app-auth'
 import { androidClientId, iosClientId } from '../private/FirebaseAuth'
 
+export type FirebaseError = firebase.FirebaseError
 export type FirebaseUser = firebase.User
 export type AuthError = firebase.auth.Error
 export type DocumentData = firebase.firestore.DocumentData

@@ -8,7 +8,7 @@ import {
 } from './Firebase'
 import { ActivityIndicator, DisplayError, FlatList, ThemeContext } from '../components'
 import { ListRenderItem, StyleProp, View, ViewStyle } from 'react-native'
-import { FirebaseError } from 'firebase'
+import { FirebaseError } from '../database/Firebase'
 import { LinearGradient } from 'expo-linear-gradient'
 import { GradientColors } from '../app/GradientColors'
 import { Styles } from '../app/Styles'

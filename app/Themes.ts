@@ -142,8 +142,9 @@ export const themes: Themes = [
         'Button',
         {
             Light: {
-                color: 'black',
-                backgroundColor: '#ccc',
+                color: '#111',
+                backgroundColor: '#ddd',
+                borderColor: 'black',
             },
             Dark: {
                 color: '#eee',

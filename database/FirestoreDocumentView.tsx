@@ -2,7 +2,7 @@ import React from 'react'
 import { useDocumentData } from './Firebase'
 import { ActivityIndicator, DisplayError, FlatList } from '../components'
 import { ListRenderItem, StyleProp, ViewStyle } from 'react-native'
-import { FirebaseError } from 'firebase'
+import { FirebaseError } from '../database/Firebase'
 import { Styles } from '../app/Styles'
 
 interface Props<T> {

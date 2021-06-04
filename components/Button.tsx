@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { Button, StyleSheet, StyleProp, TouchableOpacity, ViewStyle, View } from 'react-native'
 import Text from './Text'
 import { ThemeContext } from './ThemeContext'
+import { Styles } from '../app/Styles'
 
 interface Props {
     style?: StyleProp<ViewStyle>
@@ -36,23 +37,12 @@ export default ({
     return (
         <TouchableOpacity
             disabled={disabled}
-            style={[localStyles.touchable, currentThemeType[activeTheme], style]}
+            style={[Styles.button.touchable, currentThemeType[activeTheme], style]}
             onPress={onPress}
             {...restProps}
         >
-            {title ? <Text style={[localStyles.text, currentThemeType[activeTheme]]}>{title}</Text> : children}
+            {title ? <Text style={[Styles.button.text, currentThemeType[activeTheme]]}>{title}</Text> : children}
         </TouchableOpacity>
     )
 }
 
-const localStyles = StyleSheet.create({
-    touchable: {
-        borderRadius: 5,
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        alignItems: 'center',
-    },
-    text: {
-        fontWeight: '600',
-    }
-})

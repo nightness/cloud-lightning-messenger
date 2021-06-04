@@ -36,7 +36,7 @@ export class Styles {
             width: 140,
             alignSelf: 'center',
             margin: 30,
-            resizeMode: 'stretch',            
+            resizeMode: 'stretch',
         },
         footerView: {
             flex: 1,
@@ -76,6 +76,7 @@ export class Styles {
     static readonly button = StyleSheet.create({
         touchable: {
             borderRadius: 5,
+            borderWidth: 1,
             paddingVertical: 5,
             paddingHorizontal: 10,
             alignItems: 'center',
@@ -99,7 +100,7 @@ export class Styles {
     static readonly textInput = StyleSheet.create({
         input: {
             marginHorizontal: 15,
-            marginBottom: 10
+            marginBottom: 10,
         },
     })
 
