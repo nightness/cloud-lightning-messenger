@@ -12,8 +12,9 @@ import { GradientColors } from '../app/GradientColors'
 import { Styles } from '../app/Styles'
 import { GlobalContext } from '../app/GlobalContext'
 import Toast from '../components/Toast'
+import LoginActivity from '../screens/LoginActivity'
 
-const Stack = createStackNavigator()
+export const Stack = createStackNavigator()
 export default () => {
     const [user, firebaseLoading, firebaseError] = useAuthState()
     const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
@@ -35,6 +36,7 @@ export default () => {
                 initialRouteName={user ? 'Main' : 'Authentication'}
             >
                 <Stack.Screen name="Authentication" component={Authentication} />
+                <Stack.Screen name="LoginActivity" component={LoginActivity} />
                 <Stack.Screen name="Main">
                     {props => <DrawerNavigator
                         {...props}

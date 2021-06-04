@@ -11,6 +11,8 @@ import {
 } from '../components'
 import {
     firebaseAuth,
+    FirebaseError,
+    getAuth,
     GoogleAuthProvider,
     signInWithGoogleAsync,
 } from '../database/Firebase'
@@ -97,6 +99,12 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
     })
     const auth = firebaseAuth()
 
+    const { currentUser } = getAuth()
+    useEffect(() => {
+        if (currentUser)
+            navigation.replace('Main')
+    }, [currentUser])
+
     const softReset = (formikProps: FormikProps<any>) => {
         formikProps.setValues({
             displayName: '',
@@ -132,17 +140,18 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         const setProfileAttribute = async () => {
             console.log(values)
             await firestoreSetDisplayName(values.displayName)
-            navigation.replace('Main')
+            navigation.replace('LoginActivity')
         }
 
         auth.createUserWithEmailAndPassword(values.eMail, values.password)
-            .then(() => {
+            .then(async () => {
                 setIsLoading(true)
-                setProfileAttribute()
+                await setProfileAttribute()
             })
-            .catch((error) => {
+            .catch((error: FirebaseError) => {
                 setSubmitted(false)
-                alert(error)
+                setIsLoading(false)
+                alert(error.message)
             })
     }
 
@@ -151,7 +160,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
             const provider = new GoogleAuthProvider()
             auth.signInWithRedirect(provider)
                 .then(() => {
-                    navigation.replace('Main')
+                    navigation.replace('LoginActivity')
                 })
                 .catch((error) => {
                     setSubmitted(false)
@@ -159,7 +168,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                 })
         } else if (Platform.OS === 'android' || Platform.OS === 'ios') {
             signInWithGoogleAsync().then(() => {
-                navigation.replace('Main')
+                navigation.replace('LoginActivity')
             })
                 .catch((error) => {
                     alert(error)
@@ -174,7 +183,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         setSubmitted(true)
         try {
             await auth.signInWithEmailAndPassword(values.eMail, values.password)
-            navigation.replace('Main')
+            navigation.replace('LoginActivity')
         }
         catch (error) {
             setSubmitted(false)
@@ -203,7 +212,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         if (customToken) {
             auth.signInWithCustomToken(customToken)
                 .then(() => {
-                    navigation.replace('Main')
+                    navigation.replace('LoginActivity')
                 })
                 .catch((error) => {
                     alert('Invalid custom token specified')
@@ -421,6 +430,6 @@ const styles = StyleSheet.create({
         padding: 5
     },
     button: {
-        width: 100
+
     }
 })

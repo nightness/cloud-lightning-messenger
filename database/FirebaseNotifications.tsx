@@ -23,11 +23,12 @@ export default ({ currentUser }: Props) => {
     }, [snapshot])
 
     useEffect(() => {
-        console.log(`loadingCollection == ${loadingCollection}`)
+        //console.log(`loadingCollection == ${loadingCollection}`)
     }, [loadingCollection])
 
     useEffect(() => {
-        console.log(`errorCollection == ${errorCollection}`)
+        if (currentUser && errorCollection !== undefined)
+            console.error(`Firebase Notification Collection Error: ${errorCollection}`)
     }, [errorCollection])
 
     // No visual

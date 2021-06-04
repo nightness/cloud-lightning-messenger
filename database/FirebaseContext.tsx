@@ -6,16 +6,12 @@ import {
     callFirebaseFunction,
     getAuth,
     getFirestore,
-    DocumentData,
-    useDocument,
-    DocumentSnapshot,
-    useCollection,
-    QuerySnapshot,
     FirebaseUser
 } from './Firebase'
 import { Styles } from '../app/Styles'
 import { GlobalContext } from '../app/GlobalContext'
 import FirebaseNotifications from './FirebaseNotifications'
+import { useNavigation } from '@react-navigation/native'
 
 type ContextType = {
     currentUser?: FirebaseUser | null
@@ -49,7 +45,6 @@ export const FirebaseProvider = ({ children }: Props) => {
     const [loadingTheme, setLoadingTheme] = useState(true)
     const [authToken, setAuthToken] = useState()
     const { showToast } = useContext(GlobalContext)
-
     // Setter here is being used to prevent an async race condition with component state
     const [savingTheme, setSavingTheme] = useState(false)
 
@@ -113,14 +108,15 @@ export const FirebaseProvider = ({ children }: Props) => {
             displayName = currentUser.displayName as string
         const authToken = await currentUser.getIdToken()
         setSavingTheme(true)
-        currentUser.updateProfile({ displayName })
-        const result = await callFirebaseFunction('setProfileAttribute', {
+        const promises: Promise<any>[] = []
+        promises.push(currentUser.updateProfile({ displayName }))
+        promises.push(callFirebaseFunction('setProfileAttribute', {
             authToken,
             displayName,
             activeTheme
-        })
+        }))
         setSavingTheme(false)
-        return result
+        return Promise.all(promises)
     }
 
     // Save the current user's theme when it changes
