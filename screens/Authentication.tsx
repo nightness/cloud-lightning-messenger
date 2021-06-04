@@ -357,11 +357,9 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                                     <Button
                                                         title="Log in"
                                                         disabled={submitted}
-                                                        //onPress={onLoginPress}
                                                         onPress={formikProps.handleSubmit}
                                                     />
                                                     <Button
-                                                        //title="Google Sign-In"                                                    
                                                         onPress={() => signInWithGoogle(formikProps)}
                                                         style={{ margin: 5 }}
                                                     >

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { ScrollView, Platform, StyleProp, TextStyle } from 'react-native'
+import { View, Platform, StyleProp, TextStyle } from 'react-native'
 import { GlobalContext } from '../app/GlobalContext'
 import { Styles } from '../app/Styles'
 import { Picker, PickerIOS } from '@react-native-picker/picker'
@@ -41,8 +41,9 @@ export default ({
         onValueChanged && onValueChanged(selectedItem)
     }, [selectedItem])
 
+
     return (
-        <ScrollView style={[Styles.container.scrollView, themedStyles]} bounces={false}>
+        <View style={{ flex: 1, backgroundColor: 'transparent' }}>
             {Platform.OS === 'ios' && (
                 <ToggleBox
                     label={
@@ -94,6 +95,6 @@ export default ({
                     )
                 })}
             </Picker> : <></>}
-        </ScrollView>
+        </View>
     )
 }

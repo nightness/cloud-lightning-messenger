@@ -105,9 +105,10 @@ export class Styles {
 
     static readonly picker = StyleSheet.create({
         picker: {
-            margin: 5,
             backgroundColor: 'transparent',
             paddingHorizontal: 2,
+            borderRadius: 5,
+            paddingVertical: 5,
         },
         pickerItem: {
             backgroundColor: 'transparent',
@@ -142,7 +143,6 @@ export class Styles {
             flexDirection: 'row',
             //alignContent: 'stretch',
             width: '100%',
-            borderWidth: 1,
             borderRadius: 5,
             borderBottomWidth: 0,
             borderTopWidth: 0,
