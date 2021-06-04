@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Platform } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { WebView, WebViewRef } from '../components'
+import { WebView } from '../components'
 import Screen from '../components/Screen'
 
 interface Props {
@@ -9,9 +9,9 @@ interface Props {
 }
 
 const html = Platform.OS === 'web' ? require('./Room.html') : `
-<!-- 
+<!--
 
-    Using as proof of concept, for using WebView to have WebRTC support in Expo apps    
+    Using as proof of concept, for using WebView to have WebRTC support in Expo apps
     Original from Jeff Delaney. https://github.com/fireship-io/webrtc-firebase-demo
 
 -->
@@ -49,7 +49,6 @@ const html = Platform.OS === 'web' ? require('./Room.html') : `
         </style>
     </head>
     <body>
-        <h2>1. Start your Webcam</h2>
         <div class="videos">
             <span>
                 <h3>Local Stream</h3>
@@ -174,10 +173,12 @@ const html = Platform.OS === 'web' ? require('./Room.html') : `
             // 2. Create an offer
             callButton.onclick = async () => {
                 // Create a new call
-                const { data: call } = await functions.httpsCallable('createCall')({ target: auth.currentUser.uid })
-                
+                const { data: call } = await functions.httpsCallable('createCall')({
+                    target: auth.currentUser.uid,
+                })
+
                 if (call === undefined || call.id === undefined) {
-                    alert("Unable to create call")
+                    alert('Unable to create call')
                     return
                 }
 
@@ -201,7 +202,9 @@ const html = Platform.OS === 'web' ? require('./Room.html') : `
                     type: offerDescription.type,
                 }
 
-                const { data: resultData } = await functions.httpsCallable('setCallOffer')({ id: call.id, offer })
+                const { data: resultData } = await functions.httpsCallable(
+                    'setCallOffer'
+                )({ id: call.id, offer })
                 if (resultData.error) {
                     console.error(resultData.error)
                     return
@@ -254,19 +257,22 @@ const html = Platform.OS === 'web' ? require('./Room.html') : `
                     sdp: answerDescription.sdp,
                 }
 
-                const { data: resultData } = await functions.httpsCallable('answerCall')({ id: callId, answer })
+                const { data: resultData } = await functions.httpsCallable('answerCall')({
+                    id: callId,
+                    answer,
+                })
                 if (resultData.error) {
                     console.error(resultData.error)
                     return
                 }
 
                 hangupButton.disabled = false
-                
+
                 offerCandidates.onSnapshot((snapshot) => {
                     snapshot.docChanges().forEach((change) => {
                         if (change.type === 'added') {
                             let data = change.doc.data()
-                            pc.addIceCandidate(new RTCIceCandidate(data))                            
+                            pc.addIceCandidate(new RTCIceCandidate(data))
                         }
                     })
                 })
@@ -289,7 +295,19 @@ const html = Platform.OS === 'web' ? require('./Room.html') : `
 
                 // Close the entire connection
                 pc.close()
+
+                // Clean-up the database
+                // Create a new call
+                const result = await functions.httpsCallable('hangupCall')({
+                    id: callInput.value,
+                })
+
+                pc = new RTCPeerConnection(servers)
+                localStream = null
+                remoteStream = null
+                callInput.value = ''
                 hangupButton.disabled = true
+                webcamButton.disabled = false
             }
         </script>
     </body>

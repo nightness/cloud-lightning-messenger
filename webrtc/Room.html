@@ -284,7 +284,19 @@
 
                 // Close the entire connection
                 pc.close()
+
+                // Clean-up the database
+                // Create a new call
+                const result = await functions.httpsCallable('hangupCall')({
+                    id: callInput.value,
+                })
+
+                pc = new RTCPeerConnection(servers)
+                localStream = null
+                remoteStream = null
+                callInput.value = ''
                 hangupButton.disabled = true
+                webcamButton.disabled = false
             }
         </script>
     </body>

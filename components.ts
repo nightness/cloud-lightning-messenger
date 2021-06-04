@@ -14,7 +14,7 @@ import LabeledTextInput from './components/LabeledTextInput'
 import Image from './components/Image'
 import Badge from './components/Badge'
 import Icon from './components/Icon'
-import WebView, { ExtendedWebViewProps, WebViewRef } from './components/WebView'
+import WebView from './components/WebView'
 import { ThemeContext, ThemeProvider } from './components/ThemeContext'
 import { NamedTheme, Theme, Themes, ThemeStyles, ThemeType } from './app/ThemeTypes'
 
@@ -44,6 +44,4 @@ export {
     NamedTheme,
     Themes,
     WebView,
-    ExtendedWebViewProps,
-    WebViewRef
 }

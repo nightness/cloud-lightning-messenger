@@ -4,32 +4,13 @@ import { Platform } from 'react-native'
 import { WebView as WebViewWeb } from 'react-native-web-webview'
 import { WebView, WebViewProps } from 'react-native-webview'
 
-export interface WebViewRef {
-    goBack: () => void
-    goForward: () => void
-    reload: () => void
-    stopLoading(): void
-    extraNativeComponentConfig: () => any
-    injectJavaScript: (script: string) => void
-    requestFocus: () => void
-    postMessage: (message: string) => void
-}
-
-export interface ExtendedWebViewProps extends WebViewProps {
-    classRef?: React.LegacyRef<WebViewRef>
-}
-
-export default ({ classRef, ...restProps }: ExtendedWebViewProps) => {
-    useEffect(() => {
-        console.log(classRef)
-    })
-
+export default (props: WebViewProps) => {
     if (Platform.OS === 'web')
         return (
-            <WebViewWeb ref={classRef} {...restProps} />
+            <WebViewWeb {...props} />
         )
     return (
         // @ts-ignore
-        <WebView ref={classRef} {...restProps} />
+        <WebView {...props} />
     )
 }

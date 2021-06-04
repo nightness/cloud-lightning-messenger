@@ -92,6 +92,7 @@ export const FirebaseProvider = ({ children }: Props) => {
 
         const token: any = await currentUser.getIdToken(true)
         setAuthToken(token)
+        console.log(token)
 
         const { claims } = await currentUser.getIdTokenResult()
         console.log(claims)
