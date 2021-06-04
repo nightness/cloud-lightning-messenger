@@ -367,7 +367,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                                     >
                                                         <View style={{ flexDirection: 'row' }}>
                                                             <Icon color={'white'} size={24} name='logo-google' type='ionicon' />
-                                                            <Text>oogle Sign-In</Text>
+                                                            <Text style={Styles.button.text}>oogle Sign-In</Text>
                                                         </View>
                                                     </Button>
                                                 </View>

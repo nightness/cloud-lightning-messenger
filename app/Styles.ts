@@ -99,8 +99,7 @@ export class Styles {
 
     static readonly textInput = StyleSheet.create({
         input: {
-            marginHorizontal: 15,
-            marginBottom: 10,
+            paddingHorizontal: 10,
         },
     })
 

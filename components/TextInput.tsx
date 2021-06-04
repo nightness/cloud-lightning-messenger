@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { TextInput, TextInputProps, Keyboard, StyleSheet } from 'react-native'
 import { ThemeContext } from './ThemeContext'
+import { Styles } from '../app/Styles'
 interface Props extends TextInputProps {
     classRef?: React.LegacyRef<TextInput>
 }
@@ -24,24 +25,17 @@ export default ({
     return (
         <TextInput
             enablesReturnKeyAutomatically={true}
-            returnKeyType={returnKeyType}            
+            returnKeyType={returnKeyType}
             autoCompleteType={autoCompleteType}
             autoCapitalize={autoCapitalize}
             autoCorrect={autoCorrect}
             underlineColorAndroid={underlineColorAndroid}
             keyboardAppearance={appearance}
             ref={classRef}
-            style={[localStyles.input, getThemedComponentStyle('TextInput')[activeTheme], style]}
+            style={[Styles.textInput.input, getThemedComponentStyle('TextInput')[activeTheme], style]}
             placeholderTextColor={getThemedComponentStyle('TextInput')[activeTheme]?.color}
             onSubmitEditing={Keyboard.dismiss}
             {...restProps}
         />
     )
 }
-
-const localStyles = StyleSheet.create({
-    input: {
-        paddingHorizontal: 10
-    }
-})
-
