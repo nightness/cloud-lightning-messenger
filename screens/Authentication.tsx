@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { Image, ScrollView, Platform, StyleProp, ViewStyle, View } from 'react-native'
+import { Image, ScrollView, Platform, StyleProp, ViewStyle, View, StyleSheet } from 'react-native'
 import Screen from '../components/Screen'
 import FormField from '../components/FormField'
 import {
@@ -67,7 +67,9 @@ const LoginScheme = Yup.object({
 })
 
 const RegistrationScheme = Yup.object({
-    displayName: Yup.string().required().min(3),
+    displayName: Yup.string()
+        .required('Full name is a required field')
+        .min(3),
     eMail: Yup.string()
         .required('E-mail is a required field')
         .email('Please enter a valid e-mail address')
@@ -159,10 +161,10 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
             signInWithGoogleAsync().then(() => {
                 navigation.replace('Main')
             })
-            .catch((error) => {
-                alert(error)
-                setIsLoading(false)
-            })
+                .catch((error) => {
+                    alert(error)
+                    setIsLoading(false)
+                })
 
         }
         formikProps.resetForm()
@@ -280,6 +282,8 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                     <>
                                         {mode === 'register' ? (
                                             <FormField
+                                                style={styles.formField}
+                                                testInputStyle={styles.textInput}
                                                 label='Full Name'
                                                 formikProps={formikProps}
                                                 fieldName='displayName'
@@ -287,6 +291,8 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                             />
                                         ) : <></>}
                                         <FormField
+                                            style={styles.formField}
+                                            testInputStyle={styles.textInput}
                                             formikProps={formikProps}
                                             fieldName='eMail'
                                             label="E-Mail"
@@ -294,6 +300,8 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                         />
                                         {mode !== 'password-reset' ?
                                             <FormField
+                                                style={styles.formField}
+                                                testInputStyle={styles.textInput}
                                                 formikProps={formikProps}
                                                 secureTextEntry={true}
                                                 label='Password'
@@ -304,17 +312,21 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                         {mode === 'register' ? (
                                             <>
                                                 <FormField
+                                                    style={styles.formField}
+                                                    testInputStyle={styles.textInput}
                                                     formikProps={formikProps}
                                                     secureTextEntry={true}
                                                     label="Confirm Password"
                                                     fieldName='confirmPassword'
                                                     returnKeyType='done'
                                                 />
-                                                <Button
-                                                    title="Create Account"
-                                                    disabled={submitted}
-                                                    onPress={formikProps.handleSubmit}
-                                                />
+                                                <View style={Styles.auth.footerView}>
+                                                    <Button
+                                                        title="Create Account"
+                                                        disabled={submitted}
+                                                        onPress={formikProps.handleSubmit}
+                                                    />
+                                                </View>
                                                 <View style={Styles.auth.footerView}>
                                                     <Text fontSize={16}>Already got an account?</Text>
                                                     <Button title="Log in" onPress={() => onGotoLoginPress(formikProps)} />
@@ -369,6 +381,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                                                             Did you forget your password?
                                                 </Text>
                                                         <Button
+                                                            style={styles.button}
                                                             title="Password Reset"
                                                             onPress={() => setMode('password-reset')}
                                                         />
@@ -400,3 +413,16 @@ export default ({ navigation }: Props) => (
     //  customToken={'abc.123.45657'} {/* This is not a valid custom token */}
     />
 )
+
+const styles = StyleSheet.create({
+    formField: {
+        marginVertical: 5,
+        marginHorizontal: 15,
+    },
+    textInput: {
+        padding: 5
+    },
+    button: {
+        width: 100
+    }
+})

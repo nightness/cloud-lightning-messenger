@@ -59,18 +59,20 @@ const html = Platform.OS === 'web' ? require('./Room.html') : `
                 <video id="remoteVideo" autoplay playsinline></video>
             </span>
         </div>
-
         <button id="webcamButton">Start webcam</button>
-        <h2>2. Create a new Call</h2>
+
+        <h2>Create a new Call</h2>
+        <h5>Requires a Google or Email authenticated account to use</h5>
         <button id="callButton" disabled>Create Call (offer)</button>
 
-        <h2>3. Join a Call</h2>
+        <h2>Join a Call</h2>
+        <h5>Requires a Google or Email authenticated account to use</h5>
         <p>Answer the call from a different browser window or device</p>
 
         <input id="callInput" />
         <button id="answerButton" disabled>Answer</button>
 
-        <h2>4. Hangup</h2>
+        <h2>Hangup</h2>
 
         <button id="hangupButton" disabled>Hangup</button>
 
@@ -128,6 +130,17 @@ const html = Platform.OS === 'web' ? require('./Room.html') : `
             const answerButton = document.getElementById('answerButton')
             const remoteVideo = document.getElementById('remoteVideo')
             const hangupButton = document.getElementById('hangupButton')
+
+            const resetState = () => {
+                pc = new RTCPeerConnection(servers)
+                if (localStream) localStream.close()
+                localStream = null
+                if (remoteStream) remoteStream.close()
+                remoteStream = null
+                callInput.value = ''
+                hangupButton.disabled = true
+                webcamButton.disabled = false
+            }
 
             // 1. Setup media sources
             webcamButton.onclick = async () => {
@@ -297,17 +310,11 @@ const html = Platform.OS === 'web' ? require('./Room.html') : `
                 pc.close()
 
                 // Clean-up the database
-                // Create a new call
                 const result = await functions.httpsCallable('hangupCall')({
                     id: callInput.value,
                 })
 
-                pc = new RTCPeerConnection(servers)
-                localStream = null
-                remoteStream = null
-                callInput.value = ''
-                hangupButton.disabled = true
-                webcamButton.disabled = false
+                resetState()
             }
         </script>
     </body>
