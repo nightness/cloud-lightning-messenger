@@ -60,6 +60,7 @@ export const getAuth = () => firebase.auth()
 export const firebaseAuth = firebase.auth
 export const firebaseFunctions = firebase.functions
 export const firebaseFirestore = firebase.firestore
+export const firestoreMessenging = firebase.messaging
 
 export const GoogleAuthProvider = firebase.auth.GoogleAuthProvider
 
@@ -169,7 +170,7 @@ export const collectionContains = async (collection: string, docId: string) => {
 
 // Returns a promise
 export const callFirebaseFunction = (funcName: string, data: any) => {
-    return firebaseFunctions().httpsCallable(funcName)(data)
+    return firebase.functions().httpsCallable(funcName)(data)
 }
 
 export async function signInWithGoogleAsync() {

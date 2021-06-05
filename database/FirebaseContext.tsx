@@ -6,7 +6,8 @@ import {
     callFirebaseFunction,
     getAuth,
     getFirestore,
-    FirebaseUser
+    FirebaseUser,
+    firestoreMessenging
 } from './Firebase'
 import { Styles } from '../app/Styles'
 import { GlobalContext } from '../app/GlobalContext'
@@ -32,6 +33,8 @@ export const FirebaseContext = createContext<ContextType>({
     getClaims: (uid: string) => new Promise(() => undefined),
     setProfileAttribute: (displayName: string) => new Promise(() => undefined),
 })
+
+const messenging = firestoreMessenging()
 
 interface Props {
     children: JSX.Element | JSX.Element[]
@@ -154,6 +157,35 @@ export const FirebaseProvider = ({ children }: Props) => {
             })
         }
     }, [activeTheme])
+
+    useEffect(() => {
+        // Retrieve an instance of Firebase Messaging so that it can handle background
+        // messages.
+        messenging.requestPermission()
+            .then(() => {
+                return messenging.getToken()
+            })
+            .then((token) => {
+                messenging.onMessage((payload) => {
+                    console.log('Message received. ', payload);
+                });
+
+                messenging.onBackgroundMessage((payload) => {
+                    console.log('[firebase-messaging-sw.js] Received background message ', payload);
+                    // // Customize notification here
+                    // const notificationTitle = 'Background Message Title';
+                    // const notificationOptions = {
+                    //     body: 'Background Message body.',
+                    //     icon: '/firebase-logo.png'
+                    // };
+
+                    // self.registration.showNotification(notificationTitle,
+                    //     notificationOptions);
+                })
+            }).catch((error) => {
+                console.error(error)
+            })
+    }, [])
 
     const isLoading = loadingUser || loadingClaims || loadingTheme
     const error = errorUser

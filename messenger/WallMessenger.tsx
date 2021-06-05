@@ -73,6 +73,7 @@ export default ({ navigation }: Props) => {
         if (!selectedMember) return
         const text = messageText
         setMessageText('')
+        console.log(`sendMessage: ${selectedMember.value}`)
         callFirebaseFunction('setMessage', {
             collectionPath: `/walls`,
             documentId: selectedMember.value,
@@ -104,7 +105,7 @@ export default ({ navigation }: Props) => {
                 <LinearGradient
                     colors={GradientColors[activeTheme].secondary}>
                     <View style={[Styles.messenger.views, getThemedComponentStyle('Container')[activeTheme]]}>
-                        <Picker                            
+                        <Picker
                             style={getThemedComponentStyle('Text')[activeTheme]}
                             data={members}
                             onValueChanged={setSelectedMember}

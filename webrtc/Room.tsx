@@ -8,7 +8,7 @@ interface Props {
     navigation: StackNavigationProp<any, string>
 }
 
-const html = Platform.OS === 'web' ? require('./Room.html') : `
+const html = `
 <!--
 
     Using as proof of concept, for using WebView to have WebRTC support in Expo apps

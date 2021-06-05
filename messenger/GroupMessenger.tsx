@@ -85,6 +85,7 @@ export default ({ navigation }: Props) => {
             }
             textInput?.current?.focus()
         }).catch((error) => {
+            console.log(error)
             alert('Unhandled exception')
         })
     }
