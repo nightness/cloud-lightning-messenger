@@ -34,8 +34,6 @@ export const FirebaseContext = createContext<ContextType>({
     setProfileAttribute: (displayName: string) => new Promise(() => undefined),
 })
 
-const messenging = firestoreMessenging()
-
 interface Props {
     children: JSX.Element | JSX.Element[]
 }
