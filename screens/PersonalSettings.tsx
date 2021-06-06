@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { ReturnKeyTypeOptions, View, StyleSheet } from 'react-native'
 import { DrawerNavigationProp } from '@react-navigation/drawer'
-import { Screen, ScrollView, Image, FormField, Text } from '../components'
+import { Screen, FormField, Text } from '../components'
 import { Formik, FormikProps } from 'formik'
-import { getAuth } from '../database/Firebase'
+import { FirebaseContext } from '../database/FirebaseContext'
 
 interface SettingProp {
     label: string,
@@ -34,26 +34,33 @@ interface Props {
 }
 
 export default ({ navigation }: Props) => {
+    const { currentUser } = useContext(FirebaseContext)
+
     return (
         <Screen navigation={navigation} title='Personal Settings'>
             <View style={{ flex: 1 }}>
                 <Formik
                     initialValues={{
-                        displayName: getAuth().currentUser?.displayName,
-                        eMail: '',
+                        displayName: currentUser?.displayName,
+                        eMail: currentUser?.email,
                     }}
                     // validationSchema={scheme}
                     onSubmit={(values, helpers) => {
 
                     }}
                 >
-                    {(formikProps) => (
+                    {(formikProps) => (<>
                         <Setting
                             formikProps={formikProps}
                             label='Display Name'
                             fieldName='displayName'
                         />
-                    )}
+                        <Setting
+                            formikProps={formikProps}
+                            label='E-Mail'
+                            fieldName='eMail'
+                        />
+                    </>)}
                 </Formik>
             </View>
         </Screen>
