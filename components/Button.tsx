@@ -37,7 +37,7 @@ export default ({
     return (
         <TouchableOpacity
             disabled={disabled}
-            style={[Styles.button.touchable, currentThemeType[activeTheme], style]}
+            style={[Styles.button.touchable, currentThemeType[activeTheme], style,]}
             onPress={onPress}
             {...restProps}
         >
