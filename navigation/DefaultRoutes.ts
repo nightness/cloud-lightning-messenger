@@ -54,10 +54,16 @@ export const initialNavigationElements: NavigationElements = [
         depth: 0,
     },
     {
-        label: 'Group Chat',
+        label: 'Group Chat (new)',
         routeName: 'GroupChat',
-        //component: GroupMessenger,
         component: GroupRoomChooser,
+        initialParams: groupChatParams,
+        depth: 0,
+    },
+    {
+        label: 'Group Chat (old)',
+        routeName: 'GroupChatOld',
+        component: GroupMessenger,
         initialParams: groupChatParams,
         depth: 0,
     },
