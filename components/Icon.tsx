@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Text, ColorValue, TextStyle, StyleProp } from 'react-native'
+import { Text, ColorValue, TextStyle, StyleProp, GestureResponderEvent } from 'react-native'
 import {
     AntDesign, Entypo, Feather, Ionicons, FontAwesome, FontAwesome5, EvilIcons, Fontisto,
     Foundation, MaterialIcons, MaterialCommunityIcons, Octicons, SimpleLineIcons, Zocial
@@ -15,6 +15,9 @@ interface Props {
     size?: number
     type: IconFamilies
     name: string
+    style?: StyleProp<TextStyle>
+    onPress?: ((event: GestureResponderEvent) => void)
+    color?: ColorValue
 }
 
 export default ({
@@ -25,7 +28,8 @@ export default ({
 }: Props) => {
     const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
     const themeStyle = getThemedComponentStyle('Icon')[activeTheme]
-    const color = colors ? colors[activeTheme === 'Light' ? 0 : 1] : themeStyle.color
+    const color = restProps.color ? restProps.color :
+        colors ? colors[activeTheme === 'Light' ? 0 : 1] : themeStyle.color
 
     switch (type) {
         case 'antdesign': {
