@@ -6,11 +6,11 @@ export const themes: Themes = [
         {
             Light: {
                 backgroundColor: '#ccc',
-                borderBottomColor: '#333',
+                borderColor: 'black',
             },
             Dark: {
                 backgroundColor: '#333',
-                borderBottomColor: '#eee',
+                borderColor: 'white',
             },
         },
     ],

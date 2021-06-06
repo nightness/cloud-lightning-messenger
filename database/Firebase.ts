@@ -11,6 +11,7 @@ import { androidClientId, iosClientId } from '../private/FirebaseAuth'
 export type FirebaseError = firebase.FirebaseError
 export type FirebaseUser = firebase.User
 export type AuthError = firebase.auth.Error
+export type DocumentChange<T> = firebase.firestore.DocumentChange<T>
 export type DocumentData = firebase.firestore.DocumentData
 export type DocumentSnapshot<T> = firebase.firestore.DocumentSnapshot<T>
 export type Timestamp = firebase.firestore.Timestamp
