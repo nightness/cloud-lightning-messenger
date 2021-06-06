@@ -11,9 +11,19 @@ interface RoomDetailsProps {
 }
 
 const RoomDetails = ({ data }: RoomDetailsProps) => {
+    const [messageCount, setMessageCount] = useState<number | undefined>();
+    const [snapshot, loadingCollection, errorCollection] = useCollection(`${data.ref.path}/messages`)
     const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
     const themeStyle = getThemedComponentStyle('Screen')[activeTheme]
-    const item = data.data()
+    const docData = data.data()
+
+    console.log(`${data.ref.path}/messages`)
+
+    useEffect(() => {
+        if (loadingCollection || errorCollection) return
+        const snap = snapshot as QuerySnapshot<DocumentData>
+        setMessageCount(snap.docs.length)
+    }, [snapshot])
 
     return (
         <View style={[{
@@ -25,16 +35,23 @@ const RoomDetails = ({ data }: RoomDetailsProps) => {
             marginHorizontal: 10,
         }, themeStyle]}>
             <Text>
-                <Text style={{ fontWeight: 600 }}>Name: </Text>{item.name}
+                <Text style={{ fontWeight: 600 }}>Name: </Text>{docData.name}
             </Text>
-            { item.description ?
+            { docData.description ?
                 <Text>
-                    <Text style={{ fontWeight: 600 }}>Description: </Text>{item.description}
+                    <Text style={{ fontWeight: 600 }}>Description: </Text>{docData.description}
                 </Text> : <></>
             }
             <Text>
                 <Text style={{ fontWeight: 600 }}>Joined Member Count: </Text>
-                {item.members ? item.members.length : 0}</Text>
+                {docData.members ? docData.members.length : 0}
+            </Text>
+            { messageCount ?
+                <Text>
+                    <Text style={{ fontWeight: 600 }}>Message Count: </Text>
+                    <Text>{`${messageCount}`}</Text>
+                </Text> : <></>
+            }
         </View>
     )
 }
@@ -55,6 +72,7 @@ export default ({ navigation }: Props) => {
     } else if (errorCollection) {
         return <DisplayError error={errorCollection as FirebaseError} />
     }
+
     return (
         <Screen navigation={navigation} title={'Group Chat Rooms'}>
             {(snapshot as QuerySnapshot<DocumentData>).docs.map((data) => {
