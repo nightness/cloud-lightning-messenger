@@ -7,12 +7,21 @@ import { View } from 'react-native'
 import { DrawerContext, NavigationElement } from '../navigation'
 import DynamicMessenger from './DynamicMessenger'
 
-const getScreenConfig = (title: string) => {
+interface ScreenConfig {
+    title: string,
+    navigation: StackNavigationProp<any, string>
+    collectionPath: string
+    documentId: string
+}
+
+const buildScreenConfig = ({ title, navigation, collectionPath, documentId }: ScreenConfig) => {
     return ({
         // Route names needs to be unique for routing to work, but labels do not need to be unique
         label: title,
-        routeName: `${title}-${(Math.floor(Math.random() * 1000000))}`,
-        component: DynamicMessenger,
+        routeName: `#${title}`,
+        component: () => (
+            <DynamicMessenger navigation={navigation} collectionPath={collectionPath} documentId={documentId} />
+        ),
         initialParams: {
             activeTintColor: '#642',
             inactiveTintColor: '#642',
@@ -27,21 +36,33 @@ const getScreenConfig = (title: string) => {
 // QueryDocumentSnapshot<firebase.firestore.DocumentData>
 interface RoomDetailsProps {
     data: QueryDocumentSnapshot<DocumentData>
+    navigation: StackNavigationProp<any, string>
 }
 
-const RoomDetails = ({ data }: RoomDetailsProps) => {
+const RoomDetails = ({ data, navigation }: RoomDetailsProps) => {
+    const collectionPath = `${data.ref.path}/messages`
     const { screens, screenIndex, ScreenManager, setBadge } = useContext(DrawerContext)
     const [messageCount, setMessageCount] = useState<number | undefined>();
-    const [snapshot, loadingCollection, errorCollection] = useCollection(`${data.ref.path}/messages`)
+    const [snapshot, loadingCollection, errorCollection] = useCollection(collectionPath)
     const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
     const themeStyle = getThemedComponentStyle('Screen')[activeTheme]
     const docData = data.data()
+    const routeName = `#${docData.name}`
 
     useEffect(() => {
         if (loadingCollection || errorCollection) return
         const snap = snapshot as QuerySnapshot<DocumentData>
         setMessageCount(snap.docs.length)
     }, [snapshot])
+
+    useEffect(() => {
+        console.log(routeName)
+        screens.forEach((screen) => {
+            if (screen.routeName === routeName)
+                navigation.navigate(routeName)
+        })
+
+    }, [screens])
 
     return (
         <Button
@@ -55,12 +76,23 @@ const RoomDetails = ({ data }: RoomDetailsProps) => {
                 alignItems: 'baseline'
             }, themeStyle]}
             onPress={() => {
-                const screenConfig = getScreenConfig(docData.name)
-                if (ScreenManager?.addChild && typeof screenIndex === 'number' && screenIndex >= 0) {
+                const screenConfig = buildScreenConfig({
+                    title: docData.name,
+                    navigation,
+                    collectionPath,
+                    documentId: data.id
+                })
+                let exists = false
+                screens.forEach((screen) => {
+                    if (screen.routeName === routeName) {
+                        exists = true
+                        navigation.navigate(routeName)
+                    }
+                })
+                if (!exists && ScreenManager?.addChild && typeof screenIndex === 'number' && screenIndex >= 0) {
                     const path = ScreenManager.getScreenPath(screenIndex)
                     if (!path) throw new Error('Path Not Found')
                     ScreenManager.addChild(path, screenConfig)
-                    //showMessageBox('Completed', `Added a new dynamic child of this screen called '${screenConfig.label}' with a routeName of '${screenConfig.routeName}'`)
                 }
             }}
         >
@@ -112,6 +144,7 @@ export default ({ navigation }: Props) => {
                     <RoomDetails
                         key={`${Math.random()}`}
                         data={data}
+                        navigation={navigation}
                     />
                 )
             })}

@@ -27,7 +27,7 @@ interface ScreenManagerType {
   addChild: (
     parentScreenPath: number[],
     screenConfig: NavigationElement
-  ) => void
+  ) => number
   insertChild: (
     screenPath: number[],
     index: number,
@@ -140,9 +140,10 @@ export const DrawerProvider = ({ children, screens, activeClaims, screensDispatc
         if (node.depth < childDepth) {
           screenConfig.depth = childDepth
           dispatcher('insert', index, screenConfig)
-          break
+          return index
         }
       }
+      return -1
     },
     insertChild: (
       parentScreenPath: number[],

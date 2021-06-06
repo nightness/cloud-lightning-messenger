@@ -39,7 +39,7 @@ export default ({ navigation, collectionPath, documentId }: Props) => {
         const text = messageText
         setMessageText('')
         callFirebaseFunction('setMessage', {
-            collectionPath: `/groups`,
+            collectionPath,
             documentId,
             message: text,
         }).then((results) => {

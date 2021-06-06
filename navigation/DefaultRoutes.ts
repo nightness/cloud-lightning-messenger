@@ -2,10 +2,8 @@ import Empty from '../screens/Empty'
 import Home from '../screens/Home'
 import PrivateMessenger from '../messenger/PrivateMessenger'
 import WallMessenger from '../messenger/WallMessenger'
-import GroupMessenger from '../messenger/GroupMessenger'
 import ManageGroups from '../messenger/ManageGroups'
 import ManageUserRoles from '../messenger/ManageUserRoles'
-import MyWall from '../messenger/MyWall'
 import Room from '../webrtc/Room'
 import GroupRoomChooser from '../messenger/GroupRoomChooser'
 import { ToastExample } from '../screens/ToastExample'
@@ -15,7 +13,6 @@ import { NavigationElements } from '../navigation'
 import {
     homeParams,
     messagesParams,
-    myWallParams,
     memberWallParams,
     groupChatParams,
     manageGroupsParams,
@@ -32,13 +29,6 @@ export const initialNavigationElements: NavigationElements = [
         initialParams: homeParams,
         depth: 0,
     },
-    // {
-    //     label: 'Walls',
-    //     routeName: 'MyWall',
-    //     component: MyWall,
-    //     initialParams: myWallParams,
-    //     depth: 0
-    // },
     {
         label: 'Member Walls',
         routeName: 'MemberWalls',
@@ -54,16 +44,9 @@ export const initialNavigationElements: NavigationElements = [
         depth: 0,
     },
     {
-        label: 'Group Chat (new)',
+        label: 'Group Chat',
         routeName: 'GroupChat',
         component: GroupRoomChooser,
-        initialParams: groupChatParams,
-        depth: 0,
-    },
-    {
-        label: 'Group Chat (old)',
-        routeName: 'GroupChatOld',
-        component: GroupMessenger,
         initialParams: groupChatParams,
         depth: 0,
     },
