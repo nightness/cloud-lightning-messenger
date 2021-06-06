@@ -22,11 +22,12 @@ import { GradientColors } from '../app/GradientColors'
 
 interface Props {
     navigation: StackNavigationProp<any>
+    title: string
     collectionPath: string
     documentId: string
 }
 
-export default ({ navigation, collectionPath, documentId }: Props) => {
+export default ({ navigation, title, collectionPath, documentId }: Props) => {
     const { activeTheme } = useContext(ThemeContext)
     const [messageText, setMessageText] = useState('')
     const textInput = useRef<NativeTextInput>()
@@ -65,7 +66,7 @@ export default ({ navigation, collectionPath, documentId }: Props) => {
     }
 
     return (
-        <Screen navigation={navigation} title={'Group Messenger'}>
+        <Screen navigation={navigation} title={title}>
             <Container>
                 <FirestoreCollectionView<Message>
                     collectionPath={collectionPath}

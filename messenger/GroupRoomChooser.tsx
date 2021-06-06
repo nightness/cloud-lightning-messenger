@@ -17,10 +17,15 @@ interface ScreenConfig {
 const buildScreenConfig = ({ title, navigation, collectionPath, documentId }: ScreenConfig) => {
     return ({
         // Route names needs to be unique for routing to work, but labels do not need to be unique
-        label: title,
+        label: `#${title}`,
         routeName: `#${title}`,
         component: () => (
-            <DynamicMessenger navigation={navigation} collectionPath={collectionPath} documentId={documentId} />
+            <DynamicMessenger
+                navigation={navigation}
+                collectionPath={collectionPath}
+                documentId={documentId}
+                title={`#${title}`}
+            />
         ),
         initialParams: {
             activeTintColor: '#642',
