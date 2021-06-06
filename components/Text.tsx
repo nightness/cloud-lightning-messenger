@@ -15,20 +15,12 @@ export default ({
     children,
     style,
     classRef,
-    fontWeight,
-    fontSize,
+    fontWeight = '300',
+    fontSize = 16,
     color,
     ...restProps
 }: Props) => {
     const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
-
-    // Setup defaults
-    if (!fontWeight) {
-        fontWeight = '300'
-    }
-    if (!fontSize) {
-        fontSize = 16
-    }
 
     return (
         <Text
