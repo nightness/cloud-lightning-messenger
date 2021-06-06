@@ -160,7 +160,7 @@ export const FirebaseProvider = ({ children }: Props) => {
     const error = errorUser
 
     if (loadingUser)
-        return <ActivityIndicator viewStyle={Styles.views.activityIndicator} />
+        return <ActivityIndicator fullscreen={true} viewStyle={Styles.views.activityIndicator} />
     else if (errorUser)
         return <DisplayError permissionDenied={errorUser.code === 'permission-denied'} />
     return (

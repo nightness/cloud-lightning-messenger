@@ -57,7 +57,8 @@ export default function _<T>({
     }
 
     useEffect(() => {
-        if (!loadingCollection && !errorCollection && snapshot) fetchData()
+        if (!loadingCollection && !errorCollection && snapshot)
+            fetchData()
     }, [snapshot])
 
     if (loadingCollection || loadingData)
