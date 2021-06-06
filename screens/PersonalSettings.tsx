@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { ReturnKeyTypeOptions, View, StyleSheet } from 'react-native'
 import { DrawerNavigationProp } from '@react-navigation/drawer'
-import { Screen, FormField, Text } from '../components'
+import { Screen, FormField, Text, Button } from '../components'
 import { Formik, FormikProps } from 'formik'
 import { FirebaseContext } from '../database/FirebaseContext'
 
@@ -60,6 +60,19 @@ export default ({ navigation }: Props) => {
                             label='E-Mail'
                             fieldName='eMail'
                         />
+                        {!currentUser?.emailVerified ?
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 10 }}>
+                                <Text fontWeight='500' style={{ flex: 1 }}>{''}</Text>
+                                <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center', marginHorizontal: 10 }}>
+                                    <Text fontWeight='500'>Your E-Mail has not been verified</Text>
+                                    <Button
+                                        style={{ marginLeft: 20 }}
+                                        title='Send Verification E-Mail'
+                                        onPress={() => console.log('click')}
+                                    />
+                                </View>
+                            </View>
+                            : <></>}
                     </>)}
                 </Formik>
             </View>
