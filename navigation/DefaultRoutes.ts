@@ -22,6 +22,7 @@ import {
     manageUserRolesParams,
     playgroundParams,
 } from './DrawerParams'
+import PersonalSettings from '../screens/PersonalSettings'
 
 export const initialNavigationElements: NavigationElements = [
     {
@@ -103,6 +104,13 @@ export const initialNavigationElements: NavigationElements = [
         routeName: 'Toast Example',
         component: ToastExample,
         initialParams: playgroundParams,
+        depth: 0,
+    },
+    {
+        label: 'Personal Settings',
+        routeName: 'Personal Settings',
+        component: PersonalSettings,
+        initialParams: manageGroupsParams,
         depth: 0,
     },
 ]
