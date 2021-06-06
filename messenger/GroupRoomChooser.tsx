@@ -4,14 +4,14 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { DocumentData, FirebaseError, QueryDocumentSnapshot, QuerySnapshot, useCollection } from '../database/Firebase'
 import { Styles } from '../app/Styles'
 import { View } from 'react-native'
-import { NavigationElement } from '../navigation'
+import { DrawerContext, NavigationElement } from '../navigation'
 import DynamicMessenger from './DynamicMessenger'
 
 const getScreenConfig = (title: string) => {
     return ({
         // Route names needs to be unique for routing to work, but labels do not need to be unique
         label: title,
-        routeName: `Dynamic ${(Math.floor(Math.random() * 1000000))}`,
+        routeName: `${title}-${(Math.floor(Math.random() * 1000000))}`,
         component: DynamicMessenger,
         initialParams: {
             activeTintColor: '#642',
@@ -27,17 +27,15 @@ const getScreenConfig = (title: string) => {
 // QueryDocumentSnapshot<firebase.firestore.DocumentData>
 interface RoomDetailsProps {
     data: QueryDocumentSnapshot<DocumentData>
-    onPress: () => any
 }
 
-const RoomDetails = ({ data, onPress }: RoomDetailsProps) => {
+const RoomDetails = ({ data }: RoomDetailsProps) => {
+    const { screens, screenIndex, ScreenManager, setBadge } = useContext(DrawerContext)
     const [messageCount, setMessageCount] = useState<number | undefined>();
     const [snapshot, loadingCollection, errorCollection] = useCollection(`${data.ref.path}/messages`)
     const { activeTheme, getThemedComponentStyle } = useContext(ThemeContext)
     const themeStyle = getThemedComponentStyle('Screen')[activeTheme]
     const docData = data.data()
-
-    console.log(`${data.ref.path}/messages`)
 
     useEffect(() => {
         if (loadingCollection || errorCollection) return
@@ -56,7 +54,15 @@ const RoomDetails = ({ data, onPress }: RoomDetailsProps) => {
                 marginHorizontal: 10,
                 alignItems: 'baseline'
             }, themeStyle]}
-            onPress={onPress}
+            onPress={() => {
+                const screenConfig = getScreenConfig(docData.name)
+                if (ScreenManager?.addChild && typeof screenIndex === 'number' && screenIndex >= 0) {
+                    const path = ScreenManager.getScreenPath(screenIndex)
+                    if (!path) throw new Error('Path Not Found')
+                    ScreenManager.addChild(path, screenConfig)
+                    //showMessageBox('Completed', `Added a new dynamic child of this screen called '${screenConfig.label}' with a routeName of '${screenConfig.routeName}'`)
+                }
+            }}
         >
             <View>
                 <Text>
@@ -78,7 +84,7 @@ const RoomDetails = ({ data, onPress }: RoomDetailsProps) => {
                     </Text> : <></>
                 }
             </View>
-        </Button>
+        </Button >
     )
 }
 
@@ -106,9 +112,6 @@ export default ({ navigation }: Props) => {
                     <RoomDetails
                         key={`${Math.random()}`}
                         data={data}
-                        onPress={() => {
-                            console.log(data)
-                        }}
                     />
                 )
             })}

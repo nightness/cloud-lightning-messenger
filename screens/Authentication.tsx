@@ -140,7 +140,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         const setProfileAttribute = async () => {
             console.log(values)
             await firestoreSetDisplayName(values.displayName)
-            navigation.replace('LoginActivity')
+            navigation.navigate('LoginActivity')
         }
 
         auth.createUserWithEmailAndPassword(values.eMail, values.password)
@@ -163,14 +163,14 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
                     setSubmitted(false)
                     alert(error)
                 })
-            navigation.replace('LoginActivity')
+            navigation.navigate('LoginActivity')
         } else if (Platform.OS === 'android' || Platform.OS === 'ios') {
             signInWithGoogleAsync()
                 .catch((error) => {
                     alert(error)
                     setIsLoading(false)
                 })
-            navigation.replace('LoginActivity')
+            navigation.navigate('LoginActivity')
         }
         formikProps.resetForm()
     }
@@ -179,7 +179,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         setSubmitted(true)
         try {
             await auth.signInWithEmailAndPassword(values.eMail, values.password)
-            navigation.replace('LoginActivity')
+            navigation.navigate('LoginActivity')
         }
         catch (error) {
             setSubmitted(false)
@@ -208,7 +208,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         if (customToken) {
             auth.signInWithCustomToken(customToken)
                 .then(() => {
-                    navigation.replace('LoginActivity')
+                    navigation.navigate('LoginActivity')
                 })
                 .catch((error) => {
                     alert('Invalid custom token specified')
