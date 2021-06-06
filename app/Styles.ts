@@ -100,6 +100,7 @@ export class Styles {
     static readonly textInput = StyleSheet.create({
         input: {
             paddingHorizontal: 10,
+            borderWidth: 1,
         },
     })
 

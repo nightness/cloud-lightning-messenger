@@ -120,10 +120,12 @@ export const themes: Themes = [
             Light: {
                 color: '#212121',
                 backgroundColor: '#eee',
+                borderColor: 'black',
             },
             Dark: {
                 color: '#eee',
                 backgroundColor: '#333',
+                borderColor: 'white',
             },
         },
     ],
@@ -149,6 +151,7 @@ export const themes: Themes = [
             Dark: {
                 color: '#eee',
                 backgroundColor: '#222',
+                borderColor: 'white',
             },
         },
     ],
