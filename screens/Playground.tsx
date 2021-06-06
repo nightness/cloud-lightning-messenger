@@ -13,7 +13,7 @@ interface Props {
 // Playground
 export const Playground = ({ navigation }: Props) => {
     const { setBadge, ScreenManager, screenIndex } = useContext(DrawerContext)
-    const { showToast, hideToast, sendNotificationImmediately } = useContext(GlobalContext)
+    const { showToast, sendNotificationImmediately } = useContext(GlobalContext)
     return (
         <Screen navigation={navigation} title="Playground">
             <Button
@@ -88,6 +88,16 @@ export const Playground = ({ navigation }: Props) => {
                 title='Notification Test'
                 onPress={() => {
                     sendNotificationImmediately?.('title', 'body')
+                }}
+            />
+            <Button
+                title='Update User Profiles to match Firebase user data'
+                onPress={() => {
+                    callFirebaseFunction('updateProfiles', {})
+                        .then((results) => {
+                            console.log(results)
+                        })
+                        .catch((err) => console.warn(err))
                 }}
             />
 

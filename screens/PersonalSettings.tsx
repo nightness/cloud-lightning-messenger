@@ -4,6 +4,7 @@ import { DrawerNavigationProp } from '@react-navigation/drawer'
 import { Screen, FormField, Text, Button } from '../components'
 import { Formik, FormikProps } from 'formik'
 import { FirebaseContext } from '../database/FirebaseContext'
+import * as Yup from 'yup'
 import { getAuth } from '../database/Firebase'
 
 interface SettingProp {
@@ -34,6 +35,14 @@ interface Props {
     navigation: DrawerNavigationProp<any>
 }
 
+const scheme = Yup.object({
+    displayName: Yup.string()
+        .required('Display name is a required field')
+        .min(3),
+    photoURL: Yup.string()
+        .url('Please specify a valid URL')
+})
+
 export default ({ navigation }: Props) => {
     const { currentUser } = useContext(FirebaseContext)
 
@@ -43,23 +52,19 @@ export default ({ navigation }: Props) => {
                 <Formik
                     initialValues={{
                         displayName: currentUser?.displayName,
-                        eMail: currentUser?.email,
+                        photoURL: currentUser?.photoURL
                     }}
-                    // validationSchema={scheme}
+                    validationSchema={scheme}
                     onSubmit={(values, helpers) => {
-
+                        console.log('onSubmit')
                     }}
+                    validateOnChange={true}
                 >
                     {(formikProps) => (<>
                         <Setting
                             formikProps={formikProps}
                             label='Display Name'
                             fieldName='displayName'
-                        />
-                        <Setting
-                            formikProps={formikProps}
-                            label='E-Mail'
-                            fieldName='eMail'
                         />
                         {!currentUser?.emailVerified ?
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 10 }}>
@@ -75,8 +80,20 @@ export default ({ navigation }: Props) => {
                                         }}
                                     />
                                 </View>
-                            </View>
-                            : <></>}
+                            </View> : <></>
+                        }
+                        <Setting
+                            formikProps={formikProps}
+                            label='Photo URL'
+                            fieldName='photoURL'
+                        />
+                        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+                            <Button
+                                title='Save Changes'
+                                disabled={!formikProps.isValid}
+                                onPress={formikProps.handleSubmit}
+                            />
+                        </View>
                     </>)}
                 </Formik>
             </View>

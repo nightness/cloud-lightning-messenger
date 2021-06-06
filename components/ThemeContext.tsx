@@ -32,8 +32,8 @@ export const ThemeContext = createContext<ContextType>({
     keyboardHeight: 0,
     screenOrientation: ScreenOrientation.Orientation.UNKNOWN,
     getThemedComponentStyle: (componentName: string, isDisabled?: boolean, hasFocus?: boolean) => ({
-        Light: { },
-        Dark: { }
+        Light: {},
+        Dark: {}
     })
 })
 
@@ -73,13 +73,13 @@ export const ThemeProvider = ({ themes, children }: Props) => {
     const keyboardDidHide = () => {
         setIsKeyboardOpen(false)
         setKeyboardHeight(0)
-    }    
+    }
 
     // Screen orientation state handling
     useEffect(() => {
         if (Platform.OS === 'web') return
-        
-        ScreenOrientation.unlockAsync().catch((err : Error) => console.warn(err))
+
+        ScreenOrientation.unlockAsync().catch((err: Error) => console.warn(err))
         ScreenOrientation.getOrientationAsync()
             .then((value: Orientation) => {
                 setScreenOrientation(value)
@@ -93,8 +93,10 @@ export const ThemeProvider = ({ themes, children }: Props) => {
         return ScreenOrientation.removeOrientationChangeListeners
     })
 
-    const getThemedComponentStyle = (componentName: string, isDisabled?: boolean, hasFocus?: boolean) => {        
-        for (let i = 0; i < themes.length; i++) {          
+    const getThemedComponentStyle = (componentName: string, isDisabled?: boolean, hasFocus?: boolean) => {
+        if (isDisabled)
+            componentName += 'Disabled'
+        for (let i = 0; i < themes.length; i++) {
             const theme = themes[i]
             if (theme[0] === componentName)
                 return theme[1]

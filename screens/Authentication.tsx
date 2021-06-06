@@ -136,7 +136,7 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         softReset(formikProps)
     }
 
-    const onRegisterPress = (values: AuthenticationFields, helpers: FormikHelpers<any>) => {
+    const onRegisterPress = async (values: AuthenticationFields, helpers: FormikHelpers<any>) => {
         const setProfileAttribute = async () => {
             console.log(values)
             await firestoreSetDisplayName(values.displayName)
@@ -144,10 +144,10 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
         }
 
         auth.createUserWithEmailAndPassword(values.eMail, values.password)
-            .then(async () => {
+            .then(() => {
                 setIsLoading(true)
-                await setProfileAttribute()
             })
+            .then(setProfileAttribute)
             .catch((error: FirebaseError) => {
                 setSubmitted(false)
                 setIsLoading(false)
