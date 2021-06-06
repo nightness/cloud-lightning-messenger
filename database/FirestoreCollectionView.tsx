@@ -60,8 +60,6 @@ export default function _<T>({
         if (!loadingCollection && !errorCollection && snapshot) fetchData()
     }, [snapshot])
 
-    console.log(`loadingCollection ${loadingCollection}, loadingData = ${loadingData}`)
-
     if (loadingCollection || loadingData)
         return <ActivityIndicator viewStyle={Styles.views.activityIndicator} />
     if (errorCollection || errorData) {

@@ -52,7 +52,7 @@ export default ({ navigation }: Props) => {
                 <Formik
                     initialValues={{
                         displayName: currentUser?.displayName,
-                        photoURL: currentUser?.photoURL
+                        photoURL: currentUser?.photoURL ? currentUser.photoURL : ''
                     }}
                     validationSchema={scheme}
                     onSubmit={(values, helpers) => {
@@ -66,22 +66,6 @@ export default ({ navigation }: Props) => {
                             label='Display Name'
                             fieldName='displayName'
                         />
-                        {!currentUser?.emailVerified ?
-                            <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 10 }}>
-                                <Text fontWeight='500' style={{ flex: 1 }}>{''}</Text>
-                                <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center', marginHorizontal: 10 }}>
-                                    <Text fontWeight='500'>Your E-Mail address has not been verified</Text>
-                                    <Button
-                                        style={{ marginLeft: 20 }}
-                                        title='Send Verification E-Mail'
-                                        onPress={() => {
-                                            if (!currentUser?.email) return
-                                            currentUser?.sendEmailVerification()
-                                        }}
-                                    />
-                                </View>
-                            </View> : <></>
-                        }
                         <Setting
                             formikProps={formikProps}
                             label='Photo URL'
@@ -94,6 +78,21 @@ export default ({ navigation }: Props) => {
                                 onPress={formikProps.handleSubmit}
                             />
                         </View>
+                        {!currentUser?.emailVerified ?
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 10, marginTop: 20 }}>
+                                <View style={{ flex: 3, flexDirection: 'column', alignItems: 'center', marginHorizontal: 10 }}>
+                                    <Text fontWeight='500'>Your E-Mail address has not been verified</Text>
+                                    <Button
+                                        style={{ marginLeft: 20 }}
+                                        title='Send Verification E-Mail'
+                                        onPress={() => {
+                                            if (!currentUser?.email) return
+                                            currentUser?.sendEmailVerification()
+                                        }}
+                                    />
+                                </View>
+                            </View> : <></>
+                        }
                     </>)}
                 </Formik>
             </View>
