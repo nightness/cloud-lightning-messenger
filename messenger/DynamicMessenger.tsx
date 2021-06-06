@@ -38,9 +38,10 @@ export default ({ navigation, title, collectionPath, documentId }: Props) => {
 
     const sendMessage = () => {
         const text = messageText
+        var parentPath = collectionPath.split("/")?.[0];
         setMessageText('')
         callFirebaseFunction('setMessage', {
-            collectionPath,
+            collectionPath: parentPath,
             documentId,
             message: text,
         }).then((results) => {
