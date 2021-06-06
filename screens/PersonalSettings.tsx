@@ -4,6 +4,7 @@ import { DrawerNavigationProp } from '@react-navigation/drawer'
 import { Screen, FormField, Text, Button } from '../components'
 import { Formik, FormikProps } from 'formik'
 import { FirebaseContext } from '../database/FirebaseContext'
+import { getAuth } from '../database/Firebase'
 
 interface SettingProp {
     label: string,
@@ -64,11 +65,14 @@ export default ({ navigation }: Props) => {
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 10 }}>
                                 <Text fontWeight='500' style={{ flex: 1 }}>{''}</Text>
                                 <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center', marginHorizontal: 10 }}>
-                                    <Text fontWeight='500'>Your E-Mail has not been verified</Text>
+                                    <Text fontWeight='500'>Your E-Mail address has not been verified</Text>
                                     <Button
                                         style={{ marginLeft: 20 }}
                                         title='Send Verification E-Mail'
-                                        onPress={() => console.log('click')}
+                                        onPress={() => {
+                                            if (!currentUser?.email) return
+                                            currentUser?.sendEmailVerification()
+                                        }}
                                     />
                                 </View>
                             </View>
