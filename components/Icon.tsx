@@ -14,6 +14,7 @@ interface Props {
     colors?: [ColorValue, ColorValue] // [0] === Light Mode, [1] === Dark Mode
     size?: number
     type: IconFamilies
+    name: string
 }
 
 export default ({

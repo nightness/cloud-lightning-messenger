@@ -16,6 +16,7 @@ import Badge from './components/Badge'
 import Icon from './components/Icon'
 import WebView from './components/WebView'
 import Screen from './components/Screen'
+import FormField from './components/FormField'
 import { ThemeContext, ThemeProvider } from './components/ThemeContext'
 import { NamedTheme, Theme, Themes, ThemeStyles, ThemeType } from './app/ThemeTypes'
 
@@ -46,4 +47,5 @@ export {
     Themes,
     WebView,
     Screen,
+    FormField,
 }
