@@ -81,12 +81,6 @@ const RoomDetails = ({ data, navigation }: RoomDetailsProps) => {
                 alignItems: 'baseline'
             }, themeStyle]}
             onPress={() => {
-                const screenConfig = buildScreenConfig({
-                    title: docData.name,
-                    navigation,
-                    collectionPath,
-                    documentId: data.id
-                })
                 let exists = false
                 screens.forEach((screen) => {
                     if (screen.routeName === routeName) {
@@ -95,6 +89,12 @@ const RoomDetails = ({ data, navigation }: RoomDetailsProps) => {
                     }
                 })
                 if (!exists && ScreenManager?.addChild && typeof screenIndex === 'number' && screenIndex >= 0) {
+                    const screenConfig = buildScreenConfig({
+                        title: docData.name,
+                        navigation,
+                        collectionPath,
+                        documentId: data.id
+                    })
                     const path = ScreenManager.getScreenPath(screenIndex)
                     if (!path) throw new Error('Path Not Found')
                     ScreenManager.addChild(path, screenConfig)
