@@ -90,17 +90,6 @@ export const Playground = ({ navigation }: Props) => {
                     sendNotificationImmediately?.('title', 'body')
                 }}
             />
-            <Button
-                title='Update User Profiles to match Firebase user data'
-                onPress={() => {
-                    callFirebaseFunction('updateProfiles', {})
-                        .then((results) => {
-                            console.log(results)
-                        })
-                        .catch((err) => console.warn(err))
-                }}
-            />
-
         </Screen>
     )
 }
