@@ -86,7 +86,7 @@ const RegistrationScheme = Yup.object({
 })
 
 export const Authentication = ({ navigation, customToken }: AuthenticationProps) => {
-    const { setProfile: firestoreSetDisplayName } = useContext(FirebaseContext)
+    const { setProfile: firestoreSetProfile } = useContext(FirebaseContext)
     const [mode, setMode] = useState<'login' | 'register' | 'password-reset'>('login')
     const [scheme, setScheme] = useState<object>()
     const [submitted, setSubmitted] = useState(false)
@@ -139,7 +139,9 @@ export const Authentication = ({ navigation, customToken }: AuthenticationProps)
     const onRegisterPress = async (values: AuthenticationFields, helpers: FormikHelpers<any>) => {
         const setProfile = async () => {
             console.log(values)
-            await firestoreSetDisplayName(values.displayName)
+            await firestoreSetProfile({
+                displayName: values.displayName
+            })
             navigation.navigate('LoginActivity')
         }
 

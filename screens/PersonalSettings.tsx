@@ -44,7 +44,7 @@ const scheme = Yup.object({
 })
 
 export default ({ navigation }: Props) => {
-    const { currentUser } = useContext(FirebaseContext)
+    const { currentUser, setProfile } = useContext(FirebaseContext)
 
     return (
         <Screen navigation={navigation} title='Personal Settings'>
@@ -56,7 +56,9 @@ export default ({ navigation }: Props) => {
                     }}
                     validationSchema={scheme}
                     onSubmit={(values, helpers) => {
-                        console.log('onSubmit')
+                        setProfile({
+                            photoURL: values.photoURL
+                        })
                     }}
                     validateOnChange={true}
                 >
