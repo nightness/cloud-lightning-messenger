@@ -23,7 +23,7 @@ type ContextType = {
     addClaim: (uid: string, claimName: string) => Promise<any>
     removeClaim: (uid: string, claimName: string) => Promise<any>
     getClaims: (uid: string) => Promise<any>
-    setProfileAttribute: (displayName: string) => Promise<any>
+    setProfile: (displayName: string) => Promise<any>
 }
 
 export const FirebaseContext = createContext<ContextType>({
@@ -31,7 +31,7 @@ export const FirebaseContext = createContext<ContextType>({
     addClaim: (uid: string, claimName: string) => new Promise(() => undefined),
     removeClaim: (uid: string, claimName: string) => new Promise(() => undefined),
     getClaims: (uid: string) => new Promise(() => undefined),
-    setProfileAttribute: (displayName: string) => new Promise(() => undefined),
+    setProfile: (displayName: string) => new Promise(() => undefined),
 })
 
 interface Props {
@@ -102,7 +102,7 @@ export const FirebaseProvider = ({ children }: Props) => {
     }
 
     // Because of ContextType, displayName is required when being called non-locally
-    const setProfileAttribute = async (displayName?: string) => {
+    const setProfile = async (displayName?: string) => {
         const currentUser = getAuth().currentUser
         if (!currentUser) return
         if (!displayName)
@@ -111,7 +111,7 @@ export const FirebaseProvider = ({ children }: Props) => {
         setSavingTheme(true)
         const promises: Promise<any>[] = []
         promises.push(currentUser.updateProfile({ displayName }))
-        promises.push(callFirebaseFunction('setProfileAttribute', {
+        promises.push(callFirebaseFunction('setProfile', {
             authToken,
             displayName,
             activeTheme
@@ -149,7 +149,7 @@ export const FirebaseProvider = ({ children }: Props) => {
         if (currentUser && !savingTheme) {
             getCurrentUsersTheme(currentUser.uid).then((usersTheme: Theme) => {
                 if (usersTheme && usersTheme != activeTheme)
-                    setProfileAttribute()
+                    setProfile()
             }).catch(() => {
                 setSavingTheme(false)
             })
@@ -175,7 +175,7 @@ export const FirebaseProvider = ({ children }: Props) => {
                     addClaim,
                     removeClaim,
                     getClaims,
-                    setProfileAttribute,
+                    setProfile,
                     authToken,
                 }}
             >
