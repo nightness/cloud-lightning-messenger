@@ -26,15 +26,13 @@ export default function App() {
         />
     } else {
         return (
-            <>
-                <GlobalProvider>
-                    <ThemeProvider themes={themes}>
-                        <FirebaseProvider>
-                            <AppNavigator />
-                        </FirebaseProvider>
-                    </ThemeProvider>
-                </GlobalProvider>                
-            </>
+            <GlobalProvider>
+                <ThemeProvider themes={themes}>
+                    <FirebaseProvider>
+                        <AppNavigator />
+                    </FirebaseProvider>
+                </ThemeProvider>
+            </GlobalProvider>
         )
     }
 }

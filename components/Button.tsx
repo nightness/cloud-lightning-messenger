@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { Button, StyleSheet, StyleProp, TouchableOpacity, ViewStyle, View } from 'react-native'
+import { Button, StyleSheet, StyleProp, TouchableOpacity, ViewStyle, View, SafeAreaView } from 'react-native'
 import Text from './Text'
 import { ThemeContext } from './ThemeContext'
 import { Styles } from '../app/Styles'
@@ -28,9 +28,9 @@ export default ({
     // Use the native button
     if (reactNativeButton && title) {
         return (
-            <View style={style}>
+            <SafeAreaView style={style}>
                 <Button title={title} disabled={disabled} onPress={onPress} />
-            </View>
+            </SafeAreaView>
         )
     }
     // TouchableHighlight is another option, this works nice though
