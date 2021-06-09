@@ -103,20 +103,20 @@ const RoomDetails = ({ data, navigation }: RoomDetailsProps) => {
         >
             <View>
                 <Text>
-                    <Text style={{ fontWeight: 600 }}>Name: </Text>{docData.name}
+                    <Text style={{ fontWeight: '600' }}>Name: </Text>{docData.name}
                 </Text>
                 {docData.description ?
                     <Text>
-                        <Text style={{ fontWeight: 600 }}>Description: </Text>{docData.description}
+                        <Text style={{ fontWeight: '600' }}>Description: </Text>{docData.description}
                     </Text> : <></>
                 }
                 <Text>
-                    <Text style={{ fontWeight: 600 }}>Joined Member Count: </Text>
+                    <Text style={{ fontWeight: '600' }}>Joined Member Count: </Text>
                     {docData.members ? docData.members.length : 0}
                 </Text>
                 {messageCount ?
                     <Text>
-                        <Text style={{ fontWeight: 600 }}>Message Count: </Text>
+                        <Text style={{ fontWeight: '600' }}>Message Count: </Text>
                         <Text>{`${messageCount}`}</Text>
                     </Text> : <></>
                 }

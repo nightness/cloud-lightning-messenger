@@ -8,6 +8,7 @@ import { GlobalProvider } from './app/GlobalContext'
 import AppNavigator from './navigation/AppNavigator'
 import { ThemeProvider } from './components/ThemeContext'
 import { themes } from './app/Themes'
+import { SafeAreaView } from 'react-native'
 
 const getFonts = () =>
     Fonts.loadAsync({

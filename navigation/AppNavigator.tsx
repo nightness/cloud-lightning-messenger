@@ -13,6 +13,7 @@ import { Styles } from '../app/Styles'
 import { GlobalContext } from '../app/GlobalContext'
 import Toast from '../components/Toast'
 import LoginActivity from '../screens/LoginActivity'
+import { SafeAreaView } from 'react-native'
 
 export const Stack = createStackNavigator()
 export default () => {
@@ -38,13 +39,15 @@ export default () => {
                 <Stack.Screen name="Authentication" component={Authentication} />
                 <Stack.Screen name="LoginActivity" component={LoginActivity} />
                 <Stack.Screen name="Main">
-                    {props => <DrawerNavigator
-                        {...props}
-                        background={colorSet.drawer}
-                        claims={claims}
-                        initialScreens={initialNavigationElements}
-                        labelStyle={getThemedComponentStyle('Text')[activeTheme]}
-                    />}
+                    {props => (
+                        <DrawerNavigator
+                            {...props}
+                            background={colorSet.drawer}
+                            claims={claims}
+                            initialScreens={initialNavigationElements}
+                            labelStyle={getThemedComponentStyle('Text')[activeTheme]} />
+                    )}
+
                 </Stack.Screen>
             </Stack.Navigator>
             <Toast messages={messages} setMessages={setMessages} />

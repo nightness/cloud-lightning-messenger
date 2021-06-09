@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../app/GlobalContext'
 import { FirebaseContext } from '../database/FirebaseContext'
 import ScreenHeader from './ScreenHeader'
-import { StyleProp, ViewStyle, View, useWindowDimensions } from 'react-native'
+import { StyleProp, ViewStyle, View, useWindowDimensions, SafeAreaView } from 'react-native'
 import { GradientColors } from '../app/GradientColors'
 import { ThemeContext } from './ThemeContext'
 import { Container } from '../components'
@@ -45,7 +45,9 @@ export default ({ children, style, navigation, title }: Props) => {
                     photoURL={currentUser && currentUser.photoURL}
                     hamburgerBadgeText={hamburgerBadgeText}
                 />
-                {children}
+                <SafeAreaView style={{ flex: 1 }}>
+                    {children}
+                </SafeAreaView>
             </View>
         </Container>
     )
