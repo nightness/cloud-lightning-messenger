@@ -38,17 +38,15 @@ export default ({ children, style, navigation, title }: Props) => {
 
     return (
         <Container style={screenStyle} background={GradientColors[activeTheme].background}>
-            <View style={[screenStyle, style]}>
+            <SafeAreaView style={[screenStyle, style]}>
                 <ScreenHeader
                     navigation={navigation}
                     title={title}
                     photoURL={currentUser && currentUser.photoURL}
                     hamburgerBadgeText={hamburgerBadgeText}
                 />
-                <SafeAreaView style={{ flex: 1 }}>
-                    {children}
-                </SafeAreaView>
-            </View>
+                {children}
+            </SafeAreaView>
         </Container>
     )
 }
