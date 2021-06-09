@@ -35,7 +35,7 @@ export default ({
     }
     // TouchableHighlight is another option, this works nice though
     return (
-        <SafeAreaView style={style}>
+        <SafeAreaView>
             <TouchableOpacity
                 disabled={disabled}
                 style={[Styles.button.touchable, currentThemeType[activeTheme], style,]}
