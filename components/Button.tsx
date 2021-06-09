@@ -35,14 +35,16 @@ export default ({
     }
     // TouchableHighlight is another option, this works nice though
     return (
-        <TouchableOpacity
-            disabled={disabled}
-            style={[Styles.button.touchable, currentThemeType[activeTheme], style,]}
-            onPress={onPress}
-            {...restProps}
-        >
-            {title ? <Text style={[Styles.button.text, currentThemeType[activeTheme]]}>{title}</Text> : children}
-        </TouchableOpacity>
+        <SafeAreaView style={style}>
+            <TouchableOpacity
+                disabled={disabled}
+                style={[Styles.button.touchable, currentThemeType[activeTheme], style,]}
+                onPress={onPress}
+                {...restProps}
+            >
+                {title ? <Text style={[Styles.button.text, currentThemeType[activeTheme]]}>{title}</Text> : children}
+            </TouchableOpacity>
+        </SafeAreaView>
     )
 }
 
