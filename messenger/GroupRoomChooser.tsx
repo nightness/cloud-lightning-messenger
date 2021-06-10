@@ -3,7 +3,7 @@ import { ActivityIndicator, Button, DisplayError, Screen, ScrollView, Text, Them
 import { StackNavigationProp } from '@react-navigation/stack'
 import { DocumentData, FirebaseError, QueryDocumentSnapshot, QuerySnapshot, useCollection } from '../database/Firebase'
 import { Styles } from '../app/Styles'
-import { View } from 'react-native'
+import { FlatList, View } from 'react-native'
 import { DrawerContext, NavigationElement } from '../navigation'
 import DynamicMessenger from './DynamicMessenger'
 
@@ -142,17 +142,24 @@ export default ({ navigation }: Props) => {
         return <DisplayError error={errorCollection as FirebaseError} />
     }
 
+    const snapData: QueryDocumentSnapshot<DocumentData>[] = []
+    const snap = snapshot as QuerySnapshot<DocumentData>
+    snap.docs.forEach((doc) => snapData.push(doc))
+
     return (
         <Screen navigation={navigation} title={'Group Chat Rooms'}>
-            {(snapshot as QuerySnapshot<DocumentData>).docs.map((data) => {
-                return (
+            <FlatList
+                data={snapData}
+                renderItem={({ item }) =>
                     <RoomDetails
                         key={`${Math.random()}`}
-                        data={data}
+                        data={item}
                         navigation={navigation}
                     />
-                )
-            })}
-        </Screen>
+                }
+                style={{ flex: 1 }}
+                bounces={false}
+            />
+        </Screen >
     )
 }
