@@ -142,6 +142,8 @@ export default ({ navigation }: Props) => {
         return <DisplayError error={errorCollection as FirebaseError} />
     }
 
+
+    // Note: Fairly low cost to re-render every time (for now)
     const snapData: QueryDocumentSnapshot<DocumentData>[] = []
     const snap = snapshot as QuerySnapshot<DocumentData>
     snap.docs.forEach((doc) => snapData.push(doc))
